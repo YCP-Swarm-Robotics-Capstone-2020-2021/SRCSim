@@ -1,0 +1,9 @@
+//------------------------------------------------
+// Pos_module config block
+
+ProcessConfig = Pos_module
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
