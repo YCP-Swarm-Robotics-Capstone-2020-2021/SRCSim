@@ -31,6 +31,7 @@ public:
    bool Iterate();
    bool OnConnectToServer();
    bool OnStartUp();
+   bool handleUpdatePos(CMOOSMsg &msg);
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();

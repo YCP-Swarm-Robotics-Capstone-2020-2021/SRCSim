@@ -47,9 +47,10 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
  bool   mstr  = msg.IsString();
 #endif
 
-  if(key == "FOO")
-    cout << "great!";
-
+  if(key == "Update_Pos"){
+    cout << "Pos updated " << std::endl;
+    handleUpdatePos(msg);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -74,7 +75,8 @@ bool Pos_module::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-AppCastingMOOSApp::PostReport();
+Notify("Test", 1, MOOSTime());
+//AppCastingMOOSApp::PostReport();
 return(true);
 }
 
@@ -121,7 +123,7 @@ return(true);
 void Pos_module::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
-// Register("FOOBAR", 0);
+ Register("Update_Pos");
 }
 
 
@@ -141,5 +143,18 @@ actab << "one" << "two" << "three" << "four";
 m_msgs << actab.getFormattedString();
 
 return(true);
+}
+
+bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
+     if(!msg.IsString()){
+        return MOOSFail("You did not input a string you ninny");
+     }
+     double x = 0.0,y = 0.0;
+     MOOSValFromString(x , msg.GetString(), "xPos");
+     MOOSValFromString(y , msg.GetString(), "yPos");
+     cout << "Coordinates are now "<< x <<" as x and "<< y <<" as y " << std::endl;
+     QString coords = "xPos="+ QString::number(x) + "yPos="+ QString::number(y);
+     Notify("Current_Pos", coords.toStdString(), MOOSTime());
+     return true;
 }
 
