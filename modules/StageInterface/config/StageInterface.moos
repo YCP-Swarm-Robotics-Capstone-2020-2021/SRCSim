@@ -1,0 +1,9 @@
+//------------------------------------------------
+// StageInterface config block
+
+ProcessConfig = StageInterface
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
