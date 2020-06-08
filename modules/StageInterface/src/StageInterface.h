@@ -12,11 +12,28 @@
 #include <iterator>
 #include <MOOS/libMOOS/MOOSLib.h>
 #include "MOOS/libMOOS/Thirdparty/AppCasting/AppCastingMOOSApp.h"
+#include <FL/Fl_Shared_Image.H>
 #include <ivp/MBUtils.h>
 #include <ivp/ACTable.h>
 #include <QString>
 #include <QThread>
+#include <map>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
+#include <sstream>
+#include <iostream>
+#include <cmath>
+
+#include "Stage-4.3/stage.hh"
+
+#define ROBOT_IDENTIFIER "Dolphin"
+
+class Robot {
+public:
+  Stg::ModelPosition *position;
+};
 
 class StageInterface : public QObject, public AppCastingMOOSApp
 {
@@ -38,9 +55,15 @@ public:
 
  protected:
    void registerVariables();
+   void connect(Stg::World *world);
+   void initialize();
 
- private: // Configuration variables
-
+private: // Configuration variables
+    Robot *robots;
+    int num_bots;
+    QString world_file;
+    Stg::WorldGui *world;
+    std::map<std::string, int> index_map;
 signals:
 
 public slots:

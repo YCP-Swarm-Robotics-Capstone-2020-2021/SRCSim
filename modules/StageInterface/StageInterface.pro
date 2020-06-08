@@ -26,7 +26,9 @@ HEADERS +=  src/StageInterface.h  src/StageInterface_Info.h
 
 OTHER_FILES +=  *.sh  config/*.moos
 
-LIBS +=  -L../../../moos-ivp/build/MOOS/MOOSCore/lib/  -lMOOS   -L../../../moos-ivp/lib/  -lapputil  -lmbutil
+LIBS +=  -L../../../moos-ivp/build/MOOS/MOOSCore/lib/  -lMOOS   -L../../../moos-ivp/lib/  -lapputil  -lmbutil \
+         -lstage
+         -lfltk
 
 unix {
  QMAKE_LFLAGS_RELEASE += -W
