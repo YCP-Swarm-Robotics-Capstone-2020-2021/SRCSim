@@ -43,7 +43,6 @@ void StageRun::connectStage(World *world)
     // connect the first population_size robots to this controller
     for (int idx = 0; idx < num_bots; idx++) {
       // the robots' models are named r0 .. r1999
-        cout<<"Made it inside for loop"<<idx<<endl;
       std::stringstream name;
       name << ROBOT_IDENTIFIER << idx;
 
@@ -52,10 +51,7 @@ void StageRun::connectStage(World *world)
           reinterpret_cast<Stg::ModelPosition *>(world->GetModel(name.str()));
       assert(posmod != 0);
 
-      cout<<"Made it inside for loop after assert"<<idx<<endl;
-      cout<<num_bots<<endl;
       robots[idx].position = posmod;
-      cout<<"Made it inside for loop before subscribe "<<idx<<endl;
       robots[idx].position->Subscribe();
 
       robots[idx].position->SetSpeed(0.0, 0.0, 0.0);
@@ -65,9 +61,7 @@ void StageRun::connectStage(World *world)
     }
 
     // register with the world
-    cout<<"Made it before reinterpret_cast"<<endl;
     world->AddUpdateCallback(StageRun::Callback, reinterpret_cast<void *>(this));
-    cout<<"Made it before reinterpret_cast"<<endl;
 }
 
 void StageRun::Tick(World *)
