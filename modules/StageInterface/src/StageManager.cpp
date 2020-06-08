@@ -29,19 +29,13 @@ void StageManager::run()
     args[1] = arg;
     args[2] = NULL;
     int x = 2;
-    cout<<"Made it before init."<<endl;
     Stg::Init(&x, args);
-    cout<<"Made it before Gui."<<endl;
     world = new Stg::WorldGui(800, 700, "Stage Simulation");
-    cout<<"Made it before load."<<endl;
     world->Load(world_file.toStdString());
-    cout<<"Made it before connect."<<endl;
     stageRun = new StageRun(num_bots);
     stageRun->setNumBots(num_bots);
     stageRun->connectStage(world);
-    cout<<"Made it before run."<<endl;
     world->Run();
-    cout<<"Made it past run."<<endl;
 }
 
 void StageRun::connectStage(World *world)
@@ -79,16 +73,12 @@ void StageRun::connectStage(World *world)
 void StageRun::Tick(World *)
 {
     int index = 0;
-//    StageManagerSemAvail.acquire();
-  //  StageManagerMutex.lock();
     if(!StageManagerBuffer.isEmpty()){
         index = (int)StageManagerBuffer.takeFirst();
         robots[index].forward_speed = StageManagerBuffer.takeFirst();
         robots[index].side_speed = StageManagerBuffer.takeFirst();
         robots[index].turn_speed = StageManagerBuffer.takeFirst();
     }
-    //StageManagerMutex.unlock();
-    //StageManagerSemFree.release();
     for (int idx = 0; idx < num_bots; idx++) {
       robots[idx].position->SetSpeed(robots[idx].forward_speed, robots[idx].side_speed, robots[idx].turn_speed);
     }
@@ -97,25 +87,4 @@ void StageRun::Tick(World *)
 StageRun::StageRun(int num_bots){
     this->num_bots = num_bots;
     robots = new Robot[num_bots];
-}
-
-void StageManager::handleUpdateSideSpeed(int idx, double speed)
-{
-    cout<<"inside handleUpdateSideSpeed signal."<<endl;
-    stageRun->robots[idx].side_speed = speed;
-}
-
-void StageManager::handleUpdateForwardSpeed(int idx, double speed)
-{
-    stageRun->robots[idx].forward_speed = speed;
-}
-
-void StageManager::handleUpdateTurnSpeed(int idx, double speed)
-{
-    stageRun->robots[idx].turn_speed = speed;
-}
-
-void StageManager::helloWorld()
-{
-    cout<<"Hello World"<<endl;
 }

@@ -10,9 +10,6 @@
 #include "StageInterface.h"
 #include "global.h"
 
-//QMutex StageManagerMutex;
-//QSemaphore StageManagerSemFree(8);
-//QSemaphore StageManagerSemAvail(0);
 QList<double> StageManagerBuffer;
 QList<double> StageInterfaceBuffer;
 
@@ -84,7 +81,7 @@ bool StageInterface::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-//AppCastingMOOSApp::PostReport();
+AppCastingMOOSApp::PostReport();
 return(true);
 }
 
@@ -126,8 +123,6 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
     //initialize the map that will convert the identifier to the index of the robot
     for(int i = 0; i<num_bots; i++){
         index_map[ROBOT_IDENTIFIER+std::to_string(i)]=i;
-        //cout<<"Identifier = "<<ROBOT_IDENTIFIER+std::to_string(i)           <<endl;
-        //cout<<"Value = "     <<index_map[ROBOT_IDENTIFIER+std::to_string(i)]<<endl;
     }
 
     //declare robot array
@@ -137,20 +132,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    reportUnhandledConfigWarning(orig);
 
 }
-//connect(this, setForwardSpeed(int, double), manager, manager->handleUpdateForwardSpeed(int, double));
-//connect(this, setSideSpeed(int, double), manager, manager->handleUpdateSideSpeed(int, double));
-//connect(this, setTurnSpeed(int, double), manager, manager->handleUpdateTurnSpeed(int, double));
 manager->start();
-/*connect(this, &StageInterface::hello, manager, &StageManager::helloWorld);
-connect(this, &StageInterface::setForwardSpeed, manager, &StageManager::handleUpdateForwardSpeed, Qt::QueuedConnection);
-connect(this, &StageInterface::setSideSpeed, manager, &StageManager::handleUpdateSideSpeed, Qt::QueuedConnection);
-connect(this, &StageInterface::setTurnSpeed, manager, &StageManager::handleUpdateTurnSpeed, Qt::QueuedConnection);
-*/
-//connect(this, SIGNAL(setForwardSpeed(int, double)), manager, SLOT(handleUpdateForwardSpeed(int, double)), Qt::QueuedConnection);
-//connect(this, SIGNAL(setSideSpeed(int, double)), manager, SLOT(handleUpdateSideSpeed(int, double)), Qt::QueuedConnection);
-//connect(this, SIGNAL(setTurnSpeed(int, double)), manager, SLOT(handleUpdateTurnSpeed(int, double)), Qt::QueuedConnection);
 registerVariables();
-//emit hello();
 return(true);
 }
 
@@ -160,7 +143,6 @@ return(true);
 void StageInterface::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
-// Register("FOOBAR", 0);
     Register("Speed_Curv", 0);
 }
 
@@ -213,26 +195,9 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
     turn_speed    = (2*speed)*sin(curv*(PI/180.0));
     cout << "StageInterface: Speed = "<<speed<<". Curv = "<<curv<<"."<<endl;
     cout << "StageInterface: Forward_Speed = "<<forward_speed<<". Side_Speed = "<<side_speed<<". Turn_Speed = "<<turn_speed<<endl;
-    //robots[idx].position->SetSpeed(forward_speed, side_speed, turn_speed);
-    /*manager->getRobots()[idx].forward_speed = forward_speed;
-    manager->getRobots()[idx].side_speed = side_speed;
-    manager->getRobots()[idx].turn_speed = turn_speed;*/
-
-    //emit setForwardSpeed(idx, forward_speed);
-    //emit setSideSpeed(idx, side_speed);
-    //emit setTurnSpeed(idx, turn_speed);
-
-    /*manager->handleUpdateSideSpeed(idx, side_speed);
-    manager->handleUpdateForwardSpeed(idx, forward_speed);
-    manager->handleUpdateTurnSpeed(idx, turn_speed);*/
-
-//    StageManagerSemFree.acquire();
-  //  StageManagerMutex.lock();
     StageManagerBuffer.append(double(idx));
     StageManagerBuffer.append(forward_speed);
     StageManagerBuffer.append(side_speed);
     StageManagerBuffer.append(turn_speed);
-    //StageManagerMutex.unlock();
-    //StageManagerSemAvail.release();
     return true;
 }

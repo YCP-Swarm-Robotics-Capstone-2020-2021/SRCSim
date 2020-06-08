@@ -80,11 +80,5 @@ private:
     Stg::WorldGui *world;
     QString world_file;
     int num_bots;
-
-public slots:
-    void handleUpdateForwardSpeed(int idx, double speed);
-    void handleUpdateTurnSpeed(int idx, double speed);
-    void handleUpdateSideSpeed(int idx, double speed);
-    void helloWorld();
 };
 #endif // STAGEMANAGER_H

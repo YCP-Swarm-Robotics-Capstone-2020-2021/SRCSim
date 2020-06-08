@@ -57,12 +57,6 @@ private: // Configuration variables
     std::map<std::string, int> index_map;
     StageManager *manager;
 
-signals:
-    void setForwardSpeed(int idx, double speed);
-    void setSideSpeed(int idx, double speed);
-    void setTurnSpeed(int idx, double speed);
-    void hello();
-
 public slots:
 };
 
