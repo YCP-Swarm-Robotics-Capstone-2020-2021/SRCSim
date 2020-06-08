@@ -55,7 +55,6 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   if(key == "FOO")
     cout << "great!";
   else if(key == "Speed_Curv"){
-    cout<<"Outside OnSpeedCurv method."<<endl;
     OnSpeedCurv(msg);
   } else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -113,7 +112,6 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    handled = true;
  } else if(param == "worldfile") {
     world_file = QString::fromStdString(value);
-    cout<<"World file = "<<world_file.toStdString()<<endl;
     handled = true;
     manager->setWorldFile(world_file);
  } else if(param == "numbots") {
@@ -126,7 +124,6 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
     }
 
     //declare robot array
-    cout<<"Number of bots = "<<num_bots<<endl;
     handled = true;
  }if(!handled)
    reportUnhandledConfigWarning(orig);
@@ -167,7 +164,6 @@ return(true);
 
 bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
 {
-    cout<<"Inside OnSpeedCurv method."<<endl;
     if(!Msg.IsString()){
         return MOOSFail("You did not input a string for the Speed_Curv message.");
     }
@@ -193,8 +189,6 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
     speed = speed/100.0; //convert from percentage to
     forward_speed = speed*cos(curv*(PI/180.0));
     turn_speed    = (2*speed)*sin(curv*(PI/180.0));
-    cout << "StageInterface: Speed = "<<speed<<". Curv = "<<curv<<"."<<endl;
-    cout << "StageInterface: Forward_Speed = "<<forward_speed<<". Side_Speed = "<<side_speed<<". Turn_Speed = "<<turn_speed<<endl;
     StageManagerBuffer.append(double(idx));
     StageManagerBuffer.append(forward_speed);
     StageManagerBuffer.append(side_speed);
