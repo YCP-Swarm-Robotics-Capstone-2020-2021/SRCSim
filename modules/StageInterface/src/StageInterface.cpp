@@ -8,6 +8,13 @@
 #include "ivp/MBUtils.h"
 #include "ivp/ACTable.h"
 #include "StageInterface.h"
+#include "global.h"
+
+//QMutex StageManagerMutex;
+//QSemaphore StageManagerSemFree(8);
+//QSemaphore StageManagerSemAvail(0);
+QList<double> StageManagerBuffer;
+QList<double> StageInterfaceBuffer;
 
 using namespace std;
 
@@ -16,6 +23,7 @@ using namespace std;
 
 StageInterface::StageInterface()
 {
+    manager = new StageManager();
 }
 
 //---------------------------------------------------------
@@ -110,8 +118,10 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
     world_file = QString::fromStdString(value);
     cout<<"World file = "<<world_file.toStdString()<<endl;
     handled = true;
+    manager->setWorldFile(world_file);
  } else if(param == "numbots") {
     num_bots = QString::fromStdString(value).toInt();
+    manager->setNumBots(num_bots);
 
     //initialize the map that will convert the identifier to the index of the robot
     for(int i = 0; i<num_bots; i++){
@@ -121,15 +131,26 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
     }
 
     //declare robot array
-    robots = new Robot[num_bots];
     cout<<"Number of bots = "<<num_bots<<endl;
     handled = true;
  }if(!handled)
    reportUnhandledConfigWarning(orig);
 
 }
-initialize();
+//connect(this, setForwardSpeed(int, double), manager, manager->handleUpdateForwardSpeed(int, double));
+//connect(this, setSideSpeed(int, double), manager, manager->handleUpdateSideSpeed(int, double));
+//connect(this, setTurnSpeed(int, double), manager, manager->handleUpdateTurnSpeed(int, double));
+manager->start();
+/*connect(this, &StageInterface::hello, manager, &StageManager::helloWorld);
+connect(this, &StageInterface::setForwardSpeed, manager, &StageManager::handleUpdateForwardSpeed, Qt::QueuedConnection);
+connect(this, &StageInterface::setSideSpeed, manager, &StageManager::handleUpdateSideSpeed, Qt::QueuedConnection);
+connect(this, &StageInterface::setTurnSpeed, manager, &StageManager::handleUpdateTurnSpeed, Qt::QueuedConnection);
+*/
+//connect(this, SIGNAL(setForwardSpeed(int, double)), manager, SLOT(handleUpdateForwardSpeed(int, double)), Qt::QueuedConnection);
+//connect(this, SIGNAL(setSideSpeed(int, double)), manager, SLOT(handleUpdateSideSpeed(int, double)), Qt::QueuedConnection);
+//connect(this, SIGNAL(setTurnSpeed(int, double)), manager, SLOT(handleUpdateTurnSpeed(int, double)), Qt::QueuedConnection);
 registerVariables();
+//emit hello();
 return(true);
 }
 
@@ -169,7 +190,7 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
         return MOOSFail("You did not input a string for the Speed_Curv message.");
     }
     double speed = 0.0, curv = 0.0;
-    string id = 0;
+    string id = "";
     int idx;
     if(!MOOSValFromString(speed, Msg.GetString(), "Speed")){
         return MOOSFail("Error getting speed out of Speed_Curv message.");
@@ -182,55 +203,36 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
     double forward_speed = 0.0;
     double turn_speed = 0.0;
     double side_speed = 0.0;
-    forward_speed = speed*cos(curv);
-    side_speed    = speed*sin(curv);
-    robots[idx].position->SetSpeed(forward_speed, side_speed, turn_speed);
+    if(speed >= 100.0){
+        speed = 100.0;
+    } else if (speed <= -100.0) {
+        speed = -100.0;
+    }
+    speed = speed/100.0; //convert from percentage to
+    forward_speed = speed*cos(curv*(PI/180.0));
+    turn_speed    = (2*speed)*sin(curv*(PI/180.0));
     cout << "StageInterface: Speed = "<<speed<<". Curv = "<<curv<<"."<<endl;
-    cout << "StageInterface: Forward_Speed = "<<forward_speed<<". Side_Speed = "<<side_speed<<". Turn_Speed = "<<side_speed<<endl;
+    cout << "StageInterface: Forward_Speed = "<<forward_speed<<". Side_Speed = "<<side_speed<<". Turn_Speed = "<<turn_speed<<endl;
+    //robots[idx].position->SetSpeed(forward_speed, side_speed, turn_speed);
+    /*manager->getRobots()[idx].forward_speed = forward_speed;
+    manager->getRobots()[idx].side_speed = side_speed;
+    manager->getRobots()[idx].turn_speed = turn_speed;*/
+
+    //emit setForwardSpeed(idx, forward_speed);
+    //emit setSideSpeed(idx, side_speed);
+    //emit setTurnSpeed(idx, turn_speed);
+
+    /*manager->handleUpdateSideSpeed(idx, side_speed);
+    manager->handleUpdateForwardSpeed(idx, forward_speed);
+    manager->handleUpdateTurnSpeed(idx, turn_speed);*/
+
+//    StageManagerSemFree.acquire();
+  //  StageManagerMutex.lock();
+    StageManagerBuffer.append(double(idx));
+    StageManagerBuffer.append(forward_speed);
+    StageManagerBuffer.append(side_speed);
+    StageManagerBuffer.append(turn_speed);
+    //StageManagerMutex.unlock();
+    //StageManagerSemAvail.release();
     return true;
 }
-
-void StageInterface::initialize()
-{
-    char arg1[world_file.toStdString().size()];
-    char *arg[1];
-    char **args[3];
-    int y;
-    for(int i = 0; i < (int)world_file.toStdString().size(); i++){
-        arg1[i] = world_file.toStdString().c_str()[i];
-        y = i;
-    }
-    arg1[y+1]= '\0';
-    arg[0] = arg1;
-    args[0] = arg;
-    args[1] = arg;
-    args[2] = NULL;
-    int x = 2;
-    Stg::Init(&x, args);
-    world = new Stg::WorldGui(800, 700, "Stage Simulation");
-    world->Load(world_file.toStdString());
-    connect(world);
-    world->Run();
-    cout<<"Made it past."<<endl;
-}
-
-void StageInterface::connect(Stg::World *world)
-{
-  // connect the first population_size robots to this controller
-  for (int idx = 0; idx < num_bots; idx++) {
-    // the robots' models are named r0 .. r1999
-    std::stringstream name;
-    name << ROBOT_IDENTIFIER << idx;
-
-    // get the robot's model and subscribe to it
-    Stg::ModelPosition *posmod =
-        reinterpret_cast<Stg::ModelPosition *>(world->GetModel(name.str()));
-    assert(posmod != 0);
-
-    robots[idx].position = posmod;
-    robots[idx].position->Subscribe();
-  }
-
-  // register with the world
-}
-

@@ -20,9 +20,15 @@ QMAKE_CXXFLAGS += -Wall -Werror
 TEMPLATE = app
 
 INCLUDEPATH +=  ../../../moos-ivp/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/App/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Comms/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/getpot/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include 
-SOURCES += src/main.cpp  src/StageInterface.cpp  src/StageInterface_Info.cpp
+SOURCES += src/main.cpp  \
+           src/StageInterface.cpp  \
+           src/StageInterface_Info.cpp \
+           src/StageManager.cpp
 
-HEADERS +=  src/StageInterface.h  src/StageInterface_Info.h
+HEADERS +=  src/StageInterface.h  \
+            src/StageInterface_Info.h \
+            src/StageManager.h \
+            src/global.h
 
 OTHER_FILES +=  *.sh  config/*.moos
 

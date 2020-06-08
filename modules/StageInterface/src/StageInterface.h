@@ -25,15 +25,9 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
-
+#include "StageManager.h"
 #include "Stage-4.3/stage.hh"
 
-#define ROBOT_IDENTIFIER "Dolphin"
-
-class Robot {
-public:
-  Stg::ModelPosition *position;
-};
 
 class StageInterface : public QObject, public AppCastingMOOSApp
 {
@@ -55,16 +49,19 @@ public:
 
  protected:
    void registerVariables();
-   void connect(Stg::World *world);
-   void initialize();
 
 private: // Configuration variables
-    Robot *robots;
     int num_bots;
     QString world_file;
     Stg::WorldGui *world;
     std::map<std::string, int> index_map;
+    StageManager *manager;
+
 signals:
+    void setForwardSpeed(int idx, double speed);
+    void setSideSpeed(int idx, double speed);
+    void setTurnSpeed(int idx, double speed);
+    void hello();
 
 public slots:
 };
