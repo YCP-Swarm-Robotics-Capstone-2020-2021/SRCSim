@@ -1,4 +1,10 @@
 #ifndef VEHICLESTATEDEFINES_H
 #define VEHICLESTATEDEFINES_H
+enum VehicleStates{
+    STANDBY,
+    ALLSTOP,
+    TELEOP,
+    SWARMMODE
+};
 
 #endif // VEHICLESTATEDEFINES_H

@@ -1,0 +1,9 @@
+//------------------------------------------------
+// VehicleStateMachine config block
+
+ProcessConfig = VehicleStateMachine
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
