@@ -75,7 +75,9 @@ bool VehicleStateMachine::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-AppCastingMOOSApp::PostReport();
+//AppCastingMOOSApp::PostReport();
+Notify("Current_State", to_string(currentState), MOOSTime());
+cout<<"Current State: "<<currentState<<endl;
 return(true);
 }
 
