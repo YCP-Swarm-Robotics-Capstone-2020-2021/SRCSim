@@ -3,7 +3,7 @@
 
 ProcessConfig = VehicleStateMachine
 {
-   AppTick   = 4
+   AppTick   = 1
    CommsTick = 4
 }
 

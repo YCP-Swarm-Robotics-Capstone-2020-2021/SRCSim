@@ -18,7 +18,6 @@
 #include <QThread>
 #include "VehicleStateDefines.h"
 
-
 class VehicleStateMachine : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT

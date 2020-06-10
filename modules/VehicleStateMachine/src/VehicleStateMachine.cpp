@@ -16,7 +16,7 @@ using namespace std;
 
 VehicleStateMachine::VehicleStateMachine()
 {
-    currentState = STANDBY;
+    this->currentState = VehicleStates::STANDBY;
 }
 
 //---------------------------------------------------------
@@ -77,7 +77,6 @@ AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
 Notify("Current_State", to_string(currentState), MOOSTime());
-cout<<"Current State: "<<currentState<<endl;
 return(true);
 }
 
@@ -154,7 +153,12 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
     }
     int state = 0;
     if(!MOOSValFromString(state, Msg.GetString(), "State")){
+        return MOOSFail("VehicleStateMachine: Unable to get State variable from Change_State message.");
+    }
+    if(state < VehicleStates::ENUMLAST && state >= 0){
         currentState = VehicleStates(state);
+    } else {
+        return MOOSDebugWrite("VehicleStateMachine: Received a Change_State message that contains an invalid state.");
     }
     return true;
 }
