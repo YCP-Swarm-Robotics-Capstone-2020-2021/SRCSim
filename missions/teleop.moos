@@ -8,6 +8,7 @@ ProcessConfig = ANTLER
     Run = ../modules/StageInterface/bin/StageInterface @ NewConsole = false ~ StageInterface
     Run = ../modules/Pos_module/bin/Pos_module         @ NewConsole = false  ~ Pos_module
     Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine @ NewConsole = false ~ VehicleStateMachine
+    Run = ../modules/MotionController/bin/MotionController @ NewConsole = false ~ MotionController
     Run = uProcessWatch @ NewConsole = true ~ uProcessWatch
 }
 
@@ -40,6 +41,16 @@ ProcessConfig = Pos_module
 ProcessConfig = VehicleStateMachine
 {
    AppTick   = 1
+   CommsTick = 4
+   id = Dolphin1
+}
+
+//------------------------------------------------
+// MotionController config block
+
+ProcessConfig = MotionController
+{
+   AppTick   = 4
    CommsTick = 4
    id = Dolphin1
 }
