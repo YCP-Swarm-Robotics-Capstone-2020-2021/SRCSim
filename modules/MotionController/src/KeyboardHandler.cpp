@@ -32,7 +32,6 @@ void KeyboardHandler::keyPressEvent(QKeyEvent *event){
             //QWidget::keyPressEvent(event);
             break;
     }
-    std::cout <<"MotionController: key press" << std::endl;
 }
 
 void KeyboardHandler::keyReleaseEvent(QKeyEvent *event){
@@ -57,6 +56,5 @@ void KeyboardHandler::keyReleaseEvent(QKeyEvent *event){
             //QWidget::keyPressEvent(event);
             break;
     }
-    std::cout <<"MotionController: key release" << std::endl;
 }
 

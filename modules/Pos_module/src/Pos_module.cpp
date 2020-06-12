@@ -101,7 +101,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "id") {
+   id = QString::fromStdString(value);
    handled = true;
  }
  else if(param == "bar") {
@@ -153,7 +154,7 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
      cout << "Coordinates are now "<< x <<" as x and "<< y <<" as y " << std::endl;
-     QString coords = "xPos="+ QString::number(x) + "yPos="+ QString::number(y);
+     QString coords = "id="+ id +",xPos="+ QString::number(x) + "yPos="+ QString::number(y);
      Notify("Current_Pos", coords.toStdString(), MOOSTime());
      return true;
 }
