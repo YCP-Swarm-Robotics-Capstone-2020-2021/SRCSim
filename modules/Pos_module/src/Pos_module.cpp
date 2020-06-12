@@ -75,7 +75,6 @@ bool Pos_module::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-Notify("Test", 1, MOOSTime());
 //AppCastingMOOSApp::PostReport();
 return(true);
 }
