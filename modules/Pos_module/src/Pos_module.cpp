@@ -101,7 +101,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "id") {
+   id = QString::fromStdString(value);
    handled = true;
  }
  else if(param == "bar") {

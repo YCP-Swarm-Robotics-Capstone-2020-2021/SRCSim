@@ -1,0 +1,51 @@
+ServerHost = localhost
+ServerPort = 9000
+
+ProcessConfig = ANTLER
+{
+    MSBetweenLaunches = 200
+    Run = MOOSDB    @ NewConsole = false
+    Run = ../modules/StageInterface/bin/StageInterface @ NewConsole = false ~ StageInterface
+    Run = ../modules/Pos_module/bin/Pos_module         @ NewConsole = false  ~ Pos_module
+    Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine @ NewConsole = false ~ VehicleStateMachine
+    Run = uProcessWatch @ NewConsole = true ~ uProcessWatch
+}
+
+//------------------------------------------------
+// StageInterface config block
+ProcessConfig = StageInterface
+{
+   AppTick      = 4
+   CommsTick    = 4
+   WorldFile    = ../world/basic.world
+   //WorldFile    = ../../../../../stage4/Stage/worlds/simple.world
+   //WorldFile    = /home/jsam/stage4/Stage/worlds/simple.world
+
+   NumBots      = 2
+}
+
+//------------------------------------------------
+// Pos_module config block
+
+ProcessConfig = Pos_module
+{
+   AppTick   = 4
+   CommsTick = 4
+   id = Dolphin1
+}
+
+//------------------------------------------------
+// VehicleStateMachine config block
+
+ProcessConfig = VehicleStateMachine
+{
+   AppTick   = 1
+   CommsTick = 4
+   id = Dolphin1
+}
+
+ProcessConfig = uProcessWatch
+{
+    watch_all = false
+    watch = StageInterface,Pos_module,VehicleStateMachine,MotionController
+}
