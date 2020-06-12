@@ -75,7 +75,6 @@ bool Pos_module::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-Notify("Test", 1, MOOSTime());
 //AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -154,7 +153,7 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
      cout << "Coordinates are now "<< x <<" as x and "<< y <<" as y " << std::endl;
-     QString coords = "xPos="+ QString::number(x) + "yPos="+ QString::number(y);
+     QString coords = "id="+ id +",xPos="+ QString::number(x) + "yPos="+ QString::number(y);
      Notify("Current_Pos", coords.toStdString(), MOOSTime());
      return true;
 }

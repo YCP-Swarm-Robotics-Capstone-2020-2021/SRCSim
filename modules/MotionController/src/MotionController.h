@@ -60,8 +60,8 @@ public:
    std::string m_moosAppName,m_moosMissionFile;
 
 public slots:
-   void setSpeed(double speed){roboSpeed = speed; std::cout << "speed slot"<< speed << std::endl;}
-   void setCurv(double curv){roboCurv = curv; std::cout << "curv slot"<< curv << std::endl;}
+   void setSpeed(double speed){roboSpeed = speed;}
+   void setCurv(double curv){roboCurv = curv;}
 
 signals:
 
