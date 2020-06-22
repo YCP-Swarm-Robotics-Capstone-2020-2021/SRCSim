@@ -90,13 +90,11 @@ switch(state){
     case VehicleStates::STANDBY:{
         QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        MOOSDebugWrite("MotionController: Updating Speed_Curv in standby");
         break;
     }
     case VehicleStates::ALLSTOP:{
         QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        MOOSDebugWrite("MotionController: System went into all-stop, the apocalypse is nigh");
         break;
     }
     default:{
@@ -198,7 +196,6 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
      state = VehicleStates(x);
-     cout << "State is  "<< x << std::endl;
 
 
 
