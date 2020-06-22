@@ -11,24 +11,18 @@
 #include <sstream>
 #include <iostream>
 #include <cmath>
-
-#include "Stage-4.3/stage.hh"
+#include <thread>
+#include <QTimer>
+#include "global.h"
 
 
 #define ROBOT_IDENTIFIER "Dolphin"
-class Robot {
-public:
-  Stg::ModelPosition *position;
-  double forward_speed;
-  double side_speed;
-  double turn_speed;
-};
 
 using namespace Stg;
 
-class StageRun
+class StageRun : public QObject
 {
-    StageRun(const StageRun &){}
+    Q_OBJECT
 public:
     StageRun(int num_bots);
     ~StageRun();
@@ -44,18 +38,15 @@ public:
       // never remove this call-back
       return 0;
     }
+
+signals:
+    void updatePose(int idx, double x, double y);
 protected:
-protected:class Robot {
-  public:
-    Stg::ModelPosition *position;
-    double forward_speed;
-    double side_speed;
-    double turn_speed;
-  };
 
 private:
     Robot *robots;
     int num_bots;
+    QObject *parent;
 
 public slots:
 
@@ -66,7 +57,7 @@ class StageManager : public QThread
 {
     Q_OBJECT
 public:
-    StageManager();
+    StageManager(QObject * parent = nullptr);
 
     ~StageManager();
     void run() override;
@@ -75,6 +66,23 @@ public:
     void setNumBots(int bots){num_bots = bots;}
     StageRun *stageRun;
 protected:
+    bool runStarted;
+public slots:
+    void getNumBots(int bots){
+        num_bots = bots;
+    }
+    void getWorldFile(QString world_file){
+        this->world_file = world_file;
+    }
+    void getMotion(int idx, double xSpeed, double turnSpeed){
+        if(runStarted){
+            stageRun->robots[idx].forward_speed = xSpeed;
+            stageRun->robots[idx].turn_speed = turnSpeed;
+        }
+    }
+    void startManager(){
+        this->start();
+    }
 
 private:
     Stg::WorldGui *world;
