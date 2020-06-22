@@ -41,6 +41,7 @@ public:
 
  private: // Configuration variables
    VehicleStates currentState;
+   QString id;
 
 signals:
 

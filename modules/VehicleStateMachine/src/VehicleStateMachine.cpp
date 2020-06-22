@@ -76,7 +76,8 @@ bool VehicleStateMachine::Iterate()
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
-Notify("Current_State", to_string(currentState), MOOSTime());
+Notify("Current_State", QString::fromStdString("State = "+to_string(currentState)).toStdString(), MOOSTime());
+Notify("id", id.toStdString(), MOOSTime());
 return(true);
 }
 
@@ -101,7 +102,9 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "id") {
+   id = QString::fromStdString(value);
+   Notify("id", id.toStdString(), MOOSTime());
    handled = true;
  }
  else if(param == "bar") {

@@ -40,7 +40,8 @@ public:
    void registerVariables();
 
  private: // Configuration variables
-   QString id = "";
+ 
+ QString id = "";
 
 signals:
 
