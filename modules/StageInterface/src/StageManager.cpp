@@ -31,7 +31,6 @@ void StageManager::run()
     int x = 2;
     Stg::Init(&x, args);
     world = new Stg::WorldGui(800, 700, "Stage Simulation");
-    std::cout<<world_file.toStdString()<<std::endl;
     printf("World file is: %s", world_file.toStdString().c_str());
     world->Load(world_file.toStdString());
     runStarted = true;

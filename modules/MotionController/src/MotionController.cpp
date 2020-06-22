@@ -49,12 +49,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
 #endif
 
   if(key == "Current_Pos"){
-    cout << "New Current Pos" << std::endl;
     handleCurrentPos(msg);
-
   }
   else if(key == "Current_State"){
-      cout << "New_State" << std::endl;
       handleCurrentState(msg);
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
@@ -183,9 +180,6 @@ bool MotionController::handleCurrentPos(CMOOSMsg &msg){
      double x = 0.0,y = 0.0;
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
-     cout << "Coordinates are now "<< x <<" as x and "<< y <<" as y " << std::endl;
-
-
      return true;
 }
 

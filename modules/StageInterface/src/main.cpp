@@ -52,9 +52,6 @@ int main(int argc, char *argv[])
   a.connect(&StageInterface, SIGNAL(setMotion(int,double,double)), &StageManager, SLOT(getMotion(int,double,double)));
   a.connect(&StageInterface, SIGNAL(setWorldFile(QString)), &StageManager, SLOT(getWorldFile(QString)));
   a.connect(&StageInterface, SIGNAL(startStage()), &StageManager, SLOT(startManager()));
-  //a.connect(&StageManager, SIGNAL(updatePose(int,double,double)), &StageInterface, SLOT(notifyCurrentPose(int,double,double)));
-  cout<<"Made it past connect statements."<<endl;
-  //StageManager.start();
   StageInterface.Run(run_command.c_str(), mission_file.c_str());
   
   return a.exec();
