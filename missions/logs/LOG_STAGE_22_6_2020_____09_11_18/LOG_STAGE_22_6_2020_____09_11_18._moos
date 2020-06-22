@@ -1,3 +1,8 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOG FILE:       ./logs/LOG_STAGE_22_6_2020_____09_11_18/LOG_STAGE_22_6_2020_____09_11_18._moos
+%% FILE OPENED ON  Wed Dec 31 16:00:00 1969
+%% LOGSTART               1592842278.33
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ServerHost = localhost
 ServerPort = 9000
 
@@ -73,7 +78,7 @@ ProcessConfig = pLogger
     CompressAlogs = false
     MAX_DIR_SIZE = 475 //MB
     WildCardLogging = true
-    SyncLog = true @ 1.0
+    //SyncLog = true @ 1.0
     AsyncLog = true
 
 
@@ -94,5 +99,5 @@ WildCardOmitPattern = APPCAST_REQ
 WildCardOmitPattern = *ITER_GAP
 WildCardOmitPattern = *_ITER_LEN
 WildCardOmitPattern = *_STATUS
-WildCardOmitPattern = *PLOGGER*
 }
+

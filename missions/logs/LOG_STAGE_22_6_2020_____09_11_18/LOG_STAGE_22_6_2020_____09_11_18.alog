@@ -1,0 +1,947 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOG FILE:       ./logs/LOG_STAGE_22_6_2020_____09_11_18/LOG_STAGE_22_6_2020_____09_11_18.alog
+%% FILE OPENED ON  Wed Dec 31 16:00:00 1969
+%% LOGSTART               1592842278.33
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+0.052           id                   VehicleStateMachine Dolphin1 
+0.405           Update_Pos           StageInterface  xPos=0.0, yPos=0.0, id=Dolphin1 
+0.406           Current_Pos          Pos_module      xPos=0, yPos=0, id=Dolphin1 
+0.052           id                   VehicleStateMachine Dolphin1 
+0.656           LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+0.906           Update_Pos           StageInterface  xPos=0.0, yPos=0.0, id=Dolphin0 
+0.906           Update_Pos           StageInterface  xPos=0.0, yPos=0.0, id=Dolphin1 
+0.908           Current_Pos          Pos_module      xPos=0, yPos=0, id=Dolphin1 
+0.908           Current_Pos          Pos_module      xPos=0, yPos=0, id=Dolphin1 
+1.053           Current_State        VehicleStateMachine State = 0 
+1.407           Update_Pos           StageInterface  xPos=0.0, yPos=0.0, id=Dolphin0 
+1.411           Current_Pos          Pos_module      xPos=0, yPos=0, id=Dolphin1 
+1.572           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+1.572           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+1.658           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+1.802           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+1.802           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+1.909           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+1.910           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+2.053           Current_State        VehicleStateMachine State = 0 
+2.053           id                   VehicleStateMachine Dolphin1 
+2.053           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+2.053           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+0.656           LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+1.910           Current_Pos          Pos_module      xPos=-1.04, yPos=-0.274, id=Dolphin1 
+2.053           Current_State        VehicleStateMachine State = 0 
+2.053           id                   VehicleStateMachine Dolphin1 
+2.053           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+2.053           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+2.130           PROC_WATCH_TIME_WARP uProcessWatch   1.000        
+2.130           PROC_WATCH_TIME_WARP uProcessWatch   1.000        
+2.130           PROC_WATCH_EVENT     uProcessWatch   Noted to be present: [StageInterface] 
+2.131           PROC_WATCH_EVENT     uProcessWatch   Noted to be present: [Pos_module] 
+2.131           PROC_WATCH_EVENT     uProcessWatch   Noted to be present: [VehicleStateMachine] 
+2.131           PROC_WATCH_EVENT     uProcessWatch   Noted to be present: [MotionController] 
+2.131           PROC_WATCH_EVENT     uProcessWatch   Noted to be present: [MotionController] 
+2.159           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+2.159           Update_Pos           StageInterface  xPos=-1.04,yPos=-0.274,id=Dolphin1 
+2.304           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+2.332           PROC_WATCH_SUMMARY   uProcessWatch   All Present 
+2.332           PROC_WATCH_FULL_SUMMARY uProcessWatch   StageInterface(1/0),Pos_module(1/0),VehicleStateMachine(1/0),MotionController(1/0) 
+2.412           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+2.558           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+2.558           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+2.661           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+2.672           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+2.808           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+2.808           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+2.911           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+2.923           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+3.053           Current_State        VehicleStateMachine State = 0 
+3.059           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+3.059           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+3.162           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+3.174           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+3.317           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+3.319           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+3.412           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+3.424           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+3.561           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+3.561           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+3.663           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+3.675           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+3.820           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+3.821           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+3.916           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+3.926           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+4.054           Current_State        VehicleStateMachine State = 0 
+4.054           id                   VehicleStateMachine Dolphin1 
+4.068           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+4.069           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+4.177           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+4.313           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+4.313           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+4.427           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+4.428           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+4.569           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+4.569           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+4.679           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+4.679           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+4.815           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+4.815           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+4.929           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+4.931           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+5.054           Current_State        VehicleStateMachine State = 0 
+5.054           id                   VehicleStateMachine Dolphin1 
+5.066           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+5.066           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+5.182           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+5.184           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+5.317           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+5.318           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+5.432           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+5.432           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+5.567           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+5.567           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+5.688           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+5.818           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+5.818           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+5.938           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+5.938           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+6.055           Current_State        VehicleStateMachine State = 0 
+6.055           id                   VehicleStateMachine Dolphin1 
+6.073           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+6.075           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+6.188           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+6.189           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+6.323           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+6.328           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+6.439           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+6.441           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+6.575           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+6.575           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+6.689           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+6.691           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+6.825           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+6.825           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+6.940           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+6.942           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+7.056           Current_State        VehicleStateMachine State = 0 
+7.056           id                   VehicleStateMachine Dolphin1 
+7.076           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+7.076           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+7.192           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+7.326           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+7.327           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+7.443           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+7.443           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+7.577           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+7.577           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+7.694           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+7.694           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+7.828           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+7.828           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+7.944           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+7.944           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+8.056           Current_State        VehicleStateMachine State = 0 
+8.056           id                   VehicleStateMachine Dolphin1 
+8.080           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+8.080           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+8.195           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+8.196           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+8.331           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+8.331           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+8.447           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+8.448           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+8.582           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+8.582           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+8.698           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+8.698           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+8.833           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+8.833           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+8.949           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+8.949           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+9.057           Current_State        VehicleStateMachine State = 0 
+9.057           id                   VehicleStateMachine Dolphin1 
+9.083           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+9.083           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+9.200           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+9.200           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+9.334           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+9.334           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+9.450           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+9.450           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+9.585           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+9.585           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+9.701           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+9.701           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+9.837           Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+9.837           MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+9.951           Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+9.952           Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+10.057          Current_State        VehicleStateMachine State = 0 
+10.057          id                   VehicleStateMachine Dolphin1 
+10.087          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+10.087          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+10.093          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+10.202          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+10.203          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+10.338          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+10.338          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+10.452          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+10.454          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+10.589          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+10.589          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+10.703          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+10.839          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+10.839          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+10.954          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+10.954          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+11.058          Current_State        VehicleStateMachine State = 0 
+11.058          id                   VehicleStateMachine Dolphin1 
+11.090          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+11.093          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+11.205          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+11.207          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+11.340          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+11.340          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+11.455          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+11.461          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+11.593          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+11.593          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+11.706          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+11.708          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+11.848          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+11.849          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+11.956          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+11.960          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+12.059          Current_State        VehicleStateMachine State = 0 
+12.059          id                   VehicleStateMachine Dolphin1 
+12.119          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+12.121          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+12.207          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+12.210          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+12.348          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+12.348          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+12.458          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+12.461          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+12.599          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+12.599          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+12.709          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+12.712          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+12.851          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+12.852          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+12.959          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+12.964          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+13.059          Current_State        VehicleStateMachine State = 0 
+13.059          id                   VehicleStateMachine Dolphin1 
+13.102          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+13.102          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+13.210          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+13.213          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+13.354          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+13.355          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+13.461          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+13.466          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+13.604          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+13.604          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+13.711          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+13.716          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+13.855          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+13.855          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+13.962          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+13.967          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+14.059          Current_State        VehicleStateMachine State = 0 
+14.059          id                   VehicleStateMachine Dolphin1 
+14.106          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+14.106          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+14.213          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+14.218          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+14.358          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+14.358          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+14.464          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+14.469          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+14.609          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+14.609          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+14.715          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+14.720          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+14.861          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+14.861          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+14.966          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+14.970          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+15.060          Current_State        VehicleStateMachine State = 0 
+15.060          id                   VehicleStateMachine Dolphin1 
+15.112          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+15.112          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+15.216          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+15.221          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+15.365          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+15.365          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+15.467          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+15.473          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+15.617          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+15.617          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+15.718          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+15.725          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+15.867          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+15.867          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+15.969          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+15.975          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+16.060          Current_State        VehicleStateMachine State = 0 
+16.060          id                   VehicleStateMachine Dolphin1 
+16.121          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+16.122          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+16.220          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+16.225          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+16.371          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+16.371          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+16.470          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+16.476          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+16.628          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+16.628          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+16.721          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+16.727          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+16.873          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+16.873          MOOS_DEBUG           MotionController MotionController: Updating Speed_Curv in standby 
+15.324          Change_State         uPokeDB         State=2 
+16.972          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+16.978          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+17.061          Current_State        VehicleStateMachine State = 2 
+17.061          id                   VehicleStateMachine Dolphin1 
+17.124          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+17.223          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+17.229          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+17.376          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+17.474          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+17.480          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+17.627          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+17.725          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+17.731          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+17.878          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+17.975          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+17.982          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+18.062          Current_State        VehicleStateMachine State = 2 
+18.129          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+18.227          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+18.233          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+18.381          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+18.477          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+18.484          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+18.631          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+18.728          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+18.735          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+18.882          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+18.979          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+18.987          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+19.062          Current_State        VehicleStateMachine State = 2 
+19.062          id                   VehicleStateMachine Dolphin1 
+19.133          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+19.230          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+19.237          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+19.385          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+19.480          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+19.488          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+19.636          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+19.731          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+19.739          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+19.888          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+19.981          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+19.989          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+20.063          Current_State        VehicleStateMachine State = 2 
+20.063          id                   VehicleStateMachine Dolphin1 
+20.139          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+20.159          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+20.231          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+20.239          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+20.390          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+20.482          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+20.490          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+20.641          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+20.733          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+20.741          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+20.893          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+20.983          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+20.991          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+21.064          Current_State        VehicleStateMachine State = 2 
+21.064          id                   VehicleStateMachine Dolphin1 
+21.145          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+21.234          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+21.241          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+21.395          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+21.484          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+21.492          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+21.645          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+21.735          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+21.743          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+21.896          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+21.985          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+21.993          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+22.065          Current_State        VehicleStateMachine State = 2 
+22.065          id                   VehicleStateMachine Dolphin1 
+22.147          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+22.236          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+22.244          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+22.397          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+22.487          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+22.509          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+22.647          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+22.737          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+22.760          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+22.898          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+22.987          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+23.010          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+23.066          Current_State        VehicleStateMachine State = 2 
+23.066          id                   VehicleStateMachine Dolphin1 
+23.149          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+23.238          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+23.261          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+23.400          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+23.489          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+23.512          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+23.650          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+23.739          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+23.763          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+23.901          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+23.990          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+24.013          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+24.067          Current_State        VehicleStateMachine State = 2 
+24.151          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+24.241          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+24.263          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+24.403          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+24.491          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+24.514          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+24.653          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+24.741          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+24.764          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+24.904          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+24.992          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+25.015          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+25.067          Current_State        VehicleStateMachine State = 2 
+25.067          id                   VehicleStateMachine Dolphin1 
+25.154          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+25.242          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+25.265          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+25.406          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+25.492          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+25.515          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+25.657          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+25.743          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+25.766          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+25.908          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+25.993          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+26.016          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+26.068          Current_State        VehicleStateMachine State = 2 
+26.068          id                   VehicleStateMachine Dolphin1 
+26.159          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+26.244          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+26.267          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+26.410          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+26.495          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+26.527          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+26.660          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+26.746          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+26.778          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+26.911          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+26.997          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+27.029          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+27.068          Current_State        VehicleStateMachine State = 2 
+27.069          id                   VehicleStateMachine Dolphin1 
+27.161          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+27.248          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+27.280          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+27.413          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+27.498          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+27.530          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+27.663          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+27.749          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+27.780          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+27.914          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+27.999          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+28.031          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+28.069          Current_State        VehicleStateMachine State = 2 
+28.069          id                   VehicleStateMachine Dolphin1 
+28.164          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+28.251          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+28.282          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+28.414          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+28.502          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+28.532          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+28.665          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+28.753          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+28.782          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+28.916          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+29.004          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+29.033          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+29.070          Current_State        VehicleStateMachine State = 2 
+29.070          id                   VehicleStateMachine Dolphin1 
+29.168          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+29.255          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+29.284          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+29.420          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+29.505          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+29.534          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+29.671          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+29.756          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+29.784          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+29.922          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+30.007          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+30.035          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+30.070          Current_State        VehicleStateMachine State = 2 
+30.070          id                   VehicleStateMachine Dolphin1 
+30.173          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+30.205          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+30.257          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+30.285          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+30.423          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+30.508          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+30.536          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+30.675          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+30.758          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+30.795          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+30.926          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+31.009          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+31.046          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+31.071          Current_State        VehicleStateMachine State = 2 
+31.176          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+31.259          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+31.296          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+31.427          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+31.510          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+31.547          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+31.678          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+31.761          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+31.798          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+31.930          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+32.011          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+32.048          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+32.071          Current_State        VehicleStateMachine State = 2 
+32.071          id                   VehicleStateMachine Dolphin1 
+32.181          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+32.262          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+32.298          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+32.431          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+32.513          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+32.549          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+32.681          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+32.763          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+32.799          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+32.932          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+33.018          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+33.050          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+33.098          Current_State        VehicleStateMachine State = 2 
+33.098          id                   VehicleStateMachine Dolphin1 
+33.182          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+33.269          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+33.301          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+33.432          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+33.519          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+33.551          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+33.683          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+33.770          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+33.801          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+33.933          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+34.020          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+34.052          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+34.090          Current_State        VehicleStateMachine State = 2 
+34.184          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+34.271          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+34.303          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+34.435          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+34.521          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+34.554          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+34.686          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+34.773          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+34.805          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+34.936          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+35.023          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+35.055          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+35.092          Current_State        VehicleStateMachine State = 2 
+35.093          id                   VehicleStateMachine Dolphin1 
+35.187          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+35.274          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+35.306          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+35.438          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+35.524          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+35.556          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+35.688          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+35.775          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+35.807          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+35.939          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+36.026          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+36.058          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+36.093          Current_State        VehicleStateMachine State = 2 
+36.093          id                   VehicleStateMachine Dolphin1 
+36.190          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+36.276          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+36.309          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+36.440          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+36.527          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+36.560          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+36.690          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+36.778          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+36.810          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+36.941          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+37.029          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+37.061          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+37.093          Current_State        VehicleStateMachine State = 2 
+37.191          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+37.279          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+37.311          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+37.442          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+37.530          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+37.562          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+37.693          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+37.781          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+37.813          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+37.943          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+38.031          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+38.063          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+38.094          Current_State        VehicleStateMachine State = 2 
+38.094          id                   VehicleStateMachine Dolphin1 
+38.194          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+38.285          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+38.314          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+38.444          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+38.537          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+38.565          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+38.695          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+38.788          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+38.816          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+38.946          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+39.039          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+39.067          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+39.095          Current_State        VehicleStateMachine State = 2 
+39.095          id                   VehicleStateMachine Dolphin1 
+39.196          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+39.290          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+39.317          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+39.447          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+39.541          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+39.569          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+39.697          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+39.792          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+39.820          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+39.948          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+40.043          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+40.070          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+40.096          Current_State        VehicleStateMachine State = 2 
+40.096          id                   VehicleStateMachine Dolphin1 
+40.198          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+40.248          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+40.293          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+40.322          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+40.449          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+40.544          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+40.573          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+40.700          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+40.794          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+40.824          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+40.951          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+41.045          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+41.075          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+41.097          Current_State        VehicleStateMachine State = 2 
+41.202          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+41.296          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+41.325          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+41.452          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+41.548          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+41.575          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+41.702          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+41.799          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+41.826          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+41.953          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+42.049          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+42.076          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+42.097          Current_State        VehicleStateMachine State = 2 
+42.097          id                   VehicleStateMachine Dolphin1 
+42.204          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+42.300          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+42.326          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+42.454          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+42.551          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+42.578          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+42.704          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+42.801          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+42.828          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+42.955          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+43.051          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+43.079          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+43.099          Current_State        VehicleStateMachine State = 2 
+43.099          id                   VehicleStateMachine Dolphin1 
+43.206          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+43.302          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+43.330          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+43.457          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+43.552          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+43.581          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+43.707          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+43.804          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+43.831          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+43.958          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+44.054          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+44.082          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+44.100          Current_State        VehicleStateMachine State = 2 
+44.100          id                   VehicleStateMachine Dolphin1 
+44.213          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+44.305          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+44.332          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+44.465          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+44.558          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+44.583          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+44.717          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+44.808          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+44.833          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+44.967          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+45.059          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+45.084          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+45.101          Current_State        VehicleStateMachine State = 2 
+45.101          id                   VehicleStateMachine Dolphin1 
+45.218          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+45.309          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+45.334          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+45.469          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+45.560          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+45.585          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+45.719          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+45.811          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+45.836          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+45.969          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+46.061          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+46.086          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+46.102          Current_State        VehicleStateMachine State = 2 
+46.102          id                   VehicleStateMachine Dolphin1 
+46.222          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+46.312          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+46.336          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+46.473          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+46.563          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+46.587          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+46.728          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+46.814          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+46.842          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+46.979          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+47.065          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+47.092          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+47.103          Current_State        VehicleStateMachine State = 2 
+47.103          id                   VehicleStateMachine Dolphin1 
+47.230          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+47.315          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+47.343          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+47.480          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+47.565          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+47.594          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+47.730          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+47.816          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+47.844          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+47.981          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+48.067          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+48.095          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+48.103          Current_State        VehicleStateMachine State = 2 
+48.103          id                   VehicleStateMachine Dolphin1 
+48.231          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+48.318          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+48.345          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+48.481          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+48.568          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+48.596          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+48.732          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+48.819          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+48.846          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+48.983          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+49.070          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+49.097          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+49.103          Current_State        VehicleStateMachine State = 2 
+49.103          id                   VehicleStateMachine Dolphin1 
+49.233          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+49.321          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+49.348          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+49.483          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+49.573          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+49.598          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+49.734          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+49.824          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+49.848          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+49.984          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+50.075          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+50.100          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+50.105          Current_State        VehicleStateMachine State = 2 
+50.105          id                   VehicleStateMachine Dolphin1 
+50.234          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+50.296          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+50.325          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+50.350          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+50.485          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+50.576          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+50.602          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+50.736          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+50.827          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+50.852          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+50.987          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+51.077          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+51.109          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+51.109          Current_State        VehicleStateMachine State = 2 
+51.109          id                   VehicleStateMachine Dolphin1 
+51.239          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+51.328          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+51.360          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+51.489          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+51.578          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+51.611          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+51.740          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+51.830          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+51.862          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+51.991          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+52.081          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+52.110          Current_State        VehicleStateMachine State = 2 
+52.112          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+52.242          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+52.331          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+52.363          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+52.493          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+52.582          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+52.614          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+52.743          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+52.832          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+52.865          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+52.994          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+53.082          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+53.110          Current_State        VehicleStateMachine State = 2 
+53.110          id                   VehicleStateMachine Dolphin1 
+53.115          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+53.245          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+53.333          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+53.366          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+53.495          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+53.583          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+53.616          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+53.746          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+53.833          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+53.867          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+53.997          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+54.084          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+54.110          Current_State        VehicleStateMachine State = 2 
+54.110          id                   VehicleStateMachine Dolphin1 
+54.117          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+54.247          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+54.335          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+54.368          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+54.498          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+54.585          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+54.622          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+54.748          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+54.836          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+54.871          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+54.998          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+55.086          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+55.111          Current_State        VehicleStateMachine State = 2 
+55.111          id                   VehicleStateMachine Dolphin1 
+55.121          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+55.249          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+55.338          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+55.372          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+55.499          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+55.589          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+55.623          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+55.750          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+55.839          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+55.873          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+56.000          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=45 
+56.090          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+56.112          Current_State        VehicleStateMachine State = 2 
+56.112          id                   VehicleStateMachine Dolphin1 
+56.124          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+56.251          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=0 
+56.341          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+56.374          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+56.502          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+56.591          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+56.624          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+56.753          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+56.842          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+56.875          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+57.004          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+57.092          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+57.113          Current_State        VehicleStateMachine State = 2 
+57.125          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+57.255          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+57.343          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+57.376          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+57.505          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+57.597          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+57.626          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+57.756          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+57.848          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+57.878          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+58.007          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+58.099          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+58.113          Current_State        VehicleStateMachine State = 2 
+58.113          id                   VehicleStateMachine Dolphin1 
+58.129          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+58.257          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+58.349          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+58.379          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+58.508          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+58.600          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+58.629          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+58.759          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+58.851          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+58.881          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+59.010          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+59.102          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+59.114          Current_State        VehicleStateMachine State = 2 
+59.114          id                   VehicleStateMachine Dolphin1 
+59.132          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+59.261          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+59.353          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+59.382          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+59.512          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+59.603          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+59.632          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+59.762          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+59.854          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+59.883          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+60.012          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+60.105          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+60.114          Current_State        VehicleStateMachine State = 2 
+60.133          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+60.263          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+60.347          LOGGER_DIRECTORY     pLogger         ./logs/LOG_STAGE_22_6_2020_____09_11_18 
+60.356          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+60.384          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+60.514          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+60.607          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+60.635          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+60.764          Speed_Curv           MotionController id=Dolphin1,Speed=75,Curv=-45 
+60.858          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+60.885          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+61.015          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+61.109          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+61.115          Current_State        VehicleStateMachine State = 2 
+61.115          id                   VehicleStateMachine Dolphin1 
+61.136          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+61.266          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+61.359          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+61.386          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+61.516          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+61.610          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+61.638          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+61.767          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+61.860          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+61.888          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+62.018          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+62.111          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+62.116          Current_State        VehicleStateMachine State = 2 
+62.116          id                   VehicleStateMachine Dolphin1 
+62.138          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+62.268          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+62.361          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+62.389          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+62.518          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+62.612          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+62.640          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+62.769          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+62.862          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+62.890          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+63.019          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
+63.113          Update_Pos           StageInterface  xPos=-0.04,yPos=-0.274,id=Dolphin0 
+63.117          Current_State        VehicleStateMachine State = 2 
+63.117          id                   VehicleStateMachine Dolphin1 
+63.141          Current_Pos          Pos_module      xPos=-0.04, yPos=-0.274, id=Dolphin1 
+63.269          Speed_Curv           MotionController id=Dolphin1,Speed=0,Curv=0 
