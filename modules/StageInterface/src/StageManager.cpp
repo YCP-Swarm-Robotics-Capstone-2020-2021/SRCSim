@@ -1,10 +1,10 @@
 #include "StageManager.h"
-#include "global.h"
     using namespace Stg;
     using namespace std;
 
-StageManager::StageManager()
+StageManager::StageManager(QObject * parent) : QThread(parent)
 {
+    runStarted = false;
 
 }
 
@@ -31,10 +31,13 @@ void StageManager::run()
     int x = 2;
     Stg::Init(&x, args);
     world = new Stg::WorldGui(800, 700, "Stage Simulation");
+    printf("World file is: %s", world_file.toStdString().c_str());
     world->Load(world_file.toStdString());
+    runStarted = true;
     stageRun = new StageRun(num_bots);
     stageRun->setNumBots(num_bots);
     stageRun->connectStage(world);
+    world->Start();
     world->Run();
 }
 
@@ -64,21 +67,32 @@ void StageRun::connectStage(World *world)
     world->AddUpdateCallback(StageRun::Callback, reinterpret_cast<void *>(this));
 }
 
-void StageRun::Tick(World *)
+void StageRun::Tick(World * world)
 {
-    int index = 0;
-    if(!StageManagerBuffer.isEmpty()){
-        index = (int)StageManagerBuffer.takeFirst();
-        robots[index].forward_speed = StageManagerBuffer.takeFirst();
-        robots[index].side_speed = StageManagerBuffer.takeFirst();
-        robots[index].turn_speed = StageManagerBuffer.takeFirst();
+    if(world->paused){
+        world->Start();
     }
     for (int idx = 0; idx < num_bots; idx++) {
       robots[idx].position->SetSpeed(robots[idx].forward_speed, robots[idx].side_speed, robots[idx].turn_speed);
+      while(RobotList.length()<=idx){
+          RobotList.append(Robot());
+      }
+      RobotList[idx].xPos = robots[idx].position->GetPose().x;
+      RobotList[idx].yPos = robots[idx].position->GetPose().y;
     }
 }
 
-StageRun::StageRun(int num_bots){
+StageRun::StageRun(int num_bots)
+{
     this->num_bots = num_bots;
     robots = new Robot[num_bots];
+    for(int i = 0; i<num_bots; i++)
+    {
+        RobotList.append(robots[i]);
+    }
+}
+
+StageRun::~StageRun()
+{
+
 }
