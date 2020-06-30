@@ -209,6 +209,7 @@ void StageInterface::notifyCurrentPose()
         } else {
             dataValue = "xPos=0.0, yPos=0.0, id=Dolphin"+QString::number(i);
         }
-        Notify("Update_Pos", dataValue.toStdString(), MOOSTime());
+        QString messageName = "Dolphin"+QString::number(i)+"_Update_Pos";
+        Notify(messageName.toStdString(), dataValue.toStdString(), MOOSTime());
     }
 }

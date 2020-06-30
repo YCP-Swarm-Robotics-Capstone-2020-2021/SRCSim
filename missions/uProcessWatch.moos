@@ -1,5 +1,0 @@
-ProcessConfig = uProcessWatch
-{
-    watch_all = false
-    watch = StageInterface,Pos_module,VehicleStateMachine,MotionController
-}

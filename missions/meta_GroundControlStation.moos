@@ -4,13 +4,11 @@ ServerPort = 9000
 ProcessConfig = ANTLER
 {
     MSBetweenLaunches = 200
-    Run = MOOSDB    @ NewConsole = false
+    Run = MOOSDB    @ NewConsole = true
     Run = ../modules/StageInterface/bin/StageInterface @ NewConsole = false ~ StageInterface
-    Run = ../modules/Pos_module/bin/Pos_module         @ NewConsole = false  ~ Pos_module
-    Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine @ NewConsole = false ~ VehicleStateMachine
-    Run = ../modules/MotionController/bin/MotionController @ NewConsole = false ~ MotionController
     Run = uProcessWatch @ NewConsole = true ~ uProcessWatch
     Run = pLogger @ NewConsole = false ~ pLogger
+    Run = pShare @ NewConsole = false ~pShare
 }
 
 //------------------------------------------------
@@ -23,49 +21,20 @@ ProcessConfig = StageInterface
    //WorldFile    = ../../../../../stage4/Stage/worlds/simple.world
    //WorldFile    = /home/jsam/stage4/Stage/worlds/simple.world
 
-   NumBots      = 2
-}
-
-//------------------------------------------------
-// Pos_module config block
-
-ProcessConfig = Pos_module
-{
-   AppTick   = 4
-   CommsTick = 4
-   id = Dolphin1
-}
-//------------------------------------------------
-// VehicleStateMachine config block
-
-ProcessConfig = VehicleStateMachine
-{
-   AppTick   = 1
-   CommsTick = 4
-   id = Dolphin1
-}
-
-//------------------------------------------------
-// MotionController config block
-
-ProcessConfig = MotionController
-{
-   AppTick   = 4
-   CommsTick = 4
-   id = Dolphin1
+   NumBots      = $(NUMBOTS)
 }
 
 ProcessConfig = uProcessWatch
 {
     watch_all = false
-    watch = StageInterface,Pos_module,VehicleStateMachine,MotionController
+    watch = StageInterface,pLogger,pShare
 }
 
 ProcessConfig = pLogger
 {
     AppTick = 5
     CommsTick = 5
-    File = LOG_STAGE
+    File = LOG_$(GCSNAME)
     PATH = ./logs/
     FileTimeStamp = true
     DoublePrecision = 3
@@ -95,3 +64,5 @@ WildCardOmitPattern = *_ITER_LEN
 WildCardOmitPattern = *_STATUS
 WildCardOmitPattern = *PLOGGER*
 }
+
+#include plug_GCSpShare.moos

@@ -1,0 +1,23 @@
+ServerHost = localhost
+ServerPort = $(VPORT)
+Community  = $(VNAME)
+
+ProcessConfig = ANTLER
+{
+    MSBetweenLaunches = 200
+    Run = MOOSDB    @ NewConsole = true
+    Run = ../modules/Pos_module/bin/Pos_module				@ NewConsole = false ~ Pos_module
+    Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine 	@ NewConsole = false ~ VehicleStateMachine
+    Run = ../modules/MotionController/bin/MotionController 		@ NewConsole = false ~ MotionController
+    Run = uProcessWatch 						@ NewConsole = true  ~ uProcessWatch
+    Run = pLogger							@ NewConsole = false ~ pLogger
+    Run = pShare							@ NewConsole = false ~ pShare
+}
+
+#include plug_VehiclepShare.moos
+#include plug_pLogger.moos
+#include plug_Pos_module.moos
+#include plug_VehiclepShare.moos
+#include plug_MotionController.moos
+#include plug_VehicleStateMachine.moos
+#include plug_uProcessWatch.moos

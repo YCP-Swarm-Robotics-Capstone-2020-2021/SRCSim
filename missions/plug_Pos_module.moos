@@ -1,0 +1,6 @@
+ProcessConfig = Pos_module
+{
+   AppTick   = 4
+   CommsTick = 4
+   id = $(VNAME)
+}
