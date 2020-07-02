@@ -1,0 +1,9 @@
+ProcessConfig = pShare
+{
+     Input = route=$(GCSIP):$(GCSPORT)
+     Input = route=multicast_$(BROADCASTNUM)
+
+     Output = src_name=Change_State, route=multicast_$(BROADCASTNUM)
+     Output = src_name=$(VNAME1)_Update_Pos, dest_name=Update_Pos, route=$(V1IP):$(V1PORT)
+     Output = src_name=$(VNAME2)_Update_Pos, dest_name=Update_Pos, route=$(V2IP):$(V2PORT)
+}

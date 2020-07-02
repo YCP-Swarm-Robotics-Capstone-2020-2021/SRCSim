@@ -1,0 +1,34 @@
+ProcessConfig = pLogger
+{
+    AppTick = 5
+    CommsTick = 5
+    File = LOG_$(VNAME)
+    PATH = ./logs/
+    FileTimeStamp = true
+    DoublePrecision = 3
+    CompressAlogs = false
+    MAX_DIR_SIZE = 475 //MB
+    WildCardLogging = true
+    SyncLog = true @ 1.0
+    AsyncLog = true
+
+
+    LOG = Accel @ 0.2
+    LOG = Batt_Health @ 0.2
+    LOG = Change_State @ 0.2
+    LOG = Comm_Ping @ 0.2
+    LOG = Current_Pos @ 0.2
+    LOG = id @ 1.0
+    LOG = Motor_Odom @ 0.2
+    LOG = Speed_Curv @ 0.2
+    LOG = Update_Pos @ 0.2
+    LOG = Veh_Health @ 0.2
+
+    WildCardOmitPattern = DB*
+    WildCardOmitPattern = APPCAST
+    WildCardOmitPattern = APPCAST_REQ
+    WildCardOmitPattern = *ITER_GAP
+    WildCardOmitPattern = *_ITER_LEN
+    WildCardOmitPattern = *_STATUS
+    WildCardOmitPattern = *PLOGGER*
+}
