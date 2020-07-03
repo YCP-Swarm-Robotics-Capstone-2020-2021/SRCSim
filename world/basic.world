@@ -41,7 +41,7 @@ pioneer2dx
 (		  
   # can refer to the robot by this name
   name "Dolphin0"
-  pose [ -0.040 -0.274 0 90.0 ] 
+  pose [ -0.0 -0.0 0 90.0 ]
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
@@ -54,7 +54,7 @@ pioneer2dx
 (		  
   # can refer to the robot by this name
   name "Dolphin1"
-  pose [ -1.040 -0.274 0 90.0 ] 
+  pose [ -7.040 -0.274 0 90.0 ]
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
