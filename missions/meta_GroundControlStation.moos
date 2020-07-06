@@ -1,5 +1,6 @@
 ServerHost = localhost
 ServerPort = 9000
+Community  = $(GCSNAME)
 
 ProcessConfig = ANTLER
 {
@@ -17,9 +18,7 @@ ProcessConfig = StageInterface
 {
    AppTick      = 4
    CommsTick    = 4
-   WorldFile    = ../world/basic.world
-   //WorldFile    = ../../../../../stage4/Stage/worlds/simple.world
-   //WorldFile    = /home/jsam/stage4/Stage/worlds/simple.world
+   WorldFile    = $(WORLDFILE)
 
    NumBots      = $(NUMBOTS)
 }
