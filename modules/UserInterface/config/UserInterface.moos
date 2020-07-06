@@ -1,0 +1,10 @@
+//------------------------------------------------
+// UserInterface config block
+
+ProcessConfig = UserInterface
+{
+   AppTick   = 4
+   CommsTick = 4
+   NumOfBots = 2
+}
+
