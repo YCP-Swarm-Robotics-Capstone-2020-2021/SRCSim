@@ -48,7 +48,6 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
 #endif
 
   if(key == "Update_Pos"){
-    cout << "Pos updated " << std::endl;
     handleUpdatePos(msg);
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
@@ -152,8 +151,7 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
      double x = 0.0,y = 0.0;
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
-     cout << "Coordinates are now "<< x <<" as x and "<< y <<" as y " << std::endl;
-     QString coords = "id="+ id +",xPos="+ QString::number(x) + "yPos="+ QString::number(y);
+     QString coords = "xPos="+ QString::number(x) + ", yPos="+ QString::number(y)+ ", id="+id;
      Notify("Current_Pos", coords.toStdString(), MOOSTime());
      return true;
 }

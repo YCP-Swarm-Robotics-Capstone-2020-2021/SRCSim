@@ -33,7 +33,7 @@ class StageInterface : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT
 public:
-  StageInterface();
+  StageInterface(QObject *parent = nullptr);
   ~StageInterface();
 
 
@@ -56,8 +56,17 @@ private: // Configuration variables
     Stg::WorldGui *world;
     std::map<std::string, int> index_map;
     StageManager *manager;
+    void notifyCurrentPose();
+    bool publishPose;
 
 public slots:
+    //void notifyCurrentPose(int idx, double x, double y);
+
+signals:
+    void setNumBots(int bots);
+    void setWorldFile(QString world_file);
+    void setMotion(int idx, double xSpeed, double turnSpeed);
+    void startStage();
 };
 
 #endif 

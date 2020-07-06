@@ -8,19 +8,17 @@
 #include "ivp/MBUtils.h"
 #include "ivp/ACTable.h"
 #include "StageInterface.h"
-#include "global.h"
 
-QList<double> StageManagerBuffer;
-QList<double> StageInterfaceBuffer;
 
 using namespace std;
+QList<Robot> RobotList;
 
 //---------------------------------------------------------
 // Constructor
 
-StageInterface::StageInterface()
+StageInterface::StageInterface(QObject * parent) : QObject(parent)
 {
-    manager = new StageManager();
+    //manager = new StageManager(this);
 }
 
 //---------------------------------------------------------
@@ -80,6 +78,7 @@ bool StageInterface::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
+notifyCurrentPose();
 AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -113,10 +112,12 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  } else if(param == "worldfile") {
     world_file = QString::fromStdString(value);
     handled = true;
-    manager->setWorldFile(world_file);
+    emit setWorldFile(world_file);
+    //manager->setWorldFile(world_file);
  } else if(param == "numbots") {
     num_bots = QString::fromStdString(value).toInt();
-    manager->setNumBots(num_bots);
+    //manager->setNumBots(num_bots);
+    emit setNumBots(num_bots);
 
     //initialize the map that will convert the identifier to the index of the robot
     for(int i = 0; i<num_bots; i++){
@@ -129,8 +130,12 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    reportUnhandledConfigWarning(orig);
 
 }
-manager->start();
+//Q_ASSERT(QObject::connect(manager, SIGNAL(updatePose(int,double,double)), this, SLOT(notifyCurrentPose(int,double,double)), Qt::QueuedConnection));
+//connect(manager, &StageManager::updatePose, this, &StageInterface::notifyCurrentPose);
+//manager->start();
+emit startStage();
 registerVariables();
+publishPose = true;
 return(true);
 }
 
@@ -171,16 +176,16 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
     string id = "";
     int idx;
     if(!MOOSValFromString(speed, Msg.GetString(), "Speed")){
-        return MOOSFail("Error getting speed out of Speed_Curv message.");
+        return MOOSDebugWrite("Error getting speed out of Speed_Curv message.");
     } else if (!MOOSValFromString(curv, Msg.GetString(), "Curv")){
-        return MOOSFail("Error getting Curv from Speed_Curv message.");
+        return MOOSDebugWrite("Error getting Curv from Speed_Curv message.");
     } else if (!MOOSValFromString(id, Msg.GetString(), "id")){
-        return MOOSFail("Error getting id from Speed_Curv message.");
+        return MOOSDebugWrite("Error getting id from Speed_Curv message.");
     }
     idx = index_map[id];
     double forward_speed = 0.0;
     double turn_speed = 0.0;
-    double side_speed = 0.0;
+    //double side_speed = 0.0;
     if(speed >= 100.0){
         speed = 100.0;
     } else if (speed <= -100.0) {
@@ -189,9 +194,22 @@ bool StageInterface::OnSpeedCurv(CMOOSMsg &Msg)
     speed = speed/100.0; //convert from percentage to
     forward_speed = speed*cos(curv*(PI/180.0));
     turn_speed    = (2*speed)*sin(curv*(PI/180.0));
-    StageManagerBuffer.append(double(idx));
-    StageManagerBuffer.append(forward_speed);
-    StageManagerBuffer.append(side_speed);
-    StageManagerBuffer.append(turn_speed);
+    emit setMotion(idx, forward_speed, turn_speed);
     return true;
+}
+
+void StageInterface::notifyCurrentPose()
+{
+    QString dataValue;
+    for(int i = 0; i<num_bots; i++){
+        if(publishPose && RobotList.length()>=num_bots){
+            dataValue = "xPos="+QString::number(RobotList[i].xPos)+
+                                ",yPos="+QString::number(RobotList[i].yPos)+
+                                ",id=Dolphin"+QString::number(i);
+        } else {
+            dataValue = "xPos=0.0, yPos=0.0, id=Dolphin"+QString::number(i);
+        }
+        QString messageName = "Dolphin"+QString::number(i)+"_Update_Pos";
+        Notify(messageName.toStdString(), dataValue.toStdString(), MOOSTime());
+    }
 }

@@ -1,0 +1,6 @@
+ProcessConfig = VehicleStateMachine
+{
+   AppTick   = 1
+   CommsTick = 4
+   id = $(VNAME)
+}

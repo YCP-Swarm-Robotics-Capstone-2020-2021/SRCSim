@@ -5,6 +5,17 @@
 
 #include <QMutex>
 #include <QSemaphore>
-extern QList<double> StageManagerBuffer;
-extern QList<double> StageInterfaceBuffer;
+#include "Stage-4.3/stage.hh"
+
+class Robot {
+public:
+  Stg::ModelPosition *position;
+  double xPos;
+  double yPos;
+  double forward_speed;
+  double side_speed;
+  double turn_speed;
+};
+
+extern QList<Robot> RobotList;
 

@@ -3,3 +3,5 @@
 build-*
 *.qmake.stash*
 *.pro.user
+*logs*
+*.LastOpenedMOOSLogDirectory

@@ -45,8 +45,13 @@ int main(int argc, char *argv[])
   cout << "iStageInterface launching as " << run_command << endl;
   cout << termColor() << endl;
 
+  StageManager StageManager;
   StageInterface StageInterface;
 
+  a.connect(&StageInterface, SIGNAL(setNumBots(int)), &StageManager, SLOT(getNumBots(int)));
+  a.connect(&StageInterface, SIGNAL(setMotion(int,double,double)), &StageManager, SLOT(getMotion(int,double,double)));
+  a.connect(&StageInterface, SIGNAL(setWorldFile(QString)), &StageManager, SLOT(getWorldFile(QString)));
+  a.connect(&StageInterface, SIGNAL(startStage()), &StageManager, SLOT(startManager()));
   StageInterface.Run(run_command.c_str(), mission_file.c_str());
   
   return a.exec();
