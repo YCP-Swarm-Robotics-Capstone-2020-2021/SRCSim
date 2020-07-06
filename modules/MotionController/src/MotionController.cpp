@@ -82,17 +82,17 @@ bool MotionController::Iterate()
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
 switch(state){
-    case VehicleStates::TELEOP:{
+    case EnumDefs::VehicleStates::TELEOP:{
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         break;
     }
-    case VehicleStates::STANDBY:{
+    case EnumDefs::VehicleStates::STANDBY:{
         QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         break;
     }
-    case VehicleStates::ALLSTOP:{
+    case EnumDefs::VehicleStates::ALLSTOP:{
         QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         break;
@@ -195,7 +195,7 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
      }
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
-     state = VehicleStates(x);
+     state = EnumDefs::VehicleStates(x);
 
 
 

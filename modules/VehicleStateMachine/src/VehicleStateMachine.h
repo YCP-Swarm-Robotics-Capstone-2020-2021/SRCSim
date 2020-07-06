@@ -40,7 +40,7 @@ public:
    bool onChangeState(CMOOSMsg &Msg);
 
  private: // Configuration variables
-   VehicleStates currentState;
+   EnumDefs::VehicleStates currentState;
    QString id;
 
 signals:

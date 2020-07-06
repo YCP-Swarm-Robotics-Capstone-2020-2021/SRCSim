@@ -25,7 +25,6 @@ signals:
     void updateSpeed(double speed);
     void updateCurv(double curv);
 private:
-    QLabel *myLabelText;
     Ui::MainWindow *ui;
 
 

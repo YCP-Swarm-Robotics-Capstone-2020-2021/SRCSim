@@ -5,7 +5,6 @@
 KeyboardHandler::KeyboardHandler(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    myLabelText = new QLabel ("You Didn't Pressed / Released any Key");
 
 
 }

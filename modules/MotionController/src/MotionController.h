@@ -54,7 +54,7 @@ public:
  private: // Configuration variables
    double roboSpeed = 0;
    double roboCurv = 0;
-   VehicleStates state = VehicleStates::STANDBY;
+   EnumDefs::VehicleStates state = EnumDefs::STANDBY;
    QLabel *entryZone;
    QString id = "";
    std::string m_moosAppName,m_moosMissionFile;
@@ -65,7 +65,6 @@ public slots:
 
 signals:
 
-public slots:
 };
 
 #endif 
