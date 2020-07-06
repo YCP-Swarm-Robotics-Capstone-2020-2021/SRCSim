@@ -140,6 +140,7 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
     PORT=$(($PORT+5))
 cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF

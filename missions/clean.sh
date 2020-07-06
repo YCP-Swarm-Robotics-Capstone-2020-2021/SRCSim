@@ -30,3 +30,4 @@ rm -rf  *alvtmp
 rm -rf  *pared.alog
 rm -rf  *~
 rm -rf ../world/2020*.world
+rm -rf plug_GCSpShare.moos
