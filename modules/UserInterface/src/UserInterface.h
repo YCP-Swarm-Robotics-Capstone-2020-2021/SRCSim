@@ -1,12 +1,12 @@
 /************************************************************/
-/*    NAME: Kyle Leatherman                                              */
+/*    NAME: Kyle                                              */
 /*    ORGN: YCP                                             */
-/*    FILE: MotionController.h                                          */
-/*    DATE: 06/08/2020                                         */
+/*    FILE: UserInterface.h                                          */
+/*    DATE: 06/22/2020                                         */
 /************************************************************/
 
-#ifndef MotionController_HEADER
-#define MotionController_HEADER
+#ifndef UserInterface_HEADER
+#define UserInterface_HEADER
 
 #include <QObject>
 #include <iterator>
@@ -16,20 +16,17 @@
 #include <ivp/ACTable.h>
 #include <QString>
 #include <QThread>
-#include <QWidget>
-#include <QKeyEvent>
 #include <VehicleStateDefines.h>
-#include <QLabel>
 
 
-class MotionController : public QThread, public AppCastingMOOSApp {
+class UserInterface : public QThread, public AppCastingMOOSApp
+{
     Q_OBJECT
 public:
-  MotionController();
-  ~MotionController();
+  UserInterface();
+  ~UserInterface();
 
   void startProcess(const std::string & , const std::string &, int argc, char * argv[]);
-
 
 
  protected: // Standard MOOSApp functions to overload
@@ -37,34 +34,31 @@ public:
    bool Iterate();
    bool OnConnectToServer();
    bool OnStartUp();
-   bool handleCurrentPos(CMOOSMsg &msg);
-   bool handleCurrentState(CMOOSMsg &msg);
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();
-
-   void keyPressEvent(QKeyEvent *event);
-   void keyReleaseEvent(QKeyEvent *event);
 
  protected:
    void registerVariables();
    void run();
 
-
  private: // Configuration variables
-   double roboSpeed = 0;
-   double roboCurv = 0;
-   EnumDefs::VehicleStates state = EnumDefs::STANDBY;
-   QLabel *entryZone;
-   QString id = "";
    std::string m_moosAppName,m_moosMissionFile;
-
-public slots:
-   void setSpeed(double speed){roboSpeed = speed;}
-   void setCurv(double curv){roboCurv = curv;}
+   EnumDefs::VehicleStates State;
+   int robotId = 0;
+   int maxBots = 0;
 
 signals:
+   void informMaxBots(int maxBots);
 
+public slots:
+   void updateState(int state){State = (EnumDefs::VehicleStates)state;}
+   void updateBot(int id){robotId = id;}
+   void sendMessage(){
+       QString stateData = "id=Dolphin"+ QString::number(robotId) + ",State="+ QString::number(State);
+       QString mesName = "Dolphin"+ QString::number(robotId)+"_Change_State";
+       Notify(mesName.toStdString(), stateData.toStdString(), MOOSTime());
+   }
 };
 
 #endif 

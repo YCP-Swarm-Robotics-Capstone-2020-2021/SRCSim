@@ -16,7 +16,7 @@ using namespace std;
 
 VehicleStateMachine::VehicleStateMachine()
 {
-    this->currentState = VehicleStates::STANDBY;
+    this->currentState = EnumDefs::VehicleStates::STANDBY;
 }
 
 //---------------------------------------------------------
@@ -158,8 +158,8 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
     if(!MOOSValFromString(state, Msg.GetString(), "State")){
         return MOOSFail("VehicleStateMachine: Unable to get State variable from Change_State message.");
     }
-    if(state < VehicleStates::ENUMLAST && state >= 0){
-        currentState = VehicleStates(state);
+    if(state < EnumDefs::VehicleStates::ENUMLAST && state >= 0){
+        currentState = EnumDefs::VehicleStates(state);
     } else {
         return MOOSDebugWrite("VehicleStateMachine: Received a Change_State message that contains an invalid state.");
     }

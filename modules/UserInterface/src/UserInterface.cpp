@@ -1,35 +1,34 @@
 /************************************************************/
-/*    NAME: Kyle Leatherman                                              */
+/*    NAME: Kyle                                              */
 /*    ORGN: YCP                                             */
-/*    FILE: MotionController.cpp                                        */
-/*    DATE: 06/08/2020                                         */
+/*    FILE: UserInterface.cpp                                        */
+/*    DATE: 06/22/2020                                         */
 /************************************************************/
 #include <iterator>
 #include "ivp/MBUtils.h"
 #include "ivp/ACTable.h"
-#include "MotionController.h"
+#include "UserInterface.h"
 
 using namespace std;
 
 //---------------------------------------------------------
 // Constructor
 
-MotionController::MotionController()
+UserInterface::UserInterface()
 {
-    entryZone = new QLabel("Enter input");
 }
 
 //---------------------------------------------------------
 // Destructor
 
-MotionController::~MotionController()
+UserInterface::~UserInterface()
 {
 }
 
 //---------------------------------------------------------
 // Procedure: OnNewMail
 
-bool MotionController::OnNewMail(MOOSMSG_LIST &NewMail)
+bool UserInterface::OnNewMail(MOOSMSG_LIST &NewMail)
 {
 AppCastingMOOSApp::OnNewMail(NewMail);
 
@@ -48,12 +47,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
  bool   mstr  = msg.IsString();
 #endif
 
-  if(key == "Current_Pos"){
-    handleCurrentPos(msg);
-  }
-  else if(key == "Current_State"){
-      handleCurrentState(msg);
-  }
+  if(key == "FOO")
+    cout << "great!";
+
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -64,7 +60,7 @@ return(true);
 //---------------------------------------------------------
 // Procedure: OnConnectToServer
 
-bool MotionController::OnConnectToServer()
+bool UserInterface::OnConnectToServer()
 {
 registerVariables();
 return(true);
@@ -74,34 +70,10 @@ return(true);
 // Procedure: Iterate()
 //            happens AppTick times per second
 
-bool MotionController::Iterate()
+bool UserInterface::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-switch(state){
-    case EnumDefs::VehicleStates::TELEOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::STANDBY:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::ALLSTOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    default:{
-        MOOSDebugWrite("MotionController: Invalid state");
-        break;
-    }
-}
-
-
-
 //AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -110,7 +82,7 @@ return(true);
 // Procedure: OnStartUp()
 //            happens before connection is open
 
-bool MotionController::OnStartUp()
+bool UserInterface::OnStartUp()
 {
 AppCastingMOOSApp::OnStartUp();
 
@@ -127,9 +99,10 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "id") {
-     id = QString::fromStdString(value);
-     handled = true;
+ if(param == "numofbots") {
+   maxBots = QString::fromStdString(value).toInt();
+   emit informMaxBots(maxBots);
+   handled = true;
  }
  else if(param == "bar") {
    handled = true;
@@ -147,18 +120,17 @@ return(true);
 //---------------------------------------------------------
 // Procedure: registerVariables
 
-void MotionController::registerVariables()
+void UserInterface::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
-Register("Current_State");
-Register("Current_Pos");
+// Register("FOOBAR", 0);
 }
 
 
 //------------------------------------------------------------
 // Procedure: buildReport()
 
-bool MotionController::buildReport()
+bool UserInterface::buildReport()
 {
 m_msgs << "============================================" << endl;
 m_msgs << "File:                                       " << endl;
@@ -173,34 +145,11 @@ m_msgs << actab.getFormattedString();
 return(true);
 }
 
-bool MotionController::handleCurrentPos(CMOOSMsg &msg){
-     if(!msg.IsString()){
-        return MOOSFail("You did not input a string you ninny");
-     }
-     double x = 0.0,y = 0.0;
-     MOOSValFromString(x , msg.GetString(), "xPos");
-     MOOSValFromString(y , msg.GetString(), "yPos");
-     return true;
-}
-
-bool MotionController::handleCurrentState(CMOOSMsg &msg){
-     if(!msg.IsString()){
-        return MOOSFail("You did not input a string you ninny");
-     }
-     int x;
-     MOOSValFromString(x , msg.GetString(), "State");
-     state = EnumDefs::VehicleStates(x);
-
-
-
-     return true;
-}
-
-void MotionController::run(){
+void UserInterface::run(){
     Run(m_moosAppName,m_moosMissionFile);
 }
 
-void MotionController::startProcess(const std::string &sname, const std::string &moosfile, int argc, char **argv){
+void UserInterface::startProcess(const std::string &sname, const std::string &moosfile, int argc, char **argv){
 
     SetCommandLineParameters(argc, argv);
 
