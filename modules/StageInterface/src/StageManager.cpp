@@ -18,7 +18,7 @@ void StageManager::run()
     char arg1[world_file.toStdString().size()];
     char *arg[1];
     char **args[3];
-    int y;
+    int y=0;
     for(int i = 0; i < (int)world_file.toStdString().size(); i++){
         arg1[i] = world_file.toStdString().c_str()[i];
         y = i;

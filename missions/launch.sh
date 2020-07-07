@@ -4,6 +4,7 @@
 #-------------------------------------------------------
 TIME_WARP=1
 NUM_BOTS=2
+BUILD_MODE=0
 JUST_MAKE="no"
 LAUNCH_GUI="yes"
 version=0.0.1
@@ -12,6 +13,7 @@ print_help(){
     echo "This is a script that will run multiple vehicle simulations. Pass the below arguments to customize how the simulation launches. The most importanct parameter is the num_bots flag."
     echo "      --num_bots | -n         This flag sets how many robots you want the simulation to launch."
     echo "      --keep     | -k         Pass this flag to ensure that the world files are not deleted."
+    echo "      --build    | -b         Pass this flag to only build"
     echo
     exit 0
 }
@@ -31,6 +33,10 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
     shift;
     NUM_BOTS=$1
     echo "Num Bots = $NUM_BOTS"
+    ;;
+  -b | --build )
+    BUILD_MODE=1
+    echo "Build only"
     ;;
   * )
     print_help
@@ -160,10 +166,22 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
 done
 if [ ! -e targ_$GCSNAME.moos ]; then echo "no targ_$GCSNAME.moos";  exit; fi
 
-
-
 #-------------------------------------------------------
-#  Part 3: Launch the processes
+#  Part 3: Build the modules
+#-------------------------------------------------------
+cd ../modules
+for i in ./*; do
+    if [[ -d $i ]]; then
+        cd $i
+        qmake
+        make
+        cd ..
+    fi
+done
+cd ../missions
+if [[ BUILD_MODE -eq 1 ]]; then exit 1; fi
+#-------------------------------------------------------
+#  Part 4: Launch the processes
 #-------------------------------------------------------
 printf "Launching $GCSNAME MOOS Community (WARP=%s) \n"  $TIME_WARP
 pAntler targ_$GCSNAME.moos >& /dev/null &
