@@ -101,7 +101,6 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  bool handled = false;
  if(param == "numofbots") {
    maxBots = QString::fromStdString(value).toInt();
-   std::cout << "# of bots initialized" << std::endl;
    emit informMaxBots(maxBots);
    handled = true;
  }
