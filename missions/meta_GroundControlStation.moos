@@ -7,6 +7,7 @@ ProcessConfig = ANTLER
     MSBetweenLaunches = 200
     Run = MOOSDB    @ NewConsole = true
     Run = ../modules/StageInterface/bin/StageInterface @ NewConsole = false ~ StageInterface
+    Run = ../modules/UserInterface/bin/UserInterface @ NewConsole = false ~ UserInterface
     Run = uProcessWatch @ NewConsole = true ~ uProcessWatch
     Run = pLogger @ NewConsole = false ~ pLogger
     Run = pShare @ NewConsole = false ~pShare
@@ -63,5 +64,5 @@ WildCardOmitPattern = *_ITER_LEN
 WildCardOmitPattern = *_STATUS
 WildCardOmitPattern = *PLOGGER*
 }
-
+#include plug_UserInterface.moos
 #include plug_GCSpShare.moos
