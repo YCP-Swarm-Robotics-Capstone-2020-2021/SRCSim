@@ -11,8 +11,8 @@ public:
     Zeta operator-(const Zeta& z);
     Zeta operator*(double& d);
 
-    double getPosition() const;
-    void setPosition(double value);
+    double getxPos() const;
+    void setxPos(double value);
 
     double getAttitude() const;
     void setAttitude(double value);
@@ -23,8 +23,11 @@ public:
     double getLambda() const;
     void setLambda(double value);
 
+    double getyPos() const;
+    void setyPos(double value);
+
 private:
-    double position, attitude, theta, lambda;
+    double xPos, yPos, attitude, theta, lambda;
 };
 
 #endif // ZETA_H
