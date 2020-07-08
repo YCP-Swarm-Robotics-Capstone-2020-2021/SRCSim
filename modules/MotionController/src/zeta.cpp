@@ -85,5 +85,5 @@ void Zeta::setLambda(double value)
 
 QString Zeta::stringify()
 {
-    return "Position="+QString::number(position)+",Theta="+QString::number(theta);
+    return "Position="+QString::number(position)+",Theta="+QString::number(theta)+", Lambda="+QString::number(lambda)+", Attitude="+QString::number(attitude);
 }

@@ -9,7 +9,7 @@ ProcessConfig = pLogger
     CompressAlogs = false
     MAX_DIR_SIZE = 475 //MB
     WildCardLogging = true
-    SyncLog = true @ 1.0
+    SyncLog = false @ 1.0
     AsyncLog = true
 
 

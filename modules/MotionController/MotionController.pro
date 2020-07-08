@@ -35,12 +35,14 @@ INCLUDEPATH += \
 SOURCES += src/main.cpp \
  src/KeyboardHandler.cpp \
  src/MotionController.cpp \
- src/MotionController_Info.cpp
+ src/MotionController_Info.cpp \
+ src/zeta.cpp
 
 HEADERS += \
  src/KeyboardHandler.h \
  src/MotionController.h \
- src/MotionController_Info.h
+ src/MotionController_Info.h \
+ src/zeta.h
 
 OTHER_FILES += \
  *.sh \
