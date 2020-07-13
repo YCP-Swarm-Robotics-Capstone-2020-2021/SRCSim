@@ -24,4 +24,5 @@ void InputHandler::getMaxBots(int num){
     for(int i = 0; i<num; i++){
         ui->BotSelectionBox->insertItem(i, "Dolphin"+ QString::number(i));
     }
+    ui->BotSelectionBox->insertItem(num, "All");
 }
