@@ -17,6 +17,7 @@ InputHandler::InputHandler(QWidget *parent) : QMainWindow(parent), ui(new Ui::Ma
     connect(ui->RunModeBox, SIGNAL(currentTextChanged(QString)), this, SLOT(AlgChangedBox_valueChanged(QString)));
     connect(ui->BotSelectionBox, SIGNAL(currentIndexChanged(int)), this, SLOT(BotChangedBox_valueChanged(int)));
     connect(ui->updateButton, SIGNAL(released()), this, SLOT(submitButton_hitButton()));
+    connect(ui->killButton, SIGNAL(released()), this, SLOT(killButton_hitButton()));
 }
 
 void InputHandler::getMaxBots(int num){
