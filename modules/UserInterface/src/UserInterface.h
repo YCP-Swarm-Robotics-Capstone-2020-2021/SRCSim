@@ -55,9 +55,16 @@ public slots:
    void updateState(int state){State = (EnumDefs::VehicleStates)state;}
    void updateBot(int id){robotId = id;}
    void sendMessage(){
-       QString stateData = "id=Dolphin"+ QString::number(robotId) + ",State="+ QString::number(State);
-       QString mesName = "Dolphin"+ QString::number(robotId)+"_Change_State";
-       Notify(mesName.toStdString(), stateData.toStdString(), MOOSTime());
+       if(robotId == maxBots){
+           QString stateData ="State="+ QString::number(State);
+           Notify("Change_State", stateData.toStdString(), MOOSTime());
+       }
+       else{
+           QString stateData = "id=Dolphin"+ QString::number(robotId) + ",State="+ QString::number(State);
+           QString mesName = "Dolphin"+ QString::number(robotId)+"_Change_State";
+           Notify(mesName.toStdString(), stateData.toStdString(), MOOSTime());
+       }
+
    }
 };
 
