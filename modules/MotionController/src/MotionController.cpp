@@ -94,6 +94,10 @@ switch(state){
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         break;
     }
+    case EnumDefs::VehicleStates::DEMOMODE:{
+        demoRun();
+        break;
+    }
     default:{
         MOOSDebugWrite("MotionController: Invalid state");
         break;
@@ -175,17 +179,17 @@ return(true);
 
 bool MotionController::handleCurrentPos(CMOOSMsg &msg){
      if(!msg.IsString()){
-        return MOOSFail("You did not input a string you ninny");
+        return MOOSFail("MotionController::handleCurrentPos - You did not input a string you ninny");
      }
-     double x = 0.0,y = 0.0;
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
+     MOOSValFromString(attitude , msg.GetString(), "attitude");
      return true;
 }
 
 bool MotionController::handleCurrentState(CMOOSMsg &msg){
      if(!msg.IsString()){
-        return MOOSFail("You did not input a string you ninny");
+        return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
      }
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
@@ -207,4 +211,43 @@ void MotionController::startProcess(const std::string &sname, const std::string 
     m_moosAppName = sname;
     m_moosMissionFile = moosfile;
     start();
+}
+
+void MotionController::demoRun()
+{
+    if(x > 0 && y < 0){ //Quadrant 4
+        if((attitude>260.0)&&(attitude<280.0)){
+            roboSpeed = max_speed;
+            roboCurv = 0.0;
+        } else { //Not facing right way
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+    } else if (x >= 0 && y >= 0) { //Quadrant 1
+        if((attitude>350.0)&&(attitude<10.0)){ //Not facing right way
+            roboSpeed = max_speed;
+            roboCurv = 0.0;
+        } else { //Not facing right way
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+    } else if (x <= 0 && y < 0) { //Quadrant 3
+        if((attitude>170.0)&&(attitude<190.0)){ //Not facing right way
+            roboSpeed = max_speed;
+            roboCurv = 0.0;
+        } else { //Not facing right way
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+    } else { //Quadrant 2
+        if((attitude>80.0)&&(attitude<100.0)){ //Not facing right way
+            roboSpeed = max_speed;
+            roboCurv = 0.0;
+        } else { //Not facing right way
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+    }
+    QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
+    Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 }

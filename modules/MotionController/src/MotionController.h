@@ -49,11 +49,17 @@ public:
  protected:
    void registerVariables();
    void run();
+   void demoRun();
 
 
  private: // Configuration variables
    double roboSpeed = 0;
    double roboCurv = 0;
+   double x = 0;
+   double y = 0;
+   double attitude = 0;
+   double max_speed = 100.0;
+   double turn_speed = 25.0;
    EnumDefs::VehicleStates state = EnumDefs::STANDBY;
    QLabel *entryZone;
    QString id = "";

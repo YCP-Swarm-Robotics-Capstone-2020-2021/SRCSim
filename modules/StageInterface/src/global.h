@@ -12,6 +12,7 @@ public:
   Stg::ModelPosition *position;
   double xPos;
   double yPos;
+  double attitude;
   double forward_speed;
   double side_speed;
   double turn_speed;

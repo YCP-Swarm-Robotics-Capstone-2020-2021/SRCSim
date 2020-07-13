@@ -148,10 +148,10 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
      if(!msg.IsString()){
         return MOOSFail("You did not input a string you ninny");
      }
-     double x = 0.0,y = 0.0;
      MOOSValFromString(x , msg.GetString(), "xPos");
      MOOSValFromString(y , msg.GetString(), "yPos");
-     QString coords = "xPos="+ QString::number(x) + ", yPos="+ QString::number(y)+ ", id="+id;
+     MOOSValFromString(attitude , msg.GetString(), "attitude");
+     QString coords = "xPos="+ QString::number(x) + ", yPos="+ QString::number(y)+ ", attitude="+ QString::number(attitude) + ", id="+id;
      Notify("Current_Pos", coords.toStdString(), MOOSTime());
      return true;
 }

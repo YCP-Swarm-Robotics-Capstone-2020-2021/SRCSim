@@ -14,13 +14,15 @@ public:
         ALLSTOP,
         TELEOP,
         SWARMMODE,
+        DEMOMODE,
         ENUMLAST
     };
     Q_ENUM(VehicleStates)
 
    QMap<VehicleStates, QString> StateMap{{VehicleStates::STANDBY, "STANDBY"}, {VehicleStates::ALLSTOP, "ALLSTOP"},
                                          {VehicleStates::TELEOP, "TELEOP"},
-                                         {VehicleStates::SWARMMODE, "SWARMMODE"}};
+                                         {VehicleStates::SWARMMODE, "SWARMMODE"},
+                                         {VehicleStates::DEMOMODE, "DEMOMODE"}};
 
 
 
