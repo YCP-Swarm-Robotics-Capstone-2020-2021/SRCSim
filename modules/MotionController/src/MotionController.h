@@ -20,6 +20,8 @@
 #include <QKeyEvent>
 #include <VehicleStateDefines.h>
 #include <QLabel>
+#include <string>
+#include <iostream>
 
 
 class MotionController : public QThread, public AppCastingMOOSApp {
@@ -49,11 +51,18 @@ public:
  protected:
    void registerVariables();
    void run();
+   void demoRun();
 
 
  private: // Configuration variables
    double roboSpeed = 0;
    double roboCurv = 0;
+   double x = 0;
+   double y = 0;
+   double boundary = 6.0;
+   double attitude = 0;
+   double max_speed = 25.0;
+   double turn_speed = 15.0;
    EnumDefs::VehicleStates state = EnumDefs::STANDBY;
    QLabel *entryZone;
    QString id = "";

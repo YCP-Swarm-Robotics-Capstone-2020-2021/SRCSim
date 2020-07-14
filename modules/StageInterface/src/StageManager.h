@@ -1,6 +1,10 @@
 #ifndef STAGEMANAGER_H
 #define STAGEMANAGER_H
 
+#ifndef PI
+#define PI 3.141592653589
+#endif
+
 #include <QObject>
 #include <QString>
 #include <QThread>

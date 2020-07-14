@@ -79,6 +79,7 @@ void StageRun::Tick(World * world)
       }
       RobotList[idx].xPos = robots[idx].position->GetPose().x;
       RobotList[idx].yPos = robots[idx].position->GetPose().y;
+      RobotList[idx].attitude = robots[idx].position->GetPose().a*180.0/PI+180.0;
     }
 }
 

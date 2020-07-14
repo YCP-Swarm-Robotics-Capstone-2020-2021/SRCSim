@@ -204,8 +204,9 @@ void StageInterface::notifyCurrentPose()
     for(int i = 0; i<num_bots; i++){
         if(publishPose && RobotList.length()>=num_bots){
             dataValue = "xPos="+QString::number(RobotList[i].xPos)+
-                                ",yPos="+QString::number(RobotList[i].yPos)+
-                                ",id=Dolphin"+QString::number(i);
+                        ",yPos="+QString::number(RobotList[i].yPos)+
+                        ",id=Dolphin"+QString::number(i)+
+                        ", attitude="+QString::number(RobotList[i].attitude);
         } else {
             dataValue = "xPos=0.0, yPos=0.0, id=Dolphin"+QString::number(i);
         }
