@@ -80,8 +80,8 @@ EOF
 x=-7
 y=7
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-x=$(($x+1))
-if [[ $x -eq 8 ]]; then
+x=$(($x+2))
+if [[ $x -gt 8 ]]; then
     y=$(($y-1))
     x=-7
 fi

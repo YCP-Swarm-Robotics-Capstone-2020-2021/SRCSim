@@ -3,8 +3,8 @@
 
 ProcessConfig = MotionController
 {
-   AppTick   = 4
-   CommsTick = 4
+   AppTick   = 20
+   CommsTick = 20
    id = Dolphin1
 }
 

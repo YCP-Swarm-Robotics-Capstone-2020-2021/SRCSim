@@ -133,6 +133,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  bool handled = false;
  if(param == "id") {
      id = QString::fromStdString(value);
+     boundary -= id.mid(7).toDouble();
+     Notify("Boundary", boundary, MOOSTime());
      handled = true;
  }
  else if(param == "bar") {
@@ -215,38 +217,53 @@ void MotionController::startProcess(const std::string &sname, const std::string 
 
 void MotionController::demoRun()
 {
-    if(x > 0 && y < 0){ //Quadrant 4
-        if((attitude>260.0)&&(attitude<280.0)){
-            roboSpeed = max_speed;
-            roboCurv = 0.0;
-        } else { //Not facing right way
+    if(x >= -boundary && y >= boundary){ //Quadrant 1
+        if((attitude>10.0 && attitude<180.0)){ //Pointing down
+            roboCurv = -90.0; //clockwise
+            roboSpeed = turn_speed;
+        } else if (attitude<350.0 && attitude>=180.0){
             roboCurv = 90.0;
             roboSpeed = turn_speed;
-        }
-    } else if (x >= 0 && y >= 0) { //Quadrant 1
-        if((attitude>350.0)&&(attitude<10.0)){ //Not facing right way
+        } else { //Not facing right way
             roboSpeed = max_speed;
             roboCurv = 0.0;
-        } else { //Not facing right way
+        }
+    } else if (x < -boundary && y >= -boundary) { //Quadrant 2
+        if((attitude>100.0 && attitude<270.0)){ //Pointing down
+            roboCurv = -90.0; //clockwise
+            roboSpeed = turn_speed;
+        } else if (attitude<80.0 || attitude >= 270.0){
             roboCurv = 90.0;
             roboSpeed = turn_speed;
-        }
-    } else if (x <= 0 && y < 0) { //Quadrant 3
-        if((attitude>170.0)&&(attitude<190.0)){ //Not facing right way
+        } else { //Not facing right way
             roboSpeed = max_speed;
             roboCurv = 0.0;
-        } else { //Not facing right way
+        }
+    } else if (x <= boundary && y < -boundary) { //Quadrant 3
+        if((attitude>190.0 && attitude<360.0)){ //Pointing down
+            roboCurv = -90.0; //clockwise
+            roboSpeed = turn_speed;
+        } else if (attitude<170.0 && attitude >= 0.0){
             roboCurv = 90.0;
             roboSpeed = turn_speed;
-        }
-    } else { //Quadrant 2
-        if((attitude>80.0)&&(attitude<100.0)){ //Not facing right way
+        } else { //Not facing right way
             roboSpeed = max_speed;
             roboCurv = 0.0;
-        } else { //Not facing right way
+        }
+    } else if (x >= boundary && y < boundary) { //Quadrant 4
+        if((attitude>280.0 || attitude<90.0)){ //Pointing down
+            roboCurv = -90.0; //clockwise
+            roboSpeed = turn_speed;
+        } else if (attitude<260.0 && attitude >= 90.0){
             roboCurv = 90.0;
             roboSpeed = turn_speed;
+        } else { //Not facing right way
+            roboSpeed = max_speed;
+            roboCurv = 0.0;
         }
+    } else {
+        roboSpeed = max_speed;
+        roboCurv = 0.0;
     }
     QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
