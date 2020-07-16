@@ -98,6 +98,20 @@ switch(state){
         demoRun();
         break;
     }
+    case EnumDefs::VehicleStates::SWARMINIT:{
+        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+        break;
+    }
+    case EnumDefs::VehicleStates::SWARMSTANDBY:{
+        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+        break;
+    }
+    case EnumDefs::VehicleStates::SWARMRUN:{
+        swarmRun();
+        break;
+    }
     default:{
         MOOSDebugWrite("MotionController: Invalid state");
         break;
