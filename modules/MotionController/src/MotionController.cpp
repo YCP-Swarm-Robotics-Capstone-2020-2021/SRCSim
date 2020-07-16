@@ -133,7 +133,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  bool handled = false;
  if(param == "id") {
      id = QString::fromStdString(value);
-     boundary -= id.mid(7).toDouble();
+     boundary -= id.mid(7).toDouble()+0.5;
      Notify("Boundary", boundary, MOOSTime());
      handled = true;
  }
@@ -267,4 +267,8 @@ void MotionController::demoRun()
     }
     QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+}
+
+void MotionController::swarmRun(){
+
 }

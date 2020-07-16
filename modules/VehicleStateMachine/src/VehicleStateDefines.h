@@ -15,18 +15,29 @@ public:
         TELEOP,
         SWARMMODE,
         DEMOMODE,
+        UILAST,
+        SWARMINIT,
+        SWARMSTANDBY,
+        SWARMRUN,
         ENUMLAST
     };
     Q_ENUM(VehicleStates)
 
-   QMap<VehicleStates, QString> StateMap{{VehicleStates::STANDBY, "STANDBY"}, {VehicleStates::ALLSTOP, "ALLSTOP"},
+   QMap<VehicleStates, QString> UIStateMap{{VehicleStates::STANDBY, "STANDBY"}, {VehicleStates::ALLSTOP, "ALLSTOP"},
                                          {VehicleStates::TELEOP, "TELEOP"},
                                          {VehicleStates::SWARMMODE, "SWARMMODE"},
-                                         {VehicleStates::DEMOMODE, "DEMOMODE"}};
-
-
-
+                                         {VehicleStates::DEMOMODE, "DEMOMODE"},
+                                         {VehicleStates::SWARMINIT, "SWARMINIT"},
+                                         {VehicleStates::SWARMSTANDBY, "SWARMSTANDBY"},
+                                         {VehicleStates::SWARMMODE, "SWARMMODE"},
+                                         {VehicleStates::SWARMRUN, "SWARMRUN"}
+                                         };
 
 };
+
+
+
+
+
 
 #endif // VEHICLESTATEDEFINES_H

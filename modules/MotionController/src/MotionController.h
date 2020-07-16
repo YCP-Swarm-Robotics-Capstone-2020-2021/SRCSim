@@ -52,6 +52,7 @@ public:
    void registerVariables();
    void run();
    void demoRun();
+   void swarmRun();
 
 
  private: // Configuration variables
@@ -61,7 +62,7 @@ public:
    double y = 0;
    double boundary = 6.0;
    double attitude = 0;
-   double max_speed = 25.0;
+   double max_speed = 100.0;
    double turn_speed = 15.0;
    EnumDefs::VehicleStates state = EnumDefs::STANDBY;
    QLabel *entryZone;

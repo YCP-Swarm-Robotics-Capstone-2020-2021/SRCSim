@@ -28,7 +28,7 @@ private:
 
 private slots :
     void BotChangedBox_valueChanged(int num){emit updateRobot(num);};
-    void AlgChangedBox_valueChanged(QString string){emit updateRunAlg(defs.StateMap.key(string));}
+    void AlgChangedBox_valueChanged(QString string){emit updateRunAlg(defs.UIStateMap.key(string));}
     void submitButton_hitButton(){emit submitMessage();}
     int killButton_hitButton(){int x = system("pkill pAntler"); return x;}
     void getMaxBots(int num);

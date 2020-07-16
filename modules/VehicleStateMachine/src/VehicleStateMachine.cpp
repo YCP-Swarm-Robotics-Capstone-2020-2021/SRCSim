@@ -151,6 +151,7 @@ return(true);
 
 bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
 {
+    EnumDefs::VehicleStates updateState = currentState;
     if(!Msg.IsString()){
         return MOOSFail("You did not input a string for the Speed_Curv message.");
     }
@@ -158,10 +159,24 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
     if(!MOOSValFromString(state, Msg.GetString(), "State")){
         return MOOSFail("VehicleStateMachine: Unable to get State variable from Change_State message.");
     }
-    if(state < EnumDefs::VehicleStates::ENUMLAST && state >= 0){
-        currentState = EnumDefs::VehicleStates(state);
+    if(state < EnumDefs::VehicleStates::ENUMLAST && state >= 0 && state != EnumDefs::UILAST){
+        if(state == EnumDefs::SWARMMODE){
+            updateState = EnumDefs::SWARMINIT;
+        }
+        else if(state == EnumDefs::SWARMRUN && currentState == EnumDefs::SWARMSTANDBY){
+            updateState = EnumDefs::SWARMRUN;
+        }
+        else if(state == EnumDefs::SWARMSTANDBY && currentState == EnumDefs::SWARMINIT){
+            updateState = EnumDefs::SWARMSTANDBY;
+        }
+        else if(currentState == EnumDefs::STANDBY || state == EnumDefs::STANDBY ){
+            updateState = EnumDefs::VehicleStates(state);
+        }
+
     } else {
         return MOOSDebugWrite("VehicleStateMachine: Received a Change_State message that contains an invalid state.");
     }
+
+    currentState = updateState;
     return true;
 }
