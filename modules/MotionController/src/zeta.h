@@ -17,17 +17,36 @@ public:
     double getAttitude() const;
     void setAttitude(double value);
 
-    double getTheta() const;
-    void setTheta(double value);
+    double getTheta(int x) const;
+    void setTheta(int i, double value);
 
-    double getLambda() const;
-    void setLambda(double value);
+    QList<double> getWholeTheta() const;
+    void setWholeTheta(QList<double> ntheta);
+
+    double getLambda(int x) const;
+    void setLambda(int i, double value);
+
+    QList<double> getWholeLambda() const;
+    void setWholeLambda(QList<double> nlambda);
 
     double getyPos() const;
     void setyPos(double value);
 
+    void addtoTheta(double d);
+
+    void addtoLambda(double d);
+
+    void scale(double d);
+
+    QList<double> subtractList(QList<double> lista, QList<double> listb);
+
+    QList<double> multiplyList(QList<double> lista, double d);
+
+
+
 private:
-    double xPos, yPos, attitude, theta, lambda;
+    double xPos, yPos, attitude;
+    QList<double> theta, lambda;
 };
 
 #endif // ZETA_H
