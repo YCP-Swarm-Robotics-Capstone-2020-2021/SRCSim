@@ -38,6 +38,8 @@ public:
 
     void scale(double d);
 
+    QList<double> addList(QList<double> lista, QList<double> listb);
+
     QList<double> subtractList(QList<double> lista, QList<double> listb);
 
     QList<double> multiplyList(QList<double> lista, double d);

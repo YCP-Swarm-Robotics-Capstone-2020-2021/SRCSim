@@ -22,6 +22,8 @@
 #include <QLabel>
 #include <string>
 #include <iostream>
+#include "zeta.h"
+#include <QRandomGenerator>
 
 
 class MotionController : public QThread, public AppCastingMOOSApp {
@@ -41,6 +43,7 @@ public:
    bool OnStartUp();
    bool handleCurrentPos(CMOOSMsg &msg);
    bool handleCurrentState(CMOOSMsg &msg);
+   bool handleZetaInit(CMOOSMsg &msg);
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();
@@ -53,6 +56,8 @@ public:
    void run();
    void demoRun();
    void swarmRun();
+   EnumDefs::VehicleStates swarmInit();
+   QPoint linktoref();
 
 
  private: // Configuration variables
@@ -68,6 +73,14 @@ public:
    QLabel *entryZone;
    QString id = "";
    std::string m_moosAppName,m_moosMissionFile;
+   double xlinkoff = 0;
+   double ylinkoff = 0;
+   int linknum = 0;
+   int numlinks = 0;
+   QMap<QString,Zeta> *podmates;
+   Zeta nowZeta;
+   bool swarmflag = false;
+   QRandomGenerator randgen;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}

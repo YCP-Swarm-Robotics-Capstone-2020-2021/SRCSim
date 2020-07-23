@@ -17,6 +17,9 @@ using namespace std;
 MotionController::MotionController()
 {
     entryZone = new QLabel("Enter input");
+    podmates = new QMap<QString, Zeta>();
+    randgen = QRandomGenerator(MOOSTime());
+    trans = QTransform();
 }
 
 //---------------------------------------------------------
@@ -53,6 +56,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   }
   else if(key == "Current_State"){
       handleCurrentState(msg);
+  }
+  else if(key == "Zeta_Init"){
+      handleZetaInit(msg);
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -101,6 +107,9 @@ switch(state){
     case EnumDefs::VehicleStates::SWARMINIT:{
         QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+        state = swarmInit();
+        moveData = "State=" + QString::number(state);
+        Notify("Change_State", moveData.toStdString(), MOOSTime());
         break;
     }
     case EnumDefs::VehicleStates::SWARMSTANDBY:{
@@ -172,6 +181,7 @@ void MotionController::registerVariables()
 AppCastingMOOSApp::RegisterVariables();
 Register("Current_State");
 Register("Current_Pos");
+Register("ZetaInit");
 }
 
 
@@ -210,6 +220,28 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
      state = EnumDefs::VehicleStates(x);
+
+
+
+     return true;
+}
+
+bool MotionController::handleZetaInit(CMOOSMsg &msg){
+     if(!msg.IsString()){
+        return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+     }
+     string ids;
+     QList<QString> idlist;
+     MOOSValFromString(xlinkoff , msg.GetString(), "xOffset");
+     MOOSValFromString(ylinkoff , msg.GetString(), "yOffset");
+     MOOSValFromString(linknum , msg.GetString(), "linkageNum");
+     MOOSValFromString(numlinks, msg.GetString(), "numLinks");
+     MOOSValFromString(ids , msg.GetString(), "xOffset");
+     idlist = QString::fromStdString(ids).split("|");
+     for(int i = 0; i< idlist.size(); i++){
+         podmates->insert(idlist[i], Zeta());
+     }
+     swarmflag = true;
 
 
 
@@ -283,6 +315,33 @@ void MotionController::demoRun()
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 }
 
+QPoint MotionController::linktoref(){
+    QPoint point = QPoint(xlinkoff*nowZeta.getLambda(linknum), ylinkoff*nowZeta.getLambda(linknum));
+    for( int i = linknum-1; i>=0; i--){
+        point.setX(point.x()*cos(-nowZeta.getTheta(i)) - point.y()*sin(-nowZeta.getTheta(i)));
+        point.setY(point.x()*sin(-nowZeta.getTheta(i)) + point.y()*cos(-nowZeta.getTheta(i)));
+        point.setX(point.x() + nowZeta.getLambda(i));
+    }
+    return point;
+}
+
 void MotionController::swarmRun(){
+
+}
+
+EnumDefs::VehicleStates MotionController::swarmInit(){
+    QPoint point;
+    if(!swarmflag){
+        return EnumDefs::SWARMINIT;
+    }
+    for(int i = 0; i<numlinks; i++){
+        nowZeta.addtoTheta(randgen.bounded(0, 359));
+        nowZeta.addtoLambda(randgen.bounded(5.9)+0.1);
+    }
+    nowZeta.setAttitude(attitude);
+    point = linktoref();
+    nowZeta.setxPos(x-point.x());
+    nowZeta.setyPos(y-point.y());
+    return EnumDefs::SWARMSTANDBY;
 
 }

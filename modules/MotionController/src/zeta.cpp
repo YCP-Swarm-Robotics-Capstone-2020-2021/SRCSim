@@ -21,8 +21,8 @@ Zeta Zeta::operator+(const Zeta& z)
     result.setxPos(z.getxPos()+this->xPos);
     result.setyPos(z.getyPos()+this->yPos);
     result.setAttitude(z.getAttitude()+this->attitude);
-    result.setWholeLambda(z.getWholeLambda()+this->lambda);
-    result.setWholeTheta(z.getWholeTheta()+this->theta);
+    result.setWholeLambda(addList(this->lambda, z.getWholeLambda()));
+    result.setWholeTheta(addList(this->theta,z.getWholeTheta()));
     return result;
 }
 
@@ -140,6 +140,21 @@ void Zeta::scale(double d){
     for(int  i = 0; i< lambda.size(); i++){
         lambda[i] *= d;
     }
+}
+
+QList<double> Zeta::addList(QList<double> lista, QList<double> listb){
+    QList<double> toReturn = {};
+    for(int i = 0; i< lista.size() || i< listb.size(); i++){
+        if(i >= lista.size()){
+            toReturn[i] = listb[i];
+        }
+        else if(i >= listb.size()){
+            toReturn[i] = lista[i];
+        }
+        toReturn[i] = lista[i] + listb[i];
+    }
+    return toReturn;
+
 }
 
 QList<double> Zeta::subtractList(QList<double> lista, QList<double> listb){
