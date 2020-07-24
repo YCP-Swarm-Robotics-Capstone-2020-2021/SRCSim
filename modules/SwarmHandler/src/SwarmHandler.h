@@ -19,8 +19,10 @@
 #include <VehicleStateDefines.h>
 #include "zeta.h"
 
-struct Robot
+class Robot
 {
+public:
+    Robot(EnumDefs::VehicleStates State){state=State;}
     QString id;
     EnumDefs::VehicleStates state;
     double xOffset;
@@ -56,7 +58,7 @@ public:
 
  private: // Configuration variables
     EnumDefs::VehicleStates state;
-    QMap<QString, Robot> *registration;
+    QMap<QString, Robot*> *registration;
     Zeta *zetaControl;
 signals:
 

@@ -173,12 +173,10 @@ if [ ! -e targ_$GCSNAME.moos ]; then echo "no targ_$GCSNAME.moos";  exit; fi
 cd ../modules
 for i in ./*; do
     if [[ -d $i ]]; then
-	if [[ "$i" != "./MotionController" ]]; then
-            cd $i
-            qmake
-            make
-            cd ..
-	fi
+       cd $i
+       qmake
+       make
+       cd ..
     fi
 done
 cd ../missions

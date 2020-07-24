@@ -16,7 +16,7 @@ using namespace std;
 
 SwarmHandler::SwarmHandler()
 {
-    registration = new QMap<QString, Robot>();
+    registration = new QMap<QString, Robot*>();
     zetaControl = new Zeta();
 }
 
@@ -89,10 +89,10 @@ bool SwarmHandler::Iterate()
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
-    QMap<QString, Robot>::iterator i = registration->begin();
+    QMap<QString, Robot*>::iterator i = registration->begin();
     QString messageData = "Bot_Ids=";
     for(; i != registration->end(); i++){
-        messageData += i.key()+":"+QString::number(i.value().state)+"|";
+        messageData += i.key()+":"+QString::number(i.value()->state)+"|";
     }
     Notify("Registered_Bots", messageData.toStdString(), MOOSTime());
     if(checkState(EnumDefs::VehicleStates::SWARMINIT)){
@@ -181,9 +181,7 @@ void SwarmHandler::onRegistration(CMOOSMsg &msg)
         return;
     }
     MOOSDebugWrite("SwarmHandler: "+id+" registration message received. Sending acknowledgment.");
-    Robot dolphin;
-    dolphin.state = EnumDefs::STANDBY;
-    registration->insert(QString::fromStdString(id), dolphin);
+    registration->insert(QString::fromStdString(id), new Robot(EnumDefs::VehicleStates::STANDBY));
     Notify(id+"_Reg_Ack", "true", MOOSTime());
 }
 
@@ -205,8 +203,8 @@ bool SwarmHandler::onCurrentState(CMOOSMsg &msg)
         return MOOSFail("SwarmHandler: Unable to get State out of Current_State message.");
     }
     newState = EnumDefs::VehicleStates(state);
-    Robot dolphin = registration->find(QString::fromStdString(id)).value();
-    dolphin.state = newState;
+    Robot *dolphin = registration->find(QString::fromStdString(id)).value();
+    dolphin->state = newState;
     registration->insert(QString::fromStdString(id), dolphin);
     return true;
 }
@@ -236,9 +234,12 @@ bool SwarmHandler::onChangeState(CMOOSMsg &msg)
 
 bool SwarmHandler::checkState(EnumDefs::VehicleStates state)
 {
-    QMap<QString, Robot>::iterator iter = registration->begin();
+    if(registration->count()<1){
+        return false;
+    }
+    QMap<QString, Robot*>::iterator iter = registration->begin();
     while(iter != registration->end()){
-        if(iter.value().state != state){
+        if(iter.value()->state != state){
             return false;
         }
     }
@@ -251,41 +252,41 @@ void SwarmHandler::initializeSwarm()
     int numLinkagesInFormation = zetaControl->getWholeLambda().count();
     int linkageBotCounts[numLinkagesInFormation];
     int linkageOffsetCounts[numLinkagesInFormation];
-    QMap<QString, Robot>::iterator iter = registration->begin();
+    QMap<QString, Robot*>::iterator iter = registration->begin();
 
     //Setup topology of the formation
-    iter.value().podMates = new QList<QString>{"Narwhal", iter++.key()};
+    iter.value()->podMates->append(QList<QString>{"Narwhal", iter++.key()});
     while(iter != registration->end()--){
-        iter.value().podMates = new QList<QString>{iter--.key(), (iter++)++.key()};
+        iter.value()->podMates = new QList<QString>{iter--.key(), (iter++)++.key()};
     }
-    iter.value().podMates=new QList<QString>{iter--.key()};
+    iter.value()->podMates=new QList<QString>{iter--.key()};
 
     //Setup Linkage assignments.
     iter = registration->begin();
     for(int i = 0; i<numRobotsInSwarm; i++, iter++){
-        iter.value().linkageAssignment = i%numLinkagesInFormation;
+        iter.value()->linkageAssignment = i%numLinkagesInFormation;
         linkageBotCounts[i%numLinkagesInFormation]++;
         linkageOffsetCounts[i%numLinkagesInFormation]++;
     }
 
     iter = registration->begin();
     while(iter != registration->end()){
-        int link = iter.value().linkageAssignment;
-        iter.value().xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
-        iter.value().yOffset = 0.0;
+        int link = iter.value()->linkageAssignment;
+        iter.value()->xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
+        iter.value()->yOffset = 0.0;
         iter++;
     }
 
     iter = registration->begin();
     while(iter != registration->end()){
-        if(iter.value().state == EnumDefs::SWARMINIT){
-            QString message = "xOffset="+QString::number(iter.value().xOffset) +
-                              ", yOffset="+QString::number(iter.value().yOffset) +
-                              ", linkageNum="+QString::number(iter.value().linkageAssignment) +
+        if(iter.value()->state == EnumDefs::SWARMINIT){
+            QString message = "xOffset="+QString::number(iter.value()->xOffset) +
+                              ", yOffset="+QString::number(iter.value()->yOffset) +
+                              ", linkageNum="+QString::number(iter.value()->linkageAssignment) +
                               ", numLinks="+QString::number(numLinkagesInFormation)+
                               ", neighborIds=";
-            QList<QString>::iterator it= iter.value().podMates->begin();
-            while(it != iter.value().podMates->end()){
+            QList<QString>::iterator it= iter.value()->podMates->begin();
+            while(it != iter.value()->podMates->end()){
                 message+=*it;
             }
             Notify(iter.key().toStdString()+"_ZetaInit", message.toStdString(), MOOSTime());
