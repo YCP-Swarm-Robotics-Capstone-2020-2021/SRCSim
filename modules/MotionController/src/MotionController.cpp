@@ -18,8 +18,7 @@ MotionController::MotionController()
 {
     entryZone = new QLabel("Enter input");
     podmates = new QMap<QString, Zeta>();
-    randgen = QRandomGenerator(MOOSTime());
-    trans = QTransform();
+    srand(time(NULL));
 }
 
 //---------------------------------------------------------
@@ -335,8 +334,8 @@ EnumDefs::VehicleStates MotionController::swarmInit(){
         return EnumDefs::SWARMINIT;
     }
     for(int i = 0; i<numlinks; i++){
-        nowZeta.addtoTheta(randgen.bounded(0, 359));
-        nowZeta.addtoLambda(randgen.bounded(5.9)+0.1);
+        nowZeta.addtoTheta(rand() % 360);
+        nowZeta.addtoLambda(rand() % 7+0.1);
     }
     nowZeta.setAttitude(attitude);
     point = linktoref();

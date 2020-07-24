@@ -23,7 +23,8 @@
 #include <string>
 #include <iostream>
 #include "zeta.h"
-#include <QRandomGenerator>
+#include <stdlib.h>
+#include <time.h>
 
 
 class MotionController : public QThread, public AppCastingMOOSApp {
