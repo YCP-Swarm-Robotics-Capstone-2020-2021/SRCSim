@@ -28,10 +28,13 @@ INCLUDEPATH += \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include \
+ ../VehicleStateMachine/src/ \
+ ../MotionController/src/
 
 SOURCES += src/main.cpp \
  src/SwarmHandler.cpp \
- src/SwarmHandler_Info.cpp
+ src/SwarmHandler_Info.cpp \
+ ../MotionController/src/zeta.cpp
 
 HEADERS += \
  src/SwarmHandler.h \

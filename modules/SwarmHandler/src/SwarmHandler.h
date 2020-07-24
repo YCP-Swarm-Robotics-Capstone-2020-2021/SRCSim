@@ -16,7 +16,18 @@
 #include <ivp/ACTable.h>
 #include <QString>
 #include <QThread>
+#include <VehicleStateDefines.h>
+#include "zeta.h"
 
+struct Robot
+{
+    QString id;
+    EnumDefs::VehicleStates state;
+    double xOffset;
+    double yOffset;
+    int linkageAssignment;
+    QList<QString> *podMates;
+};
 
 class SwarmHandler : public QObject, public AppCastingMOOSApp
 {
@@ -34,12 +45,19 @@ public:
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();
+   bool onChangeState(CMOOSMsg & msg);
+   void onRegistration(CMOOSMsg & msg);
+   bool onCurrentState(CMOOSMsg & msg);
+   bool checkState(EnumDefs::VehicleStates state);
+   void initializeSwarm();
 
  protected:
    void registerVariables();
 
  private: // Configuration variables
-
+    EnumDefs::VehicleStates state;
+    QMap<QString, Robot> *registration;
+    Zeta *zetaControl;
 signals:
 
 public slots:

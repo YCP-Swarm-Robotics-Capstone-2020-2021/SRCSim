@@ -8,6 +8,7 @@ ProcessConfig = ANTLER
     Run = MOOSDB    @ NewConsole = true
     Run = ../modules/StageInterface/bin/StageInterface @ NewConsole = false ~ StageInterface
     Run = ../modules/UserInterface/bin/UserInterface @ NewConsole = false ~ UserInterface
+    Run = ../modules/SwarmHandler/bin/SwarmHandler @ NewConsole = false ~ SwarmHandler
     Run = uProcessWatch @ NewConsole = true ~ uProcessWatch
     Run = pLogger @ NewConsole = false ~ pLogger
     Run = pShare @ NewConsole = false ~pShare
@@ -24,10 +25,16 @@ ProcessConfig = StageInterface
    NumBots      = $(NUMBOTS)
 }
 
+ProcessConfig = SwarmHandler
+{
+   AppTick      = 4
+   CommsTick    = 4
+}
+
 ProcessConfig = uProcessWatch
 {
     watch_all = false
-    watch = StageInterface,pLogger,pShare
+    watch = StageInterface,pLogger,pShare,SwarmHandler
 }
 
 ProcessConfig = pLogger

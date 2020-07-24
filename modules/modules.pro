@@ -5,4 +5,6 @@ SUBDIRS += \
     Pos_module/Pos_module.pro \
     VehicleStateMachine/VehicleStateMachine.pro \
     MotionController/MotionController.pro \
-    UserInterface/UserInterface.pro
+    UserInterface/UserInterface.pro \
+    SwarmHandler/SwarmHandler.pro
+

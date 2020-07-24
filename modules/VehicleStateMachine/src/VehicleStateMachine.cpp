@@ -17,6 +17,9 @@ using namespace std;
 VehicleStateMachine::VehicleStateMachine()
 {
     this->currentState = EnumDefs::VehicleStates::STANDBY;
+    srand(MOOSTime());
+    timeout = rand() % NUM_MAX_TIMEOUT;
+    timeout *= 4; //account for the apptick
 }
 
 //---------------------------------------------------------
@@ -50,7 +53,8 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
 
   if(key == "Change_State")
     onChangeState(msg);
-
+  else if(key == "Reg_Ack")
+      registered = true;
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -76,8 +80,15 @@ bool VehicleStateMachine::Iterate()
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
+if(count % (int)timeout == 0){
+    onPingTimeout();
+}
+if(!registered){
+    Notify("Reg_In", "id="+id.toStdString(), MOOSTime());
+}
 Notify("Current_State", QString::fromStdString("State = "+to_string(currentState)).toStdString()+", id="+id.toStdString(), MOOSTime());
 Notify("id", id.toStdString(), MOOSTime());
+count++;
 return(true);
 }
 
@@ -110,7 +121,6 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  else if(param == "bar") {
    handled = true;
  }
-
  if(!handled)
    reportUnhandledConfigWarning(orig);
 
@@ -128,6 +138,7 @@ void VehicleStateMachine::registerVariables()
 AppCastingMOOSApp::RegisterVariables();
 // Register("FOOBAR", 0);
     Register("Change_State");
+    Register("Reg_Ack");
 }
 
 
@@ -160,23 +171,30 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
         return MOOSFail("VehicleStateMachine: Unable to get State variable from Change_State message.");
     }
     if(state < EnumDefs::VehicleStates::ENUMLAST && state >= 0 && state != EnumDefs::UILAST){
-        if(state == EnumDefs::SWARMMODE){
+        if (state == EnumDefs::ALLSTOP){
+            updateState = EnumDefs::ALLSTOP;
+        }
+        else if(state == EnumDefs::SWARMMODE && currentState == EnumDefs::STANDBY){
             updateState = EnumDefs::SWARMINIT;
         }
         else if(state == EnumDefs::SWARMRUN && currentState == EnumDefs::SWARMSTANDBY){
             updateState = EnumDefs::SWARMRUN;
         }
-        else if(state == EnumDefs::SWARMSTANDBY && currentState == EnumDefs::SWARMINIT){
+        else if(state == EnumDefs::SWARMSTANDBY && (currentState == EnumDefs::SWARMINIT || currentState == EnumDefs::SWARMRUN)){
             updateState = EnumDefs::SWARMSTANDBY;
         }
         else if(currentState == EnumDefs::STANDBY || state == EnumDefs::STANDBY ){
             updateState = EnumDefs::VehicleStates(state);
         }
-
     } else {
         return MOOSDebugWrite("VehicleStateMachine: Received a Change_State message that contains an invalid state.");
     }
 
     currentState = updateState;
     return true;
+}
+
+void VehicleStateMachine::onPingTimeout()
+{
+    Notify("Narwhal_Current_State", "State="+QString::number(currentState).toStdString()+", id="+id.toStdString(), MOOSTime());
 }

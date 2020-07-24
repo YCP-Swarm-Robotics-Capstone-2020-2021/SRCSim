@@ -147,6 +147,7 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
 cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
@@ -172,10 +173,12 @@ if [ ! -e targ_$GCSNAME.moos ]; then echo "no targ_$GCSNAME.moos";  exit; fi
 cd ../modules
 for i in ./*; do
     if [[ -d $i ]]; then
-        cd $i
-        qmake
-        make
-        cd ..
+	if [[ "$i" != "./MotionController" ]]; then
+            cd $i
+            qmake
+            make
+            cd ..
+	fi
     fi
 done
 cd ../missions
