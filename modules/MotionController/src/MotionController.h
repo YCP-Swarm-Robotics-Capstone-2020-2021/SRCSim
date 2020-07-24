@@ -27,6 +27,7 @@
 #include <time.h>
 
 
+
 class MotionController : public QThread, public AppCastingMOOSApp {
     Q_OBJECT
 public:

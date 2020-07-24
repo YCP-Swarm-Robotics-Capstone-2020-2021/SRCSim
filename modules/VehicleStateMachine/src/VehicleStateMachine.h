@@ -17,6 +17,8 @@
 #include <QString>
 #include <QThread>
 #include "VehicleStateDefines.h"
+#include <QMap>
+#include <QTimer>
 
 class VehicleStateMachine : public QObject, public AppCastingMOOSApp
 {
@@ -42,10 +44,15 @@ public:
  private: // Configuration variables
    EnumDefs::VehicleStates currentState;
    QString id;
+   bool registered = false;
+   double timeout;
+   int count;
 
 signals:
 
 public slots:
+   void onPingTimeout();
+
 };
 
 #endif 

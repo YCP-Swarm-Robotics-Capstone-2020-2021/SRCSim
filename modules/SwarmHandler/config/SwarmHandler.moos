@@ -1,0 +1,9 @@
+//------------------------------------------------
+// SwarmHandler config block
+
+ProcessConfig = SwarmHandler
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+

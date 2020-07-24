@@ -4,7 +4,10 @@
 #include <QObject>
 #include <QtCore>
 #include <QString>
+#include <cstdlib>
+#include <ctime>
 
+#define NUM_MAX_TIMEOUT 5
 
 class EnumDefs : public QObject{
 public:
