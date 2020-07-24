@@ -82,7 +82,6 @@ public:
    QMap<QString,Zeta> *podmates;
    Zeta nowZeta;
    bool swarmflag = false;
-   QRandomGenerator randgen;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
