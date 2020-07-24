@@ -22,7 +22,7 @@
 class Robot
 {
 public:
-    Robot(EnumDefs::VehicleStates State){state=State;}
+    Robot(EnumDefs::VehicleStates State){state=State; podMates=new QList<QString>();}
     QString id;
     EnumDefs::VehicleStates state;
     double xOffset;
@@ -60,6 +60,7 @@ public:
     EnumDefs::VehicleStates state;
     QMap<QString, Robot*> *registration;
     Zeta *zetaControl;
+    bool SwarmInitialized = false;
 signals:
 
 public slots:

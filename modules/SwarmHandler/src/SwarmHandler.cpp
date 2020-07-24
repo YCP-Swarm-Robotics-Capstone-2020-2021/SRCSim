@@ -242,6 +242,7 @@ bool SwarmHandler::checkState(EnumDefs::VehicleStates state)
         if(iter.value()->state != state){
             return false;
         }
+        iter++;
     }
     return true;
 }
@@ -252,29 +253,36 @@ void SwarmHandler::initializeSwarm()
     int numLinkagesInFormation = zetaControl->getWholeLambda().count();
     int linkageBotCounts[numLinkagesInFormation];
     int linkageOffsetCounts[numLinkagesInFormation];
+    for(int i = 0; i<numLinkagesInFormation; i++){
+        linkageBotCounts[i] = 0;
+        linkageOffsetCounts[i] = 0;
+    }
     QMap<QString, Robot*>::iterator iter = registration->begin();
 
     //Setup topology of the formation
-    iter.value()->podMates->append(QList<QString>{"Narwhal", iter++.key()});
-    while(iter != registration->end()--){
-        iter.value()->podMates = new QList<QString>{iter--.key(), (iter++)++.key()};
-    }
-    iter.value()->podMates=new QList<QString>{iter--.key()};
+    if(!SwarmInitialized){
+        iter.value()->podMates->append(QList<QString>{"Narwhal", iter++.key()});
+        while(iter != registration->end()--){
+            iter.value()->podMates = new QList<QString>{iter--.key(), (iter++)++.key()};
+        }
+        iter.value()->podMates=new QList<QString>{iter--.key()};
 
-    //Setup Linkage assignments.
-    iter = registration->begin();
-    for(int i = 0; i<numRobotsInSwarm; i++, iter++){
-        iter.value()->linkageAssignment = i%numLinkagesInFormation;
-        linkageBotCounts[i%numLinkagesInFormation]++;
-        linkageOffsetCounts[i%numLinkagesInFormation]++;
-    }
+        //Setup Linkage assignments.
+        iter = registration->begin();
+        for(int i = 0; i<numRobotsInSwarm; i++, iter++){
+            iter.value()->linkageAssignment = i%numLinkagesInFormation;
+            linkageBotCounts[i%numLinkagesInFormation]++;
+            linkageOffsetCounts[i%numLinkagesInFormation]++;
+        }
 
-    iter = registration->begin();
-    while(iter != registration->end()){
-        int link = iter.value()->linkageAssignment;
-        iter.value()->xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
-        iter.value()->yOffset = 0.0;
-        iter++;
+        iter = registration->begin();
+        while(iter != registration->end()){
+            int link = iter.value()->linkageAssignment;
+            iter.value()->xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
+            iter.value()->yOffset = 0.0;
+            iter++;
+        }
+        SwarmInitialized = true;
     }
 
     iter = registration->begin();
@@ -285,11 +293,11 @@ void SwarmHandler::initializeSwarm()
                               ", linkageNum="+QString::number(iter.value()->linkageAssignment) +
                               ", numLinks="+QString::number(numLinkagesInFormation)+
                               ", neighborIds=";
-            QList<QString>::iterator it= iter.value()->podMates->begin();
-            while(it != iter.value()->podMates->end()){
-                message+=*it;
+            for(int i = 0; i<iter.value()->podMates->count(); i++){
+                message += iter.value()->podMates->value(i);
             }
             Notify(iter.key().toStdString()+"_ZetaInit", message.toStdString(), MOOSTime());
         }
+        iter++;
     }
 }
