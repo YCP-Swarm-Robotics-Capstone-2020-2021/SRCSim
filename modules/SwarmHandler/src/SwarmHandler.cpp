@@ -261,11 +261,26 @@ void SwarmHandler::initializeSwarm()
 
     //Setup topology of the formation
     if(!SwarmInitialized){
-        iter.value()->podMates->append(QList<QString>{"Narwhal", iter++.key()});
-        while(iter != registration->end()--){
-            iter.value()->podMates = new QList<QString>{iter--.key(), (iter++)++.key()};
+        iter.value()->podMates->append("Narwhal");
+        if(numRobotsInSwarm != 1){
+            iter++;
+            QString next = iter.key();
+            iter--;
+            iter.value()->podMates->append(next);
+            QString previous = iter.key();
+            iter++;
+            while(iter != registration->end()){
+                iter.value()->podMates->append(previous);
+                previous=iter.key();
+                iter++;
+                if(iter != registration->end()){
+                    QString next = iter.key();
+                    iter--;
+                    iter.value()->podMates->append(next);
+                    iter++;
+                }
+            }
         }
-        iter.value()->podMates=new QList<QString>{iter--.key()};
 
         //Setup Linkage assignments.
         iter = registration->begin();
@@ -280,6 +295,7 @@ void SwarmHandler::initializeSwarm()
             int link = iter.value()->linkageAssignment;
             iter.value()->xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
             iter.value()->yOffset = 0.0;
+            linkageOffsetCounts[link]--;
             iter++;
         }
         SwarmInitialized = true;
@@ -293,8 +309,9 @@ void SwarmHandler::initializeSwarm()
                               ", linkageNum="+QString::number(iter.value()->linkageAssignment) +
                               ", numLinks="+QString::number(numLinkagesInFormation)+
                               ", neighborIds=";
-            for(int i = 0; i<iter.value()->podMates->count(); i++){
-                message += iter.value()->podMates->value(i);
+            message += iter.value()->podMates->value(0);
+            for(int i = 1; i<iter.value()->podMates->count(); i++){
+                message += "|"+iter.value()->podMates->value(i);
             }
             Notify(iter.key().toStdString()+"_ZetaInit", message.toStdString(), MOOSTime());
         }
