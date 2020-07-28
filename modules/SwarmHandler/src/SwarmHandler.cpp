@@ -1,5 +1,5 @@
 /************************************************************/
-/*    NAME: jsam                                              */
+/*    NAME: Josiah Sam                                             */
 /*    ORGN: YCP                                             */
 /*    FILE: SwarmHandler.cpp                                        */
 /*    DATE: 07/23/2020                                         */
@@ -97,6 +97,9 @@ AppCastingMOOSApp::Iterate();
     Notify("Registered_Bots", messageData.toStdString(), MOOSTime());
     if(checkState(EnumDefs::VehicleStates::SWARMINIT)){
         initializeSwarm();
+    }
+    else if(checkState(EnumDefs::VehicleStates::SWARMSTANDBY)){
+        Notify("Change_State","State="+QString::number(EnumDefs::VehicleStates::SWARMRUN).toStdString(),MOOSTime());
     }
 return(true);
 }
@@ -313,7 +316,7 @@ void SwarmHandler::initializeSwarm()
             for(int i = 1; i<iter.value()->podMates->count(); i++){
                 message += "|"+iter.value()->podMates->value(i);
             }
-            Notify(iter.key().toStdString()+"_ZetaInit", message.toStdString(), MOOSTime());
+            Notify(iter.key().toStdString()+"_Zeta_Init", message.toStdString(), MOOSTime());
         }
         iter++;
     }

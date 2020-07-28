@@ -59,6 +59,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Zeta_Init"){
       handleZetaInit(msg);
   }
+  else if(key == "Neighbor_Zeta"){
+      handleNeighborZeta(msg);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -180,7 +183,8 @@ void MotionController::registerVariables()
 AppCastingMOOSApp::RegisterVariables();
 Register("Current_State");
 Register("Current_Pos");
-Register("ZetaInit");
+Register("Zeta_Init");
+Register("Neighbor_Zeta");
 }
 
 
@@ -235,7 +239,7 @@ bool MotionController::handleZetaInit(CMOOSMsg &msg){
      MOOSValFromString(ylinkoff , msg.GetString(), "yOffset");
      MOOSValFromString(linknum , msg.GetString(), "linkageNum");
      MOOSValFromString(numlinks, msg.GetString(), "numLinks");
-     MOOSValFromString(ids , msg.GetString(), "xOffset");
+     MOOSValFromString(ids , msg.GetString(), "neighborIds");
      idlist = QString::fromStdString(ids).split("|");
      for(int i = 0; i< idlist.size(); i++){
          podmates->insert(idlist[i], Zeta());
@@ -245,6 +249,38 @@ bool MotionController::handleZetaInit(CMOOSMsg &msg){
 
 
      return true;
+}
+
+bool MotionController::handleNeighborZeta(CMOOSMsg &msg){
+    if(!msg.IsString()){
+       return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+    }
+    string id;
+    double xPos,yPos, att;
+    string theta, lambda;
+    QList<double> thetalist, lambdalist;
+    MOOSValFromString(id , msg.GetString(), "id");
+    MOOSValFromString(xPos , msg.GetString(), "xPos");
+    MOOSValFromString(yPos , msg.GetString(), "yPos");
+    MOOSValFromString(att , msg.GetString(), "Attitude");
+    MOOSValFromString(theta , msg.GetString(), "Theta");
+    MOOSValFromString(lambda , msg.GetString(), "Lambda");
+    thetalist = toDoubleList(QString::fromStdString(theta).split("|"));
+    lambdalist = toDoubleList(QString::fromStdString(lambda).split("|"));
+    podmates->find(QString::fromStdString(id))->setxPos(xPos);
+    podmates->find(QString::fromStdString(id))->setyPos(yPos);
+    podmates->find(QString::fromStdString(id))->setAttitude(att);
+    podmates->find(QString::fromStdString(id))->setWholeTheta(thetalist);
+    podmates->find(QString::fromStdString(id))->setWholeLambda(lambdalist);
+    return true;
+}
+
+QList<double> toDoubleList(QList<QString> input){
+    QList<double> toReturn;
+    for(int i=0; i<input.size(); i++){
+     toReturn.append(input[i].toDouble());
+    }
+    return toReturn;
 }
 
 void MotionController::run(){
@@ -315,17 +351,24 @@ void MotionController::demoRun()
 }
 
 QPoint MotionController::linktoref(){
-    QPoint point = QPoint(xlinkoff*nowZeta.getLambda(linknum), ylinkoff*nowZeta.getLambda(linknum));
+    QPoint point = QPoint(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
     for( int i = linknum-1; i>=0; i--){
-        point.setX(point.x()*cos(-nowZeta.getTheta(i)) - point.y()*sin(-nowZeta.getTheta(i)));
-        point.setY(point.x()*sin(-nowZeta.getTheta(i)) + point.y()*cos(-nowZeta.getTheta(i)));
-        point.setX(point.x() + nowZeta.getLambda(i));
+        point.setX(point.x()*cos(-CurrentZeta.getTheta(i)) - point.y()*sin(-CurrentZeta.getTheta(i)));
+        point.setY(point.x()*sin(-CurrentZeta.getTheta(i)) + point.y()*cos(-CurrentZeta.getTheta(i)));
+        point.setX(point.x() + CurrentZeta.getLambda(i));
     }
     return point;
 }
 
 void MotionController::swarmRun(){
-
+    Zeta DiffZeta = Zeta();
+    for(int i=0; i<podmates->size(); i++){
+        Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", CurrentZeta.stringify().toStdString(), MOOSTime());
+    }
+    for(int i=0; i<podmates->size(); i++){
+        DiffZeta = DiffZeta + podmates->values()[i] - (CurrentZeta - podmates->values()[i])*kappa;
+    }
+    CurrentZeta = CurrentZeta + DiffZeta * dt;
 }
 
 EnumDefs::VehicleStates MotionController::swarmInit(){
@@ -334,13 +377,13 @@ EnumDefs::VehicleStates MotionController::swarmInit(){
         return EnumDefs::SWARMINIT;
     }
     for(int i = 0; i<numlinks; i++){
-        nowZeta.addtoTheta(rand() % 360);
-        nowZeta.addtoLambda(rand() % 7+0.1);
+        CurrentZeta.addtoTheta(rand() % 360);
+        CurrentZeta.addtoLambda(rand() % 7+0.1);
     }
-    nowZeta.setAttitude(attitude);
+    CurrentZeta.setAttitude(attitude);
     point = linktoref();
-    nowZeta.setxPos(x-point.x());
-    nowZeta.setyPos(y-point.y());
+    CurrentZeta.setxPos(x-point.x());
+    CurrentZeta.setyPos(y-point.y());
     return EnumDefs::SWARMSTANDBY;
 
 }

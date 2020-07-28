@@ -46,6 +46,8 @@ public:
    bool handleCurrentPos(CMOOSMsg &msg);
    bool handleCurrentState(CMOOSMsg &msg);
    bool handleZetaInit(CMOOSMsg &msg);
+   bool handleNeighborZeta(CMOOSMsg &msg);
+   QList<double> toDoubleList(QList<QString>);
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();
@@ -80,8 +82,10 @@ public:
    int linknum = 0;
    int numlinks = 0;
    QMap<QString,Zeta> *podmates;
-   Zeta nowZeta;
+   Zeta CurrentZeta;
    bool swarmflag = false;
+   double kappa = 0.0;
+   double dt = 0.0;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}

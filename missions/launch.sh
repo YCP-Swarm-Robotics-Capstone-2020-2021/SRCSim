@@ -5,6 +5,8 @@
 TIME_WARP=1
 NUM_BOTS=2
 BUILD_MODE=0
+KAPPA=1
+DT=1
 JUST_MAKE="no"
 LAUNCH_GUI="yes"
 version=0.0.1
@@ -14,6 +16,8 @@ print_help(){
     echo "      --num_bots | -n         This flag sets how many robots you want the simulation to launch."
     echo "      --keep     | -k         Pass this flag to ensure that the world files are not deleted."
     echo "      --build    | -b         Pass this flag to only build"
+    echo "      --dt       | -d         Pass this flag to edit dt"
+    echo "      --kappa    | -K         Pass this flag to edit kappa"
     echo
     exit 0
 }
@@ -37,6 +41,14 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
   -b | --build )
     BUILD_MODE=1
     echo "Build only"
+    ;;
+  -d | --dt )
+    shift;
+    DT=$1
+    ;;
+  -K | --kappa )
+    shift;
+    KAPPA=$1
     ;;
   * )
     print_help

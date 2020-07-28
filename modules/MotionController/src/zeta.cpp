@@ -181,17 +181,15 @@ QList<double> Zeta::multiplyList(QList<double> lista, double d){
 
 QString Zeta::stringify()
 {
-    QString slambda = "(";
-    QString stheta = "(";
+    QString slambda = "";
+    QString stheta = "";
     for(int i = 0; i<lambda.size(); i++){
         slambda += QString::number(lambda[i]) + "| ";
     }
-    slambda = ")";
 
     for(int i = 0; i<theta.size(); i++){
         stheta += QString::number(theta[i]) + "| ";
     }
-    stheta = ")";
 
     return "xPos="+QString::number(xPos)+", yPos="+QString::number(yPos)+",Theta="+stheta+", Lambda="+slambda+", Attitude="+QString::number(attitude);
 }
