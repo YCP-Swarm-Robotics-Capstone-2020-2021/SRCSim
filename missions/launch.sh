@@ -139,7 +139,6 @@ ProcessConfig = pShare
 {
      Input = route=\$(GCSIP):\$(GCSPORT)
      Input = route=multicast_\$(BROADCASTNUM)
-
      Output = src_name=Change_State, route=multicast_\$(BROADCASTNUM)
 EOF
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
@@ -148,9 +147,31 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
+}
+EOF
+
+cat > plug_VehiclepShare.moos <<EOF
+ProcessConfig = pShare
+{
+     Input=route=\$(VIP):\$(VPORT)
+     Input=route=multicast_\$(BROADCASTNUM)
+
+     Output=src_name=Narwhal_Current_State,dest_name=Current_State,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=Reg_In,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=Speed_Curv,route=\$(GCSIP):\$(GCSPORT)
+EOF
+PORT=8300
+for ((i=0 ; i < $NUM_BOTS ; i++)); do
+    PORT=$(($PORT+5))
+cat >> plug_VehiclepShare.moos <<EOF
+     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=localhost:$PORT
+EOF
+done
+cat >> plug_VehiclepShare.moos <<EOF
 }
 EOF
 
