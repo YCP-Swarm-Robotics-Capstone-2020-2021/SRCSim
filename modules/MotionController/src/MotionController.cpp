@@ -360,6 +360,33 @@ QPoint MotionController::linktoref(){
     return point;
 }
 
+double MotionController::pointtoTraj(QPoint point){
+    double xdiff = point.x()- x;
+    double ydiff = point.y()- y;
+    double phi;
+    if(xdiff >=0 && ydiff >= 0){
+         phi = atan(xdiff/ydiff);
+    }
+    else if(xdiff <=0 && ydiff >= 0){
+         phi = atan(ydiff/xdiff)+90;
+    }
+    else if(xdiff <=0 && ydiff <= 0){
+         phi = atan(xdiff/ydiff)+180;
+    }
+    else{
+         phi = atan(ydiff/xdiff)+270;
+    }
+    phi += attitude;
+    if(phi > 360){
+        phi -= 360;
+    }
+    else if( phi < 0 ){
+        phi += 360;
+    }
+    return phi;
+
+}
+
 void MotionController::swarmRun(){
     Zeta DiffZeta = Zeta();
     for(int i=0; i<podmates->size(); i++){
@@ -369,6 +396,11 @@ void MotionController::swarmRun(){
         DiffZeta = DiffZeta + podmates->values()[i] - (CurrentZeta - podmates->values()[i])*kappa;
     }
     CurrentZeta = CurrentZeta + DiffZeta * dt;
+    goalpoint= linktoref();
+    goalpoint.setX(goalpoint.x()+CurrentZeta.getxPos());
+    goalpoint.setY(goalpoint.y()+CurrentZeta.getyPos());
+    goalangle = pointtoTraj(goalpoint);
+
 }
 
 EnumDefs::VehicleStates MotionController::swarmInit(){
@@ -385,5 +417,28 @@ EnumDefs::VehicleStates MotionController::swarmInit(){
     CurrentZeta.setxPos(x-point.x());
     CurrentZeta.setyPos(y-point.y());
     return EnumDefs::SWARMSTANDBY;
+
+}
+void MotionController::robotMover(){
+        if(attitude < goalangle-10){
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+        else if(attitude > goalangle+10){
+            roboCurv = -90.0;
+            roboSpeed = turn_speed;
+        }
+        else{
+            if((x > goalpoint.x()-0.5 && x <goalpoint.x()+0.5)&& (y > goalpoint.y()-0.5 && y <goalpoint.y()+0.5)){
+                roboSpeed = 0;
+                roboCurv = 0;
+            }
+            else{
+                roboSpeed = max_speed;
+                roboCurv = 0;
+            }
+        }
+        QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
+        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 
 }

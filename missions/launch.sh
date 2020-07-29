@@ -132,14 +132,7 @@ GCSIP="localhost"
 GCSPORT=9000
 VIP="localhost"
 BROADCASTNUM=1
-PORT=8300
-for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-    PORT=$(($PORT+5))
-    nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
-        VNAME="Dolphin$i"                                 VPORT=$PORT \
-        GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
-        BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP
-done
+
 #nsplug meta_vehicle.moos targ_$VNAME2.moos -f WARP=$TIME_WARP \
 #    VNAME=$VNAME2          VPORT="8310" \
 #    GCSIP=$GCSIP           GCSPORT=$GCSPORT    \
@@ -192,6 +185,15 @@ GCSIP=$GCSIP           GCSPORT=$GCSPORT    \
 BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
 UPDATEPOSE=$UPDATEPOSE                      WORLDFILE=$WORLDFILE"
 
+PORT=8300
+for ((i = 0 ; i < $NUM_BOTS ; i++)); do
+    PORT=$(($PORT+5))
+    nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
+        VNAME="Dolphin$i"                                 VPORT=$PORT \
+        GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
+        BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
+        KAPPA=$KAPPA                                 DT=$DT
+done
 nsplug meta_GroundControlStation.moos targ_$GCSNAME.moos -f WARP=$TIME_WARP \
     $GCSARGS
     

@@ -47,7 +47,7 @@ public:
    bool handleCurrentState(CMOOSMsg &msg);
    bool handleZetaInit(CMOOSMsg &msg);
    bool handleNeighborZeta(CMOOSMsg &msg);
-   QList<double> toDoubleList(QList<QString>);
+
 
  protected: // Standard AppCastingMOOSApp function to overload
    bool buildReport();
@@ -62,7 +62,9 @@ public:
    void swarmRun();
    EnumDefs::VehicleStates swarmInit();
    QPoint linktoref();
-
+   QList<double> toDoubleList(QList<QString>);
+   double pointtoTraj(QPoint);
+   void robotMover();
 
  private: // Configuration variables
    double roboSpeed = 0;
@@ -86,6 +88,8 @@ public:
    bool swarmflag = false;
    double kappa = 0.0;
    double dt = 0.0;
+   QPoint goalpoint;
+   double goalangle;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
