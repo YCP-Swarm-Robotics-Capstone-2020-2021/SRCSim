@@ -101,6 +101,9 @@ AppCastingMOOSApp::Iterate();
     else if(checkState(EnumDefs::VehicleStates::SWARMSTANDBY)){
         Notify("Change_State","State="+QString::number(EnumDefs::VehicleStates::SWARMRUN).toStdString(),MOOSTime());
     }
+    else if(checkState(EnumDefs::VehicleStates::SWARMRUN)){
+        Notify("Dolphin0_Neighbor_Zeta", "id= Narwal, " +zetaControl->stringify().toStdString(),MOOSTime());
+    }
 return(true);
 }
 

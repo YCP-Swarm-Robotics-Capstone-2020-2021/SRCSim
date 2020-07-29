@@ -275,7 +275,7 @@ bool MotionController::handleNeighborZeta(CMOOSMsg &msg){
     return true;
 }
 
-QList<double> toDoubleList(QList<QString> input){
+QList<double> MotionController::toDoubleList(QList<QString> input){
     QList<double> toReturn;
     for(int i=0; i<input.size(); i++){
      toReturn.append(input[i].toDouble());
@@ -390,7 +390,7 @@ double MotionController::pointtoTraj(QPoint point){
 void MotionController::swarmRun(){
     Zeta DiffZeta = Zeta();
     for(int i=0; i<podmates->size(); i++){
-        Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", CurrentZeta.stringify().toStdString(), MOOSTime());
+        Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", "id="+ id.toStdString()+", "+ CurrentZeta.stringify().toStdString(), MOOSTime());
     }
     for(int i=0; i<podmates->size(); i++){
         DiffZeta = DiffZeta + podmates->values()[i] - (CurrentZeta - podmates->values()[i])*kappa;
