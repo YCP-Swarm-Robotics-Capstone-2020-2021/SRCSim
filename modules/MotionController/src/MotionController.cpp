@@ -18,7 +18,8 @@ MotionController::MotionController()
 {
     entryZone = new QLabel("Enter input");
     podmates = new QMap<QString, Zeta>();
-    srand(time(NULL));
+    QHash<QString, double> idhash;
+    srand( idhash.value(id));
 }
 
 //---------------------------------------------------------
@@ -120,6 +121,7 @@ switch(state){
         break;
     }
     case EnumDefs::VehicleStates::SWARMRUN:{
+        robotMover();
         swarmRun();
         break;
     }
@@ -392,7 +394,7 @@ void MotionController::swarmRun(){
     for(int i=0; i<podmates->size(); i++){
         Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", "id="+ id.toStdString()+", "+ CurrentZeta.stringify().toStdString(), MOOSTime());
     }
-    for(int i=0; i<podmates->size(); i++){
+    for(int i=0; i<podmates->values().size(); i++){
         DiffZeta = DiffZeta + podmates->values()[i] - (CurrentZeta - podmates->values()[i])*kappa;
     }
     CurrentZeta = CurrentZeta + DiffZeta * dt;
@@ -400,6 +402,7 @@ void MotionController::swarmRun(){
     goalpoint.setX(goalpoint.x()+CurrentZeta.getxPos());
     goalpoint.setY(goalpoint.y()+CurrentZeta.getyPos());
     goalangle = pointtoTraj(goalpoint);
+    Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
 
 }
 
@@ -440,5 +443,6 @@ void MotionController::robotMover(){
         }
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
 
 }

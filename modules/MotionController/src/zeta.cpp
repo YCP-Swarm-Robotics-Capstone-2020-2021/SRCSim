@@ -146,12 +146,14 @@ QList<double> Zeta::addList(QList<double> lista, QList<double> listb){
     QList<double> toReturn = {};
     for(int i = 0; i< lista.size() || i< listb.size(); i++){
         if(i >= lista.size()){
-            toReturn[i] = listb[i];
+            toReturn.append( listb[i]);
         }
         else if(i >= listb.size()){
-            toReturn[i] = lista[i];
+            toReturn.append(  lista[i]);
         }
-        toReturn[i] = lista[i] + listb[i];
+        else{
+            toReturn.append( lista[i] + listb[i]);
+        }
     }
     return toReturn;
 
@@ -161,12 +163,14 @@ QList<double> Zeta::subtractList(QList<double> lista, QList<double> listb){
     QList<double> toReturn = {};
     for(int i = 0; i< lista.size() || i< listb.size(); i++){
         if(i >= lista.size()){
-            toReturn[i] = -listb[i];
+            toReturn.append( -listb[i]);
         }
         else if(i >= listb.size()){
-            toReturn[i] = lista[i];
+            toReturn.append( lista[i]);
         }
-        toReturn[i] = lista[i] - listb[i];
+        else{
+            toReturn.append( lista[i] - listb[i]);
+        }
     }
     return toReturn;
 
@@ -183,12 +187,13 @@ QString Zeta::stringify()
 {
     QString slambda = "";
     QString stheta = "";
-    for(int i = 0; i<lambda.size(); i++){
-        slambda += QString::number(lambda[i]) + "| ";
+    slambda += QString::number(lambda[0]);
+    for(int i = 1; i<lambda.size(); i++){
+        slambda +=  "| " + QString::number(lambda[i]) ;
     }
-
-    for(int i = 0; i<theta.size(); i++){
-        stheta += QString::number(theta[i]) + "| ";
+    stheta += QString::number(theta[0]);
+    for(int i = 1; i<theta.size(); i++){
+        stheta += "| "+ QString::number(theta[i]);
     }
 
     return "xPos="+QString::number(xPos)+", yPos="+QString::number(yPos)+",Theta="+stheta+", Lambda="+slambda+", Attitude="+QString::number(attitude);

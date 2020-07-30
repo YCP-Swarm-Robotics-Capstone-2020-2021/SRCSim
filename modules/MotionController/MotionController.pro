@@ -36,6 +36,7 @@ SOURCES += src/main.cpp \
  src/KeyboardHandler.cpp \
  src/MotionController.cpp \
  src/MotionController_Info.cpp \
+ src/main_testing.cpp \
  src/zeta.cpp
 
 HEADERS += \
