@@ -86,8 +86,8 @@ public:
    QMap<QString,Zeta> *podmates;
    Zeta CurrentZeta;
    bool swarmflag = false;
-   double kappa = 0.0;
-   double dt = 0.0;
+   double kappa = 1.0;
+   double dt = 0.02;
    QPoint goalpoint;
    double goalangle;
 

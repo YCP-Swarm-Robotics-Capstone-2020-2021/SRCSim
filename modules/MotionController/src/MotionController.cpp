@@ -18,8 +18,8 @@ MotionController::MotionController()
 {
     entryZone = new QLabel("Enter input");
     podmates = new QMap<QString, Zeta>();
-    QHash<QString, double> idhash;
-    srand( idhash.value(id));
+   // QHash<QString, double> idhash;
+  //  srand( idhash.value(id)+MOOSTime());
 }
 
 //---------------------------------------------------------
@@ -366,17 +366,20 @@ double MotionController::pointtoTraj(QPoint point){
     double xdiff = point.x()- x;
     double ydiff = point.y()- y;
     double phi;
-    if(xdiff >=0 && ydiff >= 0){
-         phi = atan(xdiff/ydiff);
+    if (ydiff == 0 && xdiff == 0){
+        return 0;
+    }
+    else if(xdiff >=0 && ydiff >= 0){
+         phi = atan(xdiff/ydiff)*180.0/PI;
     }
     else if(xdiff <=0 && ydiff >= 0){
-         phi = atan(ydiff/xdiff)+90;
+         phi = atan(ydiff/xdiff)*180.0/PI+90;
     }
     else if(xdiff <=0 && ydiff <= 0){
-         phi = atan(xdiff/ydiff)+180;
+         phi = atan(xdiff/ydiff)*180.0/PI+180;
     }
     else{
-         phi = atan(ydiff/xdiff)+270;
+         phi = atan(ydiff/xdiff)*180.0/PI+270;
     }
     phi += attitude;
     if(phi > 360){
@@ -391,23 +394,37 @@ double MotionController::pointtoTraj(QPoint point){
 
 void MotionController::swarmRun(){
     Zeta DiffZeta = Zeta();
+    static int i = 0;
     for(int i=0; i<podmates->size(); i++){
         Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", "id="+ id.toStdString()+", "+ CurrentZeta.stringify().toStdString(), MOOSTime());
     }
-    for(int i=0; i<podmates->values().size(); i++){
-        DiffZeta = DiffZeta + podmates->values()[i] - (CurrentZeta - podmates->values()[i])*kappa;
+    for(int j=0; j<podmates->values().size(); j++){
+        DiffZeta = DiffZeta+podmates->values()[j]-(CurrentZeta-podmates->values()[j])*kappa;
     }
-    CurrentZeta = CurrentZeta + DiffZeta * dt;
+    Notify("Diff_Zeta_Podmate_"+QString::number(0).toStdString(), "id="+ id.toStdString()+", "+ QString::number(podmates->values().size()).toStdString()/*podmates->values()[0].stringify().toStdString()*/, MOOSTime());
+    double numNeighbors = (double)1/(double)podmates->values().size();
+    Notify("Diff_Zeta_Initial", "id="+ id.toStdString()+", "+ DiffZeta.stringify().toStdString(), MOOSTime());
+    DiffZeta = DiffZeta*(numNeighbors);
+    Notify("Diff_Zeta", "id="+ id.toStdString()+", "+ DiffZeta.stringify().toStdString(), MOOSTime());
+    CurrentZeta = CurrentZeta + DiffZeta*dt;
+    //delete DiffZeta;
+    //Notify("Current_Zeta_Of_Podmate", "id="+ id.toStdString()+", "+ podmates->values()[0].stringify().toStdString(), MOOSTime());
     goalpoint= linktoref();
+    Notify("2", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
     goalpoint.setX(goalpoint.x()+CurrentZeta.getxPos());
     goalpoint.setY(goalpoint.y()+CurrentZeta.getyPos());
+    Notify("3", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
     goalangle = pointtoTraj(goalpoint);
-    Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
+    Notify("4", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
+    i++;
+    Notify("Goals", "Angle=" + QString::number(goalangle).toStdString()+ " X="+ QString::number(goalpoint.x()).toStdString()+ " Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
 
 }
 
 EnumDefs::VehicleStates MotionController::swarmInit(){
     QPoint point;
+
+    srand(QString(QCryptographicHash::hash(QByteArray::fromStdString(id.toStdString()), QCryptographicHash::Md5)).toDouble());
     if(!swarmflag){
         return EnumDefs::SWARMINIT;
     }

@@ -42,6 +42,37 @@ QList<double> addList2(QList<double> lista, QList<double> listb){
 
 }
 
+
+double pointtoTraj2(QPoint point, double x, double y){
+    double attitude = 270;
+    double xdiff = point.x()- x;
+    double ydiff = point.y()- y;
+    double phi;
+    if (ydiff == 0 && xdiff == 0){
+        return 0;
+    }
+    else if(xdiff >=0 && ydiff >= 0){
+         phi = atan(xdiff/ydiff)*180/3.14159;
+    }
+    else if(xdiff <=0 && ydiff >= 0){
+         phi = atan(ydiff/xdiff)*180/3.14159+90;
+    }
+    else if(xdiff <=0 && ydiff <= 0){
+         phi = atan(xdiff/ydiff)*180/3.14159+180;
+    }
+    else{
+         phi = atan(ydiff/xdiff)*180/3.14159+270;
+    }
+    phi += attitude;
+    if(phi > 360){
+        phi -= 360;
+    }
+    else if( phi < 0 ){
+        phi += 360;
+    }
+    return phi;
+}
+
 int mainTest()
 {
     Zeta object1 = Zeta();
@@ -77,6 +108,10 @@ int mainTest()
      object3.setWholeLambda(addList2(object1.getWholeLambda(), object2.getWholeLambda()));
      object3.setWholeTheta(addList2(object1.getWholeTheta(),object2.getWholeTheta()));
 
+     QPoint point;
+     point.setX(0);
+     point.setY(0);
+     pointtoTraj2(point, 0, 0);
 return 0;
 }
 
