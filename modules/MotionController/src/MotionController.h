@@ -61,9 +61,9 @@ public:
    void demoRun();
    void swarmRun();
    EnumDefs::VehicleStates swarmInit();
-   QPoint linktoref();
+   QPointF linktoref();
    QList<double> toDoubleList(QList<QString>);
-   double pointtoTraj(QPoint);
+   double pointtoTraj(QPointF);
    void robotMover();
 
  private: // Configuration variables
@@ -87,9 +87,11 @@ public:
    Zeta CurrentZeta;
    bool swarmflag = false;
    double kappa = 1.0;
-   double dt = 0.02;
-   QPoint goalpoint;
+   double dt = 1.0;
+   QPointF goalpoint;
+   double goalx, goaly;
    double goalangle;
+   double posTolerance = 0.2;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}

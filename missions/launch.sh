@@ -92,9 +92,9 @@ EOF
 x=-7
 y=7
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-x=$(($x+2))
+x=$(($x+3))
 if [[ $x -gt 8 ]]; then
-    y=$(($y-1))
+    y=$(($y-2))
     x=-7
 fi
 cat >> $title << EOF

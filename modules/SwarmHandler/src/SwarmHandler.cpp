@@ -230,7 +230,7 @@ bool SwarmHandler::onChangeState(CMOOSMsg &msg)
     if(state == EnumDefs::VehicleStates::SWARMMODE){
         zetaControl->setxPos(-2);
         zetaControl->setyPos(-2);
-        zetaControl->setAttitude(0);
+        zetaControl->setAttitude(0.0);
         zetaControl->setWholeLambda(QList<double>{4, 4, 4, 4});
         zetaControl->setWholeTheta(QList<double>{-90, -90, -90, -90});
     }

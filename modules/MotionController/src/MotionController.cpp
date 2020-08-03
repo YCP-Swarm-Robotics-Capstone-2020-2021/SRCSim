@@ -87,52 +87,49 @@ bool MotionController::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-switch(state){
-    case EnumDefs::VehicleStates::TELEOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
+    switch(state){
+        case EnumDefs::VehicleStates::TELEOP:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::STANDBY:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::ALLSTOP:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::DEMOMODE:{
+            demoRun();
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMINIT:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            state = swarmInit();
+            moveData = "State=" + QString::number(state);
+            Notify("Change_State", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMSTANDBY:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMRUN:{
+            robotMover();
+            swarmRun();
+            break;
+        }
+        default:{
+            MOOSDebugWrite("MotionController: Invalid state");
+            break;
+        }
     }
-    case EnumDefs::VehicleStates::STANDBY:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::ALLSTOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::DEMOMODE:{
-        demoRun();
-        break;
-    }
-    case EnumDefs::VehicleStates::SWARMINIT:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        state = swarmInit();
-        moveData = "State=" + QString::number(state);
-        Notify("Change_State", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::SWARMSTANDBY:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::SWARMRUN:{
-        robotMover();
-        swarmRun();
-        break;
-    }
-    default:{
-        MOOSDebugWrite("MotionController: Invalid state");
-        break;
-    }
-}
-
-
-
 //AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -352,21 +349,23 @@ void MotionController::demoRun()
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 }
 
-QPoint MotionController::linktoref(){
-    QPoint point = QPoint(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
+QPointF MotionController::linktoref(){
+    QPointF point = QPointF(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
     for( int i = linknum-1; i>=0; i--){
-        point.setX(point.x()*cos(-CurrentZeta.getTheta(i)) - point.y()*sin(-CurrentZeta.getTheta(i)));
-        point.setY(point.x()*sin(-CurrentZeta.getTheta(i)) + point.y()*cos(-CurrentZeta.getTheta(i)));
+        double x = point.x();
+        double y = point.y();
+        point.setX((x*cos(-CurrentZeta.getTheta(i)*PI/180.0) - y*sin(-CurrentZeta.getTheta(i)*PI/180.0)));
+        point.setY((x*sin(-CurrentZeta.getTheta(i)*PI/180.0) + y*cos(-CurrentZeta.getTheta(i)*PI/180.0)));
         point.setX(point.x() + CurrentZeta.getLambda(i));
     }
     return point;
 }
 
-double MotionController::pointtoTraj(QPoint point){
+double MotionController::pointtoTraj(QPointF point){
     double xdiff = point.x()- x;
     double ydiff = point.y()- y;
     double phi;
-    if (ydiff == 0 && xdiff == 0){
+    /*if (ydiff == 0 && xdiff == 0){
         return 0;
     }
     else if(xdiff >=0 && ydiff >= 0){
@@ -381,12 +380,21 @@ double MotionController::pointtoTraj(QPoint point){
     else{
          phi = atan(ydiff/xdiff)*180.0/PI+270;
     }
-    phi += attitude;
+    //phi += attitude;
     if(phi > 360){
         phi -= 360;
     }
     else if( phi < 0 ){
         phi += 360;
+    }*/
+    if(ydiff > posTolerance){
+        phi = 270.0;
+    } else if (ydiff < -posTolerance) {
+        phi = 90.0;
+    } else if (xdiff < -posTolerance) {
+        phi = 0.0;
+    } else {
+        phi = 180.0;
     }
     return phi;
 
@@ -399,30 +407,25 @@ void MotionController::swarmRun(){
         Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", "id="+ id.toStdString()+", "+ CurrentZeta.stringify().toStdString(), MOOSTime());
     }
     for(int j=0; j<podmates->values().size(); j++){
-        DiffZeta = DiffZeta+podmates->values()[j]-(CurrentZeta-podmates->values()[j])*kappa;
+        DiffZeta = DiffZeta/*podmates->values()[j]*/-(CurrentZeta-podmates->values()[j])*kappa;
     }
-    Notify("Diff_Zeta_Podmate_"+QString::number(0).toStdString(), "id="+ id.toStdString()+", "+ QString::number(podmates->values().size()).toStdString()/*podmates->values()[0].stringify().toStdString()*/, MOOSTime());
     double numNeighbors = (double)1/(double)podmates->values().size();
-    Notify("Diff_Zeta_Initial", "id="+ id.toStdString()+", "+ DiffZeta.stringify().toStdString(), MOOSTime());
     DiffZeta = DiffZeta*(numNeighbors);
-    Notify("Diff_Zeta", "id="+ id.toStdString()+", "+ DiffZeta.stringify().toStdString(), MOOSTime());
     CurrentZeta = CurrentZeta + DiffZeta*dt;
-    //delete DiffZeta;
-    //Notify("Current_Zeta_Of_Podmate", "id="+ id.toStdString()+", "+ podmates->values()[0].stringify().toStdString(), MOOSTime());
-    goalpoint= linktoref();
-    Notify("2", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
-    goalpoint.setX(goalpoint.x()+CurrentZeta.getxPos());
-    goalpoint.setY(goalpoint.y()+CurrentZeta.getyPos());
-    Notify("3", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
+    goalpoint = linktoref();
+
+    double x = goalpoint.x();
+    double y = goalpoint.y();
+    goalpoint.setX((x*cos(CurrentZeta.getAttitude())-y*sin(CurrentZeta.getAttitude()))+CurrentZeta.getxPos());
+    goalpoint.setY((x*sin(CurrentZeta.getAttitude())+y*cos(CurrentZeta.getAttitude()))+CurrentZeta.getyPos());
     goalangle = pointtoTraj(goalpoint);
-    Notify("4", "Iteration:"+QString::number(i).toStdString(), MOOSTime());
     i++;
-    Notify("Goals", "Angle=" + QString::number(goalangle).toStdString()+ " X="+ QString::number(goalpoint.x()).toStdString()+ " Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
+    Notify("Goals", "Angle=" + QString::number(goalangle).toStdString()+ " X="+ QString::number(goalpoint.x()).toStdString()+ " Y="+ QString::number(goalpoint.y()).toStdString() + " LinkageNumber=" + QString::number(linknum).toStdString(), MOOSTime()  );
 
 }
 
 EnumDefs::VehicleStates MotionController::swarmInit(){
-    QPoint point;
+    QPointF point;
 
     srand(QString(QCryptographicHash::hash(QByteArray::fromStdString(id.toStdString()), QCryptographicHash::Md5)).toDouble());
     if(!swarmflag){
@@ -449,7 +452,7 @@ void MotionController::robotMover(){
             roboSpeed = turn_speed;
         }
         else{
-            if((x > goalpoint.x()-0.5 && x <goalpoint.x()+0.5)&& (y > goalpoint.y()-0.5 && y <goalpoint.y()+0.5)){
+            if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
                 roboSpeed = 0;
                 roboCurv = 0;
             }

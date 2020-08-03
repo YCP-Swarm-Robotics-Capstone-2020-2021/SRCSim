@@ -6,6 +6,8 @@
 /************************************************************/
 
 #include "zeta.h"
+#include <QPoint>
+#include <math.h>
 
 using namespace std;
 
@@ -75,28 +77,55 @@ double pointtoTraj2(QPoint point, double x, double y){
 
 int mainTest()
 {
-    Zeta object1 = Zeta();
+    Zeta narwhal = Zeta();
     Zeta object2 = Zeta();
     Zeta object3;
+    double dt = 1.0;
+    double kappa = 1.0;
+    int linknum=2;
+    double xOff = 0;
+    double yOff = 0;
 
 
-   for(int i = 0; i<3; i++){
-        object1.addtoTheta(3);
-        object1.addtoLambda(3);
+   for(int i = 0; i<4; i++){
+        narwhal.addtoTheta(-90);
+        narwhal.addtoLambda(4);
     }
-    object1.setAttitude(3);
-    object1.setxPos(3);
-    object1.setyPos(3);
+    narwhal.setAttitude(0);
+    narwhal.setxPos(-2);
+    narwhal.setyPos(-2);
 
     for(int i = 0; i<3; i++){
-         object2.addtoTheta(2);
-         object2.addtoLambda(2);
+         object2.addtoTheta(0);
+         object2.addtoLambda(0);
      }
-     object2.setAttitude(2);
-     object2.setxPos(2);
-     object2.setyPos(2);
+     object2.setAttitude(0);
+     object2.setxPos(0);
+     object2.setyPos(0);
 
-     object3.setxPos(object1.getxPos()-object2.getxPos());
+    while(false){
+        Zeta object1 = Zeta();
+        object1 = object1 - (object2-narwhal)*kappa;
+        double numNeighbors = 1.0;
+        object1 = object1*numNeighbors;
+
+        object2 = object2 + object1*dt;
+    }
+
+    QPoint point = QPoint(xOff*narwhal.getLambda(linknum), yOff*narwhal.getLambda(linknum));
+    for( int i = linknum-1; i>=0; i--){
+        double x = point.x();
+        double y = point.y();
+        double sine = sin(-narwhal.getTheta(i)*3.14159265/180.0);
+        double cose = cos(-narwhal.getTheta(i)*3.14159265/180.0);
+        point.setX(x*cose - y*sine);
+        point.setY(x*sine+ y*cose);
+        x = point.x();
+        point.setX(x+ narwhal.getLambda(i));
+    }
+    point.setX(point.x()+narwhal.getxPos());
+    point.setY(point.y()+narwhal.getyPos());
+     /*object3.setxPos(object1.getxPos()-object2.getxPos());
      object3.setyPos(object1.getyPos()-object2.getyPos());
      object3.setAttitude(object1.getAttitude()-object2.getAttitude());
      object3.setWholeLambda(subtractList2(object1.getWholeLambda(), object2.getWholeLambda()));
@@ -106,12 +135,7 @@ int mainTest()
      object3.setyPos(object1.getyPos()+object2.getyPos());
      object3.setAttitude(object1.getAttitude()+object2.getAttitude());
      object3.setWholeLambda(addList2(object1.getWholeLambda(), object2.getWholeLambda()));
-     object3.setWholeTheta(addList2(object1.getWholeTheta(),object2.getWholeTheta()));
-
-     QPoint point;
-     point.setX(0);
-     point.setY(0);
-     pointtoTraj2(point, 0, 0);
+     object3.setWholeTheta(addList2(object1.getWholeTheta(),object2.getWholeTheta()));*/
 return 0;
 }
 
