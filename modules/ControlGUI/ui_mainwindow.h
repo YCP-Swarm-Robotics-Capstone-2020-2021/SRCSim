@@ -35,12 +35,11 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
-    QGridLayout *mainGridLayout;
-    QTextBrowser *textBrowser;
+    QHBoxLayout *horizontalLayout_6;
     QTabWidget *tabWidget_2;
     QWidget *overviewTap;
     QWidget *controlTab;
-    QVBoxLayout *verticalLayout_5;
+    QVBoxLayout *verticalLayout_6;
     QVBoxLayout *verticalLayout_4;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_2;
@@ -49,6 +48,9 @@ public:
     QSpacerItem *horizontalSpacer_3;
     QLabel *label_2;
     QComboBox *stateSelection;
+    QSpacerItem *horizontalSpacer_6;
+    QLabel *label_9;
+    QLabel *statusLabel;
     QSpacerItem *horizontalSpacer_4;
     QCommandLinkButton *submitState;
     QSpacerItem *verticalSpacer_2;
@@ -83,9 +85,7 @@ public:
     QLabel *batteryPercentage;
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_4;
-    QSpacerItem *horizontalSpacer_6;
     QSlider *maxSpeedSlider;
-    QSpacerItem *horizontalSpacer_8;
     QLabel *maxSpeedPercentage;
     QSpacerItem *horizontalSpacer_2;
     QTabWidget *motorTabWidget;
@@ -123,9 +123,13 @@ public:
     QLabel *m4Speed;
     QSpacerItem *verticalSpacer;
     QLabel *label_5;
+    QTextBrowser *textBrowser;
     QWidget *swarmTab;
     QWidget *mapTab;
     QWidget *interfaceTab;
+    QVBoxLayout *verticalLayout_5;
+    QLabel *label_6;
+    QTextBrowser *warningBrowser;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -134,31 +138,29 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(732, 689);
+        MainWindow->resize(1311, 708);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        mainGridLayout = new QGridLayout(centralWidget);
-        mainGridLayout->setSpacing(0);
-        mainGridLayout->setContentsMargins(11, 11, 11, 11);
-        mainGridLayout->setObjectName(QString::fromUtf8("mainGridLayout"));
-        mainGridLayout->setContentsMargins(0, 0, 0, 0);
-        textBrowser = new QTextBrowser(centralWidget);
-        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        textBrowser->setAutoFillBackground(true);
-
-        mainGridLayout->addWidget(textBrowser, 2, 0, 1, 1);
-
+        horizontalLayout_6 = new QHBoxLayout(centralWidget);
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         tabWidget_2 = new QTabWidget(centralWidget);
         tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(2);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(tabWidget_2->sizePolicy().hasHeightForWidth());
+        tabWidget_2->setSizePolicy(sizePolicy);
         overviewTap = new QWidget();
         overviewTap->setObjectName(QString::fromUtf8("overviewTap"));
         tabWidget_2->addTab(overviewTap, QString());
         controlTab = new QWidget();
         controlTab->setObjectName(QString::fromUtf8("controlTab"));
-        verticalLayout_5 = new QVBoxLayout(controlTab);
-        verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_6 = new QVBoxLayout(controlTab);
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         verticalLayout_4 = new QVBoxLayout();
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
@@ -200,6 +202,20 @@ public:
 
         horizontalLayout_2->addWidget(stateSelection);
 
+        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_6);
+
+        label_9 = new QLabel(controlTab);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        horizontalLayout_2->addWidget(label_9);
+
+        statusLabel = new QLabel(controlTab);
+        statusLabel->setObjectName(QString::fromUtf8("statusLabel"));
+
+        horizontalLayout_2->addWidget(statusLabel);
+
         horizontalSpacer_4 = new QSpacerItem(58, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer_4);
@@ -212,7 +228,7 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout_2);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         verticalLayout_3->addItem(verticalSpacer_2);
 
@@ -301,7 +317,7 @@ public:
 
         horizontalLayout->addLayout(gridLayout_6);
 
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer);
 
@@ -385,21 +401,14 @@ public:
 
         horizontalLayout_4->addWidget(label_4);
 
-        horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_6);
-
         maxSpeedSlider = new QSlider(controlTab);
         maxSpeedSlider->setObjectName(QString::fromUtf8("maxSpeedSlider"));
+        maxSpeedSlider->setMinimumSize(QSize(100, 0));
         maxSpeedSlider->setMaximum(100);
         maxSpeedSlider->setValue(100);
         maxSpeedSlider->setOrientation(Qt::Horizontal);
 
         horizontalLayout_4->addWidget(maxSpeedSlider);
-
-        horizontalSpacer_8 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_4->addItem(horizontalSpacer_8);
 
         maxSpeedPercentage = new QLabel(controlTab);
         maxSpeedPercentage->setObjectName(QString::fromUtf8("maxSpeedPercentage"));
@@ -412,7 +421,7 @@ public:
 
         horizontalLayout_5->addLayout(verticalLayout_2);
 
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         horizontalLayout_5->addItem(horizontalSpacer_2);
 
@@ -575,7 +584,7 @@ public:
 
         verticalLayout_4->addLayout(verticalLayout_3);
 
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
         verticalLayout_4->addItem(verticalSpacer);
 
@@ -585,8 +594,15 @@ public:
 
         verticalLayout_4->addWidget(label_5);
 
+        textBrowser = new QTextBrowser(controlTab);
+        textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
+        textBrowser->setAutoFillBackground(true);
+        textBrowser->setStyleSheet(QString::fromUtf8("background-color:grey"));
 
-        verticalLayout_5->addLayout(verticalLayout_4);
+        verticalLayout_4->addWidget(textBrowser);
+
+
+        verticalLayout_6->addLayout(verticalLayout_4);
 
         tabWidget_2->addTab(controlTab, QString());
         swarmTab = new QWidget();
@@ -599,12 +615,42 @@ public:
         interfaceTab->setObjectName(QString::fromUtf8("interfaceTab"));
         tabWidget_2->addTab(interfaceTab, QString());
 
-        mainGridLayout->addWidget(tabWidget_2, 1, 0, 1, 1);
+        horizontalLayout_6->addWidget(tabWidget_2);
+
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(1);
+        sizePolicy1.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy1);
+        label_6->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_5->addWidget(label_6);
+
+        warningBrowser = new QTextBrowser(centralWidget);
+        warningBrowser->setObjectName(QString::fromUtf8("warningBrowser"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(40);
+        sizePolicy2.setHeightForWidth(warningBrowser->sizePolicy().hasHeightForWidth());
+        warningBrowser->setSizePolicy(sizePolicy2);
+        warningBrowser->setMinimumSize(QSize(400, 0));
+        warningBrowser->setStyleSheet(QString::fromUtf8("background-color:black"));
+
+        verticalLayout_5->addWidget(warningBrowser);
+
+        verticalLayout_5->setStretch(0, 1);
+
+        horizontalLayout_6->addLayout(verticalLayout_5);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 732, 25));
+        menuBar->setGeometry(QRect(0, 0, 1311, 25));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -634,13 +680,15 @@ public:
         dolphinSelection->setItemText(1, QApplication::translate("MainWindow", "Dolphin2", nullptr));
         dolphinSelection->setItemText(2, QApplication::translate("MainWindow", "Dolphin3", nullptr));
 
-        label_2->setText(QApplication::translate("MainWindow", "State", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "State:", nullptr));
         stateSelection->setItemText(0, QApplication::translate("MainWindow", "Standby", nullptr));
         stateSelection->setItemText(1, QApplication::translate("MainWindow", "AllStop", nullptr));
         stateSelection->setItemText(2, QApplication::translate("MainWindow", "Teleop", nullptr));
         stateSelection->setItemText(3, QApplication::translate("MainWindow", "SwarmMode", nullptr));
         stateSelection->setItemText(4, QApplication::translate("MainWindow", "DemoMode", nullptr));
 
+        label_9->setText(QApplication::translate("MainWindow", "Status:", nullptr));
+        statusLabel->setText(QApplication::translate("MainWindow", "Normal", nullptr));
         submitState->setText(QApplication::translate("MainWindow", "Update ", nullptr));
         fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", nullptr));
 #ifndef QT_NO_SHORTCUT
@@ -708,6 +756,7 @@ public:
         tabWidget_2->setTabText(tabWidget_2->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
+        label_6->setText(QApplication::translate("MainWindow", "Warnings", nullptr));
     } // retranslateUi
 
 };

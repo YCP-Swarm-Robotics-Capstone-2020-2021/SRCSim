@@ -46,7 +46,8 @@ SOURCES += \
 
 HEADERS += \
         src/mainwindow.h \
-        src/robotoverviewitem.h
+        src/robotoverviewitem.h \
+    src/styles.h
 
 FORMS += \
         mainwindow.ui

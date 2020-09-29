@@ -3,9 +3,35 @@
 
 #include <QMainWindow>
 #include <QString>
+#include <QMap>
+#include <QList>
 #include "VehicleStateDefines.h"
 
 #define SPEED_INTERVAL 5
+
+class RobotState {
+    public:
+    RobotState(){
+        batteryCharge = 100;
+        maxSpeed = 100;
+        status = EnumDefs::NORMAL;
+        state = EnumDefs::STANDBY;
+        for(int j = 0; j<4; j++){
+            motorSpeed[j] = 0;
+            motorCurrent[j] = 0;
+        }
+    }
+    ~RobotState(){}
+
+        double batteryCharge;
+        int maxSpeed;
+
+        EnumDefs::StatusState status;
+        EnumDefs::VehicleStates state;
+        QString id;
+        double motorCurrent[4];
+        double motorSpeed[4];
+};
 
 namespace Ui {
 class MainWindow;
@@ -27,15 +53,23 @@ private:
     int m_numBots;
     int m_maxSpeed;
 
+    QMap<QString, RobotState> m_robotStateMap;
+    QMap<QString, QList<QString>> m_robot_message_buffer;
+
+    bool startup = true;
 public slots:
     void setBotList(QList<QString> list);
+    void setupStateSelection();
+
     void onSubmitStateButtonClicked();
     void onCurrentBotChanged(QString bot);
     void onCurrentStateChanged(QString state);
     void updateDebugText(QString);
-    void updateMotorSpeed(double speed, int motor);
-    void updateMotorCurrent(double current, int motor);
-    void updateBatteryPerc(double);
+    void updateWarningText(QString);
+    void updateMotorSpeed(double speed, int motor, QString dolphin);
+    void updateMotorCurrent(double current, int motor, QString dolphin);
+    void updateBatteryPerc(double, QString);
+    void updateDolphinStatus(EnumDefs::StatusState, QString);
     void onMaxSpeedChanged(int speed){m_maxSpeed = speed;}
 
     void onForwardButtonPressed();
@@ -45,7 +79,12 @@ public slots:
     void onSpeedUpButtonPressed();
     void onSlowDownButtonPressed();
     void onBrakeButtonPressed();
+    void updateCurrentDisplay();
 
+    void printWarning(QString text, QString dolphin);
+    void printCaution(QString text, QString dolphin);
+    void printAdvisory(QString text, QString dolphin);
+    void printText(QString text, QString dolphin);
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
 };
