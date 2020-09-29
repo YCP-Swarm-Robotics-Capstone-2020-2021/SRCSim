@@ -10,6 +10,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ControlGUI
 TEMPLATE = app
+DESTDIR = ./bin
+
+MOC_DIR = .moc
+OBJECTS_DIR = .obj
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which has been marked as deprecated (the exact warnings
@@ -24,12 +28,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+INCLUDEPATH += \
+     ../../../moos-ivp/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/App/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Comms/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/getpot/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include \
+     ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include \
+     ../VehicleStateMachine/src/
+
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp
+        src/main.cpp \
+        src/mainwindow.cpp \
+        src/robotoverviewitem.cpp
 
 HEADERS += \
-        mainwindow.h
+        src/mainwindow.h \
+        src/robotoverviewitem.h
 
 FORMS += \
         mainwindow.ui

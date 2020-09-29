@@ -5,3 +5,7 @@ build-*
 *.pro.user
 *logs*
 *.LastOpenedMOOSLogDirectory
+*.moc*
+*.obj*
+*Makefile
+*.pro.user*
