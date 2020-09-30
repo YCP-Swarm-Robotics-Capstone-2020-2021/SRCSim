@@ -208,8 +208,9 @@ if [ ! -e targ_$GCSNAME.moos ]; then echo "no targ_$GCSNAME.moos";  exit; fi
 #-------------------------------------------------------
 cd ../modules
 for i in ./*; do
-    if [[ -d $i ]]; then
+    if [[ -d $i && $i -ne "./Images" ]]; then
        cd $i
+       echo $i
        qmake
        make
        cd ..
