@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->brakeButton, SIGNAL(pressed()), this, SLOT(onBrakeButtonPressed()));
 
     setupStateSelection();
+    //Just temporary development stuff. Should be removed once registration functionality is in place
     setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3"});
 }
 
@@ -52,8 +53,6 @@ void MainWindow::onSubmitStateButtonClicked()
 {
     m_robotStateMap[m_currentBotID].maxSpeed = m_maxSpeed;
     emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
-    updateDolphinStatus(EnumDefs::StatusState::WARNING, "Dolphin3");
-    updateDolphinStatus(EnumDefs::StatusState::CAUTION, "Dolphin2");
 }
 
 void MainWindow::onCurrentStateChanged(QString state)

@@ -42,12 +42,27 @@ INCLUDEPATH += \
 SOURCES += \
         src/main.cpp \
         src/mainwindow.cpp \
-        src/robotoverviewitem.cpp
+        src/robotoverviewitem.cpp \
+        src/uimoosinterface.cpp \
+        src/uimoosinterface_info.cpp
 
 HEADERS += \
         src/mainwindow.h \
         src/robotoverviewitem.h \
-    src/styles.h
+        src/styles.h \
+        src/uimoosinterface.h \
+        src/uimoosinterface_info.h
+
+OTHER_FILES += \
+        config/*
+
+LIBS += \
+ -L../../../moos-ivp/build/MOOS/MOOSCore/lib/ \
+ -lMOOS \
+ \
+ -L../../../moos-ivp/lib/ \
+ -lapputil \
+ -lmbutil
 
 FORMS += \
         mainwindow.ui
