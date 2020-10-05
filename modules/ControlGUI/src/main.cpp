@@ -47,7 +47,8 @@ int main(int argc, char *argv[])
     UIMoosInterface mapp(run_command, mission_file);
     MainWindow w;
     //Do connections here
-
+    a.connect(&mapp, &UIMoosInterface::regIn, &w, &MainWindow::setBotList);
+    a.connect(&mapp, &UIMoosInterface::updateState, &w, &MainWindow::updateDolphinState);
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");
     QSplashScreen splash(img, Qt::WindowStaysOnTopHint);

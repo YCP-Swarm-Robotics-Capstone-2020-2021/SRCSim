@@ -21,9 +21,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->slowerButton, SIGNAL(pressed()), this, SLOT(onSlowDownButtonPressed()));
     connect(ui->brakeButton, SIGNAL(pressed()), this, SLOT(onBrakeButtonPressed()));
 
+    setBotList({});
     setupStateSelection();
     //Just temporary development stuff. Should be removed once registration functionality is in place
-    setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3"});
+    //setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3"});
 }
 
 MainWindow::~MainWindow()
@@ -33,19 +34,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::setBotList(QList<QString> list)
 {
+    QString tempBotID = ui->dolphinSelection->currentText();
+    qDebug()<<"setBotList 1"<<m_currentBotID;
     ui->dolphinSelection->clear();
     for(int i = 0; i < list.size(); i++)
     {
-        ui->dolphinSelection->insertItem(i, list[i]);
         if(!m_robotStateMap.contains(list[i]))
             m_robotStateMap[list[i]] = RobotState();
+        ui->dolphinSelection->insertItem(i, list[i]);
     }
-    ui->dolphinSelection->insertItem(list.size(), "All");
     if(!m_robotStateMap.contains("All"))
         m_robotStateMap["All"] = RobotState();
+    ui->dolphinSelection->insertItem(list.size(), "All");
     m_numBots = list.size();
 
+    ui->dolphinSelection->model()->sort(0);
+    ui->dolphinSelection->setCurrentText(tempBotID);
+    qDebug()<<"setBotList 2"<<tempBotID;
     updateCurrentDisplay();
+    ui->dolphinSelection->setCurrentText(tempBotID);
+    m_currentBotID = tempBotID;
     startup = false;
 }
 
@@ -68,8 +76,10 @@ void MainWindow::onCurrentStateChanged(QString state)
 
 void MainWindow::onCurrentBotChanged(QString bot)
 {
+    if(bot == "")
+        return;
     if(!m_robotStateMap.contains(bot)&&!startup){
-        printWarning("Received Bot ID that is not yet registered.", "All");
+        printWarning("Received Bot ID that is not yet registered: "+bot, "All");
         return;
     }
     m_currentBotID = bot;
@@ -99,11 +109,13 @@ void MainWindow::onBackwardButtonPressed()
 void MainWindow::onSpeedUpButtonPressed()
 {
     ui->speedSelection->setValue(int(ui->speedSelection->value()+SPEED_INTERVAL));
+    m_robotStateMap[m_currentBotID].cmdSpeed = ui->speedSelection->value();
 }
 
 void MainWindow::onSlowDownButtonPressed()
 {
     ui->speedSelection->setValue(int(ui->speedSelection->value()-SPEED_INTERVAL));
+    m_robotStateMap[m_currentBotID].cmdSpeed = ui->speedSelection->value();
 }
 
 void MainWindow::onBrakeButtonPressed()
@@ -139,6 +151,16 @@ void MainWindow::updateDolphinStatus(EnumDefs::StatusState status, QString dolph
             ui->statusLabel->setStyleSheet("QLabel { color : "+QString(WARNING_FONT_COLOR)+";}");
             break;
     }
+}
+
+void MainWindow::updateDolphinState(QString id, int state)
+{
+    qDebug()<<"UIMoosInterface received Current_State message: "<<id<<" "<<QString::number(state);
+    m_robotStateMap[id].state = EnumDefs::VehicleStates(state);
+    if(id != m_currentBotID)
+        return;
+
+    ui->statusLabel->setText(defs.UIStateMap[m_robotStateMap[id].state]);
 }
 
 void MainWindow::updateBatteryPerc(double perc, QString dolphin)
@@ -220,6 +242,7 @@ void MainWindow::updateCurrentDisplay()
     }
     updateDolphinStatus(m_robotStateMap[m_currentBotID].status, m_currentBotID);
     ui->maxSpeedSlider->setValue(m_robotStateMap[m_currentBotID].maxSpeed);
+    ui->speedSelection->setValue(m_robotStateMap[m_currentBotID].cmdSpeed);
     ui->textBrowser->clear();
     QList<QString>::iterator iter;
     for(iter = m_robot_message_buffer[m_currentBotID].begin(); iter!=m_robot_message_buffer[m_currentBotID].end(); iter++){

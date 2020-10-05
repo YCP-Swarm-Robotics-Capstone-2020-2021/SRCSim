@@ -37,6 +37,8 @@ public slots:
 
 signals:
     void workFinished();
+    void regIn(QList<QString>);
+    void updateState(QString,int);
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);
@@ -53,6 +55,7 @@ private: // Configuration variables
 
     QTimer iterateTimer;
     double currentFrequency;
+    QList<QString> m_idList;
 };
 
 #endif // UIMOOSINTERFACE_H

@@ -19,24 +19,41 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
 
     MOOSMSG_LIST::iterator p;
     for(p=NewMail.begin(); p!=NewMail.end(); p++) {
-     CMOOSMsg &msg = *p;
-     string key    = msg.GetKey();
+        CMOOSMsg &msg = *p;
+        string key    = msg.GetKey();
 
-    #if 0 // Keep these around just for template
-     string comm  = msg.GetCommunity();
-     double dval  = msg.GetDouble();
-     string sval  = msg.GetString();
-     string msrc  = msg.GetSource();
-     double mtime = msg.GetTime();
-     bool   mdbl  = msg.IsDouble();
-     bool   mstr  = msg.IsString();
-    #endif
+        #if 0 // Keep these around just for template
+        string comm  = msg.GetCommunity();
+        double dval  = msg.GetDouble();
+        string sval  = msg.GetString();
+        string msrc  = msg.GetSource();
+        double mtime = msg.GetTime();
+        bool   mdbl  = msg.IsDouble();
+        bool   mstr  = msg.IsString();
+        #endif
 
-      if(key == "FOO")
-        cout << "great!";
-
-      else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
-        reportRunWarning("Unhandled Mail: " + key);
+        if(key == "Reg_In")
+        {
+            std::string id;
+            MOOSValFromString(id, msg.GetString(), "id");
+            if(!m_idList.contains(QString::fromStdString(id))){
+                m_idList.append(QString::fromStdString(id));
+                emit regIn(m_idList);
+            }
+        }
+        else if(key == "Current_State")
+        {
+            Notify("Received_Current_State", "TRUE");
+            std::string id;
+            int state;
+            MOOSValFromString(id, msg.GetString(), "id");
+            MOOSValFromString(state, msg.GetString(), "State");
+            emit updateState(QString::fromStdString(id), state);
+        }
+        else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
+        {
+            reportRunWarning("Unhandled Mail: " + key);
+        }
     }
 
     return(true);
@@ -52,8 +69,6 @@ bool UIMoosInterface::OnConnectToServer()
 bool UIMoosInterface::Iterate()
 {
     AppCastingMOOSApp::Iterate();
-    static int i = 0;
-    qDebug()<<"Iterate "<<++i;
     return(true);
 }
 
@@ -91,23 +106,24 @@ bool UIMoosInterface::OnStartUp()
 
 void UIMoosInterface::registerVariables()
 {
-AppCastingMOOSApp::RegisterVariables();
-// Register("FOOBAR", 0);
+    AppCastingMOOSApp::RegisterVariables();
+    Register("Reg_In");
+    Register("Current_State");
 }
 
 bool UIMoosInterface::buildReport()
 {
-m_msgs << "============================================" << endl;
-m_msgs << "File:                                       " << endl;
-m_msgs << "============================================" << endl;
+    m_msgs << "============================================" << endl;
+    m_msgs << "File:                                       " << endl;
+    m_msgs << "============================================" << endl;
 
-ACTable actab(4);
-actab << "Alpha | Bravo | Charlie | Delta";
-actab.addHeaderLines();
-actab << "one" << "two" << "three" << "four";
-m_msgs << actab.getFormattedString();
+    ACTable actab(4);
+    actab << "Alpha | Bravo | Charlie | Delta";
+    actab.addHeaderLines();
+    actab << "one" << "two" << "three" << "four";
+    m_msgs << actab.getFormattedString();
 
-return(true);
+    return(true);
 }
 
 

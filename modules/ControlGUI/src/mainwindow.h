@@ -14,6 +14,7 @@ class RobotState {
     RobotState(){
         batteryCharge = 100;
         maxSpeed = 100;
+        cmdSpeed = 0;
         status = EnumDefs::NORMAL;
         state = EnumDefs::STANDBY;
         for(int j = 0; j<4; j++){
@@ -25,6 +26,8 @@ class RobotState {
 
         double batteryCharge;
         int maxSpeed;
+
+        int cmdSpeed;
 
         EnumDefs::StatusState status;
         EnumDefs::VehicleStates state;
@@ -70,6 +73,7 @@ public slots:
     void updateMotorCurrent(double current, int motor, QString dolphin);
     void updateBatteryPerc(double, QString);
     void updateDolphinStatus(EnumDefs::StatusState, QString);
+    void updateDolphinState(QString, int);
     void onMaxSpeedChanged(int speed){m_maxSpeed = speed;}
 
     void onForwardButtonPressed();
