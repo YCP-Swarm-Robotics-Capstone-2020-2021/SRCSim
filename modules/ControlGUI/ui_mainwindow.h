@@ -39,18 +39,21 @@ public:
     QTabWidget *tabWidget_2;
     QWidget *overviewTap;
     QWidget *controlTab;
-    QVBoxLayout *verticalLayout_6;
     QVBoxLayout *verticalLayout_4;
-    QVBoxLayout *verticalLayout_3;
-    QHBoxLayout *horizontalLayout_2;
+    QHBoxLayout *horizontalLayout_9;
     QLabel *label;
     QComboBox *dolphinSelection;
     QSpacerItem *horizontalSpacer_3;
     QLabel *label_2;
     QComboBox *stateSelection;
     QSpacerItem *horizontalSpacer_6;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_7;
     QLabel *label_9;
     QLabel *statusLabel;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_11;
+    QLabel *CurrentStateLabel;
     QSpacerItem *horizontalSpacer_4;
     QCommandLinkButton *submitState;
     QSpacerItem *verticalSpacer_2;
@@ -157,23 +160,17 @@ public:
         tabWidget_2->addTab(overviewTap, QString());
         controlTab = new QWidget();
         controlTab->setObjectName(QString::fromUtf8("controlTab"));
-        verticalLayout_6 = new QVBoxLayout(controlTab);
-        verticalLayout_6->setSpacing(6);
-        verticalLayout_6->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4 = new QVBoxLayout(controlTab);
         verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         label = new QLabel(controlTab);
         label->setObjectName(QString::fromUtf8("label"));
 
-        horizontalLayout_2->addWidget(label);
+        horizontalLayout_9->addWidget(label);
 
         dolphinSelection = new QComboBox(controlTab);
         dolphinSelection->addItem(QString());
@@ -181,16 +178,16 @@ public:
         dolphinSelection->addItem(QString());
         dolphinSelection->setObjectName(QString::fromUtf8("dolphinSelection"));
 
-        horizontalLayout_2->addWidget(dolphinSelection);
+        horizontalLayout_9->addWidget(dolphinSelection);
 
         horizontalSpacer_3 = new QSpacerItem(58, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_3);
+        horizontalLayout_9->addItem(horizontalSpacer_3);
 
         label_2 = new QLabel(controlTab);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        horizontalLayout_2->addWidget(label_2);
+        horizontalLayout_9->addWidget(label_2);
 
         stateSelection = new QComboBox(controlTab);
         stateSelection->addItem(QString());
@@ -200,37 +197,67 @@ public:
         stateSelection->addItem(QString());
         stateSelection->setObjectName(QString::fromUtf8("stateSelection"));
 
-        horizontalLayout_2->addWidget(stateSelection);
+        horizontalLayout_9->addWidget(stateSelection);
 
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_6);
+        horizontalLayout_9->addItem(horizontalSpacer_6);
 
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        horizontalLayout_7 = new QHBoxLayout();
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         label_9 = new QLabel(controlTab);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
-        horizontalLayout_2->addWidget(label_9);
+        horizontalLayout_7->addWidget(label_9);
 
         statusLabel = new QLabel(controlTab);
         statusLabel->setObjectName(QString::fromUtf8("statusLabel"));
+        statusLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        horizontalLayout_2->addWidget(statusLabel);
+        horizontalLayout_7->addWidget(statusLabel);
 
-        horizontalSpacer_4 = new QSpacerItem(58, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout_2->addItem(horizontalSpacer_4);
+        verticalLayout_3->addLayout(horizontalLayout_7);
 
-        submitState = new QCommandLinkButton(controlTab);
-        submitState->setObjectName(QString::fromUtf8("submitState"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        label_11 = new QLabel(controlTab);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
 
-        horizontalLayout_2->addWidget(submitState);
+        horizontalLayout_2->addWidget(label_11);
+
+        CurrentStateLabel = new QLabel(controlTab);
+        CurrentStateLabel->setObjectName(QString::fromUtf8("CurrentStateLabel"));
+        CurrentStateLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        horizontalLayout_2->addWidget(CurrentStateLabel);
 
 
         verticalLayout_3->addLayout(horizontalLayout_2);
 
+
+        horizontalLayout_9->addLayout(verticalLayout_3);
+
+        horizontalSpacer_4 = new QSpacerItem(58, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_9->addItem(horizontalSpacer_4);
+
+        submitState = new QCommandLinkButton(controlTab);
+        submitState->setObjectName(QString::fromUtf8("submitState"));
+
+        horizontalLayout_9->addWidget(submitState);
+
+
+        verticalLayout_4->addLayout(horizontalLayout_9);
+
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        verticalLayout_3->addItem(verticalSpacer_2);
+        verticalLayout_4->addItem(verticalSpacer_2);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setSpacing(6);
@@ -579,10 +606,7 @@ public:
         horizontalLayout_5->addWidget(motorTabWidget);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_5);
-
-
-        verticalLayout_4->addLayout(verticalLayout_3);
+        verticalLayout_4->addLayout(horizontalLayout_5);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -600,9 +624,6 @@ public:
         textBrowser->setStyleSheet(QString::fromUtf8("background-color:grey"));
 
         verticalLayout_4->addWidget(textBrowser);
-
-
-        verticalLayout_6->addLayout(verticalLayout_4);
 
         tabWidget_2->addTab(controlTab, QString());
         swarmTab = new QWidget();
@@ -680,7 +701,7 @@ public:
         dolphinSelection->setItemText(1, QApplication::translate("MainWindow", "Dolphin2", nullptr));
         dolphinSelection->setItemText(2, QApplication::translate("MainWindow", "Dolphin3", nullptr));
 
-        label_2->setText(QApplication::translate("MainWindow", "State:", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Cmd State:", nullptr));
         stateSelection->setItemText(0, QApplication::translate("MainWindow", "Standby", nullptr));
         stateSelection->setItemText(1, QApplication::translate("MainWindow", "AllStop", nullptr));
         stateSelection->setItemText(2, QApplication::translate("MainWindow", "Teleop", nullptr));
@@ -689,6 +710,8 @@ public:
 
         label_9->setText(QApplication::translate("MainWindow", "Status:", nullptr));
         statusLabel->setText(QApplication::translate("MainWindow", "Normal", nullptr));
+        label_11->setText(QApplication::translate("MainWindow", "Current State:", nullptr));
+        CurrentStateLabel->setText(QApplication::translate("MainWindow", "STANDBY", nullptr));
         submitState->setText(QApplication::translate("MainWindow", "Update ", nullptr));
         fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", nullptr));
 #ifndef QT_NO_SHORTCUT

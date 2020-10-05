@@ -155,12 +155,19 @@ void MainWindow::updateDolphinStatus(EnumDefs::StatusState status, QString dolph
 
 void MainWindow::updateDolphinState(QString id, int state)
 {
-    qDebug()<<"UIMoosInterface received Current_State message: "<<id<<" "<<QString::number(state);
     m_robotStateMap[id].state = EnumDefs::VehicleStates(state);
     if(id != m_currentBotID)
         return;
 
-    ui->statusLabel->setText(defs.UIStateMap[m_robotStateMap[id].state]);
+    ui->CurrentStateLabel->setText(defs.UIStateMap[m_robotStateMap[id].state]);
+    switch(m_robotStateMap[m_currentBotID].state){
+        case EnumDefs::VehicleStates::ALLSTOP:
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString(WARNING_FONT_COLOR)+";}");
+            break;
+        default:
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString(NORMAL_FONT_COLOR)+";}");
+            break;
+    }
 }
 
 void MainWindow::updateBatteryPerc(double perc, QString dolphin)
@@ -234,6 +241,7 @@ void MainWindow::setupStateSelection()
 void MainWindow::updateCurrentDisplay()
 {
     ui->stateSelection->setCurrentText(defs.UIStateMap[m_robotStateMap[m_currentBotID].state]);
+    ui->CurrentStateLabel->setText(defs.UIStateMap[m_robotStateMap[m_currentBotID].state]);
     ui->dolphinSelection->setCurrentText(m_currentBotID);
 
     for(int j = 0; j<4; j++){
@@ -241,6 +249,7 @@ void MainWindow::updateCurrentDisplay()
         updateMotorCurrent(m_robotStateMap[m_currentBotID].motorCurrent[j], j+1, m_currentBotID);
     }
     updateDolphinStatus(m_robotStateMap[m_currentBotID].status, m_currentBotID);
+    updateDolphinState(m_currentBotID, m_robotStateMap[m_currentBotID].state);
     ui->maxSpeedSlider->setValue(m_robotStateMap[m_currentBotID].maxSpeed);
     ui->speedSelection->setValue(m_robotStateMap[m_currentBotID].cmdSpeed);
     ui->textBrowser->clear();
