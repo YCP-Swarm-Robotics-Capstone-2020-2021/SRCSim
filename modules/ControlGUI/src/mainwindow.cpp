@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "styles.h"
 #include "ui_mainwindow.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -9,6 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_maxSpeed(100)
 {
     ui->setupUi(this);
+    myPainter = new SwarmFormationPainter(this);
+    QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    policy.setHeightForWidth(true);
+    myPainter->setSizePolicy(policy);
+    ui->glLayout->addWidget(myPainter);
     connect(ui->submitState,SIGNAL(released()), this, SLOT(onSubmitStateButtonClicked()));
     connect(ui->dolphinSelection,SIGNAL(currentTextChanged(QString)),this,SLOT(onCurrentBotChanged(QString)));
     connect(ui->stateSelection,SIGNAL(currentTextChanged(QString)),this,SLOT(onCurrentStateChanged(QString)));
@@ -20,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->fasterButton, SIGNAL(pressed()), this, SLOT(onSpeedUpButtonPressed()));
     connect(ui->slowerButton, SIGNAL(pressed()), this, SLOT(onSlowDownButtonPressed()));
     connect(ui->brakeButton, SIGNAL(pressed()), this, SLOT(onBrakeButtonPressed()));
+    connect(ui->actionKill_All, SIGNAL(triggered()), this, SLOT(onKillAllPressed()));
 
     setBotList({});
     setupStateSelection();
@@ -286,4 +293,25 @@ void MainWindow::printText(QString text, QString dolphin)
     m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
     if(m_currentBotID == dolphin)
         updateDebugText("<div style=\"color:"+QString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
+}
+
+void MainWindow::onKillAllPressed()
+{
+    int ret = QMessageBox::critical(this, tr("Kill All Dialogue"),
+                                    tr("Are you sure you want to kill all MOOS related applications?"),
+                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+    switch(ret){
+        case QMessageBox::Yes:
+            system("ktm");
+            break;
+        case QMessageBox::No:
+            break;
+        default:
+            break;
+    }
+}
+
+void MainWindow::onPreveiwPressed()
+{
+
 }

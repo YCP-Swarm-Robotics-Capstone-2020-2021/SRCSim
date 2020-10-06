@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCommandLinkButton>
@@ -17,6 +18,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
@@ -34,6 +36,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionKill_All;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_6;
     QTabWidget *tabWidget_2;
@@ -128,12 +131,35 @@ public:
     QLabel *label_5;
     QTextBrowser *textBrowser;
     QWidget *swarmTab;
+    QGridLayout *gridLayout_8;
+    QHBoxLayout *horizontalLayout_11;
+    QHBoxLayout *horizontalLayout_10;
+    QLabel *label_13;
+    QComboBox *comboBox;
+    QGridLayout *gridLayout_7;
+    QLabel *label_14;
+    QSlider *horizontalSlider_3;
+    QSpinBox *spinBox;
+    QSpinBox *spinBox_2;
+    QLabel *label_15;
+    QSlider *horizontalSlider_2;
+    QLabel *label_16;
+    QSlider *horizontalSlider;
+    QSpinBox *spinBox_3;
+    QVBoxLayout *verticalLayout_6;
+    QCommandLinkButton *commandLinkButton;
+    QCommandLinkButton *commandLinkButton_2;
+    QLabel *label_18;
+    QLabel *label_17;
+    QTextBrowser *textBrowser_2;
+    QGridLayout *glLayout;
     QWidget *mapTab;
     QWidget *interfaceTab;
     QVBoxLayout *verticalLayout_5;
     QLabel *label_6;
     QTextBrowser *warningBrowser;
     QMenuBar *menuBar;
+    QMenu *menuCommands;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -142,6 +168,8 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(1311, 708);
+        actionKill_All = new QAction(MainWindow);
+        actionKill_All->setObjectName(QString::fromUtf8("actionKill_All"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         horizontalLayout_6 = new QHBoxLayout(centralWidget);
@@ -628,6 +656,143 @@ public:
         tabWidget_2->addTab(controlTab, QString());
         swarmTab = new QWidget();
         swarmTab->setObjectName(QString::fromUtf8("swarmTab"));
+        gridLayout_8 = new QGridLayout(swarmTab);
+        gridLayout_8->setSpacing(6);
+        gridLayout_8->setContentsMargins(11, 11, 11, 11);
+        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
+        horizontalLayout_11 = new QHBoxLayout();
+        horizontalLayout_11->setSpacing(6);
+        horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
+        horizontalLayout_10 = new QHBoxLayout();
+        horizontalLayout_10->setSpacing(6);
+        horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
+        label_13 = new QLabel(swarmTab);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+
+        horizontalLayout_10->addWidget(label_13);
+
+        comboBox = new QComboBox(swarmTab);
+        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+
+        horizontalLayout_10->addWidget(comboBox);
+
+        gridLayout_7 = new QGridLayout();
+        gridLayout_7->setSpacing(6);
+        gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
+        label_14 = new QLabel(swarmTab);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+
+        gridLayout_7->addWidget(label_14, 0, 0, 2, 1);
+
+        horizontalSlider_3 = new QSlider(swarmTab);
+        horizontalSlider_3->setObjectName(QString::fromUtf8("horizontalSlider_3"));
+        horizontalSlider_3->setMinimum(1);
+        horizontalSlider_3->setMaximum(6);
+        horizontalSlider_3->setOrientation(Qt::Horizontal);
+
+        gridLayout_7->addWidget(horizontalSlider_3, 0, 1, 2, 1);
+
+        spinBox = new QSpinBox(swarmTab);
+        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        spinBox->setMinimum(1);
+        spinBox->setMaximum(6);
+
+        gridLayout_7->addWidget(spinBox, 0, 2, 1, 1);
+
+        spinBox_2 = new QSpinBox(swarmTab);
+        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
+        spinBox_2->setMinimum(1);
+        spinBox_2->setMaximum(6);
+
+        gridLayout_7->addWidget(spinBox_2, 1, 2, 2, 1);
+
+        label_15 = new QLabel(swarmTab);
+        label_15->setObjectName(QString::fromUtf8("label_15"));
+
+        gridLayout_7->addWidget(label_15, 2, 0, 1, 1);
+
+        horizontalSlider_2 = new QSlider(swarmTab);
+        horizontalSlider_2->setObjectName(QString::fromUtf8("horizontalSlider_2"));
+        horizontalSlider_2->setMinimum(1);
+        horizontalSlider_2->setMaximum(6);
+        horizontalSlider_2->setOrientation(Qt::Horizontal);
+
+        gridLayout_7->addWidget(horizontalSlider_2, 2, 1, 1, 1);
+
+        label_16 = new QLabel(swarmTab);
+        label_16->setObjectName(QString::fromUtf8("label_16"));
+
+        gridLayout_7->addWidget(label_16, 3, 0, 1, 1);
+
+        horizontalSlider = new QSlider(swarmTab);
+        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
+        horizontalSlider->setMinimum(-180);
+        horizontalSlider->setMaximum(180);
+        horizontalSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout_7->addWidget(horizontalSlider, 3, 1, 1, 1);
+
+        spinBox_3 = new QSpinBox(swarmTab);
+        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
+        spinBox_3->setMinimum(-180);
+        spinBox_3->setMaximum(180);
+
+        gridLayout_7->addWidget(spinBox_3, 3, 2, 1, 1);
+
+
+        horizontalLayout_10->addLayout(gridLayout_7);
+
+
+        horizontalLayout_11->addLayout(horizontalLayout_10);
+
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        commandLinkButton = new QCommandLinkButton(swarmTab);
+        commandLinkButton->setObjectName(QString::fromUtf8("commandLinkButton"));
+
+        verticalLayout_6->addWidget(commandLinkButton);
+
+        commandLinkButton_2 = new QCommandLinkButton(swarmTab);
+        commandLinkButton_2->setObjectName(QString::fromUtf8("commandLinkButton_2"));
+
+        verticalLayout_6->addWidget(commandLinkButton_2);
+
+
+        horizontalLayout_11->addLayout(verticalLayout_6);
+
+
+        gridLayout_8->addLayout(horizontalLayout_11, 0, 0, 1, 2);
+
+        label_18 = new QLabel(swarmTab);
+        label_18->setObjectName(QString::fromUtf8("label_18"));
+        label_18->setAlignment(Qt::AlignCenter);
+
+        gridLayout_8->addWidget(label_18, 1, 0, 1, 1);
+
+        label_17 = new QLabel(swarmTab);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setAlignment(Qt::AlignCenter);
+
+        gridLayout_8->addWidget(label_17, 1, 1, 1, 1);
+
+        textBrowser_2 = new QTextBrowser(swarmTab);
+        textBrowser_2->setObjectName(QString::fromUtf8("textBrowser_2"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(textBrowser_2->sizePolicy().hasHeightForWidth());
+        textBrowser_2->setSizePolicy(sizePolicy1);
+        textBrowser_2->setStyleSheet(QString::fromUtf8("background-color:rgb(102, 102, 102)"));
+
+        gridLayout_8->addWidget(textBrowser_2, 2, 1, 1, 1);
+
+        glLayout = new QGridLayout();
+        glLayout->setSpacing(6);
+        glLayout->setObjectName(QString::fromUtf8("glLayout"));
+
+        gridLayout_8->addLayout(glLayout, 2, 0, 1, 1);
+
         tabWidget_2->addTab(swarmTab, QString());
         mapTab = new QWidget();
         mapTab->setObjectName(QString::fromUtf8("mapTab"));
@@ -643,22 +808,22 @@ public:
         verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
         label_6 = new QLabel(centralWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(1);
-        sizePolicy1.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(1);
+        sizePolicy2.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy2);
         label_6->setAlignment(Qt::AlignCenter);
 
         verticalLayout_5->addWidget(label_6);
 
         warningBrowser = new QTextBrowser(centralWidget);
         warningBrowser->setObjectName(QString::fromUtf8("warningBrowser"));
-        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(40);
-        sizePolicy2.setHeightForWidth(warningBrowser->sizePolicy().hasHeightForWidth());
-        warningBrowser->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(40);
+        sizePolicy3.setHeightForWidth(warningBrowser->sizePolicy().hasHeightForWidth());
+        warningBrowser->setSizePolicy(sizePolicy3);
         warningBrowser->setMinimumSize(QSize(400, 0));
         warningBrowser->setStyleSheet(QString::fromUtf8("background-color:black"));
 
@@ -672,6 +837,8 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1311, 25));
+        menuCommands = new QMenu(menuBar);
+        menuCommands->setObjectName(QString::fromUtf8("menuCommands"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -680,12 +847,20 @@ public:
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
+        menuBar->addAction(menuCommands->menuAction());
+        menuCommands->addAction(actionKill_All);
+
         retranslateUi(MainWindow);
         QObject::connect(cmdSpeedSpinBox, SIGNAL(valueChanged(int)), speedSelection, SLOT(setValue(int)));
         QObject::connect(maxSpeedSlider, SIGNAL(valueChanged(int)), maxSpeedPercentage, SLOT(setNum(int)));
         QObject::connect(speedSelection, SIGNAL(valueChanged(int)), cmdSpeedSpinBox, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider_3, SIGNAL(valueChanged(int)), spinBox, SLOT(setValue(int)));
+        QObject::connect(spinBox_2, SIGNAL(valueChanged(int)), horizontalSlider_2, SLOT(setValue(int)));
+        QObject::connect(spinBox_3, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), spinBox_2, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), spinBox_3, SLOT(setValue(int)));
 
-        tabWidget_2->setCurrentIndex(1);
+        tabWidget_2->setCurrentIndex(2);
         motorTabWidget->setCurrentIndex(1);
 
 
@@ -695,6 +870,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        actionKill_All->setText(QApplication::translate("MainWindow", "Kill All", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", nullptr));
         label->setText(QApplication::translate("MainWindow", "Robot :", nullptr));
         dolphinSelection->setItemText(0, QApplication::translate("MainWindow", "Dolphin1", nullptr));
@@ -776,10 +952,19 @@ public:
         motorTabWidget->setTabText(motorTabWidget->indexOf(motor4tab), QApplication::translate("MainWindow", "Motor 4", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Debug Console", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(controlTab), QApplication::translate("MainWindow", "Control", nullptr));
+        label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", nullptr));
+        label_14->setText(QApplication::translate("MainWindow", "Width:", nullptr));
+        label_15->setText(QApplication::translate("MainWindow", "Length:", nullptr));
+        label_16->setText(QApplication::translate("MainWindow", "Rotation:", nullptr));
+        commandLinkButton->setText(QApplication::translate("MainWindow", "Preview", nullptr));
+        commandLinkButton_2->setText(QApplication::translate("MainWindow", "Submit", nullptr));
+        label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", nullptr));
+        label_17->setText(QApplication::translate("MainWindow", "Debug Output", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Warnings", nullptr));
+        menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", nullptr));
     } // retranslateUi
 
 };

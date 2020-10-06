@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -44,14 +45,16 @@ SOURCES += \
         src/mainwindow.cpp \
         src/robotoverviewitem.cpp \
         src/uimoosinterface.cpp \
-        src/uimoosinterface_info.cpp
+        src/uimoosinterface_info.cpp \
+    src/swarmformationpainter.cpp
 
 HEADERS += \
         src/mainwindow.h \
         src/robotoverviewitem.h \
         src/styles.h \
         src/uimoosinterface.h \
-        src/uimoosinterface_info.h
+        src/uimoosinterface_info.h \
+    src/swarmformationpainter.h
 
 OTHER_FILES += \
         config/*

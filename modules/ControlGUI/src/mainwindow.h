@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QList>
 #include "VehicleStateDefines.h"
+#include "swarmformationpainter.h"
 
 #define SPEED_INTERVAL 5
 
@@ -59,6 +60,8 @@ private:
     QMap<QString, RobotState> m_robotStateMap;
     QMap<QString, QList<QString>> m_robot_message_buffer;
 
+    SwarmFormationPainter *myPainter;
+
     bool startup = true;
 public slots:
     void setBotList(QList<QString> list);
@@ -67,6 +70,8 @@ public slots:
     void onSubmitStateButtonClicked();
     void onCurrentBotChanged(QString bot);
     void onCurrentStateChanged(QString state);
+    void onKillAllPressed();
+
     void updateDebugText(QString);
     void updateWarningText(QString);
     void updateMotorSpeed(double speed, int motor, QString dolphin);
@@ -89,6 +94,9 @@ public slots:
     void printCaution(QString text, QString dolphin);
     void printAdvisory(QString text, QString dolphin);
     void printText(QString text, QString dolphin);
+
+    //Swarm Page Methods
+    void onPreveiwPressed();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
 };
