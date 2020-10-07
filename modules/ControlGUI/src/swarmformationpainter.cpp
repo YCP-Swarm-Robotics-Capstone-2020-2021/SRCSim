@@ -104,7 +104,7 @@ void SwarmFormationPainter::drawBots()
     iter = m_dolphinList.begin();
     while(iter != m_dolphinList.end()){
         int link = setupMap[*iter].second;
-        setupMap[*iter].first.first = currentZeta.getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
+        setupMap[*iter].first.first = (1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
         setupMap[*iter].first.second = 0.0;
         linkageOffsetCounts[link]--;
         iter++;

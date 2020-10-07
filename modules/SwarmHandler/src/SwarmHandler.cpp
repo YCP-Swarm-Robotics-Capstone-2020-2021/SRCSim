@@ -299,7 +299,8 @@ void SwarmHandler::initializeSwarm()
         iter = registration->begin();
         while(iter != registration->end()){
             int link = iter.value()->linkageAssignment;
-            iter.value()->xOffset = zetaControl->getLambda(link)*(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
+            //Don't think we need to multiply by lambda here
+            iter.value()->xOffset = /*zetaControl->getLambda(link)**/(1.0-(linkageOffsetCounts[link]/(double)linkageBotCounts[link]));
             iter.value()->yOffset = 0.0;
             linkageOffsetCounts[link]--;
             iter++;

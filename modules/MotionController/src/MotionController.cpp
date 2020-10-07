@@ -350,6 +350,8 @@ void MotionController::demoRun()
 }
 
 QPointF MotionController::linktoref(){
+    //I think this is wrong. See, for a robot that is not the first robot on a linkage, xlinkoff != 0. This multiplication
+    //results in the x position being greater than the actual link length. What we want is xlinkoff to be a number < 1.
     QPointF point = QPointF(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
     for( int i = linknum-1; i>=0; i--){
         double x = point.x();
