@@ -38,7 +38,8 @@ INCLUDEPATH += \
      ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include \
      ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include \
      ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include \
-     ../VehicleStateMachine/src/
+     ../VehicleStateMachine/src/ \
+     ../MotionController/src/
 
 SOURCES += \
         src/main.cpp \
@@ -46,7 +47,8 @@ SOURCES += \
         src/robotoverviewitem.cpp \
         src/uimoosinterface.cpp \
         src/uimoosinterface_info.cpp \
-    src/swarmformationpainter.cpp
+        src/swarmformationpainter.cpp \
+        ../MotionController/src/zeta.cpp
 
 HEADERS += \
         src/mainwindow.h \
@@ -54,7 +56,7 @@ HEADERS += \
         src/styles.h \
         src/uimoosinterface.h \
         src/uimoosinterface_info.h \
-    src/swarmformationpainter.h
+        src/swarmformationpainter.h
 
 OTHER_FILES += \
         config/*

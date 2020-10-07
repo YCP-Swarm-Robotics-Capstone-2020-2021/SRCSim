@@ -841,7 +841,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox"/>
+             <widget class="QComboBox" name="shapeSelection"/>
             </item>
             <item>
              <layout class="QGridLayout" name="gridLayout_7">
@@ -866,7 +866,7 @@
                </widget>
               </item>
               <item row="0" column="2">
-               <widget class="QSpinBox" name="spinBox">
+               <widget class="QSpinBox" name="widthBox">
                 <property name="minimum">
                  <number>1</number>
                 </property>
@@ -876,7 +876,7 @@
                </widget>
               </item>
               <item row="1" column="2" rowspan="2">
-               <widget class="QSpinBox" name="spinBox_2">
+               <widget class="QSpinBox" name="lengthBox">
                 <property name="minimum">
                  <number>1</number>
                 </property>
@@ -926,7 +926,7 @@
                </widget>
               </item>
               <item row="3" column="2">
-               <widget class="QSpinBox" name="spinBox_3">
+               <widget class="QSpinBox" name="rotationBox">
                 <property name="minimum">
                  <number>-180</number>
                 </property>
@@ -1136,7 +1136,7 @@
   <connection>
    <sender>horizontalSlider_3</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox</receiver>
+   <receiver>widthBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1150,7 +1150,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox_2</sender>
+   <sender>lengthBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>horizontalSlider_2</receiver>
    <slot>setValue(int)</slot>
@@ -1166,7 +1166,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox_3</sender>
+   <sender>rotationBox</sender>
    <signal>valueChanged(int)</signal>
    <receiver>horizontalSlider</receiver>
    <slot>setValue(int)</slot>
@@ -1184,7 +1184,7 @@
   <connection>
    <sender>horizontalSlider_2</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox_2</receiver>
+   <receiver>lengthBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1200,7 +1200,7 @@
   <connection>
    <sender>horizontalSlider</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox_3</receiver>
+   <receiver>rotationBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">

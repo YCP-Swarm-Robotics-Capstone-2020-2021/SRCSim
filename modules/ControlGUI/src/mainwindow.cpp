@@ -27,11 +27,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->slowerButton, SIGNAL(pressed()), this, SLOT(onSlowDownButtonPressed()));
     connect(ui->brakeButton, SIGNAL(pressed()), this, SLOT(onBrakeButtonPressed()));
     connect(ui->actionKill_All, SIGNAL(triggered()), this, SLOT(onKillAllPressed()));
+    connect(this, &MainWindow::updatePaintList, myPainter, &SwarmFormationPainter::setDolphinList);
+    connect(ui->shapeSelection, SIGNAL(currentIndexChanged(int)), myPainter, SLOT(setCurrentShape(int)));
+    connect(ui->widthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentWidth(int)));
+    connect(ui->lengthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentLength(int)));
+    connect(ui->rotationBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentRotation(int)));
 
     setBotList({});
     setupStateSelection();
+    setupShapeList();
     //Just temporary development stuff. Should be removed once registration functionality is in place
-    //setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3"});
+    setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3", "Dolphin4"});
 }
 
 MainWindow::~MainWindow()
@@ -61,6 +67,7 @@ void MainWindow::setBotList(QList<QString> list)
     updateCurrentDisplay();
     ui->dolphinSelection->setCurrentText(tempBotID);
     m_currentBotID = tempBotID;
+    emit updatePaintList(list);
     startup = false;
 }
 
@@ -149,13 +156,13 @@ void MainWindow::updateDolphinStatus(EnumDefs::StatusState status, QString dolph
     ui->statusLabel->setText(defs.StatusMap[m_robotStateMap[m_currentBotID].status]);
     switch(m_robotStateMap[m_currentBotID].status){
         case EnumDefs::StatusState::NORMAL:
-            ui->statusLabel->setStyleSheet("QLabel { color : "+QString(NORMAL_FONT_COLOR)+";}");
+            ui->statusLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(NORMAL_FONT_COLOR)+";}");
             break;
         case EnumDefs::StatusState::CAUTION:
-            ui->statusLabel->setStyleSheet("QLabel { color : "+QString(CAUTION_FONT_COLOR)+";}");
+            ui->statusLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(CAUTION_FONT_COLOR)+";}");
             break;
         case EnumDefs::StatusState::WARNING:
-            ui->statusLabel->setStyleSheet("QLabel { color : "+QString(WARNING_FONT_COLOR)+";}");
+            ui->statusLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(WARNING_FONT_COLOR)+";}");
             break;
     }
 }
@@ -169,10 +176,10 @@ void MainWindow::updateDolphinState(QString id, int state)
     ui->CurrentStateLabel->setText(defs.UIStateMap[m_robotStateMap[id].state]);
     switch(m_robotStateMap[m_currentBotID].state){
         case EnumDefs::VehicleStates::ALLSTOP:
-            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString(WARNING_FONT_COLOR)+";}");
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(WARNING_FONT_COLOR)+";}");
             break;
         default:
-            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString(NORMAL_FONT_COLOR)+";}");
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(NORMAL_FONT_COLOR)+";}");
             break;
     }
 }
@@ -268,31 +275,31 @@ void MainWindow::updateCurrentDisplay()
 
 void MainWindow::printCaution(QString text, QString dolphin)
 {
-    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString(CAUTION_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Caution: "+text+"</div>");
+    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString::fromStdString(CAUTION_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Caution: "+text+"</div>");
     if(m_currentBotID == dolphin)
-        updateDebugText("<div style=\"color:"+QString(CAUTION_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Caution: "+text+"</div>");
+        updateDebugText("<div style=\"color:"+QString::fromStdString(CAUTION_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Caution: "+text+"</div>");
 }
 
 void MainWindow::printWarning(QString text, QString dolphin)
 {
-    m_robot_message_buffer[dolphin].append("<b style=\"color:"+QString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
+    m_robot_message_buffer[dolphin].append("<b style=\"color:"+QString::fromStdString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
     if(m_currentBotID == dolphin)
-        updateDebugText("<b style=\"color:"+QString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
-    updateWarningText("<b style=\"color:"+QString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
+        updateDebugText("<b style=\"color:"+QString::fromStdString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
+    updateWarningText("<b style=\"color:"+QString::fromStdString(WARNING_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Warning: "+text+"</b>");
 }
 
 void MainWindow::printAdvisory(QString text, QString dolphin)
 {
-    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString(ADVISORY_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
+    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString::fromStdString(ADVISORY_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
     if(m_currentBotID == dolphin)
-        updateDebugText("<div style=\"color:"+QString(ADVISORY_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
+        updateDebugText("<div style=\"color:"+QString::fromStdString(ADVISORY_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
 }
 
 void MainWindow::printText(QString text, QString dolphin)
 {
-    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
+    m_robot_message_buffer[dolphin].append("<div style=\"color:"+QString::fromStdString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
     if(m_currentBotID == dolphin)
-        updateDebugText("<div style=\"color:"+QString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
+        updateDebugText("<div style=\"color:"+QString::fromStdString(NORMAL_FONT_COLOR)+";font-size:"+QString::number(TEXT_FONT_SIZE)+"px;\">Advisory: "+text+"</div>");
 }
 
 void MainWindow::onKillAllPressed()
@@ -314,4 +321,13 @@ void MainWindow::onKillAllPressed()
 void MainWindow::onPreveiwPressed()
 {
 
+}
+
+void MainWindow::setupShapeList()
+{
+    ui->shapeSelection->clear();
+    for(int i = 0; i<SwarmFormationPainter::Shape::SHAPEENUMEND; i++)
+    {
+        ui->shapeSelection->addItem(myPainter->getShapeSring(SwarmFormationPainter::Shape(i)));
+    }
 }

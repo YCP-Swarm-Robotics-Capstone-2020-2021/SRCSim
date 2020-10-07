@@ -135,17 +135,17 @@ public:
     QHBoxLayout *horizontalLayout_11;
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_13;
-    QComboBox *comboBox;
+    QComboBox *shapeSelection;
     QGridLayout *gridLayout_7;
     QLabel *label_14;
     QSlider *horizontalSlider_3;
-    QSpinBox *spinBox;
-    QSpinBox *spinBox_2;
+    QSpinBox *widthBox;
+    QSpinBox *lengthBox;
     QLabel *label_15;
     QSlider *horizontalSlider_2;
     QLabel *label_16;
     QSlider *horizontalSlider;
-    QSpinBox *spinBox_3;
+    QSpinBox *rotationBox;
     QVBoxLayout *verticalLayout_6;
     QCommandLinkButton *commandLinkButton;
     QCommandLinkButton *commandLinkButton_2;
@@ -671,10 +671,10 @@ public:
 
         horizontalLayout_10->addWidget(label_13);
 
-        comboBox = new QComboBox(swarmTab);
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        shapeSelection = new QComboBox(swarmTab);
+        shapeSelection->setObjectName(QString::fromUtf8("shapeSelection"));
 
-        horizontalLayout_10->addWidget(comboBox);
+        horizontalLayout_10->addWidget(shapeSelection);
 
         gridLayout_7 = new QGridLayout();
         gridLayout_7->setSpacing(6);
@@ -692,19 +692,19 @@ public:
 
         gridLayout_7->addWidget(horizontalSlider_3, 0, 1, 2, 1);
 
-        spinBox = new QSpinBox(swarmTab);
-        spinBox->setObjectName(QString::fromUtf8("spinBox"));
-        spinBox->setMinimum(1);
-        spinBox->setMaximum(6);
+        widthBox = new QSpinBox(swarmTab);
+        widthBox->setObjectName(QString::fromUtf8("widthBox"));
+        widthBox->setMinimum(1);
+        widthBox->setMaximum(6);
 
-        gridLayout_7->addWidget(spinBox, 0, 2, 1, 1);
+        gridLayout_7->addWidget(widthBox, 0, 2, 1, 1);
 
-        spinBox_2 = new QSpinBox(swarmTab);
-        spinBox_2->setObjectName(QString::fromUtf8("spinBox_2"));
-        spinBox_2->setMinimum(1);
-        spinBox_2->setMaximum(6);
+        lengthBox = new QSpinBox(swarmTab);
+        lengthBox->setObjectName(QString::fromUtf8("lengthBox"));
+        lengthBox->setMinimum(1);
+        lengthBox->setMaximum(6);
 
-        gridLayout_7->addWidget(spinBox_2, 1, 2, 2, 1);
+        gridLayout_7->addWidget(lengthBox, 1, 2, 2, 1);
 
         label_15 = new QLabel(swarmTab);
         label_15->setObjectName(QString::fromUtf8("label_15"));
@@ -732,12 +732,12 @@ public:
 
         gridLayout_7->addWidget(horizontalSlider, 3, 1, 1, 1);
 
-        spinBox_3 = new QSpinBox(swarmTab);
-        spinBox_3->setObjectName(QString::fromUtf8("spinBox_3"));
-        spinBox_3->setMinimum(-180);
-        spinBox_3->setMaximum(180);
+        rotationBox = new QSpinBox(swarmTab);
+        rotationBox->setObjectName(QString::fromUtf8("rotationBox"));
+        rotationBox->setMinimum(-180);
+        rotationBox->setMaximum(180);
 
-        gridLayout_7->addWidget(spinBox_3, 3, 2, 1, 1);
+        gridLayout_7->addWidget(rotationBox, 3, 2, 1, 1);
 
 
         horizontalLayout_10->addLayout(gridLayout_7);
@@ -854,11 +854,11 @@ public:
         QObject::connect(cmdSpeedSpinBox, SIGNAL(valueChanged(int)), speedSelection, SLOT(setValue(int)));
         QObject::connect(maxSpeedSlider, SIGNAL(valueChanged(int)), maxSpeedPercentage, SLOT(setNum(int)));
         QObject::connect(speedSelection, SIGNAL(valueChanged(int)), cmdSpeedSpinBox, SLOT(setValue(int)));
-        QObject::connect(horizontalSlider_3, SIGNAL(valueChanged(int)), spinBox, SLOT(setValue(int)));
-        QObject::connect(spinBox_2, SIGNAL(valueChanged(int)), horizontalSlider_2, SLOT(setValue(int)));
-        QObject::connect(spinBox_3, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
-        QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), spinBox_2, SLOT(setValue(int)));
-        QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), spinBox_3, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider_3, SIGNAL(valueChanged(int)), widthBox, SLOT(setValue(int)));
+        QObject::connect(lengthBox, SIGNAL(valueChanged(int)), horizontalSlider_2, SLOT(setValue(int)));
+        QObject::connect(rotationBox, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
 
         tabWidget_2->setCurrentIndex(2);
         motorTabWidget->setCurrentIndex(1);

@@ -66,6 +66,7 @@ private:
 public slots:
     void setBotList(QList<QString> list);
     void setupStateSelection();
+    void setupShapeList();
 
     void onSubmitStateButtonClicked();
     void onCurrentBotChanged(QString bot);
@@ -99,6 +100,7 @@ public slots:
     void onPreveiwPressed();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
+    void updatePaintList(QList<QString> list);
 };
 
 #endif // MAINWINDOW_H
