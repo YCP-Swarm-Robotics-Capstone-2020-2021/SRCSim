@@ -19,6 +19,7 @@ public:
         TRIANGLE,
         CIRCLE,
         PENTAGON,
+        PARALLELOGRAM,
         SHAPEENUMEND
     };
 
@@ -52,7 +53,7 @@ protected:
 private:
     void setupZeta();
 
-    const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "CIRCLE", "PENTAGON"};
+    const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "CIRCLE", "PENTAGON", "PARALLELOGRAM"};
     QList<QString> m_dolphinList;
     QMap<QString, QPair<QPair<double, double>,int>> setupMap;
     Shape currentShape = Shape::SQUARE;
