@@ -34,6 +34,7 @@ protected: // Standard AppCastingMOOSApp function to overload
 
 public slots:
     void run();
+    void receiveZeta(QString);
 
 signals:
     void workFinished();

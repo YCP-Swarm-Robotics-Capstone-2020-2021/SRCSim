@@ -287,3 +287,8 @@ bool UIMoosInterface::doMOOSWork()
     /***************************   END OF MOOS APP LOOP ***************************************/
     return true;
 }
+
+void UIMoosInterface::receiveZeta(QString zeta)
+{
+    Notify("Zeta_Cmd", zeta.toStdString());
+}

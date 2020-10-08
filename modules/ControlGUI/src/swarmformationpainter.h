@@ -32,7 +32,7 @@ public:
         }
     }
 signals:
-
+    void emitZeta(QString);
 public slots:
     void setDolphinList(QList<QString> list)
     {
@@ -46,6 +46,13 @@ public slots:
     void setCurrentLength(int i){currentLength = i; update();}
     void setCurrentRotation(int i){currentRotation = i; update();}
     void setFeetArenaView(int i){numFeetInArenaView = i; update();}
+    void submitZetaPressed(){
+        setupZeta();
+        currentZeta.setxPos((currentZeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
+        currentZeta.setyPos((currentZeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
+        currentZeta.setAttitude(currentRotation);
+        emit emitZeta(currentZeta.stringify());
+    }
 protected:
     virtual void paintEvent(QPaintEvent *event);
     void drawGrid();

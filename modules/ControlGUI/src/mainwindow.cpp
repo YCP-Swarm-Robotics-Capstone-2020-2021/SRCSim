@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include <QMessageBox>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -32,11 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->widthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentWidth(int)));
     connect(ui->lengthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentLength(int)));
     connect(ui->rotationBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentRotation(int)));
-    connect(ui->zoomSlider, SIGNAL(valueChanged(int)), myPainter, SLOT(setFeetArenaView(int)));
-
+    connect(ui->zoomSlider, SIGNAL(valueChanged(int)), this, SLOT(descretizeZoom(int)));
+    connect(this, &MainWindow::zoomValue, myPainter, &SwarmFormationPainter::setFeetArenaView);
+    connect(ui->submitZeta, SIGNAL(released()), myPainter, SLOT(submitZetaPressed()));
+    connect(myPainter, &SwarmFormationPainter::emitZeta, this, &MainWindow::zetaSent);
     setBotList({});
     setupStateSelection();
     setupShapeList();
+
     //Just temporary development stuff. Should be removed once registration functionality is in place
     setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3", "Dolphin4"});
 }
@@ -331,4 +335,13 @@ void MainWindow::setupShapeList()
     {
         ui->shapeSelection->addItem(myPainter->getShapeSring(SwarmFormationPainter::Shape(i)));
     }
+}
+
+void MainWindow::descretizeZoom(int zoom)
+{
+    if (zoom%2 != 0){
+        zoom += 1;
+    }
+    ui->zoomSlider->setValue(zoom);
+    emit zoomValue(zoom);
 }

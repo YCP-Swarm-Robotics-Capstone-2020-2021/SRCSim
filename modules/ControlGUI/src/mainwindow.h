@@ -7,6 +7,7 @@
 #include <QList>
 #include "VehicleStateDefines.h"
 #include "swarmformationpainter.h"
+#include <QShortcut>
 
 #define SPEED_INTERVAL 5
 
@@ -62,6 +63,11 @@ private:
 
     SwarmFormationPainter *myPainter;
 
+    QShortcut *wButton;
+    QShortcut *aButton;
+    QShortcut *sButton;
+    QShortcut *dButton;
+
     bool startup = true;
 public slots:
     void setBotList(QList<QString> list);
@@ -97,10 +103,13 @@ public slots:
     void printText(QString text, QString dolphin);
 
     //Swarm Page Methods
+    void descretizeZoom(int);
     void onPreveiwPressed();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
     void updatePaintList(QList<QString> list);
+    void zoomValue(int);
+    void zetaSent(QString);
 };
 
 #endif // MAINWINDOW_H

@@ -148,7 +148,7 @@ public:
     QSpinBox *rotationBox;
     QVBoxLayout *verticalLayout_6;
     QSpacerItem *verticalSpacer_3;
-    QCommandLinkButton *commandLinkButton_2;
+    QCommandLinkButton *submitZeta;
     QSpacerItem *verticalSpacer_4;
     QGridLayout *gridLayout_8;
     QLabel *label_18;
@@ -321,7 +321,7 @@ public:
 
         forwardButton = new QPushButton(controlTab);
         forwardButton->setObjectName(QString::fromUtf8("forwardButton"));
-        forwardButton->setAutoRepeat(true);
+        forwardButton->setAutoRepeat(false);
         forwardButton->setAutoRepeatDelay(50);
         forwardButton->setAutoRepeatInterval(50);
 
@@ -333,7 +333,7 @@ public:
 
         leftButton = new QPushButton(controlTab);
         leftButton->setObjectName(QString::fromUtf8("leftButton"));
-        leftButton->setAutoRepeat(true);
+        leftButton->setAutoRepeat(false);
         leftButton->setAutoRepeatDelay(50);
         leftButton->setAutoRepeatInterval(50);
 
@@ -341,7 +341,7 @@ public:
 
         rightButton = new QPushButton(controlTab);
         rightButton->setObjectName(QString::fromUtf8("rightButton"));
-        rightButton->setAutoRepeat(true);
+        rightButton->setAutoRepeat(false);
         rightButton->setAutoRepeatDelay(50);
         rightButton->setAutoRepeatInterval(50);
 
@@ -353,7 +353,7 @@ public:
 
         reverseButton = new QPushButton(controlTab);
         reverseButton->setObjectName(QString::fromUtf8("reverseButton"));
-        reverseButton->setAutoRepeat(true);
+        reverseButton->setAutoRepeat(false);
         reverseButton->setAutoRepeatDelay(50);
         reverseButton->setAutoRepeatInterval(50);
 
@@ -758,10 +758,10 @@ public:
 
         verticalLayout_6->addItem(verticalSpacer_3);
 
-        commandLinkButton_2 = new QCommandLinkButton(swarmTab);
-        commandLinkButton_2->setObjectName(QString::fromUtf8("commandLinkButton_2"));
+        submitZeta = new QCommandLinkButton(swarmTab);
+        submitZeta->setObjectName(QString::fromUtf8("submitZeta"));
 
-        verticalLayout_6->addWidget(commandLinkButton_2);
+        verticalLayout_6->addWidget(submitZeta);
 
         verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -811,8 +811,66 @@ public:
         horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
         zoomSlider = new QSlider(swarmTab);
         zoomSlider->setObjectName(QString::fromUtf8("zoomSlider"));
+        zoomSlider->setStyleSheet(QString::fromUtf8("QSlider::groove:horizontal {\n"
+"border: 1px solid #bbb;\n"
+"background: white;\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
+"    stop: 0 #66e, stop: 1 #bbf);\n"
+"background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
+"    stop: 0 #bbf, stop: 1 #55f);\n"
+"border: 1px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal {\n"
+"background: #fff;\n"
+"border: 1px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #eee, stop:1 #ccc);\n"
+"border: 1px solid #777;\n"
+"width: 13px;\n"
+"margin-top: -2px;\n"
+"margin-bottom: -2px;\n"
+"border-radius: 4px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #fff, stop:1 #ddd);\n"
+"border: 1px solid #444;\n"
+"border-radius: 4px;\n"
+"}\n"
+""
+                        "\n"
+"QSlider::sub-page:horizontal:disabled {\n"
+"background: #bbb;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal:disabled {\n"
+"background: #eee;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"background: #eee;\n"
+"border: 1px solid #aaa;\n"
+"border-radius: 4px;\n"
+"}"));
         zoomSlider->setMinimum(1);
         zoomSlider->setMaximum(30);
+        zoomSlider->setSingleStep(2);
         zoomSlider->setValue(6);
         zoomSlider->setOrientation(Qt::Vertical);
 
@@ -902,7 +960,7 @@ public:
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
 
-        tabWidget_2->setCurrentIndex(2);
+        tabWidget_2->setCurrentIndex(1);
         motorTabWidget->setCurrentIndex(1);
 
 
@@ -998,7 +1056,7 @@ public:
         label_14->setText(QApplication::translate("MainWindow", "Width:", nullptr));
         label_15->setText(QApplication::translate("MainWindow", "Length:", nullptr));
         label_16->setText(QApplication::translate("MainWindow", "Rotation:", nullptr));
-        commandLinkButton_2->setText(QApplication::translate("MainWindow", "Submit", nullptr));
+        submitZeta->setText(QApplication::translate("MainWindow", "Submit", nullptr));
         label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", nullptr));
         label_19->setText(QApplication::translate("MainWindow", "Zoom View", nullptr));
         label_17->setText(QApplication::translate("MainWindow", "Debug Output", nullptr));

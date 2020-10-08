@@ -15,6 +15,11 @@ using namespace std;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+    QFile qss("../style.qss");
+    qss.open(QFile::ReadOnly);
+    a.setStyleSheet(qss.readAll());
+    qss.close();
     string mission_file;
     string run_command = argv[0];
 
@@ -49,6 +54,7 @@ int main(int argc, char *argv[])
     //Do connections here
     a.connect(&mapp, &UIMoosInterface::regIn, &w, &MainWindow::setBotList);
     a.connect(&mapp, &UIMoosInterface::updateState, &w, &MainWindow::updateDolphinState);
+    a.connect(&w, &MainWindow::zetaSent, &mapp, &UIMoosInterface::receiveZeta);
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");
     QSplashScreen splash(img, Qt::WindowStaysOnTopHint);
