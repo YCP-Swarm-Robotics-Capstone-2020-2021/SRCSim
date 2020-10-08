@@ -131,7 +131,7 @@ public:
     QLabel *label_5;
     QTextBrowser *textBrowser;
     QWidget *swarmTab;
-    QGridLayout *gridLayout_8;
+    QVBoxLayout *verticalLayout_8;
     QHBoxLayout *horizontalLayout_11;
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_13;
@@ -147,12 +147,18 @@ public:
     QSlider *horizontalSlider;
     QSpinBox *rotationBox;
     QVBoxLayout *verticalLayout_6;
-    QCommandLinkButton *commandLinkButton;
+    QSpacerItem *verticalSpacer_3;
     QCommandLinkButton *commandLinkButton_2;
+    QSpacerItem *verticalSpacer_4;
+    QGridLayout *gridLayout_8;
     QLabel *label_18;
+    QLabel *label_19;
     QLabel *label_17;
-    QTextBrowser *textBrowser_2;
+    QVBoxLayout *verticalLayout_7;
     QGridLayout *glLayout;
+    QHBoxLayout *horizontalLayout_12;
+    QSlider *zoomSlider;
+    QTextBrowser *textBrowser_2;
     QWidget *mapTab;
     QWidget *interfaceTab;
     QVBoxLayout *verticalLayout_5;
@@ -656,10 +662,10 @@ public:
         tabWidget_2->addTab(controlTab, QString());
         swarmTab = new QWidget();
         swarmTab->setObjectName(QString::fromUtf8("swarmTab"));
-        gridLayout_8 = new QGridLayout(swarmTab);
-        gridLayout_8->setSpacing(6);
-        gridLayout_8->setContentsMargins(11, 11, 11, 11);
-        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
+        verticalLayout_8 = new QVBoxLayout(swarmTab);
+        verticalLayout_8->setSpacing(6);
+        verticalLayout_8->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         horizontalLayout_11 = new QHBoxLayout();
         horizontalLayout_11->setSpacing(6);
         horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
@@ -748,33 +754,72 @@ public:
         verticalLayout_6 = new QVBoxLayout();
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
-        commandLinkButton = new QCommandLinkButton(swarmTab);
-        commandLinkButton->setObjectName(QString::fromUtf8("commandLinkButton"));
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        verticalLayout_6->addWidget(commandLinkButton);
+        verticalLayout_6->addItem(verticalSpacer_3);
 
         commandLinkButton_2 = new QCommandLinkButton(swarmTab);
         commandLinkButton_2->setObjectName(QString::fromUtf8("commandLinkButton_2"));
 
         verticalLayout_6->addWidget(commandLinkButton_2);
 
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_6->addItem(verticalSpacer_4);
+
 
         horizontalLayout_11->addLayout(verticalLayout_6);
 
 
-        gridLayout_8->addLayout(horizontalLayout_11, 0, 0, 1, 2);
+        verticalLayout_8->addLayout(horizontalLayout_11);
 
+        gridLayout_8 = new QGridLayout();
+        gridLayout_8->setSpacing(6);
+        gridLayout_8->setObjectName(QString::fromUtf8("gridLayout_8"));
         label_18 = new QLabel(swarmTab);
         label_18->setObjectName(QString::fromUtf8("label_18"));
         label_18->setAlignment(Qt::AlignCenter);
 
-        gridLayout_8->addWidget(label_18, 1, 0, 1, 1);
+        gridLayout_8->addWidget(label_18, 0, 0, 1, 1);
+
+        label_19 = new QLabel(swarmTab);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+        label_19->setAlignment(Qt::AlignCenter);
+
+        gridLayout_8->addWidget(label_19, 0, 1, 1, 1);
 
         label_17 = new QLabel(swarmTab);
         label_17->setObjectName(QString::fromUtf8("label_17"));
         label_17->setAlignment(Qt::AlignCenter);
 
-        gridLayout_8->addWidget(label_17, 1, 1, 1, 1);
+        gridLayout_8->addWidget(label_17, 0, 2, 1, 1);
+
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setSpacing(6);
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        glLayout = new QGridLayout();
+        glLayout->setSpacing(6);
+        glLayout->setObjectName(QString::fromUtf8("glLayout"));
+
+        verticalLayout_7->addLayout(glLayout);
+
+
+        gridLayout_8->addLayout(verticalLayout_7, 1, 0, 1, 1);
+
+        horizontalLayout_12 = new QHBoxLayout();
+        horizontalLayout_12->setSpacing(6);
+        horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
+        zoomSlider = new QSlider(swarmTab);
+        zoomSlider->setObjectName(QString::fromUtf8("zoomSlider"));
+        zoomSlider->setMinimum(1);
+        zoomSlider->setMaximum(30);
+        zoomSlider->setValue(6);
+        zoomSlider->setOrientation(Qt::Vertical);
+
+        horizontalLayout_12->addWidget(zoomSlider);
+
+
+        gridLayout_8->addLayout(horizontalLayout_12, 1, 1, 1, 1);
 
         textBrowser_2 = new QTextBrowser(swarmTab);
         textBrowser_2->setObjectName(QString::fromUtf8("textBrowser_2"));
@@ -785,13 +830,10 @@ public:
         textBrowser_2->setSizePolicy(sizePolicy1);
         textBrowser_2->setStyleSheet(QString::fromUtf8("background-color:rgb(102, 102, 102)"));
 
-        gridLayout_8->addWidget(textBrowser_2, 2, 1, 1, 1);
+        gridLayout_8->addWidget(textBrowser_2, 1, 2, 1, 1);
 
-        glLayout = new QGridLayout();
-        glLayout->setSpacing(6);
-        glLayout->setObjectName(QString::fromUtf8("glLayout"));
 
-        gridLayout_8->addLayout(glLayout, 2, 0, 1, 1);
+        verticalLayout_8->addLayout(gridLayout_8);
 
         tabWidget_2->addTab(swarmTab, QString());
         mapTab = new QWidget();
@@ -956,9 +998,9 @@ public:
         label_14->setText(QApplication::translate("MainWindow", "Width:", nullptr));
         label_15->setText(QApplication::translate("MainWindow", "Length:", nullptr));
         label_16->setText(QApplication::translate("MainWindow", "Rotation:", nullptr));
-        commandLinkButton->setText(QApplication::translate("MainWindow", "Preview", nullptr));
         commandLinkButton_2->setText(QApplication::translate("MainWindow", "Submit", nullptr));
         label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", nullptr));
+        label_19->setText(QApplication::translate("MainWindow", "Zoom View", nullptr));
         label_17->setText(QApplication::translate("MainWindow", "Debug Output", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
         tabWidget_2->setTabText(tabWidget_2->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));

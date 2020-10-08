@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->widthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentWidth(int)));
     connect(ui->lengthBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentLength(int)));
     connect(ui->rotationBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setCurrentRotation(int)));
+    connect(ui->zoomSlider, SIGNAL(valueChanged(int)), myPainter, SLOT(setFeetArenaView(int)));
 
     setBotList({});
     setupStateSelection();

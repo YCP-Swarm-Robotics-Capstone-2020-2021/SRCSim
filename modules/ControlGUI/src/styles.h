@@ -15,6 +15,6 @@ const std::string NORMAL_FONT_COLOR = "darkgreen";
 //Swarm Page Defines
 const int SWARM_DISPLAY_FONTSIZE = 2;
 const int ARENA_WIDTH_HEIGHT_IN_FEET = 6;
-const double ROBOT_HEIGHT_IN_FEET = .4;
-const double ROBOT_WIDTH_IN_FEET = 0.2;
+const double ROBOT_HEIGHT_IN_FEET = .5;
+const double ROBOT_WIDTH_IN_FEET = 0.25;
 #endif // STYLES_H

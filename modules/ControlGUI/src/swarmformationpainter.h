@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <QDebug>
 #include "zeta.h"
+#include "styles.h"
 
 class SwarmFormationPainter : public QWidget
 {
@@ -44,6 +45,7 @@ public slots:
     void setCurrentWidth(int i){currentWidth = i; update();}
     void setCurrentLength(int i){currentLength = i; update();}
     void setCurrentRotation(int i){currentRotation = i; update();}
+    void setFeetArenaView(int i){numFeetInArenaView = i; update();}
 protected:
     virtual void paintEvent(QPaintEvent *event);
     void drawGrid();
@@ -61,6 +63,7 @@ private:
     int currentWidth = 1;
     int currentLength = 1;
     int currentRotation = 0;
+    int numFeetInArenaView = ARENA_WIDTH_HEIGHT_IN_FEET;
 };
 
 #endif // SWARMFORMATIONPAINTER_H

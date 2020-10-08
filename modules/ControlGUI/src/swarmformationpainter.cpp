@@ -1,6 +1,6 @@
 #include <QStyleOption>
 #include "swarmformationpainter.h"
-#include "styles.h"
+#include <math.h>
 
 
 SwarmFormationPainter::SwarmFormationPainter(QWidget *parent) : QWidget (parent)
@@ -53,22 +53,22 @@ void SwarmFormationPainter::drawGrid()
     originPen.setStyle(Qt::SolidLine);
     painter.setPen(pen);
 
-    for(int i = 1; i<=3; i++){
-        painter.setPen((i==2) ? originPen : pen);
-        painter.drawLine(0,(this->height()/4)*i, this->width(),(this->height()/4)*i );
+    painter.setPen(pen);
+    for(int i = 1; i<=numFeetInArenaView; i++){
+        painter.drawLine(0,(this->height()/numFeetInArenaView)*i, this->width(),(this->height()/numFeetInArenaView)*i );
+        painter.drawLine((this->width()/numFeetInArenaView)*i, 0, (this->width()/numFeetInArenaView)*i,this->height());
     }
-    for(int i = 1; i<=3; i++){
-        painter.setPen((i==2) ? originPen : pen);
-        painter.drawLine((this->width()/4)*i, 0, (this->width()/4)*i,this->height());
-    }
+    painter.setPen(originPen);
+    painter.drawLine(0, (this->height()/2), this->width(), (this->height()/2));
+    painter.drawLine((this->width()/2), 0, (this->width()/2), this->height());
 }
 
 void SwarmFormationPainter::drawBots()
 {
     //1/6 of width = 1 foot
     //Robots are approx 3/4 ft x 1/2 ft
-    int roboWidth = int((this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*ROBOT_WIDTH_IN_FEET);
-    int roboHeight = int((this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*ROBOT_HEIGHT_IN_FEET);
+    int roboWidth = int((this->width()/numFeetInArenaView)*ROBOT_WIDTH_IN_FEET);
+    int roboHeight = int((this->width()/numFeetInArenaView)*ROBOT_HEIGHT_IN_FEET);
 
     QPainter painter(this);
     QPen roboPen, textPen, linePen;
@@ -120,23 +120,23 @@ void SwarmFormationPainter::drawBots()
             point.setY((x*sin(-currentZeta.getTheta(i)*PI/180.0) + y*cos(-currentZeta.getTheta(i)*PI/180.0)));
             point.setX(point.x() + currentZeta.getLambda(i));
         }
-        setupMap[*iter].first.first = ((point.x()*(this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*cos(currentZeta.getAttitude())-point.y()*(this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*sin(currentZeta.getAttitude()))+currentZeta.getxPos());
-        setupMap[*iter].first.second = ((point.x()*(this->height()/ARENA_WIDTH_HEIGHT_IN_FEET)*sin(currentZeta.getAttitude())+point.y()*(this->height()/ARENA_WIDTH_HEIGHT_IN_FEET)*cos(currentZeta.getAttitude()))+currentZeta.getyPos());
+        setupMap[*iter].first.first = ((point.x()*(this->width()/numFeetInArenaView)*cos(currentZeta.getAttitude())-point.y()*(this->width()/numFeetInArenaView)*sin(currentZeta.getAttitude()))+currentZeta.getxPos());
+        setupMap[*iter].first.second = ((point.x()*(this->height()/numFeetInArenaView)*sin(currentZeta.getAttitude())+point.y()*(this->height()/numFeetInArenaView)*cos(currentZeta.getAttitude()))+currentZeta.getyPos());
         iter++;
     }
 
     painter.setPen(linePen);
     QPoint linePoint(currentZeta.getxPos(), currentZeta.getyPos());
-    QPoint nextPoint(linePoint.x()+(currentZeta.getLambda(0)*(this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*cos(currentZeta.getAttitude())),
-                     linePoint.y()+(currentZeta.getLambda(0)*(this->height()/ARENA_WIDTH_HEIGHT_IN_FEET)*sin(currentZeta.getAttitude())));
+    QPoint nextPoint(linePoint.x()+(currentZeta.getLambda(0)*(this->width()/numFeetInArenaView)*cos(currentZeta.getAttitude())),
+                     linePoint.y()+(currentZeta.getLambda(0)*(this->height()/numFeetInArenaView)*sin(currentZeta.getAttitude())));
     int angle = currentZeta.getAttitude()*180.0/PI;
     for(int i = 1; i<=numLinkagesInFormation; i++){
         painter.drawLine(linePoint.x(), linePoint.y(), nextPoint.x(), nextPoint.y());
         linePoint.setX(nextPoint.x());
         linePoint.setY(nextPoint.y());
         angle -= (currentZeta.getTheta(i-1));
-        nextPoint.setX(linePoint.x()+(currentZeta.getLambda(i)*(this->width()/ARENA_WIDTH_HEIGHT_IN_FEET)*cos(angle*PI/180.0)));
-        nextPoint.setY(linePoint.y()+(currentZeta.getLambda(i)*(this->height()/ARENA_WIDTH_HEIGHT_IN_FEET)*sin(angle*PI/180.0)));
+        nextPoint.setX(linePoint.x()+(currentZeta.getLambda(i)*(this->width()/numFeetInArenaView)*cos(angle*PI/180.0)));
+        nextPoint.setY(linePoint.y()+(currentZeta.getLambda(i)*(this->height()/numFeetInArenaView)*sin(angle*PI/180.0)));
     }
 
     iter = m_dolphinList.begin();
@@ -155,8 +155,8 @@ void SwarmFormationPainter::setupZeta()
     double length = sqrt(currentWidth*currentWidth+currentLength*currentLength);
     switch(currentShape){
         case Shape::SQUARE:
-            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/ARENA_WIDTH_HEIGHT_IN_FEET));
-            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/ARENA_WIDTH_HEIGHT_IN_FEET));
+            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({90, 90, 90, 90});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),
@@ -165,8 +165,8 @@ void SwarmFormationPainter::setupZeta()
                                                      double(currentLength)});
             break;
         case Shape::TRIANGLE:
-            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/ARENA_WIDTH_HEIGHT_IN_FEET));
-            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/ARENA_WIDTH_HEIGHT_IN_FEET));
+            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({120, 120, 120});
             currentZeta.setWholeLambda(QList<double>{double(length),
@@ -176,8 +176,8 @@ void SwarmFormationPainter::setupZeta()
         case Shape::CIRCLE:
             break;
         case Shape::PENTAGON:
-            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/ARENA_WIDTH_HEIGHT_IN_FEET));
-            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/ARENA_WIDTH_HEIGHT_IN_FEET));
+            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({72, 72, 72, 72, 72});
             currentZeta.setWholeLambda(QList<double>{double(length),
@@ -187,8 +187,8 @@ void SwarmFormationPainter::setupZeta()
                                                      double(length)});
             break;
         case Shape::PARALLELOGRAM:
-            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/ARENA_WIDTH_HEIGHT_IN_FEET));
-            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/ARENA_WIDTH_HEIGHT_IN_FEET));
+            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({120, 60, 120, 60});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),
