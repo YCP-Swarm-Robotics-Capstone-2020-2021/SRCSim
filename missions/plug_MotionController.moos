@@ -3,4 +3,6 @@ ProcessConfig = MotionController
    AppTick   = 4
    CommsTick = 4
    id = $(VNAME)
+   kappa = $(KAPPA)
+   dt = $(DT)
 }

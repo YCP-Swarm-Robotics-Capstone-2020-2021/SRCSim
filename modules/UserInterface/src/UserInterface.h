@@ -55,7 +55,7 @@ public slots:
    void updateState(int state){State = (EnumDefs::VehicleStates)state;}
    void updateBot(int id){robotId = id;}
    void sendMessage(){
-       if(robotId == maxBots){
+       if(robotId == maxBots || State == EnumDefs::VehicleStates::SWARMMODE){
            QString stateData ="State="+ QString::number(State);
            Notify("Change_State", stateData.toStdString(), MOOSTime());
        }

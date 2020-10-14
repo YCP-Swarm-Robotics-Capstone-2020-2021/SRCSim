@@ -1,8 +1,0 @@
-ProcessConfig = pShare
-{
-     Input = route=$(VIP):$(VPORT)
-     Input = route=multicast_$(BROADCASTNUM)
-
-     Output = src_name=Current_State, dest_name=$(VNAME)_Current_State, route=$(GCSIP):$(GCSPORT)
-     Output = src_name=Speed_Curv, route=$(GCSIP):$(GCSPORT)
-}

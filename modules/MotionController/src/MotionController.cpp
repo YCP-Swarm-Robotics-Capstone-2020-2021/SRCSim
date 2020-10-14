@@ -17,6 +17,9 @@ using namespace std;
 MotionController::MotionController()
 {
     entryZone = new QLabel("Enter input");
+    podmates = new QMap<QString, Zeta>();
+   // QHash<QString, double> idhash;
+  //  srand( idhash.value(id)+MOOSTime());
 }
 
 //---------------------------------------------------------
@@ -54,6 +57,12 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Current_State"){
       handleCurrentState(msg);
   }
+  else if(key == "Zeta_Init"){
+      handleZetaInit(msg);
+  }
+  else if(key == "Neighbor_Zeta"){
+      handleNeighborZeta(msg);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -78,34 +87,49 @@ bool MotionController::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-switch(state){
-    case EnumDefs::VehicleStates::TELEOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
+    switch(state){
+        case EnumDefs::VehicleStates::TELEOP:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::STANDBY:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::ALLSTOP:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::DEMOMODE:{
+            demoRun();
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMINIT:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            state = swarmInit();
+            moveData = "State=" + QString::number(state);
+            Notify("Change_State", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMSTANDBY:{
+            QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+            Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+            break;
+        }
+        case EnumDefs::VehicleStates::SWARMRUN:{
+            robotMover();
+            swarmRun();
+            break;
+        }
+        default:{
+            MOOSDebugWrite("MotionController: Invalid state");
+            break;
+        }
     }
-    case EnumDefs::VehicleStates::STANDBY:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::ALLSTOP:{
-        QString moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
-        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        break;
-    }
-    case EnumDefs::VehicleStates::DEMOMODE:{
-        demoRun();
-        break;
-    }
-    default:{
-        MOOSDebugWrite("MotionController: Invalid state");
-        break;
-    }
-}
-
-
-
 //AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -133,7 +157,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  bool handled = false;
  if(param == "id") {
      id = QString::fromStdString(value);
-     boundary -= id.mid(7).toDouble();
+     boundary -= id.mid(7).toDouble()+0.5;
      Notify("Boundary", boundary, MOOSTime());
      handled = true;
  }
@@ -158,6 +182,8 @@ void MotionController::registerVariables()
 AppCastingMOOSApp::RegisterVariables();
 Register("Current_State");
 Register("Current_Pos");
+Register("Zeta_Init");
+Register("Neighbor_Zeta");
 }
 
 
@@ -200,6 +226,60 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
 
 
      return true;
+}
+
+bool MotionController::handleZetaInit(CMOOSMsg &msg){
+     if(!msg.IsString()){
+        return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+     }
+     string ids;
+     QList<QString> idlist;
+     MOOSValFromString(xlinkoff , msg.GetString(), "xOffset");
+     MOOSValFromString(ylinkoff , msg.GetString(), "yOffset");
+     MOOSValFromString(linknum , msg.GetString(), "linkageNum");
+     MOOSValFromString(numlinks, msg.GetString(), "numLinks");
+     MOOSValFromString(ids , msg.GetString(), "neighborIds");
+     idlist = QString::fromStdString(ids).split("|");
+     for(int i = 0; i< idlist.size(); i++){
+         podmates->insert(idlist[i], Zeta());
+     }
+     swarmflag = true;
+
+
+
+     return true;
+}
+
+bool MotionController::handleNeighborZeta(CMOOSMsg &msg){
+    if(!msg.IsString()){
+       return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+    }
+    string id;
+    double xPos,yPos, att;
+    string theta, lambda;
+    QList<double> thetalist, lambdalist;
+    MOOSValFromString(id , msg.GetString(), "id");
+    MOOSValFromString(xPos , msg.GetString(), "xPos");
+    MOOSValFromString(yPos , msg.GetString(), "yPos");
+    MOOSValFromString(att , msg.GetString(), "Attitude");
+    MOOSValFromString(theta , msg.GetString(), "Theta");
+    MOOSValFromString(lambda , msg.GetString(), "Lambda");
+    thetalist = toDoubleList(QString::fromStdString(theta).split("|"));
+    lambdalist = toDoubleList(QString::fromStdString(lambda).split("|"));
+    podmates->find(QString::fromStdString(id))->setxPos(xPos);
+    podmates->find(QString::fromStdString(id))->setyPos(yPos);
+    podmates->find(QString::fromStdString(id))->setAttitude(att);
+    podmates->find(QString::fromStdString(id))->setWholeTheta(thetalist);
+    podmates->find(QString::fromStdString(id))->setWholeLambda(lambdalist);
+    return true;
+}
+
+QList<double> MotionController::toDoubleList(QList<QString> input){
+    QList<double> toReturn;
+    for(int i=0; i<input.size(); i++){
+     toReturn.append(input[i].toDouble());
+    }
+    return toReturn;
 }
 
 void MotionController::run(){
@@ -267,4 +347,122 @@ void MotionController::demoRun()
     }
     QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+}
+
+QPointF MotionController::linktoref(){
+    QPointF point = QPointF(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
+    for( int i = linknum-1; i>=0; i--){
+        double x = point.x();
+        double y = point.y();
+        point.setX((x*cos(-CurrentZeta.getTheta(i)*PI/180.0) - y*sin(-CurrentZeta.getTheta(i)*PI/180.0)));
+        point.setY((x*sin(-CurrentZeta.getTheta(i)*PI/180.0) + y*cos(-CurrentZeta.getTheta(i)*PI/180.0)));
+        point.setX(point.x() + CurrentZeta.getLambda(i));
+    }
+    return point;
+}
+
+double MotionController::pointtoTraj(QPointF point){
+    double xdiff = point.x()- x;
+    double ydiff = point.y()- y;
+    double phi;
+    /*if (ydiff == 0 && xdiff == 0){
+        return 0;
+    }
+    else if(xdiff >=0 && ydiff >= 0){
+         phi = atan(xdiff/ydiff)*180.0/PI;
+    }
+    else if(xdiff <=0 && ydiff >= 0){
+         phi = atan(ydiff/xdiff)*180.0/PI+90;
+    }
+    else if(xdiff <=0 && ydiff <= 0){
+         phi = atan(xdiff/ydiff)*180.0/PI+180;
+    }
+    else{
+         phi = atan(ydiff/xdiff)*180.0/PI+270;
+    }
+    //phi += attitude;
+    if(phi > 360){
+        phi -= 360;
+    }
+    else if( phi < 0 ){
+        phi += 360;
+    }*/
+    if(ydiff > posTolerance){
+        phi = 270.0;
+    } else if (ydiff < -posTolerance) {
+        phi = 90.0;
+    } else if (xdiff < -posTolerance) {
+        phi = 0.0;
+    } else {
+        phi = 180.0;
+    }
+    return phi;
+
+}
+
+void MotionController::swarmRun(){
+    Zeta DiffZeta = Zeta();
+    static int i = 0;
+    for(int i=0; i<podmates->size(); i++){
+        Notify(podmates->keys()[i].toStdString()+"_Neighbor_Zeta", "id="+ id.toStdString()+", "+ CurrentZeta.stringify().toStdString(), MOOSTime());
+    }
+    for(int j=0; j<podmates->values().size(); j++){
+        DiffZeta = DiffZeta/*podmates->values()[j]*/-(CurrentZeta-podmates->values()[j])*kappa;
+    }
+    double numNeighbors = (double)1/(double)podmates->values().size();
+    DiffZeta = DiffZeta*(numNeighbors);
+    CurrentZeta = CurrentZeta + DiffZeta*dt;
+    goalpoint = linktoref();
+
+    double x = goalpoint.x();
+    double y = goalpoint.y();
+    goalpoint.setX((x*cos(CurrentZeta.getAttitude())-y*sin(CurrentZeta.getAttitude()))+CurrentZeta.getxPos());
+    goalpoint.setY((x*sin(CurrentZeta.getAttitude())+y*cos(CurrentZeta.getAttitude()))+CurrentZeta.getyPos());
+    goalangle = pointtoTraj(goalpoint);
+    i++;
+    Notify("Goals", "Angle=" + QString::number(goalangle).toStdString()+ " X="+ QString::number(goalpoint.x()).toStdString()+ " Y="+ QString::number(goalpoint.y()).toStdString() + " LinkageNumber=" + QString::number(linknum).toStdString(), MOOSTime()  );
+
+}
+
+EnumDefs::VehicleStates MotionController::swarmInit(){
+    QPointF point;
+
+    srand(QString(QCryptographicHash::hash(QByteArray::fromStdString(id.toStdString()), QCryptographicHash::Md5)).toDouble());
+    if(!swarmflag){
+        return EnumDefs::SWARMINIT;
+    }
+    for(int i = 0; i<numlinks; i++){
+        CurrentZeta.addtoTheta(rand() % 360);
+        CurrentZeta.addtoLambda(rand() % 7+0.1);
+    }
+    CurrentZeta.setAttitude(attitude);
+    point = linktoref();
+    CurrentZeta.setxPos(x-point.x());
+    CurrentZeta.setyPos(y-point.y());
+    return EnumDefs::SWARMSTANDBY;
+
+}
+void MotionController::robotMover(){
+        if(attitude < goalangle-10){
+            roboCurv = 90.0;
+            roboSpeed = turn_speed;
+        }
+        else if(attitude > goalangle+10){
+            roboCurv = -90.0;
+            roboSpeed = turn_speed;
+        }
+        else{
+            if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
+                roboSpeed = 0;
+                roboCurv = 0;
+            }
+            else{
+                roboSpeed = max_speed;
+                roboCurv = 0;
+            }
+        }
+        QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
+        Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
+
 }

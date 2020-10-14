@@ -10,9 +10,9 @@ InputHandler::InputHandler(QWidget *parent) : QMainWindow(parent), ui(new Ui::Ma
     ui->setupUi(this);
     metaState = QMetaEnum::fromType<EnumDefs::VehicleStates>();
 
-    EnumDefs::VehicleStates modeEnum = EnumDefs::VehicleStates::ENUMLAST;
+    EnumDefs::VehicleStates modeEnum = EnumDefs::VehicleStates::UILAST;
     for(int i = 0; i<modeEnum; i++){
-        ui->RunModeBox->insertItem(0, defs.StateMap.value((EnumDefs::VehicleStates)i));
+        ui->RunModeBox->insertItem(0, defs.UIStateMap.value((EnumDefs::VehicleStates)i));
     }
     connect(ui->RunModeBox, SIGNAL(currentTextChanged(QString)), this, SLOT(AlgChangedBox_valueChanged(QString)));
     connect(ui->BotSelectionBox, SIGNAL(currentIndexChanged(int)), this, SLOT(BotChangedBox_valueChanged(int)));

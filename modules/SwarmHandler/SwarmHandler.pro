@@ -1,12 +1,10 @@
 #--------------------------------------------------------
-# The .pro file for:                       aMotionController
-# Author(s):                               Kyle Leatherman
+# The .pro file for:                       pSwarmHandler
+# Author(s):                               jsam
 #--------------------------------------------------------
-QT += gui
+QT -= gui
 QT += core
-QT += widgets
-
-FORMS+=mainwindow.ui
+QT -= widgets
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -16,7 +14,7 @@ DESTDIR = ./bin
 MOC_DIR = .moc
 OBJECTS_DIR = .obj
 
-TARGET = MotionController
+TARGET = SwarmHandler
 QMAKE_CXXFLAGS += -Wall -Werror
 
 TEMPLATE = app
@@ -30,20 +28,17 @@ INCLUDEPATH += \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include \
- ../VehicleStateMachine/src/
+ ../VehicleStateMachine/src/ \
+ ../MotionController/src/
 
 SOURCES += src/main.cpp \
- src/KeyboardHandler.cpp \
- src/MotionController.cpp \
- src/MotionController_Info.cpp \
- src/main_testing.cpp \
- src/zeta.cpp
+ src/SwarmHandler.cpp \
+ src/SwarmHandler_Info.cpp \
+ ../MotionController/src/zeta.cpp
 
 HEADERS += \
- src/KeyboardHandler.h \
- src/MotionController.h \
- src/MotionController_Info.h \
- src/zeta.h
+ src/SwarmHandler.h \
+ src/SwarmHandler_Info.h
 
 OTHER_FILES += \
  *.sh \
@@ -68,5 +63,4 @@ unix {
 
 !isEmpty(target.path): INSTALLS += target
 !isEmpty(configs.path): INSTALLS += configs
-
 

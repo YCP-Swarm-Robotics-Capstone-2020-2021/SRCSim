@@ -5,6 +5,8 @@
 TIME_WARP=1
 NUM_BOTS=2
 BUILD_MODE=0
+KAPPA=1
+DT=1
 JUST_MAKE="no"
 LAUNCH_GUI="yes"
 version=0.0.1
@@ -14,6 +16,8 @@ print_help(){
     echo "      --num_bots | -n         This flag sets how many robots you want the simulation to launch."
     echo "      --keep     | -k         Pass this flag to ensure that the world files are not deleted."
     echo "      --build    | -b         Pass this flag to only build"
+    echo "      --dt       | -d         Pass this flag to edit dt"
+    echo "      --kappa    | -K         Pass this flag to edit kappa"
     echo
     exit 0
 }
@@ -37,6 +41,14 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
   -b | --build )
     BUILD_MODE=1
     echo "Build only"
+    ;;
+  -d | --dt )
+    shift;
+    DT=$1
+    ;;
+  -K | --kappa )
+    shift;
+    KAPPA=$1
     ;;
   * )
     print_help
@@ -80,9 +92,9 @@ EOF
 x=-7
 y=7
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-x=$(($x+2))
+x=$(($x+3))
 if [[ $x -gt 8 ]]; then
-    y=$(($y-1))
+    y=$(($y-2))
     x=-7
 fi
 cat >> $title << EOF
@@ -120,14 +132,7 @@ GCSIP="localhost"
 GCSPORT=9000
 VIP="localhost"
 BROADCASTNUM=1
-PORT=8300
-for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-    PORT=$(($PORT+5))
-    nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
-        VNAME="Dolphin$i"                                 VPORT=$PORT \
-        GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
-        BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP
-done
+
 #nsplug meta_vehicle.moos targ_$VNAME2.moos -f WARP=$TIME_WARP \
 #    VNAME=$VNAME2          VPORT="8310" \
 #    GCSIP=$GCSIP           GCSPORT=$GCSPORT    \
@@ -139,7 +144,6 @@ ProcessConfig = pShare
 {
      Input = route=\$(GCSIP):\$(GCSPORT)
      Input = route=multicast_\$(BROADCASTNUM)
-
      Output = src_name=Change_State, route=multicast_\$(BROADCASTNUM)
 EOF
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
@@ -147,9 +151,33 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
 cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Zeta_Init,dest_name=Zeta_Init,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
+}
+EOF
+
+cat > plug_VehiclepShare.moos <<EOF
+ProcessConfig = pShare
+{
+     Input=route=\$(VIP):\$(VPORT)
+     Input=route=multicast_\$(BROADCASTNUM)
+
+     Output=src_name=Narwhal_Current_State,dest_name=Current_State,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=Reg_In,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=Speed_Curv,route=\$(GCSIP):\$(GCSPORT)
+EOF
+PORT=8300
+for ((i=0 ; i < $NUM_BOTS ; i++)); do
+    PORT=$(($PORT+5))
+cat >> plug_VehiclepShare.moos <<EOF
+     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=localhost:$PORT
+EOF
+done
+cat >> plug_VehiclepShare.moos <<EOF
 }
 EOF
 
@@ -158,6 +186,15 @@ GCSIP=$GCSIP           GCSPORT=$GCSPORT    \
 BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
 UPDATEPOSE=$UPDATEPOSE                      WORLDFILE=$WORLDFILE"
 
+PORT=8300
+for ((i = 0 ; i < $NUM_BOTS ; i++)); do
+    PORT=$(($PORT+5))
+    nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
+        VNAME="Dolphin$i"                                 VPORT=$PORT \
+        GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
+        BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
+        KAPPA=$KAPPA                                 DT=$DT
+done
 nsplug meta_GroundControlStation.moos targ_$GCSNAME.moos -f WARP=$TIME_WARP \
     $GCSARGS
     
@@ -172,10 +209,10 @@ if [ ! -e targ_$GCSNAME.moos ]; then echo "no targ_$GCSNAME.moos";  exit; fi
 cd ../modules
 for i in ./*; do
     if [[ -d $i ]]; then
-        cd $i
-        qmake
-        make
-        cd ..
+       cd $i
+       qmake
+       make
+       cd ..
     fi
 done
 cd ../missions

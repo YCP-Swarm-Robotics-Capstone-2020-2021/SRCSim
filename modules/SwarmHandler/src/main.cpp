@@ -1,25 +1,22 @@
 /************************************************************/
-/*    NAME: Kyle Leatherman                                              */
+/*    NAME: jsam                                              */
 /*    ORGN: YCP                                             */
 /*    FILE: main.cpp                                        */
-/*    DATE: 06/08/2020                                         */
+/*    DATE: 07/23/2020                                         */
 /************************************************************/
 
 #include <string>
 #include "ivp/MBUtils.h"
 #include "ivp/ColorParse.h"
-#include <QApplication>
-#include "MotionController.h"
-#include "MotionController_Info.h"
-#include "KeyboardHandler.h"
-#include "main_testing.cpp"
+#include <QCoreApplication>
+#include "SwarmHandler.h"
+#include "SwarmHandler_Info.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
-  mainTest();
-  QApplication a(argc, argv);
+  QCoreApplication a(argc, argv);
   string mission_file;
   string run_command = argv[0];
 
@@ -45,16 +42,13 @@ int main(int argc, char *argv[])
     showHelpAndExit();
 
   cout << termColor("green");
-  cout << "aMotionController launching as " << run_command << endl;
+  cout << "pSwarmHandler launching as " << run_command << endl;
   cout << termColor() << endl;
 
-  MotionController MotionController;
-  KeyboardHandler keyboardHandler;
-  a.connect( &keyboardHandler, SIGNAL(updateSpeed(double)), &MotionController, SLOT(setSpeed(double)) , Qt::QueuedConnection);
-  a.connect( &keyboardHandler, SIGNAL(updateCurv(double)), &MotionController, SLOT(setCurv(double)), Qt::QueuedConnection);
+  SwarmHandler SwarmHandler;
 
-  MotionController.startProcess(run_command.c_str(),mission_file.c_str(), argc, argv);
-  keyboardHandler.show();
+  SwarmHandler.Run(run_command.c_str(), mission_file.c_str());
+  
   return a.exec();
 }
 
