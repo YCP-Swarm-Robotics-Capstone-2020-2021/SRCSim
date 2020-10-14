@@ -43,6 +43,7 @@ signals:
     void workFinished();
     void regIn(QList<QString>);
     void updateState(QString,int);
+    void updateProcessWatch(QString id, QString msg);
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);

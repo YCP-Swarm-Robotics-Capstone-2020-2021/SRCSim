@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
     a.connect(&w, &MainWindow::zetaSent, &mapp, &UIMoosInterface::receiveZeta);
     a.connect(&w, &MainWindow::sendStateCMD, &mapp, &UIMoosInterface::receiveStateCMD);
     a.connect(&w, &MainWindow::sendSpeed, &mapp, &UIMoosInterface::receiveSpeed);
+    a.connect(&mapp, &UIMoosInterface::updateProcessWatch, &w, &MainWindow::updateDolphinWatch);
 
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");

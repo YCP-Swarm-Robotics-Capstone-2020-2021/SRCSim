@@ -39,7 +39,7 @@ public:
     QAction *actionKill_All;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_6;
-    QTabWidget *tabWidget_2;
+    QTabWidget *uProcessWatchLabel;
     QWidget *overviewTap;
     QWidget *controlTab;
     QVBoxLayout *verticalLayout_4;
@@ -59,6 +59,9 @@ public:
     QLabel *CurrentStateLabel;
     QSpacerItem *horizontalSpacer_4;
     QCommandLinkButton *submitState;
+    QSpacerItem *verticalSpacer_5;
+    QLabel *label_23;
+    QLabel *uProcessWatchReport;
     QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout;
@@ -182,16 +185,16 @@ public:
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        tabWidget_2 = new QTabWidget(centralWidget);
-        tabWidget_2->setObjectName(QString::fromUtf8("tabWidget_2"));
+        uProcessWatchLabel = new QTabWidget(centralWidget);
+        uProcessWatchLabel->setObjectName(QString::fromUtf8("uProcessWatchLabel"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(2);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(tabWidget_2->sizePolicy().hasHeightForWidth());
-        tabWidget_2->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(uProcessWatchLabel->sizePolicy().hasHeightForWidth());
+        uProcessWatchLabel->setSizePolicy(sizePolicy);
         overviewTap = new QWidget();
         overviewTap->setObjectName(QString::fromUtf8("overviewTap"));
-        tabWidget_2->addTab(overviewTap, QString());
+        uProcessWatchLabel->addTab(overviewTap, QString());
         controlTab = new QWidget();
         controlTab->setObjectName(QString::fromUtf8("controlTab"));
         verticalLayout_4 = new QVBoxLayout(controlTab);
@@ -288,6 +291,22 @@ public:
 
 
         verticalLayout_4->addLayout(horizontalLayout_9);
+
+        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        verticalLayout_4->addItem(verticalSpacer_5);
+
+        label_23 = new QLabel(controlTab);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_23->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(label_23);
+
+        uProcessWatchReport = new QLabel(controlTab);
+        uProcessWatchReport->setObjectName(QString::fromUtf8("uProcessWatchReport"));
+        uProcessWatchReport->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_4->addWidget(uProcessWatchReport);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
@@ -660,7 +679,7 @@ public:
 
         verticalLayout_4->addWidget(textBrowser);
 
-        tabWidget_2->addTab(controlTab, QString());
+        uProcessWatchLabel->addTab(controlTab, QString());
         swarmTab = new QWidget();
         swarmTab->setObjectName(QString::fromUtf8("swarmTab"));
         verticalLayout_8 = new QVBoxLayout(swarmTab);
@@ -894,15 +913,15 @@ public:
 
         verticalLayout_8->addLayout(gridLayout_8);
 
-        tabWidget_2->addTab(swarmTab, QString());
+        uProcessWatchLabel->addTab(swarmTab, QString());
         mapTab = new QWidget();
         mapTab->setObjectName(QString::fromUtf8("mapTab"));
-        tabWidget_2->addTab(mapTab, QString());
+        uProcessWatchLabel->addTab(mapTab, QString());
         interfaceTab = new QWidget();
         interfaceTab->setObjectName(QString::fromUtf8("interfaceTab"));
-        tabWidget_2->addTab(interfaceTab, QString());
+        uProcessWatchLabel->addTab(interfaceTab, QString());
 
-        horizontalLayout_6->addWidget(tabWidget_2);
+        horizontalLayout_6->addWidget(uProcessWatchLabel);
 
         verticalLayout_5 = new QVBoxLayout();
         verticalLayout_5->setSpacing(6);
@@ -961,7 +980,7 @@ public:
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
 
-        tabWidget_2->setCurrentIndex(1);
+        uProcessWatchLabel->setCurrentIndex(1);
         motorTabWidget->setCurrentIndex(1);
 
 
@@ -972,7 +991,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionKill_All->setText(QApplication::translate("MainWindow", "Kill All", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", nullptr));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", nullptr));
         label->setText(QApplication::translate("MainWindow", "Robot :", nullptr));
         dolphinSelection->setItemText(0, QApplication::translate("MainWindow", "Dolphin1", nullptr));
         dolphinSelection->setItemText(1, QApplication::translate("MainWindow", "Dolphin2", nullptr));
@@ -990,6 +1009,8 @@ public:
         label_11->setText(QApplication::translate("MainWindow", "Current State:", nullptr));
         CurrentStateLabel->setText(QApplication::translate("MainWindow", "STANDBY", nullptr));
         submitState->setText(QApplication::translate("MainWindow", "Update ", nullptr));
+        label_23->setText(QApplication::translate("MainWindow", "uProcessWatch Report", nullptr));
+        uProcessWatchReport->setText(QApplication::translate("MainWindow", "TextLabel", nullptr));
         fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", nullptr));
 #ifndef QT_NO_SHORTCUT
         fasterButton->setShortcut(QApplication::translate("MainWindow", "Q", nullptr));
@@ -1052,7 +1073,7 @@ public:
         m4Speed->setText(QApplication::translate("MainWindow", "75 MPH", nullptr));
         motorTabWidget->setTabText(motorTabWidget->indexOf(motor4tab), QApplication::translate("MainWindow", "Motor 4", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Debug Console", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(controlTab), QApplication::translate("MainWindow", "Control", nullptr));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(controlTab), QApplication::translate("MainWindow", "Control", nullptr));
         label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", nullptr));
         label_14->setText(QApplication::translate("MainWindow", "Width:", nullptr));
         label_15->setText(QApplication::translate("MainWindow", "Length:", nullptr));
@@ -1061,9 +1082,9 @@ public:
         label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", nullptr));
         label_19->setText(QApplication::translate("MainWindow", "Zoom View", nullptr));
         label_17->setText(QApplication::translate("MainWindow", "Debug Output", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
-        tabWidget_2->setTabText(tabWidget_2->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Warnings", nullptr));
         menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", nullptr));
     } // retranslateUi

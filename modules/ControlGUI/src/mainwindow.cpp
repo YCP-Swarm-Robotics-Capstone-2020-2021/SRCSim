@@ -217,10 +217,10 @@ void MainWindow::updateDolphinState(QString id, int state)
     currentState = EnumDefs::VehicleStates(state);
     switch(currentState){
         case EnumDefs::VehicleStates::ALLSTOP:
-            printCaution("Dolphin state updated to "+defs.UIStateMap[currentState], id);
+            printWarning(id+" state updated to "+defs.UIStateMap[currentState], id);
             break;
         default:
-            printAdvisory("Dolphin state updated to "+defs.UIStateMap[currentState], id);
+            printAdvisory(id+" state updated to "+defs.UIStateMap[currentState], id);
             break;
     }
     updateCurrentDisplay();
@@ -321,6 +321,8 @@ void MainWindow::updateCurrentDisplay()
     for(iter = m_robot_message_buffer[m_currentBotID].begin(); iter!=m_robot_message_buffer[m_currentBotID].end(); iter++){
         ui->textBrowser->append(*iter);
     }
+
+    ui->uProcessWatchReport->setText(m_robotProcessMap.value(m_currentBotID, "No Process Message"));
 }
 
 void MainWindow::printCaution(QString text, QString dolphin)
@@ -389,4 +391,10 @@ void MainWindow::descretizeZoom(int zoom)
     }
     ui->zoomSlider->setValue(zoom);
     emit zoomValue(zoom);
+}
+
+void MainWindow::updateDolphinWatch(QString id, QString msg)
+{
+    m_robotProcessMap[id] = msg;
+    updateCurrentDisplay();
 }

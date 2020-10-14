@@ -14,19 +14,20 @@
 
 class RobotState {
     public:
-    RobotState(){
-        batteryCharge = 100;
-        maxSpeed = 100;
-        cmdSpeed = 0;
-        status = EnumDefs::NORMAL;
-        state = EnumDefs::STANDBY;
-        for(int j = 0; j<4; j++){
-            motorSpeed[j] = 0;
-            motorCurrent[j] = 0;
+        RobotState(){
+            batteryCharge = 100;
+            maxSpeed = 100;
+            cmdSpeed = 0;
+            status = EnumDefs::NORMAL;
+            state = EnumDefs::STANDBY;
+            for(int j = 0; j<4; j++){
+                motorSpeed[j] = 0;
+                motorCurrent[j] = 0;
+            }
         }
-    }
-    ~RobotState(){}
+        ~RobotState(){}
 
+    public:
         double batteryCharge;
         int maxSpeed;
 
@@ -35,8 +36,10 @@ class RobotState {
         EnumDefs::StatusState status;
         EnumDefs::VehicleStates state;
         QString id;
+
         double motorCurrent[4];
         double motorSpeed[4];
+
 };
 
 namespace Ui {
@@ -60,6 +63,7 @@ private:
     int m_maxSpeed;
 
     QMap<QString, RobotState> m_robotStateMap;
+    QMap<QString, QString> m_robotProcessMap;
     QMap<QString, QList<QString>> m_robot_message_buffer;
 
     SwarmFormationPainter *myPainter;
@@ -93,6 +97,7 @@ public slots:
     void updateBatteryPerc(double, QString);
     void updateDolphinStatus(EnumDefs::StatusState, QString);
     void updateDolphinState(QString, int);
+    void updateDolphinWatch(QString, QString);
     void onMaxSpeedChanged(int speed){m_maxSpeed = speed;}
 
     void onForwardButtonPressed();
