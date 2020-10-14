@@ -116,8 +116,8 @@ void SwarmFormationPainter::drawBots()
         for(int i = setupMap[*iter].second-1; i>=0; i--){
             double x = point.x();
             double y = point.y();
-            point.setX((x*cos(-currentZeta.getTheta(i)*PI/180.0) - y*sin(-currentZeta.getTheta(i)*PI/180.0)));
-            point.setY((x*sin(-currentZeta.getTheta(i)*PI/180.0) + y*cos(-currentZeta.getTheta(i)*PI/180.0)));
+            point.setX((x*cos(currentZeta.getTheta(i)*PI/180.0) - y*sin(currentZeta.getTheta(i)*PI/180.0)));
+            point.setY((x*sin(currentZeta.getTheta(i)*PI/180.0) + y*cos(currentZeta.getTheta(i)*PI/180.0)));
             point.setX(point.x() + currentZeta.getLambda(i));
         }
         setupMap[*iter].first.first = ((point.x()*(this->width()/numFeetInArenaView)*cos(currentZeta.getAttitude())-point.y()*(this->width()/numFeetInArenaView)*sin(currentZeta.getAttitude()))+currentZeta.getxPos());
@@ -134,7 +134,7 @@ void SwarmFormationPainter::drawBots()
         painter.drawLine(linePoint.x(), linePoint.y(), nextPoint.x(), nextPoint.y());
         linePoint.setX(nextPoint.x());
         linePoint.setY(nextPoint.y());
-        angle -= (currentZeta.getTheta(i-1));
+        angle += (currentZeta.getTheta(i-1));
         nextPoint.setX(linePoint.x()+(currentZeta.getLambda(i)*(this->width()/numFeetInArenaView)*cos(angle*PI/180.0)));
         nextPoint.setY(linePoint.y()+(currentZeta.getLambda(i)*(this->height()/numFeetInArenaView)*sin(angle*PI/180.0)));
     }
@@ -158,7 +158,7 @@ void SwarmFormationPainter::setupZeta()
             currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/numFeetInArenaView));
             currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({90, 90, 90, 90});
+            currentZeta.setWholeTheta({-90, -90, -90, -90});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),
                                                      double(currentLength),
                                                      double(currentWidth),
@@ -168,7 +168,7 @@ void SwarmFormationPainter::setupZeta()
             currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
             currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({120, 120, 120});
+            currentZeta.setWholeTheta({-120, -120, -120});
             currentZeta.setWholeLambda(QList<double>{double(length),
                                                      double(length),
                                                      double(length)});
@@ -179,7 +179,7 @@ void SwarmFormationPainter::setupZeta()
             currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
             currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({72, 72, 72, 72, 72});
+            currentZeta.setWholeTheta({-72, -72, -72, -72, -72});
             currentZeta.setWholeLambda(QList<double>{double(length),
                                                      double(length),
                                                      double(length),

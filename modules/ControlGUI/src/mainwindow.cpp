@@ -85,6 +85,8 @@ void MainWindow::setBotList(QList<QString> list)
 void MainWindow::onSubmitStateButtonClicked()
 {
     m_robotStateMap[m_currentBotID].maxSpeed = m_maxSpeed;
+    if(m_currentState==EnumDefs::VehicleStates::SWARMMODE)
+        myPainter->submitZetaPressed();
     emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
 }
 

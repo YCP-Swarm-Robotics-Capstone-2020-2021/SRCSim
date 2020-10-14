@@ -50,7 +50,7 @@ public slots:
         setupZeta();
         currentZeta.setxPos((currentZeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
         currentZeta.setyPos((currentZeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
-        currentZeta.setAttitude(currentRotation);
+        currentZeta.setAttitude(-currentRotation);
         emit emitZeta(currentZeta.stringify());
     }
 protected:

@@ -18,6 +18,11 @@ SwarmHandler::SwarmHandler()
 {
     registration = new QMap<QString, Robot*>();
     zetaControl = new Zeta();
+    zetaControl->setxPos(-2);
+    zetaControl->setyPos(-2);
+    zetaControl->setAttitude(0.0);
+    zetaControl->setWholeLambda(QList<double>{4, 4, 4, 4});
+    zetaControl->setWholeTheta(QList<double>{-90, -90, -90, -90});
 }
 
 //---------------------------------------------------------
@@ -62,6 +67,23 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Change_State"){
       onChangeState(msg);
   }
+  else if(key == "Zeta_Cmd"){
+      double xPos,yPos, att;
+      string theta, lambda;
+      QList<double> thetalist, lambdalist;
+      MOOSValFromString(xPos , msg.GetString(), "xPos");
+      MOOSValFromString(yPos , msg.GetString(), "yPos");
+      MOOSValFromString(att , msg.GetString(), "Attitude");
+      MOOSValFromString(theta , msg.GetString(), "Theta");
+      MOOSValFromString(lambda , msg.GetString(), "Lambda");
+      thetalist = toDoubleList(QString::fromStdString(theta).split("|"));
+      lambdalist = toDoubleList(QString::fromStdString(lambda).split("|"));
+      zetaControl->setxPos(xPos);
+      zetaControl->setyPos(yPos);
+      zetaControl->setWholeTheta(thetalist);
+      zetaControl->setAttitude(att);
+      zetaControl->setWholeLambda(lambdalist);
+  }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
     std::cout << "Bad message: "<<key<<std::endl;
@@ -102,7 +124,9 @@ AppCastingMOOSApp::Iterate();
         Notify("Change_State","State="+QString::number(EnumDefs::VehicleStates::SWARMRUN).toStdString(),MOOSTime());
     }
     else if(checkState(EnumDefs::VehicleStates::SWARMRUN)){
-        Notify("Dolphin0_Neighbor_Zeta", "id= Narwhal, " +zetaControl->stringify().toStdString(),MOOSTime());
+        for(QString it : m_neighbors){
+            Notify(it.toStdString()+"_Neighbor_Zeta", "id= Narwhal, " +zetaControl->stringify().toStdString(),MOOSTime());
+        }
     }
 return(true);
 }
@@ -154,6 +178,7 @@ AppCastingMOOSApp::RegisterVariables();
 Register("Change_State", 0);
 Register("Current_State", 0);
 Register("Reg_In", 0);
+Register("Zeta_Cmd", 0);
 }
 
 
@@ -228,11 +253,7 @@ bool SwarmHandler::onChangeState(CMOOSMsg &msg)
     }
     state = EnumDefs::VehicleStates(intState);
     if(state == EnumDefs::VehicleStates::SWARMMODE){
-        zetaControl->setxPos(-2);
-        zetaControl->setyPos(-2);
-        zetaControl->setAttitude(0.0);
-        zetaControl->setWholeLambda(QList<double>{4, 4, 4, 4});
-        zetaControl->setWholeTheta(QList<double>{-90, -90, -90, -90});
+
     }
     return true;
 
@@ -268,6 +289,7 @@ void SwarmHandler::initializeSwarm()
     //Setup topology of the formation
     if(!SwarmInitialized){
         iter.value()->podMates->append("Narwhal");
+        m_neighbors.append("Dolphin0");
         if(numRobotsInSwarm != 1){
             iter++;
             QString next = iter.key();
@@ -287,7 +309,9 @@ void SwarmHandler::initializeSwarm()
                 }
             }
         }
-
+        iter--;
+        iter.value()->podMates->append("Narwhal");
+        m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
         //Setup Linkage assignments.
         iter = registration->begin();
         for(int i = 0; i<numRobotsInSwarm; i++, iter++){
@@ -324,4 +348,12 @@ void SwarmHandler::initializeSwarm()
         }
         iter++;
     }
+}
+
+QList<double> SwarmHandler::toDoubleList(QList<QString> input){
+    QList<double> toReturn;
+    for(int i=0; i<input.size(); i++){
+     toReturn.append(input[i].toDouble());
+    }
+    return toReturn;
 }
