@@ -9,6 +9,7 @@
 #include "swarmformationpainter.h"
 #include <QShortcut>
 
+#define BUTTON_PRESS_INTERVAL 200
 #define SPEED_INTERVAL 5
 
 class RobotState {
@@ -63,12 +64,18 @@ private:
 
     SwarmFormationPainter *myPainter;
 
-    QShortcut *wButton;
-    QShortcut *aButton;
-    QShortcut *sButton;
-    QShortcut *dButton;
-
     bool startup = true;
+
+    QTimer forwardTimer;
+    QTimer backTimer;
+    QTimer leftTimer;
+    QTimer rightTimer;
+
+    bool forward = false;
+    bool reverse = false;
+    bool right = false;
+    bool left = false;
+
 public slots:
     void setBotList(QList<QString> list);
     void setupStateSelection();
@@ -92,6 +99,12 @@ public slots:
     void onBackwardButtonPressed();
     void onLeftButtonPressed();
     void onRightButtonPressed();
+    void onForwardButtonReleased();
+    void onReverseButtonReleased();
+    void onLeftButtonReleased();
+    void onRightButtonReleased();
+
+
     void onSpeedUpButtonPressed();
     void onSlowDownButtonPressed();
     void onBrakeButtonPressed();
@@ -105,8 +118,10 @@ public slots:
     //Swarm Page Methods
     void descretizeZoom(int);
     void onPreveiwPressed();
+
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
+    void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void updatePaintList(QList<QString> list);
     void zoomValue(int);
     void zetaSent(QString);

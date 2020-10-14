@@ -55,6 +55,9 @@ int main(int argc, char *argv[])
     a.connect(&mapp, &UIMoosInterface::regIn, &w, &MainWindow::setBotList);
     a.connect(&mapp, &UIMoosInterface::updateState, &w, &MainWindow::updateDolphinState);
     a.connect(&w, &MainWindow::zetaSent, &mapp, &UIMoosInterface::receiveZeta);
+    a.connect(&w, &MainWindow::sendStateCMD, &mapp, &UIMoosInterface::receiveStateCMD);
+    a.connect(&w, &MainWindow::sendSpeed, &mapp, &UIMoosInterface::receiveSpeed);
+
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");
     QSplashScreen splash(img, Qt::WindowStaysOnTopHint);

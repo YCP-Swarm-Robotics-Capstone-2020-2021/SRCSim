@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.2
+** Created by: Qt User Interface Compiler version 5.12.6
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -89,7 +89,7 @@ public:
     QLabel *label_3;
     QSpacerItem *horizontalSpacer_5;
     QLabel *batteryPercentage;
-    QHBoxLayout *horizontalLayout_4;
+    QHBoxLayout *maxSpeedSlider_2;
     QLabel *label_4;
     QSlider *maxSpeedSlider;
     QLabel *maxSpeedPercentage;
@@ -321,7 +321,7 @@ public:
 
         forwardButton = new QPushButton(controlTab);
         forwardButton->setObjectName(QString::fromUtf8("forwardButton"));
-        forwardButton->setAutoRepeat(false);
+        forwardButton->setAutoRepeat(true);
         forwardButton->setAutoRepeatDelay(50);
         forwardButton->setAutoRepeatInterval(50);
 
@@ -333,7 +333,7 @@ public:
 
         leftButton = new QPushButton(controlTab);
         leftButton->setObjectName(QString::fromUtf8("leftButton"));
-        leftButton->setAutoRepeat(false);
+        leftButton->setAutoRepeat(true);
         leftButton->setAutoRepeatDelay(50);
         leftButton->setAutoRepeatInterval(50);
 
@@ -341,7 +341,7 @@ public:
 
         rightButton = new QPushButton(controlTab);
         rightButton->setObjectName(QString::fromUtf8("rightButton"));
-        rightButton->setAutoRepeat(false);
+        rightButton->setAutoRepeat(true);
         rightButton->setAutoRepeatDelay(50);
         rightButton->setAutoRepeatInterval(50);
 
@@ -353,7 +353,7 @@ public:
 
         reverseButton = new QPushButton(controlTab);
         reverseButton->setObjectName(QString::fromUtf8("reverseButton"));
-        reverseButton->setAutoRepeat(false);
+        reverseButton->setAutoRepeat(true);
         reverseButton->setAutoRepeatDelay(50);
         reverseButton->setAutoRepeatInterval(50);
 
@@ -407,6 +407,7 @@ public:
         speedSelection->setMaximum(100);
         speedSelection->setSingleStep(5);
         speedSelection->setOrientation(Qt::Vertical);
+        speedSelection->setInvertedAppearance(true);
         speedSelection->setTickPosition(QSlider::TicksBothSides);
         speedSelection->setTickInterval(25);
 
@@ -454,13 +455,13 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        maxSpeedSlider_2 = new QHBoxLayout();
+        maxSpeedSlider_2->setSpacing(6);
+        maxSpeedSlider_2->setObjectName(QString::fromUtf8("maxSpeedSlider_2"));
         label_4 = new QLabel(controlTab);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
-        horizontalLayout_4->addWidget(label_4);
+        maxSpeedSlider_2->addWidget(label_4);
 
         maxSpeedSlider = new QSlider(controlTab);
         maxSpeedSlider->setObjectName(QString::fromUtf8("maxSpeedSlider"));
@@ -469,15 +470,15 @@ public:
         maxSpeedSlider->setValue(100);
         maxSpeedSlider->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_4->addWidget(maxSpeedSlider);
+        maxSpeedSlider_2->addWidget(maxSpeedSlider);
 
         maxSpeedPercentage = new QLabel(controlTab);
         maxSpeedPercentage->setObjectName(QString::fromUtf8("maxSpeedPercentage"));
 
-        horizontalLayout_4->addWidget(maxSpeedPercentage);
+        maxSpeedSlider_2->addWidget(maxSpeedPercentage);
 
 
-        verticalLayout_2->addLayout(horizontalLayout_4);
+        verticalLayout_2->addLayout(maxSpeedSlider_2);
 
 
         horizontalLayout_5->addLayout(verticalLayout_2);

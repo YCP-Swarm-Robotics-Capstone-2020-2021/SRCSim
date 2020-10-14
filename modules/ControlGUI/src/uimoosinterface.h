@@ -12,6 +12,8 @@
 #include <QThread>
 #include <VehicleStateDefines.h>
 
+static const std::string SPEED_CMD = "Speed_Curv";
+
 class UIMoosInterface : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT
@@ -35,7 +37,8 @@ protected: // Standard AppCastingMOOSApp function to overload
 public slots:
     void run();
     void receiveZeta(QString);
-
+    void receiveStateCMD(EnumDefs::VehicleStates, QString, int);
+    void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
 signals:
     void workFinished();
     void regIn(QList<QString>);
@@ -57,6 +60,7 @@ private: // Configuration variables
     QTimer iterateTimer;
     double currentFrequency;
     QList<QString> m_idList;
+    EnumDefs defs;
 };
 
 #endif // UIMOOSINTERFACE_H

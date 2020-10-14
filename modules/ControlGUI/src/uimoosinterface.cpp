@@ -50,6 +50,22 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             MOOSValFromString(state, msg.GetString(), "State");
             emit updateState(QString::fromStdString(id), state);
         }
+        else if(key == "Registered_Bots")
+        {
+            std::string list;
+            MOOSValFromString(list, msg.GetString(), "Bot_Ids");
+            auto dolphinList = QString::fromStdString(list).split('|');
+            QList<QString>::iterator it = dolphinList.begin();
+            QList<QString> updateList;
+            while((it+1) != dolphinList.end()){ //stop 1 short to account for trailing '|'
+                updateList.append((*it).split(':')[0]);
+                it++;
+            }
+            if(updateList != m_idList){
+                m_idList = updateList;
+                emit regIn(m_idList);
+            }
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
@@ -109,6 +125,7 @@ void UIMoosInterface::registerVariables()
     AppCastingMOOSApp::RegisterVariables();
     Register("Reg_In");
     Register("Current_State");
+    Register("Registered_Bots");
 }
 
 bool UIMoosInterface::buildReport()
@@ -291,4 +308,61 @@ bool UIMoosInterface::doMOOSWork()
 void UIMoosInterface::receiveZeta(QString zeta)
 {
     Notify("Zeta_Cmd", zeta.toStdString());
+}
+
+void UIMoosInterface::receiveStateCMD(EnumDefs::VehicleStates state, QString id, int maxSpeed)
+{
+    if(state != EnumDefs::VehicleStates::SWARMMODE && id != QString("All"))
+        Notify(id.toStdString()+"_Change_State", "State="+QString::number(int(state)).toStdString()+", id="+id.toStdString());
+    else
+        Notify("Change_State", "State="+QString::number(int(state)).toStdString());
+}
+
+void UIMoosInterface::receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed)
+{
+    int speedSign = 1;
+    int curv = 0;
+    //Forward
+    if(forward and ((not left and not right) or (left and right))){
+        speedSign = 1;
+    }
+    //Back
+    else if(reverse and ((not left and not right) or (left and right))){
+        speedSign = -1;
+    }
+    //Right
+    else if(right and not forward and not reverse and not left){
+        curv = -90;
+    }
+    //Left
+    else if(left and not forward and not reverse and not right){
+        curv = 90;
+    }
+    //Forward Left
+    else if(forward and left and not right){
+        speedSign = 1;
+        curv = 45;
+    }
+    //Forward Right
+    else if(forward and right and not left){
+        speedSign = 1;
+        curv = -45;
+    }
+    //Back Left
+    else if(reverse and left and not right){
+        speedSign = -1;
+        curv = -45;
+    }
+    //Back Right
+    else if(reverse and right and not left){
+        speedSign = -1;
+        curv = 45;
+    }
+    //stop
+    else{
+        curv = 0;
+        speedSign = 0;
+    }
+    Notify("Received_BOOLS", "FWD: "+QString::number(forward).toStdString()+". REV: "+QString::number(reverse).toStdString()+". RIGHT: "+QString::number(right).toStdString()+". Left: "+QString::number(left).toStdString());
+    Notify(id.toStdString()+"_"+SPEED_CMD, "id="+id.toStdString()+",Speed="+QString::number(speed*speedSign).toStdString()+",Curv="+QString::number(curv).toStdString());
 }

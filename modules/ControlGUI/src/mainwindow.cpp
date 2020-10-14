@@ -37,6 +37,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::zoomValue, myPainter, &SwarmFormationPainter::setFeetArenaView);
     connect(ui->submitZeta, SIGNAL(released()), myPainter, SLOT(submitZetaPressed()));
     connect(myPainter, &SwarmFormationPainter::emitZeta, this, &MainWindow::zetaSent);
+
+    connect(&forwardTimer, &QTimer::timeout, this, &MainWindow::onForwardButtonReleased);
+    connect(&rightTimer, &QTimer::timeout, this, &MainWindow::onRightButtonReleased);
+    connect(&leftTimer, &QTimer::timeout, this, &MainWindow::onLeftButtonReleased);
+    connect(&backTimer, &QTimer::timeout, this, &MainWindow::onReverseButtonReleased);
+
     setBotList({});
     setupStateSelection();
     setupShapeList();
@@ -107,24 +113,53 @@ void MainWindow::onCurrentBotChanged(QString bot)
 
 void MainWindow::onForwardButtonPressed()
 {
-
+    forwardTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
+    forward = true;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
+void MainWindow::onForwardButtonReleased()
+{
+    forward = false;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+}
 void MainWindow::onLeftButtonPressed()
 {
+    leftTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
+    left = true;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+}
 
+void MainWindow::onLeftButtonReleased()
+{
+    left = false;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
 void MainWindow::onRightButtonPressed()
 {
-
+    rightTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
+    right = true;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+}
+void MainWindow::onRightButtonReleased()
+{
+    right = false;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
 void MainWindow::onBackwardButtonPressed()
 {
-
+    backTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
+    reverse = true;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
+void MainWindow::onReverseButtonReleased()
+{
+    reverse = false;
+    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+}
 void MainWindow::onSpeedUpButtonPressed()
 {
     ui->speedSelection->setValue(int(ui->speedSelection->value()+SPEED_INTERVAL));
@@ -174,19 +209,21 @@ void MainWindow::updateDolphinStatus(EnumDefs::StatusState status, QString dolph
 
 void MainWindow::updateDolphinState(QString id, int state)
 {
-    m_robotStateMap[id].state = EnumDefs::VehicleStates(state);
-    if(id != m_currentBotID)
+    EnumDefs::VehicleStates currentState = m_robotStateMap[id].state;
+    if(int(currentState) == state)
         return;
 
-    ui->CurrentStateLabel->setText(defs.UIStateMap[m_robotStateMap[id].state]);
-    switch(m_robotStateMap[m_currentBotID].state){
+    m_robotStateMap[id].state = EnumDefs::VehicleStates(state);
+    currentState = EnumDefs::VehicleStates(state);
+    switch(currentState){
         case EnumDefs::VehicleStates::ALLSTOP:
-            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(WARNING_FONT_COLOR)+";}");
+            printCaution("Dolphin state updated to "+defs.UIStateMap[currentState], id);
             break;
         default:
-            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(NORMAL_FONT_COLOR)+";}");
+            printAdvisory("Dolphin state updated to "+defs.UIStateMap[currentState], id);
             break;
     }
+    updateCurrentDisplay();
 }
 
 void MainWindow::updateBatteryPerc(double perc, QString dolphin)
@@ -259,8 +296,16 @@ void MainWindow::setupStateSelection()
 
 void MainWindow::updateCurrentDisplay()
 {
-    ui->stateSelection->setCurrentText(defs.UIStateMap[m_robotStateMap[m_currentBotID].state]);
     ui->CurrentStateLabel->setText(defs.UIStateMap[m_robotStateMap[m_currentBotID].state]);
+    switch(m_robotStateMap[m_currentBotID].state){
+        case EnumDefs::VehicleStates::ALLSTOP:
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(WARNING_FONT_COLOR)+";}");
+            break;
+        default:
+            ui->CurrentStateLabel->setStyleSheet("QLabel { color : "+QString::fromStdString(NORMAL_FONT_COLOR)+";}");
+            break;
+    }
+
     ui->dolphinSelection->setCurrentText(m_currentBotID);
 
     for(int j = 0; j<4; j++){

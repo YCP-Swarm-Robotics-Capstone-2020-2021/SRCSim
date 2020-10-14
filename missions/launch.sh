@@ -154,6 +154,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Zeta_Init,dest_name=Zeta_Init,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
