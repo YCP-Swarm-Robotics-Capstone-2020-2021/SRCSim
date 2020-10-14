@@ -49,12 +49,8 @@ int main(int argc, char *argv[])
   cout << termColor() << endl;
 
   MotionController MotionController;
-  KeyboardHandler keyboardHandler;
-  a.connect( &keyboardHandler, SIGNAL(updateSpeed(double)), &MotionController, SLOT(setSpeed(double)) , Qt::QueuedConnection);
-  a.connect( &keyboardHandler, SIGNAL(updateCurv(double)), &MotionController, SLOT(setCurv(double)), Qt::QueuedConnection);
 
   MotionController.startProcess(run_command.c_str(),mission_file.c_str(), argc, argv);
-  keyboardHandler.show();
   return a.exec();
 }
 

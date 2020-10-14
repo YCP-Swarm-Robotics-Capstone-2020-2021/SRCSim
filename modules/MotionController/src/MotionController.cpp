@@ -63,6 +63,10 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Neighbor_Zeta"){
       handleNeighborZeta(msg);
   }
+  else if(key == "Speed_Curv_Override"){
+      MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
+      MOOSValFromString(roboCurv, msg.GetString(), "Curv");
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -184,6 +188,7 @@ Register("Current_State");
 Register("Current_Pos");
 Register("Zeta_Init");
 Register("Neighbor_Zeta");
+Register("Speed_Curv_Override");
 }
 
 
