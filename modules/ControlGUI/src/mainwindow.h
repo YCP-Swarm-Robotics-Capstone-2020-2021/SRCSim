@@ -130,6 +130,7 @@ signals:
     void updatePaintList(QList<QString> list);
     void zoomValue(int);
     void zetaSent(QString);
+    void logBookmarkReq();
 };
 
 #endif // MAINWINDOW_H

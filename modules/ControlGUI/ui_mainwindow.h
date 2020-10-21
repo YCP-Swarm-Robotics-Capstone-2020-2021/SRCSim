@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.6
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -167,6 +167,7 @@ public:
     QVBoxLayout *verticalLayout_5;
     QLabel *label_6;
     QTextBrowser *warningBrowser;
+    QPushButton *LOG_BOOKMARK_BUTTON;
     QMenuBar *menuBar;
     QMenu *menuCommands;
     QToolBar *mainToolBar;
@@ -949,6 +950,11 @@ public:
 
         verticalLayout_5->addWidget(warningBrowser);
 
+        LOG_BOOKMARK_BUTTON = new QPushButton(centralWidget);
+        LOG_BOOKMARK_BUTTON->setObjectName(QString::fromUtf8("LOG_BOOKMARK_BUTTON"));
+
+        verticalLayout_5->addWidget(LOG_BOOKMARK_BUTTON);
+
         verticalLayout_5->setStretch(0, 1);
 
         horizontalLayout_6->addLayout(verticalLayout_5);
@@ -1086,6 +1092,7 @@ public:
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Warnings", nullptr));
+        LOG_BOOKMARK_BUTTON->setText(QApplication::translate("MainWindow", "BOOKMARK LOG", nullptr));
         menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", nullptr));
     } // retranslateUi
 

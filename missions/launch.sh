@@ -145,6 +145,7 @@ ProcessConfig = pShare
      Input = route=\$(GCSIP):\$(GCSPORT)
      Input = route=multicast_\$(BROADCASTNUM)
      Output = src_name=Change_State, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=LOG_BOOKMARK, route=multicast_\$(BROADCASTNUM)
 EOF
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
     PORT=$(($PORT+5))

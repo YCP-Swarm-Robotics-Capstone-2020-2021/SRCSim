@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, &MainWindow::zoomValue, myPainter, &SwarmFormationPainter::setFeetArenaView);
     connect(ui->submitZeta, SIGNAL(released()), myPainter, SLOT(submitZetaPressed()));
     connect(myPainter, &SwarmFormationPainter::emitZeta, this, &MainWindow::zetaSent);
+    connect(ui->LOG_BOOKMARK_BUTTON, SIGNAL(pressed()), this, SIGNAL(logBookmarkReq()));
 
     connect(&forwardTimer, &QTimer::timeout, this, &MainWindow::onForwardButtonReleased);
     connect(&rightTimer, &QTimer::timeout, this, &MainWindow::onRightButtonReleased);

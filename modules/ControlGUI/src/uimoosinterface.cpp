@@ -373,3 +373,8 @@ void UIMoosInterface::receiveSpeed(QString id, bool forward, bool reverse, bool 
     Notify("Received_BOOLS", "FWD: "+QString::number(forward).toStdString()+". REV: "+QString::number(reverse).toStdString()+". RIGHT: "+QString::number(right).toStdString()+". Left: "+QString::number(left).toStdString());
     Notify(id.toStdString()+"_"+SPEED_CMD, "id="+id.toStdString()+",Speed="+QString::number(speed*speedSign).toStdString()+",Curv="+QString::number(curv).toStdString());
 }
+
+void UIMoosInterface::sendLogBookmark()
+{
+    Notify("LOG_BOOKMARK", GetAppName()+" "+std::to_string(++m_logBookmarkCounter));
+}

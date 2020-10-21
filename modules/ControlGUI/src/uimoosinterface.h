@@ -39,6 +39,7 @@ public slots:
     void receiveZeta(QString);
     void receiveStateCMD(EnumDefs::VehicleStates, QString, int);
     void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
+    void sendLogBookmark();
 signals:
     void workFinished();
     void regIn(QList<QString>);
@@ -60,6 +61,7 @@ private: // Configuration variables
 
     QTimer iterateTimer;
     double currentFrequency;
+    int m_logBookmarkCounter=0;
     QList<QString> m_idList;
     EnumDefs defs;
 };

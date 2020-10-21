@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     a.connect(&w, &MainWindow::sendStateCMD, &mapp, &UIMoosInterface::receiveStateCMD);
     a.connect(&w, &MainWindow::sendSpeed, &mapp, &UIMoosInterface::receiveSpeed);
     a.connect(&mapp, &UIMoosInterface::updateProcessWatch, &w, &MainWindow::updateDolphinWatch);
-
+    a.connect(&w, &MainWindow::logBookmarkReq, &mapp, &UIMoosInterface::sendLogBookmark);
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");
     QSplashScreen splash(img, Qt::WindowStaysOnTopHint);

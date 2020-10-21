@@ -1173,7 +1173,7 @@ border-radius: 4px;
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,0">
+     <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,0,0">
       <item>
        <widget class="QLabel" name="label_6">
         <property name="sizePolicy">
@@ -1206,6 +1206,13 @@ border-radius: 4px;
         </property>
         <property name="styleSheet">
          <string notr="true">background-color:black</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="LOG_BOOKMARK_BUTTON">
+        <property name="text">
+         <string>BOOKMARK LOG</string>
         </property>
        </widget>
       </item>
