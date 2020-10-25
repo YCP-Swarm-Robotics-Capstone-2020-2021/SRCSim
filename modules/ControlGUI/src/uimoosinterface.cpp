@@ -72,6 +72,12 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             QString processMsg = QString::fromStdString(msg.GetAsString());
             emit updateProcessWatch(id, processMsg);
         }
+        else if(key == "PROC_WATCH_SUMMARY")
+        {
+            QString id = "All";
+            QString processMsg = "GCS Proc Watch Report: "+QString::fromStdString(msg.GetAsString());
+            emit updateProcessWatch(id, processMsg);
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
@@ -133,6 +139,7 @@ void UIMoosInterface::registerVariables()
     Register("Current_State");
     Register("Registered_Bots");
     Register("PROC_WATCH_DOLPHIN");
+    Register("PROC_WATCH_SUMMARY");
 }
 
 bool UIMoosInterface::buildReport()
