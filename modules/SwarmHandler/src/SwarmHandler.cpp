@@ -308,8 +308,8 @@ void SwarmHandler::initializeSwarm()
                     iter++;
                 }
             }
+            iter--;
         }
-        iter--;
         iter.value()->podMates->append("Narwhal");
         m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
         //Setup Linkage assignments.
