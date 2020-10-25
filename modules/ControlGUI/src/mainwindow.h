@@ -17,7 +17,7 @@ class RobotState {
         RobotState(){
             batteryCharge = 100;
             maxSpeed = 100;
-            cmdSpeed = 0;
+            cmdSpeed = 50;
             status = EnumDefs::NORMAL;
             state = EnumDefs::STANDBY;
             for(int j = 0; j<4; j++){

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1311</width>
+    <width>1312</width>
     <height>708</height>
    </rect>
   </property>
@@ -458,6 +458,9 @@
                 <property name="maximum">
                  <number>100</number>
                 </property>
+                <property name="value">
+                 <number>50</number>
+                </property>
                </widget>
               </item>
               <item>
@@ -488,6 +491,9 @@
                   </property>
                   <property name="singleStep">
                    <number>5</number>
+                  </property>
+                  <property name="value">
+                   <number>50</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -1225,8 +1231,8 @@ border-radius: 4px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1311</width>
-     <height>25</height>
+     <width>1312</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCommands">
