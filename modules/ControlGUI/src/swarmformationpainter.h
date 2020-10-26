@@ -46,13 +46,19 @@ public slots:
     void setCurrentLength(int i){currentLength = i; update();}
     void setCurrentRotation(int i){currentRotation = i; update();}
     void setFeetArenaView(int i){numFeetInArenaView = i; update();}
-    void submitZetaPressed(){
+    void submitZetaPressed(double x=0, double y=0){
+        xOffset += x;
+        yOffset += y;
         setupZeta();
+        currentZeta.setxPos(currentZeta.getxPos()+x);
+        currentZeta.setyPos(currentZeta.getyPos()+y);
         currentZeta.setxPos((currentZeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
         currentZeta.setyPos((currentZeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
         currentZeta.setAttitude(-currentRotation);
         emit emitZeta(currentZeta.stringify());
     }
+public:
+    Zeta currentZeta;
 protected:
     virtual void paintEvent(QPaintEvent *event);
     void drawGrid();
@@ -66,11 +72,12 @@ private:
     QList<QString> m_dolphinList;
     QMap<QString, QPair<QPair<double, double>,int>> setupMap;
     Shape currentShape = Shape::SQUARE;
-    Zeta currentZeta;
     int currentWidth = 1;
     int currentLength = 1;
     int currentRotation = 0;
     int numFeetInArenaView = ARENA_WIDTH_HEIGHT_IN_FEET;
+    double xOffset = 0.0;
+    double yOffset = 0.0;
 };
 
 #endif // SWARMFORMATIONPAINTER_H

@@ -155,8 +155,8 @@ void SwarmFormationPainter::setupZeta()
     double length = sqrt(currentWidth*currentWidth+currentLength*currentLength);
     switch(currentShape){
         case Shape::SQUARE:
-            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/numFeetInArenaView));
+            currentZeta.setxPos(formationXY.first-((xOffset+(double(currentWidth)/2.0))*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((yOffset+(double(currentLength)/2.0))*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({-90, -90, -90, -90});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),
@@ -165,8 +165,8 @@ void SwarmFormationPainter::setupZeta()
                                                      double(currentLength)});
             break;
         case Shape::TRIANGLE:
-            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
+            currentZeta.setxPos(formationXY.first-((xOffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+(yOffset+((double(length)/2.0))*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({-120, -120, -120});
             currentZeta.setWholeLambda(QList<double>{double(length),
@@ -176,8 +176,8 @@ void SwarmFormationPainter::setupZeta()
         case Shape::CIRCLE:
             break;
         case Shape::PENTAGON:
-            currentZeta.setxPos(formationXY.first-((double(length)/2.0)*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((double(length)/2.0)*this->height()/numFeetInArenaView));
+            currentZeta.setxPos(formationXY.first-((xOffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((yOffset+(double(length)/2.0))*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({-72, -72, -72, -72, -72});
             currentZeta.setWholeLambda(QList<double>{double(length),
@@ -187,8 +187,8 @@ void SwarmFormationPainter::setupZeta()
                                                      double(length)});
             break;
         case Shape::PARALLELOGRAM:
-            currentZeta.setxPos(formationXY.first-((double(currentWidth)/2.0)*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((double(currentLength)/2.0)*this->height()/numFeetInArenaView));
+            currentZeta.setxPos(formationXY.first-((xOffset+(double(currentWidth)/2.0))*this->width()/numFeetInArenaView));
+            currentZeta.setyPos(formationXY.second+((yOffset+(double(currentLength)/2.0))*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
             currentZeta.setWholeTheta({120, 60, 120, 60});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),

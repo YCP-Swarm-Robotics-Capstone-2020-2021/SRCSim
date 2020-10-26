@@ -118,7 +118,10 @@ void MainWindow::onForwardButtonPressed()
 {
     forwardTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     forward = true;
-    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+    if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
+        myPainter->submitZetaPressed(0, -ui->speedSelection->value()/1000.0);
+    } else
+        emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
 void MainWindow::onForwardButtonReleased()
@@ -130,7 +133,10 @@ void MainWindow::onLeftButtonPressed()
 {
     leftTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     left = true;
-    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+    if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
+        myPainter->submitZetaPressed(ui->speedSelection->value()/1000.0);
+    } else
+        emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
 void MainWindow::onLeftButtonReleased()
@@ -143,7 +149,10 @@ void MainWindow::onRightButtonPressed()
 {
     rightTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     right = true;
-    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+    if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
+        myPainter->submitZetaPressed(-ui->speedSelection->value()/1000.0);
+    } else
+        emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 void MainWindow::onRightButtonReleased()
 {
@@ -155,7 +164,10 @@ void MainWindow::onBackwardButtonPressed()
 {
     backTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     reverse = true;
-    emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
+    if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
+        myPainter->submitZetaPressed(0, ui->speedSelection->value()/1000.0);
+    } else
+        emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
 
 void MainWindow::onReverseButtonReleased()
