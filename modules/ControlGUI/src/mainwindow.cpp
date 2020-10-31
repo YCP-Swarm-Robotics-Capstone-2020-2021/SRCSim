@@ -96,7 +96,17 @@ void MainWindow::onCurrentStateChanged(QString state)
     EnumDefs::VehicleStates tempState = EnumDefs::VehicleStates(0);
     while(tempState != EnumDefs::VehicleStates::UILAST){
         if(state.toUpper() == defs.UIStateMap[tempState]){
-            m_currentState = tempState;
+            if(tempState != EnumDefs::ALLSTOP && m_currentState != EnumDefs::STANDBY && tempState != EnumDefs::STANDBY && m_currentState != tempState){
+                int ret = QMessageBox::warning(this, tr("State Change Not Allowed"), tr("You must pass through StandBy state when changing states. Did you mean to change to Standby?"),
+                                     QMessageBox::Yes|QMessageBox::No);
+
+                if(ret == QMessageBox::Yes){
+                    m_currentState = EnumDefs::STANDBY;
+                }
+                ui->stateSelection->setCurrentText(defs.UIStateMap[m_currentState]);
+                return;
+            } else
+                m_currentState = tempState;
         }
         tempState = EnumDefs::VehicleStates(int(tempState)+1);
     }

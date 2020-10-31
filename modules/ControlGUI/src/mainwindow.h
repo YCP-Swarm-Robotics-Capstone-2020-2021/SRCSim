@@ -123,7 +123,6 @@ public slots:
     //Swarm Page Methods
     void descretizeZoom(int);
     void onPreveiwPressed();
-
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
     void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);

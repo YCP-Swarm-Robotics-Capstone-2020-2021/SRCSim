@@ -991,7 +991,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SRC Control GUI", Q_NULLPTR));
         actionKill_All->setText(QApplication::translate("MainWindow", "Kill All", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", Q_NULLPTR));
         label->setText(QApplication::translate("MainWindow", "Robot :", Q_NULLPTR));
