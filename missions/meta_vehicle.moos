@@ -5,11 +5,11 @@ Community  = $(VNAME)
 ProcessConfig = ANTLER
 {
     MSBetweenLaunches = 200
-    Run = MOOSDB    @ NewConsole = true
+    Run = MOOSDB    @ NewConsole = false
     Run = ../modules/Pos_module/bin/Pos_module				@ NewConsole = false ~ Pos_module
     Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine 	@ NewConsole = false ~ VehicleStateMachine
     Run = ../modules/MotionController/bin/MotionController 		@ NewConsole = false ~ MotionController
-    Run = uProcessWatch 						@ NewConsole = true  ~ uProcessWatch
+    Run = uProcessWatch 						@ NewConsole = false  ~ uProcessWatch
     Run = pLogger							@ NewConsole = false ~ pLogger
     Run = pShare							@ NewConsole = false ~ pShare
 }

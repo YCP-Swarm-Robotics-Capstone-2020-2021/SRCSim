@@ -12,6 +12,12 @@
 class EnumDefs : public QObject{
 public:
 
+    enum StatusState{
+        NORMAL,
+        CAUTION,
+        WARNING
+    };
+
     enum VehicleStates{
         STANDBY,
         ALLSTOP,
@@ -36,6 +42,9 @@ public:
                                          {VehicleStates::SWARMRUN, "SWARMRUN"}
                                          };
 
+   QMap<StatusState, QString> StatusMap{{StatusState::NORMAL, "NORMAL"},
+                                        {StatusState::CAUTION, "CAUTION"},
+                                        {StatusState::WARNING, "WARNING"}};
 };
 
 

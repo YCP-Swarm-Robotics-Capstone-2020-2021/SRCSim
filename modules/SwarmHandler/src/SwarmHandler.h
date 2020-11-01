@@ -51,6 +51,7 @@ public:
    void onRegistration(CMOOSMsg & msg);
    bool onCurrentState(CMOOSMsg & msg);
    bool checkState(EnumDefs::VehicleStates state);
+   QList<double> toDoubleList(QList<QString> input);
    void initializeSwarm();
 
  protected:
@@ -61,6 +62,7 @@ public:
     QMap<QString, Robot*> *registration;
     Zeta *zetaControl;
     bool SwarmInitialized = false;
+    QList<QString> m_neighbors;
 signals:
 
 public slots:

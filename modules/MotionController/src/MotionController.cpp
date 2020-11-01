@@ -63,6 +63,10 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Neighbor_Zeta"){
       handleNeighborZeta(msg);
   }
+  else if(key == "Speed_Curv_Override"){
+      MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
+      MOOSValFromString(roboCurv, msg.GetString(), "Curv");
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -184,6 +188,7 @@ Register("Current_State");
 Register("Current_Pos");
 Register("Zeta_Init");
 Register("Neighbor_Zeta");
+Register("Speed_Curv_Override");
 }
 
 
@@ -350,6 +355,8 @@ void MotionController::demoRun()
 }
 
 QPointF MotionController::linktoref(){
+    //I think this is wrong. See, for a robot that is not the first robot on a linkage, xlinkoff != 0. This multiplication
+    //results in the x position being greater than the actual link length. What we want is xlinkoff to be a number < 1.
     QPointF point = QPointF(xlinkoff*CurrentZeta.getLambda(linknum), ylinkoff*CurrentZeta.getLambda(linknum));
     for( int i = linknum-1; i>=0; i--){
         double x = point.x();

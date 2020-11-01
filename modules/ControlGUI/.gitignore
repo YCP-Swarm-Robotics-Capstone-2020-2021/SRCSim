@@ -9,4 +9,3 @@ build-*
 *.obj*
 *Makefile
 *.pro.user*
-*plug_VehiclepShare.moos
