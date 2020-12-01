@@ -122,7 +122,8 @@ if [[ ! -d "./logs" ]]; then
 fi
 if [[ ! BUILD_MODE  -eq 1 ]]; then
     cd ./logs
-    mission_dir=$(date +'%F-%H-%M-%S_Mission')
+    mission_dir=$(date +'%F-%H-%M-%S_Mission_Numbots-')
+    mission_dir=$mission_dir$NUM_BOTS
     mkdir $mission_dir
     cd ../
 fi
