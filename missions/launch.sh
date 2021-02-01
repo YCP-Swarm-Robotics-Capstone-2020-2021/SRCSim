@@ -117,6 +117,17 @@ cd ../missions/
 #  Part 3: Create the .moos and .bhv files.
 #-------------------------------------------------------
 #PATH='../../../missions/$title'
+if [[ ! -d "./logs" ]]; then
+    mkdir logs
+fi
+if [[ ! BUILD_MODE  -eq 1 ]]; then
+    cd ./logs
+    mission_dir=$(date +'%F-%H-%M-%S_Mission_Numbots-')
+    mission_dir=$mission_dir$NUM_BOTS
+    mkdir $mission_dir
+    cd ../
+fi
+
 WORLDFILE="../world/$title"
 VNAME1="Dolphin0"           # The first vehicle Community
 V1PORT="8305"
@@ -187,7 +198,8 @@ EOF
 GCSARGS="NUMBOTS=$NUM_BOTS              GCSNAME=$GCSNAME \
 GCSIP=$GCSIP           GCSPORT=$GCSPORT    \
 BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
-UPDATEPOSE=$UPDATEPOSE                      WORLDFILE=$WORLDFILE"
+UPDATEPOSE=$UPDATEPOSE                      WORLDFILE=$WORLDFILE \
+LOG_DIR=$mission_dir"
 
 PORT=8300
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
@@ -196,7 +208,8 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
         VNAME="Dolphin$i"                                 VPORT=$PORT \
         GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
-        KAPPA=$KAPPA                                 DT=$DT
+        KAPPA=$KAPPA                                 DT=$DT  \
+	LOG_DIR=$mission_dir
 done
 nsplug meta_GroundControlStation.moos targ_$GCSNAME.moos -f WARP=$TIME_WARP \
     $GCSARGS
