@@ -16,6 +16,7 @@ public:
   double forward_speed;
   double side_speed;
   double turn_speed;
+  double current_speed;
 };
 
 extern QList<Robot> RobotList;
