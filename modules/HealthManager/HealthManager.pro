@@ -28,6 +28,7 @@ INCLUDEPATH += \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/PocoBits/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Thirdparty/AppCasting/include \
  ../../../moos-ivp/MOOS/MOOSCore/Core/libMOOS/Utils/include \
+ ../VehicleStateMachine/src/ \
 
 SOURCES += src/main.cpp \
  src/HealthManager.cpp \

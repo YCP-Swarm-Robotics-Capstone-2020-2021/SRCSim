@@ -45,9 +45,9 @@ int main(int argc, char *argv[])
   cout << "pHealthManager launching as " << run_command << endl;
   cout << termColor() << endl;
 
-  HealthManager HealthManager;
+  HealthManager HealthManager(run_command, mission_file);
 
-  HealthManager.Run(run_command.c_str(), mission_file.c_str());
+  HealthManager.run();
   
   return a.exec();
 }
