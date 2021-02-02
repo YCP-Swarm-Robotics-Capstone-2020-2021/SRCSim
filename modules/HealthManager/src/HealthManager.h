@@ -20,6 +20,7 @@
 #include <VehicleStateDefines.h>
 
 
+
 class HealthManager : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT
@@ -43,6 +44,7 @@ public:
  private: // Configuration variables
    bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);
    bool doMOOSWork();
+   void restartProcess(QList<QString> appName);
 
     QTimer iterateTimer;
     virtual bool OnIteratePrepare() final
@@ -52,6 +54,11 @@ public:
     }
     double currentFrequency;
     std::string m_moosAppName,m_moosMissionFile;
+    QString m_binarypath;
+    double m_launchtime;
+    bool m_runSim;
+    bool m_launchmode = false;
+    std::string m_substring;
 
 signals:
    void workFinished();

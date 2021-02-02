@@ -6,6 +6,7 @@
 /************************************************************/
 #include <iterator>
 #include "HealthManager.h"
+#include <QDebug>
 
 using namespace std;
 
@@ -16,6 +17,7 @@ HealthManager::HealthManager(std::string sName, std::string sMissionFile)
 {
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
+    qDebug()<<system("touch ~/Documents/duh.txt");
 }
 
 //---------------------------------------------------------
@@ -47,11 +49,20 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
  bool   mstr  = msg.IsString();
 #endif
 
-  if(key == "FOO")
-    cout << "great!";
-
-  else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
+  if(key == "PROC_WATCH_SUMMARY"){
+      std::string val = msg.GetAsString();
+    if("All Present" != msg.GetAsString()){
+        Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
+        m_substring = msg.GetAsString().substr(6, msg.GetAsString().size()-1);
+        m_launchmode = true;
+    }
+    else{
+        m_launchmode = false;
+    }
+  }
+  else if(key != "APPCAST_REQ"){ // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
+  }
 }
 
 return(true);
@@ -73,7 +84,9 @@ return(true);
 bool HealthManager::Iterate()
 {
 AppCastingMOOSApp::Iterate();
-// Do your thing here!
+if(m_launchmode){
+    restartProcess(QString::fromStdString(m_substring).split(','));
+}
 AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -99,18 +112,20 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "binarypath") {
    handled = true;
+   m_binarypath = QString::fromStdString(value);
  }
- else if(param == "bar") {
+ else if(param == "runsim") {
    handled = true;
+   m_runSim = value == "true";
  }
 
  if(!handled)
    reportUnhandledConfigWarning(orig);
 
 }
-
+m_launchtime = MOOSTime();
 registerVariables();
 return(true);
 }
@@ -121,7 +136,7 @@ return(true);
 void HealthManager::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
-// Register("FOOBAR", 0);
+  Register("PROC_WATCH_SUMMARY");
 }
 
 
@@ -295,3 +310,30 @@ bool HealthManager::doMOOSWork()
     return true;
 }
 
+void HealthManager::restartProcess(QList<QString> appName){
+    int error;
+    for(QString str : appName){
+            QString command;
+            QString pathStr;
+            if(str.at(0) == "p"){
+                command = str + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile);
+                error = system(command.toLocal8Bit().data());
+                qDebug()<<error;
+            }
+            else{
+                if(m_runSim){
+                    pathStr = "./" + m_binarypath + "/" + str + "/bin/" + str;
+                }
+                else{
+                    pathStr = "./" + m_binarypath + "/" + str;
+                }
+                command =  pathStr + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile);
+                error = system(command.toLocal8Bit().data());
+                qDebug()<<error;
+            }
+            error = system("ls");
+        }
+        error = system("echo \"hello world\" >> ~/Documents/duh.txt");
+        qDebug()<<error;
+
+}
