@@ -316,7 +316,7 @@ void HealthManager::restartProcess(QList<QString> appName){
             QString command;
             QString pathStr;
             if(str.at(0) == "p"){
-                command = str + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile);
+                command = str + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile) +" &";
                 error = system(command.toLocal8Bit().data());
                 qDebug()<<error;
             }
@@ -327,7 +327,7 @@ void HealthManager::restartProcess(QList<QString> appName){
                 else{
                     pathStr = "./" + m_binarypath + "/" + str;
                 }
-                command =  pathStr + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile);
+                command =  pathStr + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile)+" &";
                 error = system(command.toLocal8Bit().data());
                 qDebug()<<error;
             }
