@@ -1,0 +1,11 @@
+//------------------------------------------------
+// HealthManager config block
+
+ProcessConfig = HealthManager
+{
+   AppTick   = 4
+   CommsTick = 4
+   BinaryPath = ../modules
+   RunSim = true
+}
+
