@@ -183,9 +183,7 @@ ProcessConfig = pShare
      Output=src_name=Narwhal_Current_State,dest_name=Current_State,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=Reg_In,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=Speed_Curv,route=\$(GCSIP):\$(GCSPORT)
-     Output=src_name=WCA_WARNING,route=\$(GCSIP):\$(GCSPORT)
-     Output=src_name=WCA_CAUTION,route=\$(GCSIP):\$(GCSPORT)
-     Output=src_name=WCA_ADVISORY,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=WCA_MESSAGE,route=\$(GCSIP):\$(GCSPORT)
 
 
 EOF

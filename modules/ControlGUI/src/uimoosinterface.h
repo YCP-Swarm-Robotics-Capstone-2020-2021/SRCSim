@@ -45,6 +45,7 @@ signals:
     void regIn(QList<QString>);
     void updateState(QString,int);
     void updateProcessWatch(QString id, QString msg);
+    void updateWarning(QString id, QString msg, int);
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);

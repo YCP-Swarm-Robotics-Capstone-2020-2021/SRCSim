@@ -242,13 +242,30 @@ void MainWindow::updateDolphinState(QString id, int state)
     currentState = EnumDefs::VehicleStates(state);
     switch(currentState){
         case EnumDefs::VehicleStates::ALLSTOP:
-            printWarning(id+" state updated to "+defs.UIStateMap[currentState], id);
+            printCaution(id+" state updated to "+defs.UIStateMap[currentState], id);
             break;
         default:
             printAdvisory(id+" state updated to "+defs.UIStateMap[currentState], id);
             break;
     }
     updateCurrentDisplay();
+}
+
+void MainWindow::updateDolphinMsg(QString id, QString msg, int lvl){
+    switch(lvl){
+        case EnumDefs::StatusState::NORMAL:
+            printAdvisory(id+": "+msg, id);
+            break;
+        case EnumDefs::StatusState::CAUTION:
+            printCaution(id+": "+msg, id);
+            break;
+        case EnumDefs::StatusState::WARNING:
+            printWarning(id+": "+msg, id);
+            break;
+        default:
+            printText(id+": "+msg, id);
+            break;
+    }
 }
 
 void MainWindow::updateBatteryPerc(double perc, QString dolphin)
