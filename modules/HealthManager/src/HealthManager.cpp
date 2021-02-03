@@ -52,8 +52,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   if(key == "PROC_WATCH_SUMMARY"){
       std::string val = msg.GetAsString();
     if("All Present" != msg.GetAsString()){
-        Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
         m_substring = msg.GetAsString().substr(6, msg.GetAsString().size()-1);
+        Notify("WCA_MESSAGE", "ID="+ msg.GetCommunity() + ",Message=Module " + m_substring +" has crashed,Level=" + QString::number(EnumDefs::StatusState::WARNING).toStdString());
+        Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
         m_launchmode = true;
     }
     else{

@@ -98,6 +98,7 @@ public slots:
     void updateDolphinStatus(EnumDefs::StatusState, QString);
     void updateDolphinState(QString, int);
     void updateDolphinWatch(QString, QString);
+    void updateDolphinMsg(QString id, QString msg, int lvl);
     void onMaxSpeedChanged(int speed){m_maxSpeed = speed;}
 
     void onForwardButtonPressed();

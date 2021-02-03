@@ -54,6 +54,7 @@ int main(int argc, char *argv[])
     //Do connections here
     a.connect(&mapp, &UIMoosInterface::regIn, &w, &MainWindow::setBotList);
     a.connect(&mapp, &UIMoosInterface::updateState, &w, &MainWindow::updateDolphinState);
+    a.connect(&mapp, &UIMoosInterface::updateWarning, &w, &MainWindow::updateDolphinMsg);
     a.connect(&w, &MainWindow::zetaSent, &mapp, &UIMoosInterface::receiveZeta);
     a.connect(&w, &MainWindow::sendStateCMD, &mapp, &UIMoosInterface::receiveStateCMD);
     a.connect(&w, &MainWindow::sendSpeed, &mapp, &UIMoosInterface::receiveSpeed);
