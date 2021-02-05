@@ -38,10 +38,13 @@ public:
 
  protected:
    void registerVariables();
+   void detectBoundary();
 
  private: // Configuration variables
    double x, y, attitude;
    QString id = "";
+   double m_boundary = 6;
+   bool m_boundary_detected = false;
 
 signals:
 

@@ -242,6 +242,7 @@ void MainWindow::updateDolphinState(QString id, int state)
     currentState = EnumDefs::VehicleStates(state);
     switch(currentState){
         case EnumDefs::VehicleStates::ALLSTOP:
+        case EnumDefs::VehicleStates::BOUNDARY:
             printCaution(id+" state updated to "+defs.UIStateMap[currentState], id);
             break;
         default:

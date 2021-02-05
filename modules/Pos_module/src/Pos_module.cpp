@@ -50,6 +50,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   if(key == "Update_Pos"){
     handleUpdatePos(msg);
   }
+  else if(key == "Boundary"){
+    m_boundary = msg.GetDouble();
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -123,6 +126,7 @@ void Pos_module::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
  Register("Update_Pos");
+ Register("Boundary");
 }
 
 
@@ -153,6 +157,20 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
      MOOSValFromString(attitude , msg.GetString(), "attitude");
      QString coords = "xPos="+ QString::number(x) + ", yPos="+ QString::number(y)+ ", attitude="+ QString::number(attitude) + ", id="+id;
      Notify("Current_Pos", coords.toStdString(), MOOSTime());
+     detectBoundary();
      return true;
 }
 
+void Pos_module::detectBoundary()
+{
+    if(abs(x) > m_boundary/2.0){
+        m_boundary_detected = true;
+    }
+    else if(abs(y) > m_boundary/2.0){
+        m_boundary_detected = true;
+    }
+    else{
+        m_boundary_detected = false;
+    }
+    Notify("BOUND_DETECT", (m_boundary_detected) ? "TRUE" : "FALSE");
+}

@@ -28,6 +28,7 @@ public:
         SWARMINIT,
         SWARMSTANDBY,
         SWARMRUN,
+        BOUNDARY,
         ENUMLAST
     };
     Q_ENUM(VehicleStates)
@@ -39,7 +40,8 @@ public:
                                          {VehicleStates::SWARMINIT, "SWARMINIT"},
                                          {VehicleStates::SWARMSTANDBY, "SWARMSTANDBY"},
                                          {VehicleStates::SWARMMODE, "SWARMMODE"},
-                                         {VehicleStates::SWARMRUN, "SWARMRUN"}
+                                         {VehicleStates::SWARMRUN, "SWARMRUN"},
+                                         {VehicleStates::BOUNDARY, "BOUNDARY"}
                                          };
 
    QMap<StatusState, QString> StatusMap{{StatusState::NORMAL, "NORMAL"},

@@ -55,6 +55,22 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     onChangeState(msg);
   else if(key == "Reg_Ack")
       registered = true;
+  else if(key == "BOUND_DETECT"){
+      m_currentBoundaryState = (msg.GetAsString()=="TRUE");
+      if( m_currentBoundaryState == true and m_previousBoundaryState == false){
+          if(currentState != EnumDefs::VehicleStates::TELEOP)
+            currentState = EnumDefs::VehicleStates::BOUNDARY;
+      } else if (m_currentBoundaryState == true and m_previousBoundaryState == true){
+          if(currentState != EnumDefs::VehicleStates::BOUNDARY and currentState != EnumDefs::TELEOP){
+              Notify("WCA_MESSAGE", "ID="+msg.GetCommunity()+", Level="+QString::number(EnumDefs::StatusState::WARNING).toStdString()+", Message=Boundary Detection failed. Did not go into boundary detection correctly.");
+              currentState = EnumDefs::VehicleStates::ALLSTOP;
+          }
+      } else if (m_currentBoundaryState == false and m_previousBoundaryState == true){
+          if(currentState != EnumDefs::TELEOP)
+            currentState = EnumDefs::VehicleStates::ALLSTOP;
+      }
+      m_previousBoundaryState = m_currentBoundaryState;
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -139,6 +155,7 @@ AppCastingMOOSApp::RegisterVariables();
 // Register("FOOBAR", 0);
     Register("Change_State");
     Register("Reg_Ack");
+    Register("BOUND_DETECT");
 }
 
 

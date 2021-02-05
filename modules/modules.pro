@@ -6,5 +6,8 @@ SUBDIRS += \
     VehicleStateMachine/VehicleStateMachine.pro \
     MotionController/MotionController.pro \
     UserInterface/UserInterface.pro \
-    SwarmHandler/SwarmHandler.pro
+    SwarmHandler/SwarmHandler.pro \
+    HealthManager/HealthManager.pro \
+    ControlGUI/ControlGUI.pro \
+
 
