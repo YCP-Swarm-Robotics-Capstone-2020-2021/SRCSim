@@ -50,7 +50,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   if(key == "Update_Pos"){
     handleUpdatePos(msg);
   }
-  else if(key == "Boundary"){
+  else if(key == "BOUNDARY_SIZE"){
     m_boundary = msg.GetDouble();
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
@@ -126,7 +126,7 @@ void Pos_module::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
  Register("Update_Pos");
- Register("Boundary");
+ Register("BOUNDARY_SIZE");
 }
 
 
