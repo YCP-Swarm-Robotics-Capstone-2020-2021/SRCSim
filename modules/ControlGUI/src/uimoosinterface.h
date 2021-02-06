@@ -12,6 +12,7 @@
 #include <QThread>
 #include <VehicleStateDefines.h>
 
+static const int BOUNDARY_SIZE_UPDATE_INTERVAL = 1;
 static const std::string SPEED_CMD = "Speed_Curv";
 
 class UIMoosInterface : public QObject, public AppCastingMOOSApp
@@ -40,6 +41,7 @@ public slots:
     void receiveStateCMD(EnumDefs::VehicleStates, QString, int);
     void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void sendLogBookmark();
+    void updateBoundarySize(int size);
 signals:
     void workFinished();
     void regIn(QList<QString>);
@@ -65,6 +67,8 @@ private: // Configuration variables
     int m_logBookmarkCounter=0;
     QList<QString> m_idList;
     EnumDefs defs;
+    int m_boundary_size = 6;
+    int m_publishBoundarySizeCounter = 0;
 };
 
 #endif // UIMOOSINTERFACE_H

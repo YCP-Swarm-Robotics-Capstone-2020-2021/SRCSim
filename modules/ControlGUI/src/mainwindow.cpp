@@ -44,12 +44,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&leftTimer, &QTimer::timeout, this, &MainWindow::onLeftButtonReleased);
     connect(&backTimer, &QTimer::timeout, this, &MainWindow::onReverseButtonReleased);
 
+    connect(ui->boundaryPushButton, SIGNAL(released()), this, SLOT(sendUpdateBoundarySizeSignal()));
+
     setBotList({});
     setupStateSelection();
     setupShapeList();
-
-    //Just temporary development stuff. Should be removed once registration functionality is in place
-    setBotList({"Dolphin0", "Dolphin1", "Dolphin2", "Dolphin3", "Dolphin4"});
 }
 
 MainWindow::~MainWindow()
@@ -440,4 +439,10 @@ void MainWindow::updateDolphinWatch(QString id, QString msg)
 {
     m_robotProcessMap[id] = msg;
     updateCurrentDisplay();
+}
+
+void MainWindow::sendUpdateBoundarySizeSignal()
+{
+    int boundarySize = ui->boundarySpinBox->value();
+    emit updateBoundarySize(boundarySize);
 }

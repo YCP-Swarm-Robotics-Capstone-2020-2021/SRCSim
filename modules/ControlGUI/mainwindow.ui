@@ -1179,7 +1179,7 @@ border-radius: 4px;
      </widget>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_5" stretch="1,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
       <item>
        <widget class="QLabel" name="label_6">
         <property name="sizePolicy">
@@ -1221,6 +1221,34 @@ border-radius: 4px;
          <string>BOOKMARK LOG</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="boundaryLabel">
+          <property name="text">
+           <string>Boundary Size (Ft)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="boundarySpinBox">
+          <property name="maximum">
+           <number>20</number>
+          </property>
+          <property name="value">
+           <number>6</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="boundaryPushButton">
+          <property name="text">
+           <string>Update Boundary</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
