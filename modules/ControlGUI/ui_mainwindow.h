@@ -44,7 +44,7 @@ public:
     QTabWidget *uProcessWatchLabel;
     QWidget *overviewTap;
     QWidget *controlTab;
-    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_9;
     QLabel *label;
     QComboBox *dolphinSelection;
@@ -52,18 +52,24 @@ public:
     QLabel *label_2;
     QComboBox *stateSelection;
     QSpacerItem *horizontalSpacer_6;
-    QVBoxLayout *verticalLayout_3;
+    QGridLayout *gridLayout_9;
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_9;
     QLabel *statusLabel;
-    QHBoxLayout *horizontalLayout_2;
     QLabel *label_11;
     QLabel *CurrentStateLabel;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_22;
+    QLabel *versionLabel;
     QSpacerItem *horizontalSpacer_4;
     QCommandLinkButton *submitState;
     QSpacerItem *verticalSpacer_5;
+    QHBoxLayout *horizontalLayout_13;
     QLabel *label_23;
     QLabel *uProcessWatchReport;
+    QHBoxLayout *horizontalLayout_14;
+    QLabel *label_24;
+    QLabel *commitMessageLabel;
     QSpacerItem *verticalSpacer_2;
     QHBoxLayout *horizontalLayout_5;
     QHBoxLayout *horizontalLayout;
@@ -204,10 +210,10 @@ public:
         uProcessWatchLabel->addTab(overviewTap, QString());
         controlTab = new QWidget();
         controlTab->setObjectName(QStringLiteral("controlTab"));
-        verticalLayout_4 = new QVBoxLayout(controlTab);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_3 = new QVBoxLayout(controlTab);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(6);
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
@@ -239,9 +245,9 @@ public:
 
         horizontalLayout_9->addItem(horizontalSpacer_6);
 
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        gridLayout_9 = new QGridLayout();
+        gridLayout_9->setSpacing(6);
+        gridLayout_9->setObjectName(QStringLiteral("gridLayout_9"));
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
@@ -257,27 +263,38 @@ public:
         horizontalLayout_7->addWidget(statusLabel);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_7);
+        gridLayout_9->addLayout(horizontalLayout_7, 0, 0, 1, 2);
 
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         label_11 = new QLabel(controlTab);
         label_11->setObjectName(QStringLiteral("label_11"));
 
-        horizontalLayout_2->addWidget(label_11);
+        gridLayout_9->addWidget(label_11, 1, 0, 1, 1);
 
         CurrentStateLabel = new QLabel(controlTab);
         CurrentStateLabel->setObjectName(QStringLiteral("CurrentStateLabel"));
         CurrentStateLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        horizontalLayout_2->addWidget(CurrentStateLabel);
+        gridLayout_9->addWidget(CurrentStateLabel, 1, 1, 1, 1);
+
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        label_22 = new QLabel(controlTab);
+        label_22->setObjectName(QStringLiteral("label_22"));
+
+        horizontalLayout_2->addWidget(label_22);
+
+        versionLabel = new QLabel(controlTab);
+        versionLabel->setObjectName(QStringLiteral("versionLabel"));
+        versionLabel->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        horizontalLayout_2->addWidget(versionLabel);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_2);
+        gridLayout_9->addLayout(horizontalLayout_2, 2, 0, 1, 2);
 
 
-        horizontalLayout_9->addLayout(verticalLayout_3);
+        horizontalLayout_9->addLayout(gridLayout_9);
 
         horizontalSpacer_4 = new QSpacerItem(58, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -289,27 +306,51 @@ public:
         horizontalLayout_9->addWidget(submitState);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_9);
+        verticalLayout_3->addLayout(horizontalLayout_9);
 
         verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        verticalLayout_4->addItem(verticalSpacer_5);
+        verticalLayout_3->addItem(verticalSpacer_5);
 
+        horizontalLayout_13 = new QHBoxLayout();
+        horizontalLayout_13->setSpacing(6);
+        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
         label_23 = new QLabel(controlTab);
         label_23->setObjectName(QStringLiteral("label_23"));
         label_23->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_4->addWidget(label_23);
+        horizontalLayout_13->addWidget(label_23);
 
         uProcessWatchReport = new QLabel(controlTab);
         uProcessWatchReport->setObjectName(QStringLiteral("uProcessWatchReport"));
         uProcessWatchReport->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_4->addWidget(uProcessWatchReport);
+        horizontalLayout_13->addWidget(uProcessWatchReport);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_13);
+
+        horizontalLayout_14 = new QHBoxLayout();
+        horizontalLayout_14->setSpacing(6);
+        horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
+        label_24 = new QLabel(controlTab);
+        label_24->setObjectName(QStringLiteral("label_24"));
+        label_24->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_14->addWidget(label_24);
+
+        commitMessageLabel = new QLabel(controlTab);
+        commitMessageLabel->setObjectName(QStringLiteral("commitMessageLabel"));
+        commitMessageLabel->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_14->addWidget(commitMessageLabel);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_14);
 
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        verticalLayout_4->addItem(verticalSpacer_2);
+        verticalLayout_3->addItem(verticalSpacer_2);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setSpacing(6);
@@ -661,24 +702,24 @@ public:
         horizontalLayout_5->addWidget(motorTabWidget);
 
 
-        verticalLayout_4->addLayout(horizontalLayout_5);
+        verticalLayout_3->addLayout(horizontalLayout_5);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        verticalLayout_4->addItem(verticalSpacer);
+        verticalLayout_3->addItem(verticalSpacer);
 
         label_5 = new QLabel(controlTab);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setAlignment(Qt::AlignCenter);
 
-        verticalLayout_4->addWidget(label_5);
+        verticalLayout_3->addWidget(label_5);
 
         textBrowser = new QTextBrowser(controlTab);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
         textBrowser->setAutoFillBackground(true);
         textBrowser->setStyleSheet(QStringLiteral("background-color:grey"));
 
-        verticalLayout_4->addWidget(textBrowser);
+        verticalLayout_3->addWidget(textBrowser);
 
         uProcessWatchLabel->addTab(controlTab, QString());
         swarmTab = new QWidget();
@@ -1040,9 +1081,13 @@ public:
         statusLabel->setText(QApplication::translate("MainWindow", "Normal", Q_NULLPTR));
         label_11->setText(QApplication::translate("MainWindow", "Current State:", Q_NULLPTR));
         CurrentStateLabel->setText(QApplication::translate("MainWindow", "STANDBY", Q_NULLPTR));
+        label_22->setText(QApplication::translate("MainWindow", "Version:", Q_NULLPTR));
+        versionLabel->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
         submitState->setText(QApplication::translate("MainWindow", "Update ", Q_NULLPTR));
-        label_23->setText(QApplication::translate("MainWindow", "uProcessWatch Report", Q_NULLPTR));
-        uProcessWatchReport->setText(QApplication::translate("MainWindow", "TextLabel", Q_NULLPTR));
+        label_23->setText(QApplication::translate("MainWindow", "uProcessWatch Report:", Q_NULLPTR));
+        uProcessWatchReport->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
+        label_24->setText(QApplication::translate("MainWindow", "Commit Message: ", Q_NULLPTR));
+        commitMessageLabel->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
         fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         fasterButton->setShortcut(QApplication::translate("MainWindow", "Q", Q_NULLPTR));

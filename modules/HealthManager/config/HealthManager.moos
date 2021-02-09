@@ -7,5 +7,7 @@ ProcessConfig = HealthManager
    CommsTick = 4
    BinaryPath = ../modules
    RunSim = true
+   VersionNum = abcdefg
+   CommitMessage = "SRC-6.0.3: This is a test message."
 }
 

@@ -85,9 +85,44 @@ void MainWindow::setBotList(QList<QString> list)
 void MainWindow::onSubmitStateButtonClicked()
 {
     m_robotStateMap[m_currentBotID].maxSpeed = m_maxSpeed;
-    if(m_currentState==EnumDefs::VehicleStates::SWARMMODE)
+    bool differentVersions = false;
+    QString version = m_robotStateMap[m_currentBotID].versionNumber;
+    QList<QString> versionList = {};
+    if(m_currentState==EnumDefs::VehicleStates::SWARMMODE){
         myPainter->submitZetaPressed();
-    emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+        for(auto robot_id : m_robotStateMap.keys()){
+            versionList.append("ID: "+robot_id+"; Version: "+m_robotStateMap[robot_id].versionNumber);
+            if(m_robotStateMap[robot_id].versionNumber != version){
+                differentVersions = true;
+            }
+        }
+        QString versions;
+        auto iter = versionList.begin();
+        iter++;
+        while(iter != versionList.end()){
+            versions+="\t"+*iter+"\n";
+            iter++;
+        }
+        if(differentVersions){
+            int user_return;
+            user_return = QMessageBox::warning(this, tr("Different Versions"),
+                                               tr("The Dolphins are running different versions.\n")+versions+tr("\n\nDo you want to continue?"),
+                                               QMessageBox::Yes|QMessageBox::No);
+            switch(user_return){
+                case QMessageBox::Yes:
+                    emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+                    break;
+                case QMessageBox::No:
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else {
+        emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+    }
+
 }
 
 void MainWindow::onCurrentStateChanged(QString state)
@@ -363,7 +398,8 @@ void MainWindow::updateCurrentDisplay()
     for(iter = m_robot_message_buffer[m_currentBotID].begin(); iter!=m_robot_message_buffer[m_currentBotID].end(); iter++){
         ui->textBrowser->append(*iter);
     }
-
+    ui->versionLabel->setText(m_robotStateMap[m_currentBotID].versionNumber);
+    ui->commitMessageLabel->setText(m_robotStateMap[m_currentBotID].commitMessage);
     ui->uProcessWatchReport->setText(m_robotProcessMap.value(m_currentBotID, "No Process Message"));
 }
 
@@ -445,4 +481,11 @@ void MainWindow::sendUpdateBoundarySizeSignal()
 {
     int boundarySize = ui->boundarySpinBox->value();
     emit updateBoundarySize(boundarySize);
+}
+
+void MainWindow::updateDolphinVersion(QString id, QString version, QString msg)
+{
+    m_robotStateMap[id].versionNumber = version;
+    m_robotStateMap[id].commitMessage = msg;
+    updateCurrentDisplay();
 }

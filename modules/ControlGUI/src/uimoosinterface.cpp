@@ -87,6 +87,16 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             MOOSValFromString(priority, msg.GetString(), "Level");
             emit updateWarning(QString::fromStdString(id), QString::fromStdString(errormsg), priority);
         }
+        else if(key == "VERSION_NUMBER")
+        {
+            QString id = QString::fromStdString(msg.GetCommunity());
+            std::string version;
+            std::string message;
+            MOOSValFromString(version, msg.GetString(), "version");
+            MOOSValFromString(message, msg.GetString(), "message");
+
+            emit updateDolphinVersion(id, QString::fromStdString(toupper(version)), QString::fromStdString(message));
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
@@ -156,6 +166,7 @@ void UIMoosInterface::registerVariables()
     Register("PROC_WATCH_DOLPHIN");
     Register("PROC_WATCH_SUMMARY");
     Register("WCA_MESSAGE");
+    Register("VERSION_NUMBER");
 }
 
 bool UIMoosInterface::buildReport()

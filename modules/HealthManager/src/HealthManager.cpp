@@ -79,6 +79,10 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(x , msg.GetString(), "State");
       m_currentState = EnumDefs::VehicleStates(x);
   }
+  else if(key == "VERSION_ACK")
+  {
+      m_versionRecv = true;
+  }
   else if(key != "APPCAST_REQ"){ // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
   }
@@ -106,6 +110,9 @@ AppCastingMOOSApp::Iterate();
 if(m_launchmode){
     restartProcess(QString::fromStdString(m_substring).split(','));
 }
+if(!m_versionRecv){
+    Notify("VERSION_NUMBER", "version="+m_versionNum+",message="+m_commitMessage);
+}
 AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -119,8 +126,8 @@ bool HealthManager::OnStartUp()
 AppCastingMOOSApp::OnStartUp();
 
 STRING_LIST sParams;
-m_MissionReader.EnableVerbatimQuoting(false);
-if(!m_MissionReader.GetConfiguration(GetAppName(), sParams))
+m_MissionReader.EnableVerbatimQuoting(true);
+if(!m_MissionReader.GetConfigurationAndPreserveSpace(GetAppName(), sParams))
  reportConfigWarning("No config block found for " + GetAppName());
 
 STRING_LIST::iterator p;
@@ -139,7 +146,16 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    handled = true;
    m_runSim = value == "true";
  }
-
+ else if(param == "versionnum")
+ {
+     handled = true;
+     m_versionNum = value;
+ }
+ else if(param == "commitmessage")
+ {
+    handled = true;
+    m_commitMessage = value;
+ }
  if(!handled)
    reportUnhandledConfigWarning(orig);
 
@@ -157,6 +173,7 @@ void HealthManager::registerVariables()
 AppCastingMOOSApp::RegisterVariables();
   Register("PROC_WATCH_SUMMARY");
   Register("BLACK_LINE_DETECTED");
+  Register("VERSION_ACK");
   Register("Current_State");
 }
 
