@@ -65,6 +65,7 @@ public:
    QList<double> toDoubleList(QList<QString>);
    double pointtoTraj(QPointF);
    void robotMover();
+   void boundaryRecovery();
 
  private: // Configuration variables
    double roboSpeed = 0;

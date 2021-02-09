@@ -129,6 +129,10 @@ AppCastingMOOSApp::Iterate();
             swarmRun();
             break;
         }
+        case EnumDefs::VehicleStates::BOUNDARY:{
+            boundaryRecovery();
+            break;
+        }
         default:{
             MOOSDebugWrite("MotionController: Invalid state");
             break;
@@ -472,4 +476,10 @@ void MotionController::robotMover(){
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
 
+}
+
+void MotionController::boundaryRecovery()
+{
+    QString moveData = "id="+ id +",Speed="+ QString::number(-max_speed/2.0) + ",Curv=" + QString::number(0);
+    Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 }

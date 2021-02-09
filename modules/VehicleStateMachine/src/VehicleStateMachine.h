@@ -48,6 +48,9 @@ public:
    double timeout;
    int count;
 
+
+   bool m_previousBoundaryState = false;
+   bool m_currentBoundaryState = false;
 signals:
 
 public slots:

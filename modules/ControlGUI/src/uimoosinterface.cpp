@@ -107,6 +107,11 @@ bool UIMoosInterface::OnConnectToServer()
 bool UIMoosInterface::Iterate()
 {
     AppCastingMOOSApp::Iterate();
+    m_publishBoundarySizeCounter++;
+    if(m_publishBoundarySizeCounter > currentFrequency*BOUNDARY_SIZE_UPDATE_INTERVAL){
+        Notify("BOUNDARY_SIZE", m_boundary_size);
+        m_publishBoundarySizeCounter = 0;
+    }
     return(true);
 }
 
@@ -395,4 +400,10 @@ void UIMoosInterface::receiveSpeed(QString id, bool forward, bool reverse, bool 
 void UIMoosInterface::sendLogBookmark()
 {
     Notify("LOG_BOOKMARK", GetAppName()+" "+std::to_string(++m_logBookmarkCounter));
+}
+
+void UIMoosInterface::updateBoundarySize(int size)
+{
+    m_boundary_size = size;
+    Notify("BOUNDARY_SIZE", size);
 }

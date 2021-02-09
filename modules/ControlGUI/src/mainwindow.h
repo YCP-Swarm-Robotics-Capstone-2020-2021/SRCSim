@@ -85,6 +85,8 @@ public slots:
     void setupStateSelection();
     void setupShapeList();
 
+    void sendUpdateBoundarySizeSignal();
+
     void onSubmitStateButtonClicked();
     void onCurrentBotChanged(QString bot);
     void onCurrentStateChanged(QString state);
@@ -131,6 +133,7 @@ signals:
     void zoomValue(int);
     void zetaSent(QString);
     void logBookmarkReq();
+    void updateBoundarySize(int size);
 };
 
 #endif // MAINWINDOW_H
