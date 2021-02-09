@@ -50,6 +50,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
 #endif
 
   if(key == "PROC_WATCH_SUMMARY"){
+      id = msg.GetCommunity();
       std::string val = msg.GetAsString();
     if("All Present" != msg.GetAsString()){
         m_substring = msg.GetAsString().substr(6, msg.GetAsString().size()-1);
@@ -60,6 +61,23 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     else{
         m_launchmode = false;
     }
+  }
+  else if(key == "BLACK_LINE_DETECTED"){
+      m_black_line_detected = (toupper(msg.GetAsString())=="TRUE");
+      if(m_black_line_detected && m_currentState != EnumDefs::TELEOP and id != "NotSet"){
+          if(!m_lineWCAPublished){
+            Notify("WCA_MESSAGE", "ID="+ id + ",Message=The dolphin has hit the black line,Level=" + QString::number(EnumDefs::StatusState::WARNING).toStdString());
+            m_lineWCAPublished = true;
+          }
+          Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
+      } else {
+          m_lineWCAPublished = false;
+      }
+  }
+  else if(key == "Current_State"){
+      int x;
+      MOOSValFromString(x , msg.GetString(), "State");
+      m_currentState = EnumDefs::VehicleStates(x);
   }
   else if(key != "APPCAST_REQ"){ // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -138,6 +156,8 @@ void HealthManager::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
   Register("PROC_WATCH_SUMMARY");
+  Register("BLACK_LINE_DETECTED");
+  Register("Current_State");
 }
 
 

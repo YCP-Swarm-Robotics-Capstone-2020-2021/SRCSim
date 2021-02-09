@@ -17,6 +17,7 @@ public:
   double side_speed;
   double turn_speed;
   double current_speed;
+  bool line_detected = false;
 };
 
 extern QList<Robot> RobotList;

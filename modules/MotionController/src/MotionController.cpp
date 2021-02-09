@@ -231,9 +231,6 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
      state = EnumDefs::VehicleStates(x);
-
-
-
      return true;
 }
 
