@@ -334,7 +334,8 @@ bool UIMoosInterface::RunInQtEventLoop(const std::string &sName, const std::stri
 }
 
 bool UIMoosInterface::doMOOSWork()
-{    /****************************  THE MAIN MOOS APP LOOP **********************************/
+{
+    /****************************  THE MAIN MOOS APP LOOP **********************************/
     m_dfFreq = -1; //Set this to -1 in order to override the MOOS Sleep function
     bool bOK = DoRunWork();
     if(m_bQuitOnIterateFail && !bOK){
