@@ -1,36 +1,36 @@
 /************************************************************/
-/*    NAME: Kyle Leatherman                                              */
+/*    NAME: Josiah Sam                                              */
 /*    ORGN: YCP                                             */
-/*    FILE: HealthManager.cpp                                        */
-/*    DATE: 11/07/2020                                         */
+/*    FILE: MotorController.cpp                                        */
+/*    DATE: 02/10/2021                                         */
 /************************************************************/
 #include <iterator>
-#include "HealthManager.h"
-#include <QDebug>
+#include "ivp/MBUtils.h"
+#include "ivp/ACTable.h"
+#include "MotorController.h"
 
 using namespace std;
 
 //---------------------------------------------------------
 // Constructor
 
-HealthManager::HealthManager(std::string sName, std::string sMissionFile)
-{
+MotorController::MotorController(std::string sName, std::string sMissionFile)
+{    
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
-    qDebug()<<system("touch ~/Documents/duh.txt");
 }
 
 //---------------------------------------------------------
 // Destructor
 
-HealthManager::~HealthManager()
+MotorController::~MotorController()
 {
 }
 
 //---------------------------------------------------------
 // Procedure: OnNewMail
 
-bool HealthManager::OnNewMail(MOOSMSG_LIST &NewMail)
+bool MotorController::OnNewMail(MOOSMSG_LIST &NewMail)
 {
 AppCastingMOOSApp::OnNewMail(NewMail);
 
@@ -49,43 +49,11 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
  bool   mstr  = msg.IsString();
 #endif
 
-  if(key == "PROC_WATCH_SUMMARY"){
-      id = msg.GetCommunity();
-      std::string val = msg.GetAsString();
-    if("All Present" != msg.GetAsString()){
-        m_substring = msg.GetAsString().substr(6, msg.GetAsString().size()-1);
-        Notify("WCA_MESSAGE", "ID="+ msg.GetCommunity() + ",Message=Module " + m_substring +" has crashed,Level=" + QString::number(EnumDefs::StatusState::WARNING).toStdString());
-        Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
-        m_launchmode = true;
-    }
-    else{
-        m_launchmode = false;
-    }
-  }
-  else if(key == "BLACK_LINE_DETECTED"){
-      m_black_line_detected = (toupper(msg.GetAsString())=="TRUE");
-      if(m_black_line_detected && m_currentState != EnumDefs::TELEOP and id != "NotSet"){
-          if(!m_lineWCAPublished){
-            Notify("WCA_MESSAGE", "ID="+ id + ",Message=The dolphin has hit the black line,Level=" + QString::number(EnumDefs::StatusState::WARNING).toStdString());
-            m_lineWCAPublished = true;
-          }
-          Notify("Change_State", "State="+QString::number(EnumDefs::VehicleStates::ALLSTOP).toStdString());
-      } else {
-          m_lineWCAPublished = false;
-      }
-  }
-  else if(key == "Current_State"){
-      int x;
-      MOOSValFromString(x , msg.GetString(), "State");
-      m_currentState = EnumDefs::VehicleStates(x);
-  }
-  else if(key == "VERSION_ACK")
-  {
-      m_versionRecv = true;
-  }
-  else if(key != "APPCAST_REQ"){ // handled by AppCastingMOOSApp
+  if(key == "FOO")
+    cout << "great!";
+
+  else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
-  }
 }
 
 return(true);
@@ -94,7 +62,7 @@ return(true);
 //---------------------------------------------------------
 // Procedure: OnConnectToServer
 
-bool HealthManager::OnConnectToServer()
+bool MotorController::OnConnectToServer()
 {
 registerVariables();
 return(true);
@@ -104,15 +72,10 @@ return(true);
 // Procedure: Iterate()
 //            happens AppTick times per second
 
-bool HealthManager::Iterate()
+bool MotorController::Iterate()
 {
 AppCastingMOOSApp::Iterate();
-if(m_launchmode){
-    restartProcess(QString::fromStdString(m_substring).split(','));
-}
-if(!m_versionRecv){
-    Notify("VERSION_NUMBER", "version="+m_versionNum+",message="+m_commitMessage);
-}
+// Do your thing here!
 AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -121,13 +84,13 @@ return(true);
 // Procedure: OnStartUp()
 //            happens before connection is open
 
-bool HealthManager::OnStartUp()
+bool MotorController::OnStartUp()
 {
 AppCastingMOOSApp::OnStartUp();
 
 STRING_LIST sParams;
-m_MissionReader.EnableVerbatimQuoting(true);
-if(!m_MissionReader.GetConfigurationAndPreserveSpace(GetAppName(), sParams))
+m_MissionReader.EnableVerbatimQuoting(false);
+if(!m_MissionReader.GetConfiguration(GetAppName(), sParams))
  reportConfigWarning("No config block found for " + GetAppName());
 
 STRING_LIST::iterator p;
@@ -138,29 +101,18 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "binarypath") {
+ if(param == "foo") {
    handled = true;
-   m_binarypath = QString::fromStdString(value);
  }
- else if(param == "runsim") {
+ else if(param == "bar") {
    handled = true;
-   m_runSim = value == "true";
  }
- else if(param == "versionnum")
- {
-     handled = true;
-     m_versionNum = value;
- }
- else if(param == "commitmessage")
- {
-    handled = true;
-    m_commitMessage = value;
- }
+
  if(!handled)
    reportUnhandledConfigWarning(orig);
 
 }
-m_launchtime = MOOSTime();
+
 registerVariables();
 return(true);
 }
@@ -168,20 +120,17 @@ return(true);
 //---------------------------------------------------------
 // Procedure: registerVariables
 
-void HealthManager::registerVariables()
+void MotorController::registerVariables()
 {
 AppCastingMOOSApp::RegisterVariables();
-  Register("PROC_WATCH_SUMMARY");
-  Register("BLACK_LINE_DETECTED");
-  Register("VERSION_ACK");
-  Register("Current_State");
+// Register("FOOBAR", 0);
 }
 
 
 //------------------------------------------------------------
 // Procedure: buildReport()
 
-bool HealthManager::buildReport()
+bool MotorController::buildReport()
 {
 m_msgs << "============================================" << endl;
 m_msgs << "File:                                       " << endl;
@@ -196,12 +145,20 @@ m_msgs << actab.getFormattedString();
 return(true);
 }
 
-void HealthManager::run()
+void MotorController::startProcess(const std::string &sname, const std::string &moosfile, int argc, char **argv)
+{
+    SetCommandLineParameters(argc, argv);
+
+    m_moosAppName = sname;
+    m_moosMissionFile = moosfile;
+}
+
+void MotorController::run()
 {
     RunInQtEventLoop(m_moosAppName, m_moosMissionFile);
 }
 
-bool HealthManager::RunInQtEventLoop(const std::string &sName, const std::string &sMissionFile)
+bool MotorController::RunInQtEventLoop(const std::string &sName, const std::string &sMissionFile)
 {
     //straight away do we want colour in this application?
     if(m_CommandLineParser.GetFlag("--moos_no_colour"))
@@ -329,14 +286,15 @@ bool HealthManager::RunInQtEventLoop(const std::string &sName, const std::string
 
 
     DoBanner();
-    connect(&iterateTimer, &QTimer::timeout, this, &HealthManager::doMOOSWork);
+    connect(&iterateTimer, &QTimer::timeout, this, &MotorController::doMOOSWork);
     iterateTimer.start(1000.0/m_dfFreq);
     currentFrequency = m_dfFreq;
     return true;
 }
 
-bool HealthManager::doMOOSWork()
-{    /****************************  THE MAIN MOOS APP LOOP **********************************/
+bool MotorController::doMOOSWork()
+{
+    /****************************  THE MAIN MOOS APP LOOP **********************************/
     m_dfFreq = -1; //Set this to -1 in order to override the MOOS Sleep function
     bool bOK = DoRunWork();
     if(m_bQuitOnIterateFail && !bOK){
@@ -346,32 +304,4 @@ bool HealthManager::doMOOSWork()
     }
     /***************************   END OF MOOS APP LOOP ***************************************/
     return true;
-}
-
-void HealthManager::restartProcess(QList<QString> appName){
-    int error;
-    for(QString str : appName){
-            QString command;
-            QString pathStr;
-            if(str.at(0) == "p"){
-                command = str + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile) +" &";
-                error = system(command.toLocal8Bit().data());
-                qDebug()<<error;
-            }
-            else{
-                if(m_runSim){
-                    pathStr = "./" + m_binarypath + "/" + str + "/bin/" + str;
-                }
-                else{
-                    pathStr = "./" + m_binarypath + "/" + str;
-                }
-                command =  pathStr + " --alias=" + str + " " + QString::fromStdString(m_moosMissionFile)+" &";
-                error = system(command.toLocal8Bit().data());
-                qDebug()<<error;
-            }
-            error = system("ls");
-        }
-        error = system("echo \"hello world\" >> ~/Documents/duh.txt");
-        qDebug()<<error;
-
 }

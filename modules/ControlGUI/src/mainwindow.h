@@ -20,6 +20,8 @@ class RobotState {
             cmdSpeed = 50;
             status = EnumDefs::NORMAL;
             state = EnumDefs::STANDBY;
+            versionNumber = "";
+            commitMessage = "";
             for(int j = 0; j<4; j++){
                 motorSpeed[j] = 0;
                 motorCurrent[j] = 0;
@@ -36,6 +38,8 @@ class RobotState {
         EnumDefs::StatusState status;
         EnumDefs::VehicleStates state;
         QString id;
+        QString versionNumber;
+        QString commitMessage;
 
         double motorCurrent[4];
         double motorSpeed[4];
@@ -101,6 +105,7 @@ public slots:
     void updateDolphinState(QString, int);
     void updateDolphinWatch(QString, QString);
     void updateDolphinMsg(QString id, QString msg, int lvl);
+    void updateDolphinVersion(QString id, QString version, QString msg);
     void onMaxSpeedChanged(int speed){m_maxSpeed = speed;}
 
     void onForwardButtonPressed();

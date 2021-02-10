@@ -57,6 +57,9 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
 
+#get version number
+version_number=`git rev-parse --short HEAD`
+commit_message=`git show-branch --no-name HEAD`
 
 #-------------------------------------------------------
 #  Part 2: Create the .world file
@@ -169,6 +172,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Zeta_Init,dest_name=Zeta_Init,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=localhost:$PORT
      Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
@@ -186,8 +190,7 @@ ProcessConfig = pShare
      Output=src_name=Reg_In,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=Speed_Curv,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=WCA_MESSAGE,route=\$(GCSIP):\$(GCSPORT)
-
-
+     Output=src_name=VERSION_NUMBER,route=\$(GCSIP):\$(GCSPORT)
 EOF
 PORT=8300
 for ((i=0 ; i < $NUM_BOTS ; i++)); do
@@ -214,7 +217,8 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
         GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
         KAPPA=$KAPPA                                 DT=$DT  \
-	LOG_DIR=$mission_dir
+	LOG_DIR=$mission_dir                         VERSION=$version_number \
+	MESSAGE="$commit_message"
 done
 nsplug meta_GroundControlStation.moos targ_$GCSNAME.moos -f WARP=$TIME_WARP \
     $GCSARGS

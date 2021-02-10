@@ -7,5 +7,7 @@ ProcessConfig = HealthManager
    CommsTick = 4
    BinaryPath = ../modules
    RunSim = true
+   VersionNum = $(VERSION)
+   CommitMessage = $(MESSAGE)   
 }
 

@@ -63,7 +63,9 @@ public:
     std::string m_substring;
     bool m_lineWCAPublished = false;
     std::string id = "NotSet";
-
+    std::string m_versionNum = "";
+    std::string m_commitMessage = "";
+    bool m_versionRecv = false;
 signals:
    void workFinished();
 

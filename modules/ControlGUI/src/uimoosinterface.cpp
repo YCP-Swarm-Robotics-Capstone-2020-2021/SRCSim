@@ -87,6 +87,18 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             MOOSValFromString(priority, msg.GetString(), "Level");
             emit updateWarning(QString::fromStdString(id), QString::fromStdString(errormsg), priority);
         }
+        else if(key == "VERSION_NUMBER")
+        {
+            QString id = QString::fromStdString(msg.GetCommunity());
+            std::string version;
+            std::string message;
+            MOOSValFromString(version, msg.GetString(), "version");
+            MOOSValFromString(message, msg.GetString(), "message");
+
+            emit updateDolphinVersion(id, QString::fromStdString(toupper(version)), QString::fromStdString(message));
+
+            Notify(id.toStdString()+"_VERSION_ACK", "TRUE");
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
@@ -156,6 +168,7 @@ void UIMoosInterface::registerVariables()
     Register("PROC_WATCH_DOLPHIN");
     Register("PROC_WATCH_SUMMARY");
     Register("WCA_MESSAGE");
+    Register("VERSION_NUMBER");
 }
 
 bool UIMoosInterface::buildReport()
@@ -323,7 +336,8 @@ bool UIMoosInterface::RunInQtEventLoop(const std::string &sName, const std::stri
 }
 
 bool UIMoosInterface::doMOOSWork()
-{    /****************************  THE MAIN MOOS APP LOOP **********************************/
+{
+    /****************************  THE MAIN MOOS APP LOOP **********************************/
     m_dfFreq = -1; //Set this to -1 in order to override the MOOS Sleep function
     bool bOK = DoRunWork();
     if(m_bQuitOnIterateFail && !bOK){
