@@ -16,7 +16,9 @@ using namespace std;
 
 VehicleStateMachine::VehicleStateMachine()
 {
+
     this->currentState = EnumDefs::VehicleStates::STANDBY;
+    m_previousState = currentState;
     srand(MOOSTime());
     timeout = rand() % NUM_MAX_TIMEOUT;
     timeout *= 4; //account for the apptick
@@ -59,15 +61,19 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       m_currentBoundaryState = (msg.GetAsString()=="TRUE");
       if( m_currentBoundaryState == true and m_previousBoundaryState == false){
           if(currentState != EnumDefs::VehicleStates::TELEOP)
+              m_previousState = currentState;
             currentState = EnumDefs::VehicleStates::BOUNDARY;
       } else if (m_currentBoundaryState == true and m_previousBoundaryState == true){
-          if(currentState != EnumDefs::VehicleStates::BOUNDARY and currentState != EnumDefs::TELEOP){
+          if(currentState != EnumDefs::VehicleStates::BOUNDARY and currentState != EnumDefs::TELEOP and currentState != EnumDefs::ALLSTOP && m_previousState == EnumDefs::VehicleStates::TELEOP){
               Notify("WCA_MESSAGE", "ID="+msg.GetCommunity()+", Level="+QString::number(EnumDefs::StatusState::WARNING).toStdString()+", Message=Boundary Detection failed. Did not go into boundary detection correctly.");
+              m_previousState = currentState;
               currentState = EnumDefs::VehicleStates::ALLSTOP;
           }
       } else if (m_currentBoundaryState == false and m_previousBoundaryState == true){
-          if(currentState != EnumDefs::TELEOP)
+          if(currentState != EnumDefs::TELEOP){
+            m_previousState = currentState;
             currentState = EnumDefs::VehicleStates::ALLSTOP;
+          }
       }
       m_previousBoundaryState = m_currentBoundaryState;
   }
@@ -206,7 +212,7 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
     } else {
         return MOOSDebugWrite("VehicleStateMachine: Received a Change_State message that contains an invalid state.");
     }
-
+    m_previousState = currentState;
     currentState = updateState;
     return true;
 }

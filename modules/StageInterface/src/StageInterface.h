@@ -28,7 +28,6 @@
 #include "StageManager.h"
 #include "Stage-4.3/stage.hh"
 
-
 class StageInterface : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT

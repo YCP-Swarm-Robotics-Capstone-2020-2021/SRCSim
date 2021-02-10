@@ -77,10 +77,15 @@ void StageRun::Tick(World * world)
       while(RobotList.length()<=idx){
           RobotList.append(Robot());
       }
-      RobotList[idx].xPos = robots[idx].position->GetPose().x;
-      RobotList[idx].yPos = robots[idx].position->GetPose().y;
+      double x, y;
+      x = robots[idx].position->GetPose().x;
+      y = robots[idx].position->GetPose().y;
+      RobotList[idx].xPos = x;
+      RobotList[idx].yPos = y;
       RobotList[idx].attitude = robots[idx].position->GetPose().a*180.0/PI+180.0;
       RobotList[idx].current_speed = robots[idx].forward_speed;
+      RobotList[idx].line_detected = (abs(x)>(BLACK_LINE_LOCATION/2.0-0.25) and abs(x)< (BLACK_LINE_LOCATION/2.0+0.25))
+              or (abs(y)>(BLACK_LINE_LOCATION/2.0-0.25) and abs(y)< (BLACK_LINE_LOCATION/2.0+0.25));
     }
 }
 

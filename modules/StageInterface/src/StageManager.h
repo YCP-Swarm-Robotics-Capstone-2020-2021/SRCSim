@@ -21,6 +21,7 @@
 
 
 #define ROBOT_IDENTIFIER "Dolphin"
+static const int BLACK_LINE_LOCATION = 16;
 
 using namespace Stg;
 

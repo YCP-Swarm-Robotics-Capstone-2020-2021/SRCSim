@@ -43,6 +43,7 @@ public:
 
  private: // Configuration variables
    EnumDefs::VehicleStates currentState;
+   EnumDefs::VehicleStates m_previousState;
    QString id;
    bool registered = false;
    double timeout;

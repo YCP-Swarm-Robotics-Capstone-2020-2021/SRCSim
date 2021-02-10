@@ -53,12 +53,16 @@ public:
       return true;
     }
     double currentFrequency;
+    EnumDefs::VehicleStates m_currentState = EnumDefs::STANDBY;
     std::string m_moosAppName,m_moosMissionFile;
     QString m_binarypath;
     double m_launchtime;
     bool m_runSim;
     bool m_launchmode = false;
+    bool m_black_line_detected = false;
     std::string m_substring;
+    bool m_lineWCAPublished = false;
+    std::string id = "NotSet";
 
 signals:
    void workFinished();
