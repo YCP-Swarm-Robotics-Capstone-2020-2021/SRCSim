@@ -96,6 +96,8 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             MOOSValFromString(message, msg.GetString(), "message");
 
             emit updateDolphinVersion(id, QString::fromStdString(toupper(version)), QString::fromStdString(message));
+
+            Notify(id.toStdString()+"_VERSION_ACK", "TRUE");
         }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
