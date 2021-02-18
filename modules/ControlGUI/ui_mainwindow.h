@@ -176,6 +176,7 @@ public:
     QLabel *label_6;
     QTextBrowser *warningBrowser;
     QPushButton *LOG_BOOKMARK_BUTTON;
+    QPushButton *runPushButton;
     QHBoxLayout *horizontalLayout_4;
     QLabel *boundaryLabel;
     QSpinBox *boundarySpinBox;
@@ -996,6 +997,11 @@ public:
 
         verticalLayout_5->addWidget(LOG_BOOKMARK_BUTTON);
 
+        runPushButton = new QPushButton(centralWidget);
+        runPushButton->setObjectName(QStringLiteral("runPushButton"));
+
+        verticalLayout_5->addWidget(runPushButton);
+
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
@@ -1064,9 +1070,7 @@ public:
         label->setText(QApplication::translate("MainWindow", "Robot :", Q_NULLPTR));
         dolphinSelection->clear();
         dolphinSelection->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "Dolphin1", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Dolphin2", Q_NULLPTR)
-         << QApplication::translate("MainWindow", "Dolphin3", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "All", Q_NULLPTR)
         );
         label_2->setText(QApplication::translate("MainWindow", "Cmd State:", Q_NULLPTR));
         stateSelection->clear();
@@ -1164,6 +1168,7 @@ public:
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", Q_NULLPTR));
         label_6->setText(QApplication::translate("MainWindow", "Warnings", Q_NULLPTR));
         LOG_BOOKMARK_BUTTON->setText(QApplication::translate("MainWindow", "BOOKMARK LOG", Q_NULLPTR));
+        runPushButton->setText(QApplication::translate("MainWindow", "Start Run", Q_NULLPTR));
         boundaryLabel->setText(QApplication::translate("MainWindow", "Boundary Size (Ft)", Q_NULLPTR));
         boundaryPushButton->setText(QApplication::translate("MainWindow", "Update Boundary", Q_NULLPTR));
         menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", Q_NULLPTR));

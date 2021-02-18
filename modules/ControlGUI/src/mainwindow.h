@@ -8,9 +8,16 @@
 #include "VehicleStateDefines.h"
 #include "swarmformationpainter.h"
 #include <QShortcut>
+#include <QInputDialog>
+#include <QLineEdit>
+#include <chrono>
+#include <ctime>
+#include <sstream>
 
 #define BUTTON_PRESS_INTERVAL 200
 #define SPEED_INTERVAL 5
+#define DEFAULT_RUN_TIMEOUT_MSEC 600000 //10 minutes
+#define RUN_ID_FILE "runIDFile.txt"
 
 class RobotState {
     public:
@@ -44,6 +51,24 @@ class RobotState {
         double motorCurrent[4];
         double motorSpeed[4];
 
+};
+
+class Run{
+    public:
+        int runId = 0;
+        QString description = "";
+        QTimer runTimeout;
+        Run();
+        Run(int id, QString des, int timeout){
+            runId = id;
+            description = des;
+            runTimeout.start(timeout);
+        }
+        ~Run(){runTimeout.stop();}
+
+        std::string toMOOSMessage(){
+            return "id="+QString::number(runId).toStdString()+",description="+description.toStdString();
+        };
 };
 
 namespace Ui {
@@ -83,6 +108,12 @@ private:
     bool reverse = false;
     bool right = false;
     bool left = false;
+
+    int m_runIDNumber;
+    QMap<int,QString> m_runIDtoDescriptionMap;
+    Run *m_currentRun;
+    bool m_runActive = false;
+    QFile *m_runIDFile;
 
 public slots:
     void setBotList(QList<QString> list);
@@ -131,6 +162,9 @@ public slots:
     //Swarm Page Methods
     void descretizeZoom(int);
     void onPreveiwPressed();
+
+    void onRunPressed();
+    void onRunTimeout();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
     void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
@@ -139,6 +173,8 @@ signals:
     void zetaSent(QString);
     void logBookmarkReq();
     void updateBoundarySize(int size);
+    void runStarted(std::string msg);
+    void runEnded(std::string msg);
 };
 
 #endif // MAINWINDOW_H

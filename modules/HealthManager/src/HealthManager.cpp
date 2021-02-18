@@ -369,9 +369,7 @@ void HealthManager::restartProcess(QList<QString> appName){
                 error = system(command.toLocal8Bit().data());
                 qDebug()<<error;
             }
-            error = system("ls");
         }
-        error = system("echo \"hello world\" >> ~/Documents/duh.txt");
         qDebug()<<error;
 
 }

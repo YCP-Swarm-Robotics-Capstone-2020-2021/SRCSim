@@ -49,17 +49,7 @@
            <widget class="QComboBox" name="dolphinSelection">
             <item>
              <property name="text">
-              <string>Dolphin1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Dolphin2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Dolphin3</string>
+              <string>All</string>
              </property>
             </item>
            </widget>
@@ -1264,6 +1254,13 @@ border-radius: 4px;
        <widget class="QPushButton" name="LOG_BOOKMARK_BUTTON">
         <property name="text">
          <string>BOOKMARK LOG</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="runPushButton">
+        <property name="text">
+         <string>Start Run</string>
         </property>
        </widget>
       </item>

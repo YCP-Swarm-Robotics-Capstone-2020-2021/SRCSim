@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->submitZeta, SIGNAL(released()), myPainter, SLOT(submitZetaPressed()));
     connect(myPainter, &SwarmFormationPainter::emitZeta, this, &MainWindow::zetaSent);
     connect(ui->LOG_BOOKMARK_BUTTON, SIGNAL(pressed()), this, SIGNAL(logBookmarkReq()));
+    connect(ui->runPushButton, SIGNAL(pressed()), this, SLOT(onRunPressed()));
 
     connect(&forwardTimer, &QTimer::timeout, this, &MainWindow::onForwardButtonReleased);
     connect(&rightTimer, &QTimer::timeout, this, &MainWindow::onRightButtonReleased);
@@ -45,15 +46,37 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&backTimer, &QTimer::timeout, this, &MainWindow::onReverseButtonReleased);
 
     connect(ui->boundaryPushButton, SIGNAL(released()), this, SLOT(sendUpdateBoundarySizeSignal()));
-
+    QString path = QDir::currentPath()+"/"+RUN_ID_FILE;
+    m_runIDFile = new QFile(path);
     setBotList({});
     setupStateSelection();
     setupShapeList();
+    if(!m_runIDFile->exists()){
+        system(QString::fromStdString("touch "+path.toStdString()).toLocal8Bit().data());
+    }
+    if (!m_runIDFile->open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QTextStream in(m_runIDFile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        m_runIDNumber = line.toInt()+1;
+    }
+    m_runIDFile->close();
 }
 
 MainWindow::~MainWindow()
 {
+    if (m_runIDFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
+        QTextStream out(m_runIDFile);
+        out << m_runIDNumber;
+        m_runIDFile->close();
+    }
     system("ktm");
+    if(m_currentRun != nullptr)
+        delete m_currentRun;
+    if(m_runIDFile != nullptr)
+        delete m_runIDFile;
     delete ui;
 }
 
@@ -489,4 +512,67 @@ void MainWindow::updateDolphinVersion(QString id, QString version, QString msg)
     m_robotStateMap[id].versionNumber = version;
     m_robotStateMap[id].commitMessage = msg;
     updateCurrentDisplay();
+}
+
+void MainWindow::onRunPressed()
+{
+    if(m_runActive) //Simply end the current run
+    {
+        //change button to "Start Run"
+        ui->runPushButton->setText("Start Run");
+        m_currentRun->runTimeout.stop();
+        m_runIDtoDescriptionMap.insert(m_runIDNumber, m_currentRun->description);
+        m_runActive = false;
+        m_runIDNumber++;
+        emit runEnded(m_currentRun->toMOOSMessage());
+    }
+    else //Get the information from the user for the run
+    {
+        bool ok;
+        QString description = QInputDialog::getText(this, "Run Information", "Run ID: "+QString::number(m_runIDNumber)+". Description: ", QLineEdit::Normal, "", &ok);
+        if(!ok){
+            return;
+        }
+        else if(description.isEmpty()){
+            printAdvisory("No description given for run. Setting to current time.", "All");
+            std::time_t now = std::time(NULL);
+            std::tm * ptm = std::localtime(&now);
+            char buffer[32];
+            // Format: Mo, 15.06.2009 20:20:00
+            std::strftime(buffer, 32, "%a, %d.%m.%Y %H:%M:%S", ptm);
+            std::stringstream ss;
+            ss << buffer;
+            description = QString::fromStdString(ss.str());
+        }
+        //change button text to "Stop Run"
+        ui->runPushButton->setText("Stop Run");
+        //set bool to true
+        m_runActive = true;
+        //Crete current Run object
+        if(m_currentRun != nullptr){
+            delete m_currentRun;
+        }
+        m_currentRun = new Run(m_runIDNumber, description, DEFAULT_RUN_TIMEOUT_MSEC);
+        connect(&m_currentRun->runTimeout, SIGNAL(timeout()), this, SLOT(onRunTimeout()));
+        emit runStarted(m_currentRun->toMOOSMessage());
+    }
+    updateCurrentDisplay();
+}
+
+void MainWindow::onRunTimeout()
+{
+    int user_return = QMessageBox::critical(this, tr("Run Expired"),
+                                           tr("The current run timeout has been reached. Would you like the current run to continue?\n"),
+                                           QMessageBox::Yes|QMessageBox::No);
+
+    switch (user_return) {
+        case QMessageBox::Yes:
+            m_currentRun->runTimeout.start(DEFAULT_RUN_TIMEOUT_MSEC);
+            break;
+        case QMessageBox::No:
+            onRunPressed();
+            break;
+        default:
+            break;
+    }
 }

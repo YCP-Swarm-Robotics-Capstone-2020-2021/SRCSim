@@ -14,6 +14,8 @@
 
 static const int BOUNDARY_SIZE_UPDATE_INTERVAL = 1;
 static const std::string SPEED_CMD = "Speed_Curv";
+static const std::string RUN_STARTED = "RUN_STARTED";
+static const std::string RUN_ENDED = "RUN_ENDED";
 
 class UIMoosInterface : public QObject, public AppCastingMOOSApp
 {
@@ -42,6 +44,8 @@ public slots:
     void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void sendLogBookmark();
     void updateBoundarySize(int size);
+    void onRunStarted(std::string msg);
+    void onRunEnded(std::string msg);
 signals:
     void workFinished();
     void regIn(QList<QString>);

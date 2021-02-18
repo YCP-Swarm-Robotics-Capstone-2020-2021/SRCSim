@@ -421,3 +421,13 @@ void UIMoosInterface::updateBoundarySize(int size)
     m_boundary_size = size;
     Notify("BOUNDARY_SIZE", size);
 }
+
+void UIMoosInterface::onRunEnded(std::string msg)
+{
+    Notify(RUN_ENDED, msg);
+}
+
+void UIMoosInterface::onRunStarted(std::string msg)
+{
+    Notify(RUN_STARTED, msg);
+}
