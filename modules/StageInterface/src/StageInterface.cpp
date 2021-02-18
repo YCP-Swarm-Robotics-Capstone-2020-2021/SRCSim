@@ -202,6 +202,7 @@ void StageInterface::notifyCurrentPose()
 {
     QString dataValue;
     bool line = false;
+    int sensorState = 0;
     for(int i = 0; i<num_bots; i++){
         if(publishPose && RobotList.length()>=num_bots){
             dataValue = "xPos="+QString::number(RobotList[i].xPos)+
@@ -210,6 +211,7 @@ void StageInterface::notifyCurrentPose()
                         ", attitude="+QString::number(RobotList[i].attitude)+
                         ", current_speed="+QString::number(RobotList[i].current_speed);
             line = RobotList[i].line_detected;
+            sensorState = RobotList[i].sensorState;
 
         } else {
             dataValue = "xPos=0.0, yPos=0.0, id=Dolphin"+QString::number(i);
@@ -217,5 +219,6 @@ void StageInterface::notifyCurrentPose()
         QString messageName = "Dolphin"+QString::number(i)+"_Update_Pos";
         Notify("Dolphin"+QString::number(i).toStdString()+"_BLACK_LINE_DETECTED", (line) ? "TRUE" : "FALSE");
         Notify(messageName.toStdString(), dataValue.toStdString(), MOOSTime());
+        Notify("Dolphin"+QString::number(i).toStdString()+"_OBJECT_DETECTED", sensorState);
     }
 }

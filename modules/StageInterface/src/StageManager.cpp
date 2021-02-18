@@ -61,6 +61,8 @@ void StageRun::connectStage(World *world)
       robots[idx].forward_speed = 0.0;
       robots[idx].side_speed = 0.0;
       robots[idx].turn_speed = 0.0;
+      robots[idx].laser = dynamic_cast<ModelRanger *>(robots[idx].position->GetChild( name.str() ));
+      robots[idx].laser->Subscribe();
     }
 
     // register with the world
@@ -86,6 +88,43 @@ void StageRun::Tick(World * world)
       RobotList[idx].current_speed = robots[idx].forward_speed;
       RobotList[idx].line_detected = (abs(x)>(BLACK_LINE_LOCATION/2.0-0.25) and abs(x)< (BLACK_LINE_LOCATION/2.0+0.25))
               or (abs(y)>(BLACK_LINE_LOCATION/2.0-0.25) and abs(y)< (BLACK_LINE_LOCATION/2.0+0.25));
+      const std::vector<meters_t> &scan = robots[idx].laser->GetSensors()[0].ranges;
+      uint32_t sample_count = scan.size();
+      double minfrontdistance = 1.0;
+      double backupdist = 0.3;
+      double minleft = 1e6, minright = 1e6;
+      bool obstruction = false;
+      //bool backup = false;
+
+
+      for (uint32_t i = 0; i < sample_count; i++) {
+
+          if ((i > (sample_count / 3)) && (i < (sample_count - (sample_count / 3)))
+              && scan[i] < minfrontdistance) {
+            obstruction = true;
+          }
+          if (scan[i] < backupdist) {
+            //backup = true;
+          }
+          if (i > sample_count / 2)
+            minleft = std::min(minleft, scan[i]);
+          else
+            minright = std::min(minright, scan[i]);
+      }
+      if(obstruction){
+          if(minleft > minright){
+              RobotList[idx].sensorState = EnumDefs::RIGHT;
+          }
+          else if( minright > minleft){
+              RobotList[idx].sensorState = EnumDefs::LEFT;
+          }
+          else{
+              RobotList[idx].sensorState = EnumDefs::MIDDLE;
+          }
+      }
+      else{
+          RobotList[idx].sensorState = EnumDefs::NONE;
+      }
     }
 }
 

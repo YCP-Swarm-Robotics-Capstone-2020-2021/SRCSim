@@ -18,6 +18,14 @@ public:
         WARNING
     };
 
+    enum SensorState{
+        NONE,
+        BACK,
+        LEFT,
+        RIGHT,
+        MIDDLE
+    };
+
     enum VehicleStates{
         STANDBY,
         ALLSTOP,
