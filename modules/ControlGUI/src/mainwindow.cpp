@@ -46,15 +46,37 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&backTimer, &QTimer::timeout, this, &MainWindow::onReverseButtonReleased);
 
     connect(ui->boundaryPushButton, SIGNAL(released()), this, SLOT(sendUpdateBoundarySizeSignal()));
-
+    QString path = QDir::currentPath()+"/"+RUN_ID_FILE;
+    m_runIDFile = new QFile(path);
     setBotList({});
     setupStateSelection();
     setupShapeList();
+    if(!m_runIDFile->exists()){
+        system(QString::fromStdString("touch "+path.toStdString()).toLocal8Bit().data());
+    }
+    if (!m_runIDFile->open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QTextStream in(m_runIDFile);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        m_runIDNumber = line.toInt()+1;
+    }
+    m_runIDFile->close();
 }
 
 MainWindow::~MainWindow()
 {
+    if (m_runIDFile->open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)){
+        QTextStream out(m_runIDFile);
+        out << m_runIDNumber;
+        m_runIDFile->close();
+    }
     system("ktm");
+    if(m_currentRun != nullptr)
+        delete m_currentRun;
+    if(m_runIDFile != nullptr)
+        delete m_runIDFile;
     delete ui;
 }
 

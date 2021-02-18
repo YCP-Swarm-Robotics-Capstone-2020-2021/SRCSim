@@ -17,6 +17,7 @@
 #define BUTTON_PRESS_INTERVAL 200
 #define SPEED_INTERVAL 5
 #define DEFAULT_RUN_TIMEOUT_MSEC 600000 //10 minutes
+#define RUN_ID_FILE "runIDFile.txt"
 
 class RobotState {
     public:
@@ -112,6 +113,7 @@ private:
     QMap<int,QString> m_runIDtoDescriptionMap;
     Run *m_currentRun;
     bool m_runActive = false;
+    QFile *m_runIDFile;
 
 public slots:
     void setBotList(QList<QString> list);
