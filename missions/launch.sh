@@ -70,6 +70,7 @@ cd ../world/
 cat > $title << EOF
 include "/usr/local/share/stage/worlds/pioneer.inc"
 include "/usr/local/share/stage/worlds/map.inc"
+include "/usr/local/share/stage/worlds/sick.inc"
 
 quit_time 3600
 paused 1
@@ -106,6 +107,7 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin$i"
   pose [ $x $y 0 90.0 ]
+  sicklaser( pose [ 0 0 0 0] )
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
