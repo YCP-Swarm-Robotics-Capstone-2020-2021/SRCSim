@@ -1,4 +1,4 @@
-#!/bin/bash -e
+1#!/bin/bash -e
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
@@ -161,6 +161,8 @@ ProcessConfig = pShare
      Output = src_name=Change_State, route=multicast_\$(BROADCASTNUM)
      Output = src_name=LOG_BOOKMARK, route=multicast_\$(BROADCASTNUM)
      Output = src_name=BOUNDARY_SIZE, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=RUN_ENDED, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=RUN_STARTED, route=multicast_\$(BROADCASTNUM)
 EOF
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
     PORT=$(($PORT+5))
