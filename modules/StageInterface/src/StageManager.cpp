@@ -50,6 +50,9 @@ void StageRun::connectStage(World *world)
       name << ROBOT_IDENTIFIER << idx;
 
       // get the robot's model and subscribe to it
+      for(auto model : world->GetAllModels()){
+          cout<<model->GetId()<<endl;
+      }
       Stg::ModelPosition *posmod =
           reinterpret_cast<Stg::ModelPosition *>(world->GetModel(name.str()));
       assert(posmod != 0);
@@ -61,7 +64,19 @@ void StageRun::connectStage(World *world)
       robots[idx].forward_speed = 0.0;
       robots[idx].side_speed = 0.0;
       robots[idx].turn_speed = 0.0;
-      robots[idx].laser = dynamic_cast<ModelRanger *>(robots[idx].position->GetChild( name.str() ));
+      ModelRanger *laser = NULL;
+      for( int i=0; i<16; i++ )
+      {
+           char name[32];
+           snprintf( name, 32, "ranger:%d", i ); // generate sequence of model names
+           laser = dynamic_cast<ModelRanger *>(posmod->GetChild( name ));
+           if( laser && laser->GetSensors()[0].sample_count > 8 )
+         {
+           break;
+         }
+      }
+
+      robots[idx].laser = laser;
       robots[idx].laser->Subscribe();
     }
 

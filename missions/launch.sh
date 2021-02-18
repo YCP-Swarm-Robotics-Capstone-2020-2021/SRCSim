@@ -107,7 +107,7 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin$i"
   pose [ $x $y 0 90.0 ]
-  sicklaser( pose [ 0 0 0 0] )
+  sicklaser( pose [ 0 0 0 0 ] ) 
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
@@ -177,6 +177,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=localhost:$PORT
      Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=localhost:$PORT
      Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_OBJECT_DETECTED,dest_name=OBJECT_DETECTED,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF
