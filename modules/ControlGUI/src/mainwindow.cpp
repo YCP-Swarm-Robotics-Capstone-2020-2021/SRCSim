@@ -146,6 +146,9 @@ void MainWindow::onSubmitStateButtonClicked()
                     break;
             }
         }
+        else {
+            emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+        }
     }
     else {
         emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
