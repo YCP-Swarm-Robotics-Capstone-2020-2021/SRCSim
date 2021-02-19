@@ -10,3 +10,4 @@ build-*
 *Makefile
 *.pro.user*
 *plug_VehiclepShare.moos
+*.world
