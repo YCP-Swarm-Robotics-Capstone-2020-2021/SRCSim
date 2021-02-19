@@ -67,6 +67,15 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
+  else if(key == "OBJECT_DETECTED"){
+     dodgeState = (EnumDefs::SensorState)msg.GetDouble();
+     if(dodgeState != EnumDefs::NONE ){
+        object = true;
+     }
+     else{
+         object = false;
+     }
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -108,7 +117,11 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::DEMOMODE:{
-            demoRun();
+            if(object){
+                dodge();
+            }else{
+                demoRun();
+            }
             break;
         }
         case EnumDefs::VehicleStates::SWARMINIT:{
@@ -125,12 +138,23 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::SWARMRUN:{
-            robotMover();
-            swarmRun();
+            if(object){
+                dodge();
+            }else{
+                robotMover();
+                swarmRun();
+            }
             break;
         }
         case EnumDefs::VehicleStates::BOUNDARY:{
-            boundaryRecovery();
+            if(object){
+                dodge();
+            }else{
+                boundaryRecovery();
+            }
+            break;
+        }
+        case EnumDefs::DODGE:{
             break;
         }
         default:{
@@ -193,6 +217,7 @@ Register("Current_Pos");
 Register("Zeta_Init");
 Register("Neighbor_Zeta");
 Register("Speed_Curv_Override");
+Register("OBJECT_DETECTED");
 }
 
 
@@ -230,7 +255,9 @@ bool MotionController::handleCurrentState(CMOOSMsg &msg){
      }
      int x;
      MOOSValFromString(x , msg.GetString(), "State");
-     state = EnumDefs::VehicleStates(x);
+     if(EnumDefs::VehicleStates(x) != EnumDefs::DODGE){
+         state = EnumDefs::VehicleStates(x);
+     }
      return true;
 }
 
@@ -475,8 +502,33 @@ void MotionController::robotMover(){
 
 }
 
-void MotionController::boundaryRecovery()
-{
+void MotionController::boundaryRecovery(){
     QString moveData = "id="+ id +",Speed="+ QString::number(-max_speed/2.0) + ",Curv=" + QString::number(0);
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+}
+
+void MotionController::dodge(){
+    QString moveData;
+    switch(dodgeState){
+        case EnumDefs::NONE:
+             object = false;
+             break;
+        case EnumDefs::BACK:
+             if(state == EnumDefs::BOUNDARY){
+                 moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+                 Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+             }
+             break;
+        case EnumDefs::MIDDLE:
+        case EnumDefs::LEFT:
+             moveData = "id="+ id +",Speed="+ QString::number(turn_speed) + ",Curv=" + QString::number(-90);
+             Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+             break;
+        case EnumDefs::RIGHT :
+             moveData = "id="+ id +",Speed="+ QString::number(turn_speed) + ",Curv=" + QString::number(90);
+             Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+             break;
+        default:
+             break;
+    }
 }

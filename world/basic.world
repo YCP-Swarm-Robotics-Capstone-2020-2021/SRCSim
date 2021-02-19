@@ -4,7 +4,7 @@
 
 include "/usr/local/share/stage/worlds/pioneer.inc"
 include "/usr/local/share/stage/worlds/map.inc"
-include "/usr/local/share/stage/worlds/sick.inc"
+include "sick.inc"
 
 # time to pause (in GUI mode) or quit (in headless mode (-g)) the simulation
 quit_time 3600 # 1 hour of simulated time

@@ -77,6 +77,25 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       }
       m_previousBoundaryState = m_currentBoundaryState;
   }
+  else if(key == "OBJECT_DETECTED"){
+      EnumDefs::SensorState state = (EnumDefs::SensorState)msg.GetDouble();
+      switch(state){
+          case EnumDefs::NONE:
+               if(dodgeon){
+                   currentState = m_previousState;
+                   dodgeon = false;
+               }
+               break;
+          default:
+               if(! dodgeon && ( currentState == EnumDefs::SWARMRUN || currentState == EnumDefs::BOUNDARY || currentState == EnumDefs::DODGE || currentState == EnumDefs::DEMOMODE )){
+                   m_previousState = currentState;
+                   currentState = EnumDefs::VehicleStates::DODGE;
+                   dodgeon = true;
+               }
+
+               break;
+      }
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -162,6 +181,7 @@ AppCastingMOOSApp::RegisterVariables();
     Register("Change_State");
     Register("Reg_Ack");
     Register("BOUND_DETECT");
+    Register("OBJECT_DETECTED");
 }
 
 

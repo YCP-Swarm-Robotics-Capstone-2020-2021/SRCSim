@@ -70,7 +70,7 @@ cd ../world/
 cat > $title << EOF
 include "/usr/local/share/stage/worlds/pioneer.inc"
 include "/usr/local/share/stage/worlds/map.inc"
-include "/usr/local/share/stage/worlds/sick.inc"
+include "sick.inc"
 
 quit_time 3600
 paused 1

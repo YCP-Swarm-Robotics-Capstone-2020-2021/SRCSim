@@ -47,6 +47,7 @@ public:
    bool handleCurrentState(CMOOSMsg &msg);
    bool handleZetaInit(CMOOSMsg &msg);
    bool handleNeighborZeta(CMOOSMsg &msg);
+   bool handleObjectDetected(CMOOSMsg &msg);
 
 
  protected: // Standard AppCastingMOOSApp function to overload
@@ -66,6 +67,7 @@ public:
    double pointtoTraj(QPointF);
    void robotMover();
    void boundaryRecovery();
+   void dodge();
 
  private: // Configuration variables
    double roboSpeed = 0;
@@ -93,6 +95,8 @@ public:
    double goalx, goaly;
    double goalangle;
    double posTolerance = 0.2;
+   EnumDefs::SensorState dodgeState = EnumDefs::NONE;
+   bool object = false;
 
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
