@@ -110,13 +110,17 @@ void MainWindow::onSubmitStateButtonClicked()
 {
     m_robotStateMap[m_currentBotID].maxSpeed = m_maxSpeed;
     bool differentVersions = false;
-    QString version = m_robotStateMap[m_currentBotID].versionNumber;
+    QString version;
+    for(auto robot : m_robotStateMap){
+        if(robot.versionNumber != "")
+            version = robot.versionNumber;
+    }
     QList<QString> versionList = {};
     if(m_currentState==EnumDefs::VehicleStates::SWARMMODE){
         myPainter->submitZetaPressed();
         for(auto robot_id : m_robotStateMap.keys()){
             versionList.append("ID: "+robot_id+"; Version: "+m_robotStateMap[robot_id].versionNumber);
-            if(m_robotStateMap[robot_id].versionNumber != version){
+            if(m_robotStateMap[robot_id].versionNumber != version && robot_id != "All"){
                 differentVersions = true;
             }
         }
