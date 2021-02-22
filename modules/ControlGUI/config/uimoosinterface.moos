@@ -1,0 +1,6 @@
+ProcessConfig = ControlGUI
+{
+   AppTick   = 4
+   CommsTick = 4
+   Timeout = 5
+}

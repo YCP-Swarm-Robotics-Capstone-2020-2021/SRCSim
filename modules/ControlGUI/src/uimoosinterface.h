@@ -53,6 +53,7 @@ signals:
     void updateProcessWatch(QString id, QString msg);
     void updateWarning(QString id, QString msg, int);
     void updateDolphinVersion(QString id, QString version, QString msg);
+    void checkActive(double time, QString id);
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);
@@ -74,6 +75,8 @@ private: // Configuration variables
     EnumDefs defs;
     int m_boundary_size = 6;
     int m_publishBoundarySizeCounter = 0;
+    double m_timeout;
+    double m_lastupdated = 0;
 };
 
 #endif // UIMOOSINTERFACE_H

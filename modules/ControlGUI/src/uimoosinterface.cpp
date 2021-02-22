@@ -146,6 +146,10 @@ bool UIMoosInterface::OnStartUp()
      bool handled = false;
      if(param == "numofbots") {
      }
+     else if(param == "timeout") {
+       handled = true;
+       m_timeout = QString::fromStdString(value).toDouble();
+     }
      else if(param == "bar") {
        handled = true;
      }
@@ -430,4 +434,14 @@ void UIMoosInterface::onRunEnded(std::string msg)
 void UIMoosInterface::onRunStarted(std::string msg)
 {
     Notify(RUN_STARTED, msg);
+}
+void UIMoosInterface::checkActive(double time, QString id)
+{
+     if(time - m_lastupdated > m_timeout){
+         Notify("DOLPHIN_DISCONNECTED", "id="+ id.toStdString());
+         emit updateWarning(id, "Dolphin has been disconnected", EnumDefs::WARNING);
+     }
+     else{
+         m_lastupdated = time;
+     }
 }
