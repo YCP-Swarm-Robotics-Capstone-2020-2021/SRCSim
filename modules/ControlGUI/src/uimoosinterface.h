@@ -46,6 +46,8 @@ public slots:
     void updateBoundarySize(int size);
     void onRunStarted(std::string msg);
     void onRunEnded(std::string msg);
+    void checkActive();
+
 signals:
     void workFinished();
     void regIn(QList<QString>);
@@ -68,12 +70,16 @@ private: // Configuration variables
     std::string m_moosAppName,m_moosMissionFile;
 
     QTimer iterateTimer;
+    QTimer callcheckactive;
     double currentFrequency;
     int m_logBookmarkCounter=0;
     QList<QString> m_idList;
     EnumDefs defs;
     int m_boundary_size = 6;
     int m_publishBoundarySizeCounter = 0;
+    double m_timeout;
+    double m_lastupdated = 0;
+    QMap<QString , QPair<double , bool> > m_updatemap;
 };
 
 #endif // UIMOOSINTERFACE_H
