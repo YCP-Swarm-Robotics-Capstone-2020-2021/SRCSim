@@ -46,6 +46,8 @@ public slots:
     void updateBoundarySize(int size);
     void onRunStarted(std::string msg);
     void onRunEnded(std::string msg);
+    void checkActive();
+
 signals:
     void workFinished();
     void regIn(QList<QString>);
@@ -53,7 +55,6 @@ signals:
     void updateProcessWatch(QString id, QString msg);
     void updateWarning(QString id, QString msg, int);
     void updateDolphinVersion(QString id, QString version, QString msg);
-    void checkActive(double time, QString id);
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);
@@ -69,6 +70,7 @@ private: // Configuration variables
     std::string m_moosAppName,m_moosMissionFile;
 
     QTimer iterateTimer;
+    QTimer callcheckactive;
     double currentFrequency;
     int m_logBookmarkCounter=0;
     QList<QString> m_idList;
@@ -77,6 +79,7 @@ private: // Configuration variables
     int m_publishBoundarySizeCounter = 0;
     double m_timeout;
     double m_lastupdated = 0;
+    QMap<QString , QPair<double , bool> > m_updatemap;
 };
 
 #endif // UIMOOSINTERFACE_H

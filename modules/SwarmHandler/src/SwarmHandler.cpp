@@ -67,6 +67,11 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "Change_State"){
       onChangeState(msg);
   }
+  else if (key == "DOLPHIN_DISCONNECTED"){
+      string id;
+      MOOSValFromString(id , msg.GetString(), "id");
+      registration->remove(QString::fromStdString(id));
+  }
   else if(key == "Zeta_Cmd"){
       double xPos,yPos, att;
       string theta, lambda;
@@ -179,6 +184,7 @@ Register("Change_State", 0);
 Register("Current_State", 0);
 Register("Reg_In", 0);
 Register("Zeta_Cmd", 0);
+Register("DOLPHIN_DISCONNECTED", 0);
 }
 
 
@@ -235,6 +241,9 @@ bool SwarmHandler::onCurrentState(CMOOSMsg &msg)
     }
     newState = EnumDefs::VehicleStates(state);
     Robot *dolphin = registration->find(QString::fromStdString(id)).value();
+    if(dolphin == registration->end().value()){
+        dolphin = new Robot(EnumDefs::VehicleStates::STANDBY);
+    }
     dolphin->state = newState;
     registration->insert(QString::fromStdString(id), dolphin);
     return true;

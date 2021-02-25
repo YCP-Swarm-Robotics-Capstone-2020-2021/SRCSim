@@ -48,6 +48,8 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
             int state;
             MOOSValFromString(id, msg.GetString(), "id");
             MOOSValFromString(state, msg.GetString(), "State");
+            QPair<double , bool> toinsert = QPair<double , bool>(MOOSTime(), false);
+            m_updatemap.insert(QString::fromStdString(id), toinsert);
             emit updateState(QString::fromStdString(id), state);
         }
         else if(key == "Registered_Bots")
@@ -148,7 +150,8 @@ bool UIMoosInterface::OnStartUp()
      }
      else if(param == "timeout") {
        handled = true;
-       m_timeout = QString::fromStdString(value).toDouble();
+       //m_timeout = QString::fromStdString(value).toDouble();
+       m_timeout = 20;
      }
      else if(param == "bar") {
        handled = true;
@@ -334,7 +337,9 @@ bool UIMoosInterface::RunInQtEventLoop(const std::string &sName, const std::stri
 
     DoBanner();
     connect(&iterateTimer, &QTimer::timeout, this, &UIMoosInterface::doMOOSWork);
+    connect(&callcheckactive, &QTimer::timeout, this, &UIMoosInterface::checkActive);
     iterateTimer.start(1000.0/m_dfFreq);
+    callcheckactive.start(1000);
     currentFrequency = m_dfFreq;
     return true;
 }
@@ -435,13 +440,17 @@ void UIMoosInterface::onRunStarted(std::string msg)
 {
     Notify(RUN_STARTED, msg);
 }
-void UIMoosInterface::checkActive(double time, QString id)
+void UIMoosInterface::checkActive()
 {
-     if(time - m_lastupdated > m_timeout){
-         Notify("DOLPHIN_DISCONNECTED", "id="+ id.toStdString());
-         emit updateWarning(id, "Dolphin has been disconnected", EnumDefs::WARNING);
-     }
-     else{
-         m_lastupdated = time;
-     }
+    if(!m_updatemap.isEmpty()){
+        for(QMap<QString , QPair<double , bool> >::iterator it = m_updatemap.begin(), end = m_updatemap.end(); it != end; ++it){
+            if(MOOSTime() - it.value().first >= m_timeout && !it.value().second){
+                it.value().second = true;
+                Notify("DOLPHIN_DISCONNECTED", "id="+ it.key().toStdString());
+                emit updateWarning(it.key(), "Dolphin has been disconnected", EnumDefs::WARNING);
+            }
+        }
+    }
 }
+
+

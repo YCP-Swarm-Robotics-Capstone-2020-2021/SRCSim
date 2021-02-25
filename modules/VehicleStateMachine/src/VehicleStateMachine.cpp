@@ -109,6 +109,7 @@ if(!registered){
     Notify("Reg_In", "id="+id.toStdString(), MOOSTime());
 }
 Notify("Current_State", QString::fromStdString("State = "+to_string(currentState)).toStdString()+", id="+id.toStdString(), MOOSTime());
+Notify("Narwhal_Current_State", "State="+QString::number(currentState).toStdString()+", id="+id.toStdString(), MOOSTime());
 Notify("id", id.toStdString(), MOOSTime());
 count++;
 return(true);
