@@ -1,7 +1,8 @@
-1#!/bin/bash -e
+#!/bin/bash -e
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
+ktm
 TIME_WARP=1
 NUM_BOTS=2
 BUILD_MODE=0
