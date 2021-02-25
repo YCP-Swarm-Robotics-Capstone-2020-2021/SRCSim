@@ -68,6 +68,9 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
   else if(key == "OBJECT_DETECTED"){
+     if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE){
+         dodge_state_fwd = true;
+     }
      dodgeState = (EnumDefs::SensorState)msg.GetDouble();
      if(dodgeState != EnumDefs::NONE ){
         object = true;
@@ -116,7 +119,10 @@ AppCastingMOOSApp::Iterate();
             Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
             break;
         }
-        case EnumDefs::VehicleStates::DEMOMODE:{
+        case EnumDefs::VehicleStates::DEMOMODE:{        
+            if(dodge_state_fwd){
+                dodgeStateFWD();
+            }
             if(object){
                 dodge();
             }else{
@@ -138,6 +144,9 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::SWARMRUN:{
+            if(dodge_state_fwd){
+                dodgeStateFWD();
+            }
             if(object){
                 dodge();
             }else{
@@ -147,6 +156,9 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::BOUNDARY:{
+            if(dodge_state_fwd){
+                dodgeStateFWD();
+            }
             if(object){
                 dodge();
             }else{
@@ -528,7 +540,21 @@ void MotionController::dodge(){
              moveData = "id="+ id +",Speed="+ QString::number(turn_speed) + ",Curv=" + QString::number(90);
              Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
              break;
+        case EnumDefs::TOOCLOSE:
+             moveData = "id="+ id +",Speed="+ QString::number(-max_speed) + ",Curv=" + QString::number(0);
+             Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+             break;
         default:
              break;
     }
+}
+
+void MotionController::dodgeStateFWD()
+{
+    QString moveData = "id="+ id +",Speed="+ QString::number(max_speed) + ",Curv=" + QString::number(0);
+    Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
+    dodge_state_fwd = false;
+    sleep(1);
+    moveData = "id="+ id +",Speed="+ QString::number(0) + ",Curv=" + QString::number(0);
+    Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
 }

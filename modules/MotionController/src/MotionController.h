@@ -97,10 +97,11 @@ public:
    double posTolerance = 0.2;
    EnumDefs::SensorState dodgeState = EnumDefs::NONE;
    bool object = false;
-
+   bool dodge_state_fwd = false;
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
    void setCurv(double curv){roboCurv = curv;}
+   void dodgeStateFWD();
 
 signals:
 

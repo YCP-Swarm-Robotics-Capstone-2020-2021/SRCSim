@@ -60,7 +60,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   else if(key == "BOUND_DETECT"){
       m_currentBoundaryState = (msg.GetAsString()=="TRUE");
       if( m_currentBoundaryState == true and m_previousBoundaryState == false){
-          if(currentState != EnumDefs::VehicleStates::TELEOP)
+          if(currentState != EnumDefs::VehicleStates::TELEOP and currentState != EnumDefs::BOUNDARY)
               m_previousState = currentState;
             currentState = EnumDefs::VehicleStates::BOUNDARY;
       } else if (m_currentBoundaryState == true and m_previousBoundaryState == true){
@@ -87,10 +87,16 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
                }
                break;
           default:
-               if(! dodgeon && ( currentState == EnumDefs::SWARMRUN || currentState == EnumDefs::BOUNDARY || currentState == EnumDefs::DODGE || currentState == EnumDefs::DEMOMODE )){
-                   m_previousState = currentState;
-                   currentState = EnumDefs::VehicleStates::DODGE;
-                   dodgeon = true;
+               //if((!dodgeon) && ( currentState == EnumDefs::SWARMRUN || currentState == EnumDefs::BOUNDARY || currentState == EnumDefs::DODGE || currentState == EnumDefs::DEMOMODE )){
+                if(!dodgeon){
+                   if(currentState == EnumDefs::STANDBY || currentState == EnumDefs::ALLSTOP || currentState == EnumDefs::TELEOP || currentState == EnumDefs::SWARMINIT || currentState == EnumDefs::SWARMSTANDBY){
+                       break;
+                   }
+                   else{
+                       m_previousState = currentState;
+                       currentState = EnumDefs::VehicleStates::DODGE;
+                       dodgeon = true;
+                   }
                }
 
                break;
@@ -128,6 +134,7 @@ if(!registered){
     Notify("Reg_In", "id="+id.toStdString(), MOOSTime());
 }
 Notify("Current_State", QString::fromStdString("State = "+to_string(currentState)).toStdString()+", id="+id.toStdString(), MOOSTime());
+Notify("Narwhal_Current_State", "State="+QString::number(currentState).toStdString()+", id="+id.toStdString(), MOOSTime());
 Notify("id", id.toStdString(), MOOSTime());
 count++;
 return(true);

@@ -23,7 +23,8 @@ public:
         BACK,
         LEFT,
         RIGHT,
-        MIDDLE
+        MIDDLE,
+        TOOCLOSE
     };
 
     enum VehicleStates{

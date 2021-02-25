@@ -94,9 +94,9 @@ floorplan
 )
 EOF
 x=-7
-y=7
+y=6
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-x=$(($x+3))
+x=$(($x+2))
 if [[ $x -gt 8 ]]; then
     y=$(($y-2))
     x=-7
@@ -107,7 +107,7 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin$i"
   pose [ $x $y 0 90.0 ]
-  sicklaser( pose [ 0 0 0 0 ] ) 
+  sicklaser( pose [ -0.1 0 0 0 ] ) 
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"

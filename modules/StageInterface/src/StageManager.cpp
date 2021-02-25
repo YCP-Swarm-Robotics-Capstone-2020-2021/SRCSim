@@ -106,7 +106,7 @@ void StageRun::Tick(World * world)
       const std::vector<meters_t> &scan = robots[idx].laser->GetSensors()[0].ranges;
       uint32_t sample_count = scan.size();
       double minfrontdistance = 1.2;
-      double minleft = 1e6, minright = 1e6;
+      double minleft = 1e6, minright = 1e6, minmiddle = 1e6, minbackup = 0.5;
       bool obstruction = false;
 
 
@@ -115,19 +115,25 @@ void StageRun::Tick(World * world)
           if (scan[i] < minfrontdistance) {
             obstruction = true;
           }
-          if (i > sample_count / 2)
+          if (i >= 2*sample_count / 3)
             minleft = std::min(minleft, scan[i]);
+          else if(i > sample_count / 3 && i <= 2* sample_count /3 ){
+            minmiddle = std::min(minmiddle, scan[i]);
+          }
           else
             minright = std::min(minright, scan[i]);
       }
       if(obstruction){
-          if(minleft > minright){
+          if(minleft <= minbackup || minright <= minbackup || minmiddle <= minbackup){
+              RobotList[idx].sensorState = EnumDefs::TOOCLOSE;
+          }
+          else if(minleft > minright && minmiddle > minright){
               RobotList[idx].sensorState = EnumDefs::RIGHT;
           }
-          else if( minright > minleft){
+          else if( minright > minleft && minmiddle > minleft){
               RobotList[idx].sensorState = EnumDefs::LEFT;
           }
-          else{
+          else if ( minright > minmiddle && minleft > minmiddle ){
               RobotList[idx].sensorState = EnumDefs::MIDDLE;
           }
       }
