@@ -31,6 +31,13 @@ ProcessConfig = SwarmHandler
    CommsTick    = 4
 }
 
+ProcessConfig = ControlGUI
+{
+   AppTick	= 4
+   CommsTick	= 4
+   Timeout	= 5
+
+}
 ProcessConfig = uProcessWatch
 {
     watch_all = false

@@ -132,7 +132,6 @@ bool UIMoosInterface::Iterate()
 bool UIMoosInterface::OnStartUp()
 {
     AppCastingMOOSApp::OnStartUp();
-
     STRING_LIST sParams;
     m_MissionReader.EnableVerbatimQuoting(false);
     if(!m_MissionReader.GetConfiguration(GetAppName(), sParams))
@@ -150,8 +149,8 @@ bool UIMoosInterface::OnStartUp()
      }
      else if(param == "timeout") {
        handled = true;
-       //m_timeout = QString::fromStdString(value).toDouble();
-       m_timeout = 20;
+       m_timeout = QString::fromStdString(value).toDouble();
+
      }
      else if(param == "bar") {
        handled = true;
@@ -444,7 +443,7 @@ void UIMoosInterface::checkActive()
 {
     if(!m_updatemap.isEmpty()){
         for(QMap<QString , QPair<double , bool> >::iterator it = m_updatemap.begin(), end = m_updatemap.end(); it != end; ++it){
-            if(MOOSTime() - it.value().first >= m_timeout && !it.value().second){
+            if((MOOSTime() - it.value().first) >= m_timeout && !it.value().second){
                 it.value().second = true;
                 Notify("DOLPHIN_DISCONNECTED", "id="+ it.key().toStdString());
                 emit updateWarning(it.key(), "Dolphin has been disconnected", EnumDefs::WARNING);
