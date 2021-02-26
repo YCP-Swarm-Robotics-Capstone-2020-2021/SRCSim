@@ -60,7 +60,6 @@ if [[ "$1" == '--' ]]; then shift; fi
 #get version number
 version_number=`git rev-parse --short HEAD`
 commit_message=`git show-branch --no-name HEAD`
-
 cd ../missions/
 #-------------------------------------------------------
 #  Part 3: Create the .moos and .bhv files.
@@ -80,6 +79,7 @@ fi
 GCSNAME="Narwhal"
 GCSIP="localhost"
 GCSPORT=9000
+VIP="localhost"
 BROADCASTNUM=1
 
 #nsplug meta_vehicle.moos targ_$VNAME2.moos -f WARP=$TIME_WARP \
@@ -140,6 +140,7 @@ cd SwarmHandler
 qmake
 make
 cd ../../missions
+cd ../missions
 if [[ BUILD_MODE -eq 1 ]]; then exit 1; fi
 #-------------------------------------------------------
 #  Part 4: Launch the processes
@@ -147,4 +148,3 @@ if [[ BUILD_MODE -eq 1 ]]; then exit 1; fi
 printf "Launching $GCSNAME MOOS Community (WARP=%s) \n"  $TIME_WARP
 pAntler targ_$GCSNAME.moos >& /dev/null &
 printf "Done \n"
-

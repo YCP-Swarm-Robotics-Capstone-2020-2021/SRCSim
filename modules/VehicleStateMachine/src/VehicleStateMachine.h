@@ -48,6 +48,7 @@ public:
    bool registered = false;
    double timeout;
    int count;
+   bool dodgeon = false;
 
 
    bool m_previousBoundaryState = false;

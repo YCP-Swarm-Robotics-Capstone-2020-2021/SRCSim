@@ -6,10 +6,12 @@
 #include <QMutex>
 #include <QSemaphore>
 #include "Stage-4.3/stage.hh"
+#include "VehicleStateDefines.h"
 
 class Robot {
 public:
   Stg::ModelPosition *position;
+  Stg::ModelRanger *laser;
   double xPos;
   double yPos;
   double attitude;
@@ -18,6 +20,7 @@ public:
   double turn_speed;
   double current_speed;
   bool line_detected = false;
+  EnumDefs::SensorState sensorState = EnumDefs::SensorState::NONE;
 };
 
 extern QList<Robot> RobotList;

@@ -1,7 +1,8 @@
-1#!/bin/bash -e
+#!/bin/bash -e
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
+ktm
 TIME_WARP=1
 NUM_BOTS=2
 BUILD_MODE=0
@@ -70,7 +71,7 @@ cd ../world/
 cat > $title << EOF
 include "/usr/local/share/stage/worlds/pioneer.inc"
 include "/usr/local/share/stage/worlds/map.inc"
-include "/usr/local/share/stage/worlds/sick.inc"
+include "sick.inc"
 
 quit_time 3600
 paused 1
@@ -94,9 +95,9 @@ floorplan
 )
 EOF
 x=-7
-y=7
+y=6
 for ((i = 0 ; i < $NUM_BOTS ; i++)); do
-x=$(($x+3))
+x=$(($x+2))
 if [[ $x -gt 8 ]]; then
     y=$(($y-2))
     x=-7
@@ -107,7 +108,7 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin$i"
   pose [ $x $y 0 90.0 ]
-  sicklaser( pose [ 0 0 0 0] )
+  sicklaser( pose [ -0.1 0 0 0 ] ) 
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
@@ -177,6 +178,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=localhost:$PORT
      Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=localhost:$PORT
      Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=localhost:$PORT
+     Output=src_name=Dolphin${i}_OBJECT_DETECTED,dest_name=OBJECT_DETECTED,route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF

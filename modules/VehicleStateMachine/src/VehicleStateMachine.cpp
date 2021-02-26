@@ -59,23 +59,54 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       registered = true;
   else if(key == "BOUND_DETECT"){
       m_currentBoundaryState = (msg.GetAsString()=="TRUE");
+      if(currentState == EnumDefs::VehicleStates::TELEOP and currentState == EnumDefs::STANDBY and currentState == EnumDefs::ALLSTOP){
+          return true;
+      }
       if( m_currentBoundaryState == true and m_previousBoundaryState == false){
-          if(currentState != EnumDefs::VehicleStates::TELEOP)
+          if(currentState != EnumDefs::VehicleStates::TELEOP and currentState != EnumDefs::BOUNDARY and currentState != EnumDefs::STANDBY and currentState != EnumDefs::ALLSTOP){
               m_previousState = currentState;
-            currentState = EnumDefs::VehicleStates::BOUNDARY;
+              currentState = EnumDefs::VehicleStates::BOUNDARY;
+              m_previousBoundaryState = m_currentBoundaryState;
+          }
       } else if (m_currentBoundaryState == true and m_previousBoundaryState == true){
-          if(currentState != EnumDefs::VehicleStates::BOUNDARY and currentState != EnumDefs::TELEOP and currentState != EnumDefs::ALLSTOP && m_previousState == EnumDefs::VehicleStates::TELEOP){
+          if(currentState != EnumDefs::VehicleStates::BOUNDARY and currentState != EnumDefs::TELEOP and currentState != EnumDefs::ALLSTOP && m_previousState != EnumDefs::VehicleStates::STANDBY){
               Notify("WCA_MESSAGE", "ID="+msg.GetCommunity()+", Level="+QString::number(EnumDefs::StatusState::WARNING).toStdString()+", Message=Boundary Detection failed. Did not go into boundary detection correctly.");
               m_previousState = currentState;
               currentState = EnumDefs::VehicleStates::ALLSTOP;
+              m_previousBoundaryState = m_currentBoundaryState;
           }
       } else if (m_currentBoundaryState == false and m_previousBoundaryState == true){
           if(currentState != EnumDefs::TELEOP){
             m_previousState = currentState;
             currentState = EnumDefs::VehicleStates::ALLSTOP;
+            m_previousBoundaryState = m_currentBoundaryState;
           }
       }
-      m_previousBoundaryState = m_currentBoundaryState;
+  }
+  else if(key == "OBJECT_DETECTED"){
+      EnumDefs::SensorState state = (EnumDefs::SensorState)msg.GetDouble();
+      switch(state){
+          case EnumDefs::NONE:
+               if(dodgeon){
+                   currentState = m_previousState;
+                   dodgeon = false;
+               }
+               break;
+          default:
+               //if((!dodgeon) && ( currentState == EnumDefs::SWARMRUN || currentState == EnumDefs::BOUNDARY || currentState == EnumDefs::DODGE || currentState == EnumDefs::DEMOMODE )){
+                if(!dodgeon){
+                   if(currentState == EnumDefs::STANDBY || currentState == EnumDefs::ALLSTOP || currentState == EnumDefs::TELEOP || currentState == EnumDefs::SWARMINIT || currentState == EnumDefs::SWARMSTANDBY){
+                       break;
+                   }
+                   else{
+                       m_previousState = currentState;
+                       currentState = EnumDefs::VehicleStates::DODGE;
+                       dodgeon = true;
+                   }
+               }
+
+               break;
+      }
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -163,6 +194,7 @@ AppCastingMOOSApp::RegisterVariables();
     Register("Change_State");
     Register("Reg_Ack");
     Register("BOUND_DETECT");
+    Register("OBJECT_DETECTED");
 }
 
 

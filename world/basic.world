@@ -4,6 +4,7 @@
 
 include "/usr/local/share/stage/worlds/pioneer.inc"
 include "/usr/local/share/stage/worlds/map.inc"
+include "sick.inc"
 
 # time to pause (in GUI mode) or quit (in headless mode (-g)) the simulation
 quit_time 3600 # 1 hour of simulated time
@@ -42,6 +43,8 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin0"
   pose [ -0.0 -0.0 0 90.0 ]
+  sicklaser( pose [ -0.1 0 0 0 ] ) 
+
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
@@ -55,6 +58,8 @@ pioneer2dx
   # can refer to the robot by this name
   name "Dolphin1"
   pose [ -7.040 -0.274 0 90.0 ]
+  sicklaser( pose [ 0 0 0 0 ] ) 
+ 
   drive "omni"
   # report error-free position in world coordinates
   localization "gps"
@@ -63,5 +68,3 @@ pioneer2dx
   trail_length 400
     
 )
-
-
