@@ -3,8 +3,8 @@
 
 ProcessConfig = StageInterface
 {
-   AppTick      = 4
-   CommsTick    = 4
+   AppTick      = 8
+   CommsTick    = 8
    WorldFile    = ../../../world/basic.world
    //WorldFile    = ../../../../../stage4/Stage/worlds/simple.world
    //WorldFile    = /home/jsam/stage4/Stage/worlds/simple.world
