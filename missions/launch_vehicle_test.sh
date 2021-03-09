@@ -2,8 +2,9 @@
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
+export ID="Dolphin0"
 TIME_WARP=1
-NUM_BOTS=1
+NUM_BOTS=0
 BUILD_MODE=0
 KAPPA=1
 DT=1
