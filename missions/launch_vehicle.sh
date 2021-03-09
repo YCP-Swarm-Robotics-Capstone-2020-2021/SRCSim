@@ -107,7 +107,7 @@ EOF
 PORT=9000
 VIP2="192.168.1."
 VIPEND=108
-for ((i=0 ; i < $NUM_BOTS ; i++)); do
+for ((i=0 ; i -lt $NUM_BOTS ; i++)); do
 VIPEND=$(($VIPEND+5))
 cat >> plug_VehiclepShare.moos <<EOF
      Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=${VIP2}${VIPEND}:$PORT
@@ -132,7 +132,7 @@ nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
 cd ../modules
 for i in ./*; do
     if [[ -d $i ]]; then
-	if [[ "$i" != "./Images" && "$i" != "./SwarmHandler" && "$i" != "./StageInterface" && "$i" != "./ControlGUI" && "$i" != "./UserInterface" ]]; then
+	if [[ "$i" != "./Images" && "$i" != "./SwarmHandler" && "$i" != "./StageInterface" && "$I" != "./ControlGUI" && "$i" != "./UserInterface" ]]; then
 	    cd $i
 	    qmake
 	    make
