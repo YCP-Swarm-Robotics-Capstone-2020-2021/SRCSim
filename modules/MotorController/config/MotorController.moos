@@ -1,9 +1,0 @@
-//------------------------------------------------
-// MotorController config block
-
-ProcessConfig = MotorController
-{
-   AppTick   = 4
-   CommsTick = 4
-}
-
