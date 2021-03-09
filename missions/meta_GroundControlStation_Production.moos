@@ -1,0 +1,70 @@
+ServerHost = localhost
+ServerPort = 9000
+Community  = $(GCSNAME)
+
+ProcessConfig = ANTLER
+{
+    MSBetweenLaunches = 200
+    Run = MOOSDB    @ NewConsole = false
+    Run = ../modules/ControlGUI/bin/ControlGUI  @ NewConsole = false ~ ControlGUI
+    Run = ../modules/SwarmHandler/bin/SwarmHandler @ NewConsole = false ~ SwarmHandler
+    Run = uProcessWatch @ NewConsole = false ~ uProcessWatch
+    Run = pLogger @ NewConsole = false ~ pLogger
+    Run = pShare @ NewConsole = false ~pShare
+}
+
+ProcessConfig = SwarmHandler
+{
+   AppTick      = 4
+   CommsTick    = 4
+}
+
+ProcessConfig = ControlGUI
+{
+   AppTick	= 4
+   CommsTick	= 4
+   Timeout	= 5
+
+}
+ProcessConfig = uProcessWatch
+{
+    watch_all = false
+    watch = pLogger,pShare,SwarmHandler,ControlGUI
+}
+
+ProcessConfig = pLogger
+{
+    AppTick = 5
+    CommsTick = 5
+    File = LOG_$(GCSNAME)
+    PATH = ./logs/$(LOG_DIR)
+    FileTimeStamp = true
+    DoublePrecision = 3
+    CompressAlogs = false
+    MAX_DIR_SIZE = 475 //MB
+    WildCardLogging = true
+    SyncLog = true @ 1.0
+    AsyncLog = true
+
+
+LOG = Accel @ 0.2
+LOG = Batt_Health @ 0.2
+LOG = Change_State @ 0.2
+LOG = Comm_Ping @ 0.2
+LOG = Current_Pos @ 0.2
+LOG = id @ 1.0
+LOG = Motor_Odom @ 0.2
+LOG = Speed_Curv @ 0.2
+LOG = Update_Pos @ 0.2
+LOG = Veh_Health @ 0.2
+
+WildCardOmitPattern = DB*
+WildCardOmitPattern = APPCAST
+WildCardOmitPattern = APPCAST_REQ
+WildCardOmitPattern = *ITER_GAP
+WildCardOmitPattern = *_ITER_LEN
+WildCardOmitPattern = *_STATUS
+WildCardOmitPattern = *PLOGGER*
+}
+#include plug_UserInterface.moos
+#include plug_GCSpShare.moos

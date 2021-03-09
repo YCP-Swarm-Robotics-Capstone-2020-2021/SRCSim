@@ -17,7 +17,7 @@ using namespace std;
 
 MotionController::MotionController()
 {
-    entryZone = new QLabel("Enter input");
+//    entryZone = new QLabel("Enter input");
     podmates = new QMap<QString, Zeta>();
    // QHash<QString, double> idhash;
   //  srand( idhash.value(id)+MOOSTime());
