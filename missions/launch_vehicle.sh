@@ -3,7 +3,7 @@
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
 TIME_WARP=1
-NUM_BOTS=${ID}
+NUM_BOTS=2
 BUILD_MODE=0
 KAPPA=1
 DT=1
@@ -80,7 +80,7 @@ fi
 VNAME=$ID           # The first vehicle Community
 V1PORT="9000"
 
-GCSIP="192.168.1.141"
+GCSIP="192.168.1.110"
 GCSPORT=9000
 BROADCASTNUM=1
 
@@ -106,8 +106,8 @@ ProcessConfig = pShare
 EOF
 PORT=9000
 VIP2="192.168.1."
-VIPEND=108
-for ((i=0 ; i -lt $NUM_BOTS ; i++)); do
+VIPEND=110
+for ((i=0 ; i < $NUM_BOTS ; i++)); do
 VIPEND=$(($VIPEND+5))
 cat >> plug_VehiclepShare.moos <<EOF
      Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=${VIP2}${VIPEND}:$PORT

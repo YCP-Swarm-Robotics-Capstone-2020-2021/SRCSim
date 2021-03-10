@@ -36,9 +36,11 @@ signals:
 public slots:
     void setDolphinList(QList<QString> list)
     {
+        qDebug()<<"painting";
         m_dolphinList = list;
         std::sort(m_dolphinList.begin(), m_dolphinList.end());
         update();
+        qDebug()<<" done painting";
     }
 
     void setCurrentShape(int i){currentShape = Shape(i); update();}

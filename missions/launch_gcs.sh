@@ -100,8 +100,8 @@ ProcessConfig = pShare
      Output = src_name=RUN_STARTED, route=multicast_\$(BROADCASTNUM)
 EOF
 VIP="192.168.1."
-VIPEND=108
-for ((i = 0 ; i < 10 ; i++)); do
+VIPEND=110
+for ((i = 0 ; i < 2 ; i++)); do
 VIPEND=$(($VIPEND+5))
 cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=${VIP}${VIPEND}:9000
