@@ -95,8 +95,6 @@ cat > plug_VehiclepShare.moos <<EOF
 ProcessConfig = pShare
 {
      Input=route=localhost:\$(VPORT)
-     Input=route=multicast_\$(BROADCASTNUM)
-
      Output=src_name=PROC_WATCH_SUMMARY,dest_name=PROC_WATCH_DOLPHIN,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=Narwhal_Current_State,dest_name=Current_State,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=Reg_In,route=\$(GCSIP):\$(GCSPORT)
