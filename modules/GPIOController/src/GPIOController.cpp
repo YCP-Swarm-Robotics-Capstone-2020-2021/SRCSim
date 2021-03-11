@@ -18,6 +18,7 @@ GPIOController::GPIOController(std::string sName, std::string sMissionFile)
 {    
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
+    connect(&motorcontroller, &MotorController::notifyMOOSMsg, this, &GPIOController::notifyMOOSMsg);
 }
 
 //---------------------------------------------------------
@@ -51,7 +52,24 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
 
   if(key == "FOO")
     cout << "great!";
-
+  else if(key == "Speed_Curv"){
+    double speed = 0;
+    double curv = 0;
+    MOOSValFromString(speed,msg.GetString(),"Speed");
+    MOOSValFromString(curv,msg.GetString(),"Curv");
+    motorcontroller.onSpeedCurv(speed, curv);
+  }
+  else if(key == "Speed_Curv_Override"){
+    double speed = 0;
+    double curv = 0;
+    MOOSValFromString(speed,msg.GetString(),"Speed");
+    MOOSValFromString(curv,msg.GetString(),"Curv");
+    motorcontroller.onSpeedCurvOverride(speed, curv);
+  }
+  else if(key == "OVERRIDE_ON"){
+    bool on = (msg.GetAsString()=="true");
+    motorcontroller.setOverride(on);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -76,7 +94,11 @@ bool GPIOController::Iterate()
 {
 AppCastingMOOSApp::Iterate();
 // Do your thing here!
-AppCastingMOOSApp::PostReport();
+//AppCastingMOOSApp::PostReport();
+if(!onStartupComplete){
+    motorcontroller.start();
+    onStartupComplete = true;
+}
 return(true);
 }
 
@@ -92,14 +114,13 @@ STRING_LIST sParams;
 m_MissionReader.EnableVerbatimQuoting(false);
 if(!m_MissionReader.GetConfiguration(GetAppName(), sParams))
  reportConfigWarning("No config block found for " + GetAppName());
-
+int ccwl = 0, cwl = 0;
 STRING_LIST::iterator p;
 for(p=sParams.begin(); p!=sParams.end(); p++) {
  string orig  = *p;
  string line  = *p;
  string param = tolower(biteStringX(line, '='));
  string value = line;
-
  bool handled = false;
  if(param == "wheelradius") {
    for(int i= 0; i<2; i++){
@@ -134,14 +155,15 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  else if (param == "d"){
      for(int i= 0; i<2; i++){
          QList<Motor*> temp = motorcontroller.motorMap.value(SIDE(i));
-         temp[0]->i = QString::fromStdString(value).toDouble();
-         temp[1]->i = QString::fromStdString(value).toDouble();
+         temp[0]->d = QString::fromStdString(value).toDouble();
+         temp[1]->d = QString::fromStdString(value).toDouble();
          motorcontroller.motorMap.insert(SIDE(i), temp);
      }
 
        handled = true;
  }
  else if (param == "cwbandl"){
+     cwl = QString::fromStdString(value).toDouble();
      for(int i= 0; i<2; i++){
          QList<Motor*> temp = motorcontroller.motorMap.value(SIDE(i));
          temp[0]->cwlow = QString::fromStdString(value).toDouble();
@@ -162,6 +184,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
        handled = true;
  }
  else if (param == "ccwbandl"){
+     ccwl = QString::fromStdString(value).toDouble();
      for(int i= 0; i<2; i++){
          QList<Motor*> temp = motorcontroller.motorMap.value(SIDE(i));
          temp[0]->ccwlow = QString::fromStdString(value).toDouble();
@@ -222,11 +245,11 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  }
  else if (param == "motor"){
      QList<QString> temp = QString::fromStdString(value).split(',');
-     int id;
-     int cGPIO;
-     int rGPIO;
-     int side;
-     bool reversed;
+     int id = 0;
+     int cGPIO = 0;
+     int rGPIO = 0;
+     int side = 0;
+     bool reversed = false;
      for(QString value : temp){
          QList<QString> temp2 = value.split(':');
          if(temp2[0] == "id"){
@@ -241,7 +264,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
          else if(temp2[0] == "SIDE"){
               side = temp2[1] == "R" ? 1 : 0;
          }
-         else if(temp2[0] == "CTRLGPIO"){
+         else if(temp2[0] == "REVERSED"){
               reversed = (temp2[1] == "true");
          }
      }
@@ -251,7 +274,12 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      temp3[((id-1)%2)]->readGPIO = rGPIO;
      temp3[((id-1)%2)]->reversed = reversed;
      temp3[((id-1)%2)]->side = SIDE(side);
-       handled = true;
+     motorcontroller.motorMap.insert(SIDE(side), temp3);
+     handled = true;
+ }
+ else if (param == "currentspeednotifyrates"){
+     motorcontroller.notifyCurrentSpeedInterval = QString::fromStdString(value).toDouble();
+     handled = true;
  }
  else if(param == "bar") {
    handled = true;
@@ -261,7 +289,31 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    reportUnhandledConfigWarning(orig);
 
 }
-
+motorcontroller.setupDeadbandRange(ccwl, cwl);
+for(auto list : motorcontroller.motorMap){
+    cout<<"Key: "<<motorcontroller.motorMap.key(list);
+    for(auto element : list){
+        QString reversed = (element->reversed)?"y":"n";
+        cout<<"\nMotor: "<<element->id
+            <<"\tP: "<<element->p<<"\n"
+            <<"\tI:"<<element->i<<"\n"
+            <<"\tD:"<<element->d<<"\n"
+            <<"\tSide:"<<element->side<<"\n"
+            <<"\tCWL:"<<element->cwlow<<"\n"
+            <<"\tCWH:"<<element->cwhigh<<"\n"
+            <<"\tCCWL:"<<element->ccwlow<<"\n"
+            <<"\tCCWH:"<<element->ccwhigh<<"\n"
+            <<"\tRDL:"<<element->rdlow<<"\n"
+            <<"\tRDH:"<<element->rdhigh<<"\n"
+            <<"\tDBH:"<<element->dblow<<"\n"
+            <<"\tDBL:"<<element->dbhigh<<"\n"
+            <<"\tMaxRPM:"<<element->maxRPM<<"\n"
+            <<"\tMaxRPM:"<<element->wheelrad<<"\n"
+            <<"\tReversed:"<<reversed.toStdString()<<"\n"
+            <<"\tReadGPIO:"<<element->readGPIO<<"\n"
+            <<"\tWriteGPIO:"<<element->writeGPIO<<"\n"<<endl;
+    }
+}
 registerVariables();
 return(true);
 }
@@ -271,8 +323,10 @@ return(true);
 
 void GPIOController::registerVariables()
 {
-AppCastingMOOSApp::RegisterVariables();
-// Register("FOOBAR", 0);
+    AppCastingMOOSApp::RegisterVariables();
+    Register("Speed_Curv");
+    Register("OVERRIDE_ON");
+    Register("Speed_Curv_Override");
 }
 
 
@@ -453,4 +507,9 @@ bool GPIOController::doMOOSWork()
     }
     /***************************   END OF MOOS APP LOOP ***************************************/
     return true;
+}
+
+void GPIOController::notifyMOOSMsg(QString key, QString msg)
+{
+    Notify(key.toStdString(), msg.toStdString());
 }

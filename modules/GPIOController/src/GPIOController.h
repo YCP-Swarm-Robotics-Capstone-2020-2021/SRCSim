@@ -65,6 +65,10 @@ signals:
 
 public slots:
    void run();
+   void notifyMOOSMsg(QString key, QString msg);
+
+  private:
+    bool onStartupComplete = false;
 };
 
 #endif 

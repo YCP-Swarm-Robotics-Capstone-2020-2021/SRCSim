@@ -20,4 +20,27 @@ Motor::Motor(QObject *parent) : QObject(parent)
         d = 0;
         wheelrad = 0;
         side = SIDE::LEFT;
+        connect(&notifyCurrentSpeedTimer,&QTimer::timeout,this, &Motor::notifyCurrentSpeed);
+}
+
+void Motor::notifyCurrentSpeed()
+{
+    QString key = QString::fromStdString(MOTOR_CURRENT_SPEED);
+    QString msg = "Speed="+QString::number(currentSpeed)+", MotorID="+QString::number(id);
+    emit notifyMOOSMsg(key, msg);
+}
+
+void Motor::updateCmdSpeed(double speed)
+{
+    if(reversed){
+        speed = -speed;
+    }
+    cmdSpeed = speed;
+    if(cmdSpeed > 0){ //CCW
+
+    } else if (cmdSpeed < 0) { //CW
+
+    } else { //stationary
+
+    }
 }

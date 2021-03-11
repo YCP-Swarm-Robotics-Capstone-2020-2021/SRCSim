@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
   GPIOController GPIOController(run_command, mission_file);
 
-  GPIOController.Run(run_command.c_str(), mission_file.c_str());
+  GPIOController.run();
   
   return a.exec();
 }

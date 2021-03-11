@@ -1,8 +1,13 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-#include <QObject>
+#define PI 3.141592653589
 
+#include <QObject>
+#include <QTimer>
+#include <pigpio.h>
+
+const static std::string MOTOR_CURRENT_SPEED = "MOTOR_CURRENT_SPEED";
 enum SIDE{
     LEFT,
     RIGHT
@@ -31,12 +36,18 @@ public:
     double i;
     double d;
     double wheelrad;
+    double cmdSpeed = 0;
+    double cmdRPM = 0;
+    double currentSpeed;
+    double currentRPM;
     SIDE side;
 
-
-
+    QTimer notifyCurrentSpeedTimer;
+public slots:
+    void notifyCurrentSpeed();
+    void updateCmdSpeed(double speed);
 signals:
-
+    void notifyMOOSMsg(QString key, QString msg);
 };
 
 #endif // MOTOR_H

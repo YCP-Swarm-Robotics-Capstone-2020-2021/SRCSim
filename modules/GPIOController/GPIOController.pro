@@ -53,7 +53,9 @@ LIBS += \
  \
  -L../../../moos-ivp/lib/ \
  -lapputil \
- -lmbutil
+ -lmbutil \
+ -lpigpio \
+ -lrt
 
 unix {
  QMAKE_LFLAGS_RELEASE += -W

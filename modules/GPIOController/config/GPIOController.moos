@@ -9,6 +9,7 @@ ProcessConfig = GPIOController
    p =1
    i =1
    d =1
+   CurrentSpeedNotifyRateS=2
    CWBANDL = 1480
    CWBANDH = 1280
    CCWBANDL = 1520
