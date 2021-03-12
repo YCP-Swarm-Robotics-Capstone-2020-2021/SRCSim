@@ -21,6 +21,7 @@ public:
     void start();
 
     double notifyCurrentSpeedInterval = 1.0;
+    double maxSpeed = 1.5;
 
 signals:
     void notifyMOOSMsg(QString key, QString val);

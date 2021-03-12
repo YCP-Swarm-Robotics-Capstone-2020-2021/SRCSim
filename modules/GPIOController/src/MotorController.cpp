@@ -55,8 +55,8 @@ void MotorController::onSpeedCurv(double speed, double curv, bool fromOverride)
     double forward_speed = speed*cos(curv*(PI/180.0));
     double turn_speed    = (speed)*sin(curv*(PI/180.0));
 
-    double right_speed = qBound(-speed,forward_speed + turn_speed,speed);
-    double left_speed = qBound(-speed,forward_speed - turn_speed, speed);
+    double right_speed = qBound(-1.0,forward_speed + turn_speed,1.0)*maxSpeed;
+    double left_speed = qBound(-1.0,forward_speed - turn_speed, 1.0)*maxSpeed;
 
     for(auto motor : motorMap[LEFT]){
         motor->updateCmdSpeed(left_speed);

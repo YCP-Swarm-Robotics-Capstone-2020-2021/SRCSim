@@ -5,6 +5,8 @@ ProcessConfig = GPIOController
 {
    AppTick   = 4
    CommsTick = 4
+   //Arguably the most important line in the config files
+   MaxSpeed = 1.5 //Feet/second
    WheelRadius = 1
    p =1
    i =1

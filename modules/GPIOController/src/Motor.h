@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <pigpio.h>
 
+const static int motor_control_period = 40;
 const static std::string MOTOR_CURRENT_SPEED = "MOTOR_CURRENT_SPEED";
 enum SIDE{
     LEFT,
@@ -38,14 +39,21 @@ public:
     double wheelrad;
     double cmdSpeed = 0;
     double cmdRPM = 0;
+    double cmdPulseWidth = 0;
     double currentSpeed;
     double currentRPM;
     SIDE side;
 
     QTimer notifyCurrentSpeedTimer;
+    QTimer cmdMotorTimer;
 public slots:
     void notifyCurrentSpeed();
     void updateCmdSpeed(double speed);
+    double fps_to_rpm(double fps);
+    double rpm_to_fps(double rpm);
+    void startUp();
+    void publishCMDPulseWidth();
+    void readPulseWidth();
 signals:
     void notifyMOOSMsg(QString key, QString msg);
 };

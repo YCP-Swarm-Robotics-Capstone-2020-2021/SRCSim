@@ -21,6 +21,8 @@ Motor::Motor(QObject *parent) : QObject(parent)
         wheelrad = 0;
         side = SIDE::LEFT;
         connect(&notifyCurrentSpeedTimer,&QTimer::timeout,this, &Motor::notifyCurrentSpeed);
+        connect(&cmdMotorTimer,&QTimer::timeout,this, &Motor::publishCMDPulseWidth);
+
 }
 
 void Motor::notifyCurrentSpeed()
@@ -32,15 +34,45 @@ void Motor::notifyCurrentSpeed()
 
 void Motor::updateCmdSpeed(double speed)
 {
+    //speed is in feet/sec.
     if(reversed){
         speed = -speed;
     }
     cmdSpeed = speed;
+    cmdRPM = fps_to_rpm(cmdSpeed);
     if(cmdSpeed > 0){ //CCW
-
+        double range = abs(ccwhigh-ccwlow);
+        double ratio = range *(cmdRPM/maxRPM);
+        cmdPulseWidth = ratio + ccwlow;
     } else if (cmdSpeed < 0) { //CW
-
+        double range = abs(cwhigh-cwlow);
+        double ratio = range *(cmdRPM/maxRPM);
+        cmdPulseWidth = cwlow-ratio;
     } else { //stationary
-
+        double range = abs(dbhigh-dblow);
+        cmdPulseWidth = dblow+range/2.0;
     }
+}
+
+double  Motor::fps_to_rpm(double fps)
+{
+    double angular_velocity = fps/(wheelrad);
+    return angular_velocity*(60.0/2*PI);
+}
+
+double Motor::rpm_to_fps(double rpm)
+{
+    double angular_velocity = rpm*(2*PI/60.0);
+    return angular_velocity+wheelrad;
+}
+
+void Motor::startUp()
+{
+    //DO WORK TO SETUP GPIOs and CALLBACK HERE
+    cmdMotorTimer.start(motor_control_period);
+}
+
+void Motor::publishCMDPulseWidth()
+{
+    //TODO: Do work to publish PWM signal here
 }

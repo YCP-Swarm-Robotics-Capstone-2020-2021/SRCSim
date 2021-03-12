@@ -281,7 +281,9 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      motorcontroller.notifyCurrentSpeedInterval = QString::fromStdString(value).toDouble();
      handled = true;
  }
- else if(param == "bar") {
+ else if(param == "maxspeed") {
+   double max_speed = QString::fromStdString(value).toDouble();
+   motorcontroller.maxSpeed = max_speed;
    handled = true;
  }
 
