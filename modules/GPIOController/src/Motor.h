@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <pigpio.h>
 
+const static uint PWM_WRITE_RANGE = 20000;
 const static int motor_control_period = 40;
 const static std::string MOTOR_CURRENT_SPEED = "MOTOR_CURRENT_SPEED";
 enum SIDE{
@@ -19,7 +20,7 @@ class Motor : public QObject
     Q_OBJECT
 public:
     explicit Motor(QObject *parent = nullptr);
-
+    ~Motor();
     int readGPIO;
     int writeGPIO;
     int maxRPM;
@@ -53,9 +54,12 @@ public slots:
     double rpm_to_fps(double rpm);
     void startUp();
     void publishCMDPulseWidth();
-    void readPulseWidth();
+    void readPulseWidth(int gpio, int level, uint32_t tick);
 signals:
     void notifyMOOSMsg(QString key, QString msg);
+
+private:
+    int pigpio_daemon;
 };
 
 #endif // MOTOR_H

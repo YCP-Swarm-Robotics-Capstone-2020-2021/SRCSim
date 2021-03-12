@@ -25,6 +25,10 @@ Motor::Motor(QObject *parent) : QObject(parent)
 
 }
 
+Motor::~Motor()
+{
+    gpioTerminate();
+}
 void Motor::notifyCurrentSpeed()
 {
     QString key = QString::fromStdString(MOTOR_CURRENT_SPEED);
@@ -63,16 +67,28 @@ double  Motor::fps_to_rpm(double fps)
 double Motor::rpm_to_fps(double rpm)
 {
     double angular_velocity = rpm*(2*PI/60.0);
-    return angular_velocity+wheelrad;
+    return angular_velocity*wheelrad;
 }
 
 void Motor::startUp()
 {
     //DO WORK TO SETUP GPIOs and CALLBACK HERE
+    int ret = gpioInitialise();
+    if(ret < 0){return;}
+    pigpio_daemon = ret;
+    gpioSetMode(readGPIO, PI_INPUT);
+    gpioSetMode(writeGPIO, PI_OUTPUT);
+    gpioSetPWMrange(writeGPIO, PWM_WRITE_RANGE);
     cmdMotorTimer.start(motor_control_period);
 }
 
 void Motor::publishCMDPulseWidth()
 {
     //TODO: Do work to publish PWM signal here
+    gpioSetPWMfrequency(writeGPIO, cmdPulseWidth);
+}
+
+void Motor::readPulseWidth(int gpio, int level, uint32_t tick)
+{
+
 }
