@@ -9,8 +9,8 @@
 #include "ivp/MBUtils.h"
 #include "ivp/ColorParse.h"
 #include <QCoreApplication>
-#include "MotorController.h"
-#include "MotorController_Info.h"
+#include "GPIOController.h"
+#include "GPIOController_Info.h"
 
 using namespace std;
 
@@ -42,12 +42,12 @@ int main(int argc, char *argv[])
     showHelpAndExit();
 
   cout << termColor("green");
-  cout << "pMotorController launching as " << run_command << endl;
+  cout << "pGPIOController launching as " << run_command << endl;
   cout << termColor() << endl;
 
-  MotorController MotorController(run_command, mission_file);
+  GPIOController GPIOController(run_command, mission_file);
 
-  MotorController.Run(run_command.c_str(), mission_file.c_str());
+  GPIOController.run();
   
   return a.exec();
 }

@@ -1,13 +1,13 @@
 /****************************************************************/
 /*   NAME: Josiah Sam                                                 */
 /*   ORGN: YCP                                                  */
-/*   FILE: MotorController_Info.cpp                                        */
+/*   FILE: GPIOController_Info.cpp                                        */
 /*   DATE: 02/10/2021                                              */
 /****************************************************************/
 
 #include <cstdlib>
 #include <iostream>
-#include "MotorController_Info.h"
+#include "GPIOController_Info.h"
 #include "ivp/ColorParse.h"
 #include "ivp/ReleaseInfo.h"
 
@@ -20,7 +20,7 @@ void showSynopsis()
 {
   blk("SYNOPSIS:                                                       ");
   blk("------------------------------------                            ");
-  blk("  The pMotorController application is used for               ");
+  blk("  The pGPIOController application is used for               ");
   blk("                                                                ");
   blk("                                                                ");
   blk("                                                                ");
@@ -34,15 +34,15 @@ void showHelpAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("Usage: pMotorController file.moos [OPTIONS]                   ");
+  blu("Usage: pGPIOController file.moos [OPTIONS]                   ");
   blu("=============================================================== ");
   blk("                                                                ");
   showSynopsis();
   blk("                                                                ");
   blk("Options:                                                        ");
   mag("  --alias","=<ProcessName>                                      ");
-  blk("      Launch pMotorController with the given process name         ");
-  blk("      rather than pMotorController.                           ");
+  blk("      Launch pGPIOController with the given process name         ");
+  blk("      rather than pGPIOController.                           ");
   mag("  --example, -e                                                 ");
   blk("      Display example MOOS configuration block.                 ");
   mag("  --help, -h                                                    ");
@@ -50,7 +50,7 @@ void showHelpAndExit()
   mag("  --interface, -i                                               ");
   blk("      Display MOOS publications and subscriptions.              ");
   mag("  --version,-v                                                  ");
-  blk("      Display the release version of pMotorController.        ");
+  blk("      Display the release version of pGPIOController.        ");
   blk("                                                                ");
   blk("Note: If argv[2] does not otherwise match a known option,       ");
   blk("      then it will be interpreted as a run alias. This is       ");
@@ -66,10 +66,10 @@ void showExampleConfigAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("pMotorController Example MOOS Configuration                   ");
+  blu("pGPIOController Example MOOS Configuration                   ");
   blu("=============================================================== ");
   blk("                                                                ");
-  blk("ProcessConfig = pMotorController                              ");
+  blk("ProcessConfig = pGPIOController                              ");
   blk("{                                                               ");
   blk("  AppTick   = 4                                                 ");
   blk("  CommsTick = 4                                                 ");
@@ -87,7 +87,7 @@ void showInterfaceAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("pMotorController INTERFACE                                    ");
+  blu("pGPIOController INTERFACE                                    ");
   blu("=============================================================== ");
   blk("                                                                ");
   showSynopsis();
@@ -109,7 +109,7 @@ void showInterfaceAndExit()
 
 void showReleaseInfoAndExit()
 {
-  showReleaseInfo("pMotorController", "gpl");
+  showReleaseInfo("pGPIOController", "gpl");
   exit(0);
 }
 
