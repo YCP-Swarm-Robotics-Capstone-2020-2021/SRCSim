@@ -123,7 +123,8 @@ bool UIMoosInterface::Iterate()
     AppCastingMOOSApp::Iterate();
     m_publishBoundarySizeCounter++;
     if(m_publishBoundarySizeCounter > currentFrequency*BOUNDARY_SIZE_UPDATE_INTERVAL){
-        Notify("BOUNDARY_SIZE", m_boundary_size);
+        QString size = "Width="+ QString::number(m_boundary_width) + ", Height="+ QString::number(m_boundary_height);
+        Notify("BOUNDARY_SIZE", size.toStdString());
         m_publishBoundarySizeCounter = 0;
     }
     return(true);
@@ -424,10 +425,12 @@ void UIMoosInterface::sendLogBookmark()
     Notify("LOG_BOOKMARK", GetAppName()+" "+std::to_string(++m_logBookmarkCounter));
 }
 
-void UIMoosInterface::updateBoundarySize(int size)
+void UIMoosInterface::updateBoundarySize(int width, int height)
 {
-    m_boundary_size = size;
-    Notify("BOUNDARY_SIZE", size);
+    m_boundary_width = width;
+    m_boundary_height = height;
+    QString size = "Width="+ QString::number(m_boundary_width) + ", Height="+ QString::number(m_boundary_height);
+    Notify("BOUNDARY_SIZE", size.toStdString());
 }
 
 void UIMoosInterface::onRunEnded(std::string msg)
