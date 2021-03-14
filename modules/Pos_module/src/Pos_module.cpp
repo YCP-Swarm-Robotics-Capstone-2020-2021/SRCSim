@@ -51,7 +51,8 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     handleUpdatePos(msg);
   }
   else if(key == "BOUNDARY_SIZE"){
-    m_boundary = msg.GetDouble();
+      MOOSValFromString(m_boundaryWidth , msg.GetString(), "Width");
+      MOOSValFromString(m_boundaryHeight , msg.GetString(), "Height");
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -163,10 +164,10 @@ bool Pos_module::handleUpdatePos(CMOOSMsg &msg){
 
 void Pos_module::detectBoundary()
 {
-    if(abs(x) > m_boundary/2.0){
+    if(abs(x) > m_boundaryWidth/2.0){
         m_boundary_detected = true;
     }
-    else if(abs(y) > m_boundary/2.0){
+    else if(abs(y) > m_boundaryHeight/2.0){
         m_boundary_detected = true;
     }
     else{
