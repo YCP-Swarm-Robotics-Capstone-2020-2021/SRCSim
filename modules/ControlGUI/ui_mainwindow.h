@@ -178,8 +178,10 @@ public:
     QPushButton *LOG_BOOKMARK_BUTTON;
     QPushButton *runPushButton;
     QHBoxLayout *horizontalLayout_4;
-    QLabel *boundaryLabel;
-    QSpinBox *boundarySpinBox;
+    QLabel *HeightLabel;
+    QSpinBox *HeightSpinBox;
+    QLabel *WidthLabel;
+    QSpinBox *WidthSpinBox;
     QPushButton *boundaryPushButton;
     QMenuBar *menuBar;
     QMenu *menuCommands;
@@ -1005,17 +1007,26 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        boundaryLabel = new QLabel(centralWidget);
-        boundaryLabel->setObjectName(QStringLiteral("boundaryLabel"));
+        WidthLabel = new QLabel(centralWidget);
+        WidthLabel->setObjectName(QStringLiteral("WidthLabel"));
+        HeightLabel = new QLabel(centralWidget);
+        HeightLabel->setObjectName(QStringLiteral("HeightLabel"));
 
-        horizontalLayout_4->addWidget(boundaryLabel);
+        HeightSpinBox = new QSpinBox(centralWidget);
+        HeightSpinBox->setObjectName(QStringLiteral("HeightSpinBox"));
+        HeightSpinBox->setMaximum(20);
+        HeightSpinBox->setValue(6);
 
-        boundarySpinBox = new QSpinBox(centralWidget);
-        boundarySpinBox->setObjectName(QStringLiteral("boundarySpinBox"));
-        boundarySpinBox->setMaximum(20);
-        boundarySpinBox->setValue(6);
+        WidthSpinBox = new QSpinBox(centralWidget);
+        WidthSpinBox->setObjectName(QStringLiteral("WidthSpinBox"));
+        WidthSpinBox->setMaximum(20);
+        WidthSpinBox->setValue(6);
 
-        horizontalLayout_4->addWidget(boundarySpinBox);
+        horizontalLayout_4->addWidget(WidthLabel);
+        horizontalLayout_4->addWidget(WidthSpinBox);
+        horizontalLayout_4->addWidget(HeightLabel);
+        horizontalLayout_4->addWidget(HeightSpinBox);
+
 
         boundaryPushButton = new QPushButton(centralWidget);
         boundaryPushButton->setObjectName(QStringLiteral("boundaryPushButton"));
@@ -1169,7 +1180,8 @@ public:
         label_6->setText(QApplication::translate("MainWindow", "Warnings", Q_NULLPTR));
         LOG_BOOKMARK_BUTTON->setText(QApplication::translate("MainWindow", "BOOKMARK LOG", Q_NULLPTR));
         runPushButton->setText(QApplication::translate("MainWindow", "Start Run", Q_NULLPTR));
-        boundaryLabel->setText(QApplication::translate("MainWindow", "Boundary Size (Ft)", Q_NULLPTR));
+        HeightLabel->setText(QApplication::translate("MainWindow", "Height (Ft)", Q_NULLPTR));
+        WidthLabel->setText(QApplication::translate("MainWindow", "Width (Ft)", Q_NULLPTR));
         boundaryPushButton->setText(QApplication::translate("MainWindow", "Update Boundary", Q_NULLPTR));
         menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", Q_NULLPTR));
     } // retranslateUi

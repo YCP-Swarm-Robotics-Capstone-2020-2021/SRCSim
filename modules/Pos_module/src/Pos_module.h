@@ -43,7 +43,8 @@ public:
  private: // Configuration variables
    double x, y, attitude;
    QString id = "";
-   double m_boundary = 6;
+   double m_boundaryWidth = 6;
+   double m_boundaryHeight = 6;
    bool m_boundary_detected = false;
 
 signals:
