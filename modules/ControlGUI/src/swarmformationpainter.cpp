@@ -190,7 +190,7 @@ void SwarmFormationPainter::setupZeta()
             currentZeta.setxPos(formationXY.first-((xOffset+(double(currentWidth)/2.0))*this->width()/numFeetInArenaView));
             currentZeta.setyPos(formationXY.second+((yOffset+(double(currentLength)/2.0))*this->height()/numFeetInArenaView));
             currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({120, 60, 120, 60});
+            currentZeta.setWholeTheta({-60, -120, -60, -120});
             currentZeta.setWholeLambda(QList<double>{double(currentWidth),
                                                      double(currentLength),
                                                      double(currentWidth),
