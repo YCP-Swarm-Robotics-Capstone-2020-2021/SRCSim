@@ -5,7 +5,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 
 const static uint PWM_WRITE_RANGE = 20000;
 const static int motor_control_period = 40;

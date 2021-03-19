@@ -23,3 +23,4 @@ ProcessConfig = ANTLER
 #include plug_VehicleStateMachine.moos
 #include plug_uProcessWatch.moos
 #include plug_HealthManager.moos
+#include plug_GPIOController.moos

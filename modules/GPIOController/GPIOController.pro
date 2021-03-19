@@ -54,7 +54,7 @@ LIBS += \
  -L../../../moos-ivp/lib/ \
  -lapputil \
  -lmbutil \
- -lpigpio \
+ -lpigpiod_if2 \
  -lrt
 
 unix {
