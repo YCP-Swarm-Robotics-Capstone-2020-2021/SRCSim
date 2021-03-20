@@ -1,0 +1,7 @@
+Package: swarm-robotics-software
+Version: 1.0.0
+Section: base
+Priority: necessary
+Architecture: arm64
+Maintainer: Josiah Sam <jsam@ycp.edu>
+Description: This is a debian to install the SRC software package
