@@ -1,15 +1,18 @@
-#!/bin/bash -e
+#!/bin/bash
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
 TIME_WARP=1
-NUM_BOTS=2
+NUM_BOTS=5
 BUILD_MODE=0
 KAPPA=1
 DT=1
 JUST_MAKE="no"
 LAUNCH_GUI="yes"
 version=0.0.1
+VNAME=$ID
+deployment=0
+
 print_help(){
     echo
     echo "This is a script that will run multiple vehicle simulations. Pass the below arguments to customize how the simulation launches. The most importanct parameter is the num_bots flag."
@@ -50,6 +53,13 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
     shift;
     KAPPA=$1
     ;;
+  -i | --id )
+    shift;
+    VNAME=$1
+    ;;
+  -D | --deploy )
+    deployment=1
+    ;;
   * )
     print_help
     exit 1
@@ -77,7 +87,7 @@ if [[ ! BUILD_MODE  -eq 1 ]]; then
     cd ../
 fi
 
-VNAME=$ID           # The first vehicle Community
+
 V1PORT="9000"
 
 GCSIP="192.168.1.110"
@@ -116,14 +126,25 @@ cat >> plug_VehiclepShare.moos <<EOF
 EOF
 
 PORT=9000
-nsplug meta_vehicle.moos targ_Dolphin$i.moos -f WARP=$TIME_WARP \
+
+if [[ deployment -eq 1 ]]; then
+    echo "Building with deployment options."
+    nsplug meta_vehicle_production.moos targ_$VNAME.moos -f WARP=$TIME_WARP \
         VNAME=$VNAME                                 VPORT=$PORT \
         GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
         KAPPA=$KAPPA                                 DT=$DT  \
 	LOG_DIR=$mission_dir                         VERSION=$version_number \
 	MESSAGE=$commit_message
-
+else
+    nsplug meta_vehicle.moos targ_$VNAME.moos -f WARP=$TIME_WARP \
+        VNAME=$VNAME                                 VPORT=$PORT \
+        GCSIP=$GCSIP                                 GCSPORT=$GCSPORT \
+        BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
+        KAPPA=$KAPPA                                 DT=$DT  \
+	LOG_DIR=$mission_dir                         VERSION=$version_number \
+	MESSAGE=$commit_message
+fi
 #-------------------------------------------------------
 #  Part 3: Build the modules
 #-------------------------------------------------------
@@ -139,10 +160,13 @@ for i in ./*; do
     fi
 done
 cd ../missions
-if [[ BUILD_MODE -eq 1 ]]; then exit 1; fi
+if [[ BUILD_MODE -eq 1 ]]; then echo "Done building";
+else
 #-------------------------------------------------------
 #  Part 4: Launch the processes
 #-------------------------------------------------------
 printf "Launching ${VNAME} MOOS Community (WARP=%s) \n" $TIME_WARP
 pAntler targ_${VNAME}.moos >& /dev/null &
 printf "Done \n"
+fi
+

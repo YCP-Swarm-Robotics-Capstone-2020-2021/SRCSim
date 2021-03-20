@@ -1,5 +1,5 @@
 ProcessConfig = uProcessWatch
 {
     watch_all = false
-    watch = pShare,pLogger,Pos_module,VehicleStateMachine,MotionController
+    watch = pShare,pLogger,Pos_module,VehicleStateMachine,MotionController,HealthManager,GPIOController
 }

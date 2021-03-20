@@ -349,7 +349,7 @@ bool HealthManager::doMOOSWork()
 }
 
 void HealthManager::restartProcess(QList<QString> appName){
-    int error;
+    int error=0;
     for(QString str : appName){
             QString command;
             QString pathStr;
