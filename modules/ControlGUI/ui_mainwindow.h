@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.11.3
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,10 +12,12 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCommandLinkButton>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
@@ -176,8 +178,10 @@ public:
     QPushButton *LOG_BOOKMARK_BUTTON;
     QPushButton *runPushButton;
     QHBoxLayout *horizontalLayout_4;
-    QLabel *boundaryLabel;
-    QSpinBox *boundarySpinBox;
+    QLabel *HeightLabel;
+    QSpinBox *HeightSpinBox;
+    QLabel *WidthLabel;
+    QSpinBox *WidthSpinBox;
     QPushButton *boundaryPushButton;
     QMenuBar *menuBar;
     QMenu *menuCommands;
@@ -222,7 +226,6 @@ public:
         horizontalLayout_9->addWidget(label);
 
         dolphinSelection = new QComboBox(controlTab);
-        dolphinSelection->addItem(QString());
         dolphinSelection->setObjectName(QStringLiteral("dolphinSelection"));
 
         horizontalLayout_9->addWidget(dolphinSelection);
@@ -237,11 +240,6 @@ public:
         horizontalLayout_9->addWidget(label_2);
 
         stateSelection = new QComboBox(controlTab);
-        stateSelection->addItem(QString());
-        stateSelection->addItem(QString());
-        stateSelection->addItem(QString());
-        stateSelection->addItem(QString());
-        stateSelection->addItem(QString());
         stateSelection->setObjectName(QStringLiteral("stateSelection"));
 
         horizontalLayout_9->addWidget(stateSelection);
@@ -1009,17 +1007,28 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
-        boundaryLabel = new QLabel(centralWidget);
-        boundaryLabel->setObjectName(QStringLiteral("boundaryLabel"));
+        HeightLabel = new QLabel(centralWidget);
+        HeightLabel->setObjectName(QStringLiteral("HeightLabel"));
 
-        horizontalLayout_4->addWidget(boundaryLabel);
+        horizontalLayout_4->addWidget(HeightLabel);
 
-        boundarySpinBox = new QSpinBox(centralWidget);
-        boundarySpinBox->setObjectName(QStringLiteral("boundarySpinBox"));
-        boundarySpinBox->setMaximum(20);
-        boundarySpinBox->setValue(6);
+        HeightSpinBox = new QSpinBox(centralWidget);
+        HeightSpinBox->setObjectName(QStringLiteral("HeightSpinBox"));
+        HeightSpinBox->setValue(6);
 
-        horizontalLayout_4->addWidget(boundarySpinBox);
+        horizontalLayout_4->addWidget(HeightSpinBox);
+
+        WidthLabel = new QLabel(centralWidget);
+        WidthLabel->setObjectName(QStringLiteral("WidthLabel"));
+
+        horizontalLayout_4->addWidget(WidthLabel);
+
+        WidthSpinBox = new QSpinBox(centralWidget);
+        WidthSpinBox->setObjectName(QStringLiteral("WidthSpinBox"));
+        WidthSpinBox->setMaximum(20);
+        WidthSpinBox->setValue(6);
+
+        horizontalLayout_4->addWidget(WidthSpinBox);
 
         boundaryPushButton = new QPushButton(centralWidget);
         boundaryPushButton->setObjectName(QStringLiteral("boundaryPushButton"));
@@ -1068,110 +1077,115 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SRC Control GUI", nullptr));
-        actionKill_All->setText(QApplication::translate("MainWindow", "Kill All", nullptr));
-        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", nullptr));
-        label->setText(QApplication::translate("MainWindow", "Robot :", nullptr));
-        dolphinSelection->setItemText(0, QApplication::translate("MainWindow", "All", nullptr));
-
-        label_2->setText(QApplication::translate("MainWindow", "Cmd State:", nullptr));
-        stateSelection->setItemText(0, QApplication::translate("MainWindow", "Standby", nullptr));
-        stateSelection->setItemText(1, QApplication::translate("MainWindow", "AllStop", nullptr));
-        stateSelection->setItemText(2, QApplication::translate("MainWindow", "Teleop", nullptr));
-        stateSelection->setItemText(3, QApplication::translate("MainWindow", "SwarmMode", nullptr));
-        stateSelection->setItemText(4, QApplication::translate("MainWindow", "DemoMode", nullptr));
-
-        label_9->setText(QApplication::translate("MainWindow", "Status:", nullptr));
-        statusLabel->setText(QApplication::translate("MainWindow", "Normal", nullptr));
-        label_11->setText(QApplication::translate("MainWindow", "Current State:", nullptr));
-        CurrentStateLabel->setText(QApplication::translate("MainWindow", "STANDBY", nullptr));
-        label_22->setText(QApplication::translate("MainWindow", "Version:", nullptr));
-        versionLabel->setText(QApplication::translate("MainWindow", "N/A", nullptr));
-        submitState->setText(QApplication::translate("MainWindow", "Update ", nullptr));
-        label_23->setText(QApplication::translate("MainWindow", "uProcessWatch Report:", nullptr));
-        uProcessWatchReport->setText(QApplication::translate("MainWindow", "N/A", nullptr));
-        label_24->setText(QApplication::translate("MainWindow", "Commit Message: ", nullptr));
-        commitMessageLabel->setText(QApplication::translate("MainWindow", "N/A", nullptr));
-        fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "SRC Control GUI", Q_NULLPTR));
+        actionKill_All->setText(QApplication::translate("MainWindow", "Kill All", Q_NULLPTR));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(overviewTap), QApplication::translate("MainWindow", "Overview", Q_NULLPTR));
+        label->setText(QApplication::translate("MainWindow", "Robot :", Q_NULLPTR));
+        dolphinSelection->clear();
+        dolphinSelection->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "All", Q_NULLPTR)
+        );
+        label_2->setText(QApplication::translate("MainWindow", "Cmd State:", Q_NULLPTR));
+        stateSelection->clear();
+        stateSelection->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "Standby", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "AllStop", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "Teleop", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "SwarmMode", Q_NULLPTR)
+         << QApplication::translate("MainWindow", "DemoMode", Q_NULLPTR)
+        );
+        label_9->setText(QApplication::translate("MainWindow", "Status:", Q_NULLPTR));
+        statusLabel->setText(QApplication::translate("MainWindow", "Normal", Q_NULLPTR));
+        label_11->setText(QApplication::translate("MainWindow", "Current State:", Q_NULLPTR));
+        CurrentStateLabel->setText(QApplication::translate("MainWindow", "STANDBY", Q_NULLPTR));
+        label_22->setText(QApplication::translate("MainWindow", "Version:", Q_NULLPTR));
+        versionLabel->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
+        submitState->setText(QApplication::translate("MainWindow", "Update ", Q_NULLPTR));
+        label_23->setText(QApplication::translate("MainWindow", "uProcessWatch Report:", Q_NULLPTR));
+        uProcessWatchReport->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
+        label_24->setText(QApplication::translate("MainWindow", "Commit Message: ", Q_NULLPTR));
+        commitMessageLabel->setText(QApplication::translate("MainWindow", "N/A", Q_NULLPTR));
+        fasterButton->setText(QApplication::translate("MainWindow", "Faster (Q)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        fasterButton->setShortcut(QApplication::translate("MainWindow", "Q", nullptr));
+        fasterButton->setShortcut(QApplication::translate("MainWindow", "Q", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        brakeButton->setText(QApplication::translate("MainWindow", "Brake (Space)", nullptr));
+        brakeButton->setText(QApplication::translate("MainWindow", "Brake (Space)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        brakeButton->setShortcut(QApplication::translate("MainWindow", "Space", nullptr));
+        brakeButton->setShortcut(QApplication::translate("MainWindow", "Space", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        forwardButton->setText(QApplication::translate("MainWindow", "Forward (W)", nullptr));
+        forwardButton->setText(QApplication::translate("MainWindow", "Forward (W)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        forwardButton->setShortcut(QApplication::translate("MainWindow", "W", nullptr));
+        forwardButton->setShortcut(QApplication::translate("MainWindow", "W", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        leftButton->setText(QApplication::translate("MainWindow", "Left (A)", nullptr));
+        leftButton->setText(QApplication::translate("MainWindow", "Left (A)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        leftButton->setShortcut(QApplication::translate("MainWindow", "A", nullptr));
+        leftButton->setShortcut(QApplication::translate("MainWindow", "A", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        rightButton->setText(QApplication::translate("MainWindow", "Right (D)", nullptr));
+        rightButton->setText(QApplication::translate("MainWindow", "Right (D)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        rightButton->setShortcut(QApplication::translate("MainWindow", "D", nullptr));
+        rightButton->setShortcut(QApplication::translate("MainWindow", "D", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        reverseButton->setText(QApplication::translate("MainWindow", "Reverse (S)", nullptr));
+        reverseButton->setText(QApplication::translate("MainWindow", "Reverse (S)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        reverseButton->setShortcut(QApplication::translate("MainWindow", "S", nullptr));
+        reverseButton->setShortcut(QApplication::translate("MainWindow", "S", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        slowerButton->setText(QApplication::translate("MainWindow", "Slower (E)", nullptr));
+        slowerButton->setText(QApplication::translate("MainWindow", "Slower (E)", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
-        slowerButton->setShortcut(QApplication::translate("MainWindow", "E", nullptr));
+        slowerButton->setShortcut(QApplication::translate("MainWindow", "E", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
-        label_7->setText(QApplication::translate("MainWindow", "Speed", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Battery:", nullptr));
-        batteryPercentage->setText(QApplication::translate("MainWindow", "100%", nullptr));
-        label_4->setText(QApplication::translate("MainWindow", "Max Speed:", nullptr));
-        maxSpeedPercentage->setText(QApplication::translate("MainWindow", "100", nullptr));
-        label_32->setText(QApplication::translate("MainWindow", "Motor Temp:", nullptr));
-        m1Temp->setText(QApplication::translate("MainWindow", "30*", nullptr));
-        label_33->setText(QApplication::translate("MainWindow", "Motor Current:", nullptr));
-        m1Current->setText(QApplication::translate("MainWindow", ".675 A", nullptr));
-        label_37->setText(QApplication::translate("MainWindow", "Motor Speed:", nullptr));
-        m1Speed->setText(QApplication::translate("MainWindow", "75 MPH", nullptr));
-        motorTabWidget->setTabText(motorTabWidget->indexOf(motor1tab), QApplication::translate("MainWindow", "Motor 1", nullptr));
-        label_20->setText(QApplication::translate("MainWindow", "Motor Temp:", nullptr));
-        m2Temp->setText(QApplication::translate("MainWindow", "30*", nullptr));
-        label_21->setText(QApplication::translate("MainWindow", "Motor Current:", nullptr));
-        m2Current->setText(QApplication::translate("MainWindow", ".675 A", nullptr));
-        label_25->setText(QApplication::translate("MainWindow", "Motor Speed:", nullptr));
-        m2Speed->setText(QApplication::translate("MainWindow", "75 MPH", nullptr));
-        motorTabWidget->setTabText(motorTabWidget->indexOf(motor2tab), QApplication::translate("MainWindow", "Motor 2", nullptr));
-        label_26->setText(QApplication::translate("MainWindow", "Motor Temp:", nullptr));
-        m3Temp->setText(QApplication::translate("MainWindow", "30*", nullptr));
-        label_27->setText(QApplication::translate("MainWindow", "Motor Current:", nullptr));
-        m3Current->setText(QApplication::translate("MainWindow", ".675 A", nullptr));
-        label_31->setText(QApplication::translate("MainWindow", "Motor Speed:", nullptr));
-        m3Speed->setText(QApplication::translate("MainWindow", "75 MPH", nullptr));
-        motorTabWidget->setTabText(motorTabWidget->indexOf(motor3tab), QApplication::translate("MainWindow", "Motor 3", nullptr));
-        label_8->setText(QApplication::translate("MainWindow", "Motor Temp:", nullptr));
-        m4Temp->setText(QApplication::translate("MainWindow", "30*", nullptr));
-        label_10->setText(QApplication::translate("MainWindow", "Motor Current:", nullptr));
-        m4Current->setText(QApplication::translate("MainWindow", ".675 A", nullptr));
-        label_12->setText(QApplication::translate("MainWindow", "Motor Speed:", nullptr));
-        m4Speed->setText(QApplication::translate("MainWindow", "75 MPH", nullptr));
-        motorTabWidget->setTabText(motorTabWidget->indexOf(motor4tab), QApplication::translate("MainWindow", "Motor 4", nullptr));
-        label_5->setText(QApplication::translate("MainWindow", "Debug Console", nullptr));
-        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(controlTab), QApplication::translate("MainWindow", "Control", nullptr));
-        label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", nullptr));
-        label_14->setText(QApplication::translate("MainWindow", "Width:", nullptr));
-        label_15->setText(QApplication::translate("MainWindow", "Length:", nullptr));
-        label_16->setText(QApplication::translate("MainWindow", "Rotation:", nullptr));
-        submitZeta->setText(QApplication::translate("MainWindow", "Submit", nullptr));
-        label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", nullptr));
-        label_19->setText(QApplication::translate("MainWindow", "Zoom View", nullptr));
-        label_17->setText(QApplication::translate("MainWindow", "Debug Output", nullptr));
-        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", nullptr));
-        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(mapTab), QApplication::translate("MainWindow", "Map", nullptr));
-        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", nullptr));
-        label_6->setText(QApplication::translate("MainWindow", "Warnings", nullptr));
-        LOG_BOOKMARK_BUTTON->setText(QApplication::translate("MainWindow", "BOOKMARK LOG", nullptr));
-        runPushButton->setText(QApplication::translate("MainWindow", "Start Run", nullptr));
-        boundaryLabel->setText(QApplication::translate("MainWindow", "Boundary Size (Ft)", nullptr));
-        boundaryPushButton->setText(QApplication::translate("MainWindow", "Update Boundary", nullptr));
-        menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Speed", Q_NULLPTR));
+        label_3->setText(QApplication::translate("MainWindow", "Battery:", Q_NULLPTR));
+        batteryPercentage->setText(QApplication::translate("MainWindow", "100%", Q_NULLPTR));
+        label_4->setText(QApplication::translate("MainWindow", "Max Speed:", Q_NULLPTR));
+        maxSpeedPercentage->setText(QApplication::translate("MainWindow", "100", Q_NULLPTR));
+        label_32->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
+        m1Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
+        label_33->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
+        m1Current->setText(QApplication::translate("MainWindow", ".675 A", Q_NULLPTR));
+        label_37->setText(QApplication::translate("MainWindow", "Motor Speed:", Q_NULLPTR));
+        m1Speed->setText(QApplication::translate("MainWindow", "75 MPH", Q_NULLPTR));
+        motorTabWidget->setTabText(motorTabWidget->indexOf(motor1tab), QApplication::translate("MainWindow", "Motor 1", Q_NULLPTR));
+        label_20->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
+        m2Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
+        label_21->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
+        m2Current->setText(QApplication::translate("MainWindow", ".675 A", Q_NULLPTR));
+        label_25->setText(QApplication::translate("MainWindow", "Motor Speed:", Q_NULLPTR));
+        m2Speed->setText(QApplication::translate("MainWindow", "75 MPH", Q_NULLPTR));
+        motorTabWidget->setTabText(motorTabWidget->indexOf(motor2tab), QApplication::translate("MainWindow", "Motor 2", Q_NULLPTR));
+        label_26->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
+        m3Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
+        label_27->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
+        m3Current->setText(QApplication::translate("MainWindow", ".675 A", Q_NULLPTR));
+        label_31->setText(QApplication::translate("MainWindow", "Motor Speed:", Q_NULLPTR));
+        m3Speed->setText(QApplication::translate("MainWindow", "75 MPH", Q_NULLPTR));
+        motorTabWidget->setTabText(motorTabWidget->indexOf(motor3tab), QApplication::translate("MainWindow", "Motor 3", Q_NULLPTR));
+        label_8->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
+        m4Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
+        label_10->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
+        m4Current->setText(QApplication::translate("MainWindow", ".675 A", Q_NULLPTR));
+        label_12->setText(QApplication::translate("MainWindow", "Motor Speed:", Q_NULLPTR));
+        m4Speed->setText(QApplication::translate("MainWindow", "75 MPH", Q_NULLPTR));
+        motorTabWidget->setTabText(motorTabWidget->indexOf(motor4tab), QApplication::translate("MainWindow", "Motor 4", Q_NULLPTR));
+        label_5->setText(QApplication::translate("MainWindow", "Debug Console", Q_NULLPTR));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(controlTab), QApplication::translate("MainWindow", "Control", Q_NULLPTR));
+        label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", Q_NULLPTR));
+        label_14->setText(QApplication::translate("MainWindow", "Width:", Q_NULLPTR));
+        label_15->setText(QApplication::translate("MainWindow", "Length:", Q_NULLPTR));
+        label_16->setText(QApplication::translate("MainWindow", "Rotation:", Q_NULLPTR));
+        submitZeta->setText(QApplication::translate("MainWindow", "Submit", Q_NULLPTR));
+        label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", Q_NULLPTR));
+        label_19->setText(QApplication::translate("MainWindow", "Zoom View", Q_NULLPTR));
+        label_17->setText(QApplication::translate("MainWindow", "Debug Output", Q_NULLPTR));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", Q_NULLPTR));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(mapTab), QApplication::translate("MainWindow", "Map", Q_NULLPTR));
+        uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", Q_NULLPTR));
+        label_6->setText(QApplication::translate("MainWindow", "Warnings", Q_NULLPTR));
+        LOG_BOOKMARK_BUTTON->setText(QApplication::translate("MainWindow", "BOOKMARK LOG", Q_NULLPTR));
+        runPushButton->setText(QApplication::translate("MainWindow", "Start Run", Q_NULLPTR));
+        HeightLabel->setText(QApplication::translate("MainWindow", "Height(ft)", Q_NULLPTR));
+        WidthLabel->setText(QApplication::translate("MainWindow", "Width (Ft)", Q_NULLPTR));
+        boundaryPushButton->setText(QApplication::translate("MainWindow", "Update Boundary", Q_NULLPTR));
+        menuCommands->setTitle(QApplication::translate("MainWindow", "Commands", Q_NULLPTR));
     } // retranslateUi
 
 };

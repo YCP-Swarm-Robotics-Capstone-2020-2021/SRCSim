@@ -172,7 +172,7 @@ signals:
     void zoomValue(int);
     void zetaSent(QString);
     void logBookmarkReq();
-    void updateBoundarySize(int size);
+    void updateBoundarySize(int width, int height);
     void runStarted(std::string msg);
     void runEnded(std::string msg);
 };
