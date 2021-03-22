@@ -139,6 +139,8 @@ if(count % (int)timeout == 0){
 if(!registered){
     Notify("Reg_In", "id="+id.toStdString(), MOOSTime());
 }
+std::string override = (currentState == EnumDefs::TELEOP) ? "true" : "false";
+Notify("OVERRIDE_ON", override, MOOSTime());
 Notify("Current_State", QString::fromStdString("State = "+to_string(currentState)).toStdString()+", id="+id.toStdString(), MOOSTime());
 Notify("Narwhal_Current_State", "State="+QString::number(currentState).toStdString()+", id="+id.toStdString(), MOOSTime());
 Notify("id", id.toStdString(), MOOSTime());

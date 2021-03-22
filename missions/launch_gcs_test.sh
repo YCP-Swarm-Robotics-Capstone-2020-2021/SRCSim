@@ -92,25 +92,24 @@ cat > plug_GCSpShare.moos <<EOF
 ProcessConfig = pShare
 {
      Input = route=\$(GCSIP):\$(GCSPORT)
+     Input = route=multicast_\$(BROADCASTNUM)
+     Output = src_name=Change_State, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=LOG_BOOKMARK, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=BOUNDARY_SIZE, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=RUN_ENDED, route=multicast_\$(BROADCASTNUM)
+     Output = src_name=RUN_STARTED, route=multicast_\$(BROADCASTNUM)
 EOF
-VIP="192.168.1."
-VIPEND=110
-for ((i = 0 ; i < 2 ; i++)); do
-VIPEND=$(($VIPEND+5))
+VIP="localhost"
+for ((i = 0 ; i < 10 ; i++)); do
 cat >> plug_GCSpShare.moos <<EOF
-     Output = src_name=Change_State, route=${VIP}${VIPEND}:9000
-     Output = src_name=LOG_BOOKMARK, route=${VIP}${VIPEND}:9000
-     Output = src_name=BOUNDARY_SIZE, route=${VIP}${VIPEND}:9000
-     Output = src_name=RUN_ENDED, route=${VIP}${VIPEND}:9000
-     Output = src_name=RUN_STARTED, route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Zeta_Init,dest_name=Zeta_Init,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=${VIP}${VIPEND}:9000
-     Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=${VIP}${VIPEND}:9000
+     Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_Neighbor_Zeta,dest_name=Neighbor_Zeta,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_Zeta_Init,dest_name=Zeta_Init,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=${VIP}:8000
+     Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=${VIP}:8000
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF

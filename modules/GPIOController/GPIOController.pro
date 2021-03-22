@@ -14,7 +14,7 @@ DESTDIR = ./bin
 MOC_DIR = .moc
 OBJECTS_DIR = .obj
 
-TARGET = MotorController
+TARGET = GPIOController
 QMAKE_CXXFLAGS += -Wall -Werror
 
 TEMPLATE = app
@@ -32,12 +32,16 @@ INCLUDEPATH += \
  ../MotionController/src/
 
 SOURCES += src/main.cpp \
+ src/Motor.cpp \
  src/MotorController.cpp \
- src/MotorController_Info.cpp
+ src/GPIOController.cpp \
+ src/GPIOController_Info.cpp
 
 HEADERS += \
+ src/Motor.h \
  src/MotorController.h \
- src/MotorController_Info.h
+ src/GPIOController.h \
+ src/GPIOController_Info.h
 
 OTHER_FILES += \
  *.sh \
@@ -49,7 +53,9 @@ LIBS += \
  \
  -L../../../moos-ivp/lib/ \
  -lapputil \
- -lmbutil
+ -lmbutil \
+ -lpigpio \
+ -lrt
 
 unix {
  QMAKE_LFLAGS_RELEASE += -W

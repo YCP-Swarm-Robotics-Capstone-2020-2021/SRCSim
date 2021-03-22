@@ -1,12 +1,12 @@
 /****************************************************************/
 /*   NAME: Josiah Sam                                                 */
 /*   ORGN: YCP                                                  */
-/*   FILE: MotorController_Info.h                                          */
+/*   FILE: GPIOController_Info.h                                          */
 /*   DATE: 02/10/2021                                              */
 /****************************************************************/
 
-#ifndef MotorController_INFO_HEADER
-#define MotorController_INFO_HEADER
+#ifndef GPIOController_INFO_HEADER
+#define GPIOController_INFO_HEADER
 
 void showSynopsis();
 void showHelpAndExit();

@@ -1,12 +1,12 @@
 /************************************************************/
 /*    NAME: Josiah Sam                                              */
 /*    ORGN: YCP                                             */
-/*    FILE: MotorController.h                                          */
+/*    FILE: GPIOController.h                                          */
 /*    DATE: 02/10/2021                                         */
 /************************************************************/
 
-#ifndef MotorController_HEADER
-#define MotorController_HEADER
+#ifndef GPIOController_HEADER
+#define GPIOController_HEADER
 
 #include <QObject>
 #include <iterator>
@@ -19,14 +19,15 @@
 #include <QThread>
 #include <QTimer>
 #include <VehicleStateDefines.h>
+#include "MotorController.h"
 
 
-class MotorController : public QObject, public AppCastingMOOSApp
+class GPIOController : public QObject, public AppCastingMOOSApp
 {
     Q_OBJECT
 public:
-  MotorController(std::string sName, std::string sMissionFile);
-  ~MotorController();
+  GPIOController(std::string sName, std::string sMissionFile);
+  ~GPIOController();
 
   void startProcess(const std::string &, const std::string &, int argc, char * argv[]);
 
@@ -57,12 +58,17 @@ private: // Configuration variables
     QTimer iterateTimer;
     double currentFrequency;
     EnumDefs defs;
+    MotorController motorcontroller;
 
 signals:
     void workFinished();
 
 public slots:
    void run();
+   void notifyMOOSMsg(QString key, QString msg);
+
+  private:
+    bool onStartupComplete = false;
 };
 
 #endif 

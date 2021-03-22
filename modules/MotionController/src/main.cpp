@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   mainTest();
-  QApplication a(argc, argv);
+  QCoreApplication a(argc, argv);
   string mission_file;
   string run_command = argv[0];
 

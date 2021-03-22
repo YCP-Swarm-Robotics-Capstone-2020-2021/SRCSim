@@ -18,7 +18,7 @@ public:
     enum Shape {
         SQUARE = 0,
         TRIANGLE,
-        CIRCLE,
+        LINE,
         PENTAGON,
         PARALLELOGRAM,
         SHAPEENUMEND
@@ -36,9 +36,11 @@ signals:
 public slots:
     void setDolphinList(QList<QString> list)
     {
+        qDebug()<<"painting";
         m_dolphinList = list;
         std::sort(m_dolphinList.begin(), m_dolphinList.end());
         update();
+        qDebug()<<" done painting";
     }
 
     void setCurrentShape(int i){currentShape = Shape(i); update();}
@@ -68,7 +70,7 @@ protected:
 private:
     void setupZeta();
 
-    const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "CIRCLE", "PENTAGON", "PARALLELOGRAM"};
+    const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "LINE", "PENTAGON", "PARALLELOGRAM"};
     QList<QString> m_dolphinList;
     QMap<QString, QPair<QPair<double, double>,int>> setupMap;
     Shape currentShape = Shape::SQUARE;
