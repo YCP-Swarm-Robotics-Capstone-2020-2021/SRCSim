@@ -1267,14 +1267,28 @@ border-radius: 4px;
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="boundaryLabel">
+         <widget class="QLabel" name="HeightLabel">
           <property name="text">
-           <string>Boundary Size (Ft)</string>
+           <string>Height(ft)</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QSpinBox" name="boundarySpinBox">
+         <widget class="QSpinBox" name="HeightSpinBox">
+          <property name="value">
+           <number>6</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="WidthLabel">
+          <property name="text">
+           <string>Width (Ft)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="WidthSpinBox">
           <property name="maximum">
            <number>20</number>
           </property>

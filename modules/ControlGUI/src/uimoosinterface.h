@@ -43,7 +43,7 @@ public slots:
     void receiveStateCMD(EnumDefs::VehicleStates, QString, int);
     void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void sendLogBookmark();
-    void updateBoundarySize(int size);
+    void updateBoundarySize(int width, int height);
     void onRunStarted(std::string msg);
     void onRunEnded(std::string msg);
     void checkActive();
@@ -75,7 +75,8 @@ private: // Configuration variables
     int m_logBookmarkCounter=0;
     QList<QString> m_idList;
     EnumDefs defs;
-    int m_boundary_size = 6;
+    int m_boundary_width = 6;
+    int m_boundary_height = 6;
     int m_publishBoundarySizeCounter = 0;
     double m_timeout;
     double m_lastupdated = 0;

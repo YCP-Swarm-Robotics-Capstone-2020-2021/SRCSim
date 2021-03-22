@@ -510,8 +510,9 @@ void MainWindow::updateDolphinWatch(QString id, QString msg)
 
 void MainWindow::sendUpdateBoundarySizeSignal()
 {
-    int boundarySize = ui->boundarySpinBox->value();
-    emit updateBoundarySize(boundarySize);
+    int boundaryWidth = ui->WidthSpinBox->value();
+    int boundaryHeight = ui->HeightSpinBox->value();
+    emit updateBoundarySize(boundaryWidth, boundaryHeight);
 }
 
 void MainWindow::updateDolphinVersion(QString id, QString version, QString msg)
