@@ -86,7 +86,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setxPos(xPos);
       zetaControl->setyPos(yPos);
       zetaControl->setWholeTheta(thetalist);
-      zetaControl->setAttitude(att);
+      zetaControl->setAttitude(att*PI/180.0);
       zetaControl->setWholeLambda(lambdalist);
   }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
@@ -298,7 +298,7 @@ void SwarmHandler::initializeSwarm()
     //Setup topology of the formation
     if(!SwarmInitialized){
         iter.value()->podMates->append("Narwhal");
-        m_neighbors.append("Dolphin0");
+        m_neighbors.append(iter.key());
         if(numRobotsInSwarm != 1){
             iter++;
             QString next = iter.key();
@@ -318,6 +318,7 @@ void SwarmHandler::initializeSwarm()
                 }
             }
             iter--;
+            iter.value()->podMates->append("Narwhal");
         }
         iter.value()->podMates->append("Narwhal");
         m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));

@@ -2,6 +2,7 @@
 #include "styles.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <iostream>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -56,13 +57,15 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     if (!m_runIDFile->open(QIODevice::ReadOnly | QIODevice::Text))
         return;
-
+    std::cout << "window 0"<< std::endl;
     QTextStream in(m_runIDFile);
     while (!in.atEnd()) {
         QString line = in.readLine();
         m_runIDNumber = line.toInt()+1;
     }
+    std::cout << "window 1"<< std::endl;
     m_runIDFile->close();
+    std::cout << "window 2"<< std::endl;
 }
 
 MainWindow::~MainWindow()

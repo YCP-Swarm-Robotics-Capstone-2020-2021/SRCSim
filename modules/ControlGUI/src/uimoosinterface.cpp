@@ -16,7 +16,7 @@ UIMoosInterface::~UIMoosInterface()
 bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
 {
     AppCastingMOOSApp::OnNewMail(NewMail);
-
+    cout << "i've got mail "<< endl;
     MOOSMSG_LIST::iterator p;
     for(p=NewMail.begin(); p!=NewMail.end(); p++) {
         CMOOSMsg &msg = *p;
@@ -107,7 +107,7 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
         }
 
     }
-
+    cout << "What the hell is he doing "<< endl;
     return(true);
 }
 
@@ -121,12 +121,14 @@ bool UIMoosInterface::OnConnectToServer()
 bool UIMoosInterface::Iterate()
 {
     AppCastingMOOSApp::Iterate();
+    cout << "trying to do"<< endl;
     m_publishBoundarySizeCounter++;
     if(m_publishBoundarySizeCounter > currentFrequency*BOUNDARY_SIZE_UPDATE_INTERVAL){
         QString size = "Width="+ QString::number(m_boundary_width) + ", Height="+ QString::number(m_boundary_height);
         Notify("BOUNDARY_SIZE", size.toStdString());
         m_publishBoundarySizeCounter = 0;
     }
+    cout << "did"<< endl;
     return(true);
 }
 
@@ -161,7 +163,7 @@ bool UIMoosInterface::OnStartUp()
        reportUnhandledConfigWarning(orig);
 
     }
-
+cout << "started maybe "<< endl;
     registerVariables();
     return(true);
 }

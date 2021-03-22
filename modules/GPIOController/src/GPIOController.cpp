@@ -67,7 +67,6 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     if(state == EnumDefs::VehicleStates::TELEOP){
         motorcontroller.onSpeedCurvOverride(speed, curv);
     }
-
   }
   else if(key == "OVERRIDE_ON"){
     bool on = (msg.GetAsString()=="true");

@@ -1,4 +1,7 @@
 #include "Motor.h"
+#include <iostream>
+using namespace std;
+
 
 Motor::Motor(QObject *parent) : QObject(parent)
 {
@@ -51,7 +54,8 @@ void Motor::updateCmdSpeed(double speed)
     } else if (cmdSpeed < 0) { //CW
         double range = abs(cwhigh-cwlow);
         double ratio = range *(cmdRPM/maxRPM);
-        cmdPulseWidth = cwlow-ratio;
+        cmdPulseWidth = cwlow+ratio;
+
     } else { //stationary
         double range = abs(dbhigh-dblow);
         cmdPulseWidth = dblow+range/2.0;
@@ -79,6 +83,8 @@ void Motor::startUp()
     gpioSetMode(readGPIO, PI_INPUT);
     gpioSetMode(writeGPIO, PI_OUTPUT);
     gpioSetPWMrange(writeGPIO, PWM_WRITE_RANGE);
+    gpioSetPWMfrequency(writeGPIO, 50);
+
     cmdMotorTimer.start(motor_control_period);
 }
 
@@ -90,5 +96,6 @@ void Motor::publishCMDPulseWidth()
 
 void Motor::readPulseWidth(int gpio, int level, uint32_t tick)
 {
+  cout<<gpio<<" "<<level<<" "<<tick<<endl;
 
 }
