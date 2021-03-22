@@ -5,9 +5,8 @@ Community  = $(GCSNAME)
 ProcessConfig = ANTLER
 {
     MSBetweenLaunches = 200
-    Run = ../modules/ControlGUI/bin/ControlGUI  @ NewConsole = false ~ ControlGUI
     Run = MOOSDB    @ NewConsole = false
-
+    Run = ../modules/ControlGUI/bin/ControlGUI  @ NewConsole = false ~ ControlGUI
     Run = ../modules/SwarmHandler/bin/SwarmHandler @ NewConsole = false ~ SwarmHandler
     Run = uProcessWatch @ NewConsole = false ~ uProcessWatch
     Run = pLogger @ NewConsole = false ~ pLogger

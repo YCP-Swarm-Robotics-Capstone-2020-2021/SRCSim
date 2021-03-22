@@ -3,6 +3,7 @@
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
 TIME_WARP=1
+
 NUM_BOTS=2
 BUILD_MODE=0
 KAPPA=1
@@ -79,6 +80,7 @@ fi
 
 VNAME=$ID           # The first vehicle Community
 V1PORT="9000"
+
 
 GCSIP="192.168.1.110"
 GCSPORT=9000
