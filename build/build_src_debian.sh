@@ -43,6 +43,9 @@ fi
 mkdir $dst_dir
 mkdir $dst_dir/usr
 mkdir $dst_dir/usr/bin
+mkdir $dst_dir/etc
+mkdir $dst_dir/etc/systemd
+mkdir $dst_dir/etc/systemd/system
 mkdir $dst_dir/DEBIAN
 cp ../missions/control $dst_dir/DEBIAN
 
@@ -62,5 +65,8 @@ for i in "${binlist[@]}"; do
 done
 
 cd ../build
+cp star_src_software.sh ./$dst_dir/usr/bin/
+cp src.service ./$dst_dir/usr/bin/
+cp postinst ./$dst_dir/DEBIAN
 dpkg-deb --build $dst_dir
 rm -rf $dst_dir

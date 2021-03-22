@@ -1,0 +1,10 @@
+[Unit]
+Description=This is the SRC Software Service
+
+[Service]
+Type=simple
+User=ubuntu
+ExecStart=/usr/bin/start_src_software.sh
+
+[Install]
+WantedBy=multi-user.target
