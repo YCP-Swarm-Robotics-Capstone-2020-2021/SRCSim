@@ -1,0 +1,9 @@
+//------------------------------------------------
+// CameraInterface config block
+
+ProcessConfig = CameraInterface
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+
