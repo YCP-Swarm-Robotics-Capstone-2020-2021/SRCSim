@@ -9,6 +9,7 @@ ProcessConfig = ANTLER
     Run = MOOSDB    @ NewConsole = false
 
     Run = ../modules/SwarmHandler/bin/SwarmHandler @ NewConsole = false ~ SwarmHandler
+    Run = ../modules/CameraInterface/bin/CameraInterface @ NewConsole = false ~ CameraInterface
     Run = uProcessWatch @ NewConsole = false ~ uProcessWatch
     Run = pLogger @ NewConsole = false ~ pLogger
     Run = pShare @ NewConsole = false ~pShare
@@ -30,7 +31,7 @@ ProcessConfig = ControlGUI
 ProcessConfig = uProcessWatch
 {
     watch_all = false
-    watch = pLogger,pShare,SwarmHandler,ControlGUI
+    watch = pLogger,pShare,SwarmHandler,ControlGUI,CameraInterface
 }
 
 ProcessConfig = pLogger
@@ -69,3 +70,4 @@ WildCardOmitPattern = *PLOGGER*
 }
 #include plug_UserInterface.moos
 #include plug_GCSpShare.moos
+#include plug_CameraInterface.moos

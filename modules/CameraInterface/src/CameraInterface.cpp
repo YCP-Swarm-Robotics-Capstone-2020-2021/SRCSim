@@ -320,8 +320,12 @@ void CameraInterface::readData()
     counter = (counter+1)%debug_string.size();
     processData(data);
 #else
-    m_udp_socket.readAll();
-    while(!m_udp_socket.hasPendingDatagrams());
+    if(m_udp_socket.hasPendingDatagrams()){
+      m_udp_socket.readAll();
+    }
+    while(!m_udp_socket.hasPendingDatagrams()){
+      //      cout<<"Waiting for packets"<<endl;
+    }
     QNetworkDatagram datagram = m_udp_socket.receiveDatagram();
     processData(datagram.data());
 #endif
@@ -345,7 +349,6 @@ void CameraInterface::processData(QString data)
         int num_dolphin = QString(id.at(7)).toInt();
         id = "Dolphin"+QString::number(num_dolphin);
         std::cout<<"ID: "<<id.toStdString()<<". Ort: "<<ort<<". X,Y="<<x<<","<<y<<std::endl;
-        //xPos=-5,yPos=6,id=Dolphin0, attitude=270
         QString data = "xPos="+QString::number(x)+",yPos="+QString::number(y)+",attitude="+QString::number(ort)+",id="+id;
         Notify(QString(id+"_Update_Pos").toStdString(), data.toStdString());
     }
@@ -353,5 +356,9 @@ void CameraInterface::processData(QString data)
 
 void CameraInterface::bindSocket()
 {
-    m_udp_socket.bind(QHostAddress::LocalHost,port);
+    bool return_val = m_udp_socket.bind(QHostAddress::Any,8888);
+    if(!return_val){
+      std::cout<<"Binding to socket did not work."<<std::endl;
+    }
+    connect(&m_udp_socket, &QUdpSocket::readyRead, this, &CameraInterface::readData);
 }
