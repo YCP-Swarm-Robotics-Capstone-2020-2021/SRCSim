@@ -20,7 +20,7 @@
 #include <QThread>
 #include <QUdpSocket>
 #include <QJsonObject>
-#define debug 1
+#define debug 0
 static const int READ_DATA_PERIOD = 1000; //msec
 struct Position{
   double x;
@@ -87,7 +87,9 @@ public slots:
    void processData(QString datagram);
 
   private:
+    void bindSocket();
     bool onStartupComplete = false;
+    int port = 0;
 };
 
 #endif 

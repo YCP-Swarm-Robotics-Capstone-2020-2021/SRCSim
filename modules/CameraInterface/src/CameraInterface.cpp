@@ -10,6 +10,7 @@
 #include "CameraInterface.h"
 #include <QJsonDocument>
 #include <QJsonArray>
+#include <QNetworkDatagram>
 using namespace std;
 
 //---------------------------------------------------------
@@ -104,7 +105,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "port") {
+   port = QString::fromStdString(value).toInt();
    handled = true;
  }
  else if(param == "bar") {
@@ -117,6 +119,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
 }
 
 registerVariables();
+bindSocket();
 return(true);
 }
 
@@ -317,7 +320,10 @@ void CameraInterface::readData()
     counter = (counter+1)%debug_string.size();
     processData(data);
 #else
-
+    m_udp_socket.readAll();
+    while(!m_udp_socket.hasPendingDatagrams());
+    QNetworkDatagram datagram = m_udp_socket.receiveDatagram();
+    processData(datagram.data());
 #endif
 }
 
@@ -343,4 +349,9 @@ void CameraInterface::processData(QString data)
         QString data = "xPos="+QString::number(x)+",yPos="+QString::number(y)+",attitude="+QString::number(ort)+",id="+id;
         Notify(QString(id+"_Update_Pos").toStdString(), data.toStdString());
     }
+}
+
+void CameraInterface::bindSocket()
+{
+    m_udp_socket.bind(QHostAddress::LocalHost,port);
 }
