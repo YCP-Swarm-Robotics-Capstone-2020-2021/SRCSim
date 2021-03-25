@@ -8,7 +8,8 @@
 #include "ivp/MBUtils.h"
 #include "ivp/ACTable.h"
 #include "CameraInterface.h"
-
+#include <QJsonDocument>
+#include <QJsonArray>
 using namespace std;
 
 //---------------------------------------------------------
@@ -18,6 +19,8 @@ CameraInterface::CameraInterface(std::string sName, std::string sMissionFile)
 {    
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
+    connect(&m_read_data_timer, &QTimer::timeout,this,&CameraInterface::readData);
+    m_read_data_timer.start(READ_DATA_PERIOD);
 }
 
 //---------------------------------------------------------
@@ -306,3 +309,38 @@ bool CameraInterface::doMOOSWork()
     return true;
 }
 
+void CameraInterface::readData()
+{
+#if debug == 1
+    static int counter = 0;
+    QString data = debug_string[counter];
+    counter = (counter+1)%debug_string.size();
+    processData(data);
+#else
+
+#endif
+}
+
+
+void CameraInterface::processData(QString data)
+{
+
+    std::cout<<"In processData: "<<data.toStdString()<<std::endl;
+    QJsonDocument datagram = QJsonDocument::fromJson(data.toUtf8());
+    QJsonObject datagram_object = datagram.object();
+    QJsonObject data_field = datagram_object["data"].toObject();
+    QJsonArray robots_array = data_field["robots"].toArray();
+    for(QJsonValue dolphin : robots_array){
+        QString id = dolphin.toObject().value("id").toString();
+        double ort = dolphin.toObject().value("ort").toDouble();
+        QJsonArray pos = dolphin.toObject().value("pos").toArray();
+        double x = pos[0].toDouble();
+        double y = pos[1].toDouble();
+        int num_dolphin = QString(id.at(7)).toInt();
+        id = "Dolphin"+QString::number(num_dolphin);
+        std::cout<<"ID: "<<id.toStdString()<<". Ort: "<<ort<<". X,Y="<<x<<","<<y<<std::endl;
+        //xPos=-5,yPos=6,id=Dolphin0, attitude=270
+        QString data = "xPos="+QString::number(x)+",yPos="+QString::number(y)+",attitude="+QString::number(ort)+",id="+id;
+        Notify(QString(id+"_Update_Pos").toStdString(), data.toStdString());
+    }
+}

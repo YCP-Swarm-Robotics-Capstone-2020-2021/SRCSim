@@ -46,7 +46,6 @@ int main(int argc, char *argv[])
   cout << termColor() << endl;
 
   CameraInterface CameraInterface(run_command, mission_file);
-
   CameraInterface.run();
   
   return a.exec();

@@ -3,7 +3,7 @@
 # Author(s):                               Josiah Sam
 #--------------------------------------------------------
 QT -= gui
-QT += core
+QT += core network
 QT -= widgets
 
 CONFIG += c++11 console
