@@ -486,7 +486,7 @@ void MotionController::robotMover(){
         //2: Tranform by adding 180 - A to everything
         //3: Take difference between a' and theta'
         //4: Compare. if a' - theta' > 0, turn Right. Else, turn left
-        if(!(attitude > goalangle-10 && attitude < goalangle+10)){ //turn
+        if(!(attitude > goalangle-5 && attitude < goalangle+5)){ //turn
                 int a_prime, theta_prime;
                 a_prime = 180;
                 theta_prime = (int(goalangle + (a_prime - attitude)))%360;

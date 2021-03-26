@@ -57,7 +57,8 @@ public slots:
         currentZeta.setxPos((currentZeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
         currentZeta.setyPos((currentZeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
         currentZeta.setAttitude(-currentRotation);
-        emit emitZeta(currentZeta.stringify());
+        QString shape = ",shape="+QString::fromStdString(shapeArray[currentShape]);
+        emit emitZeta(currentZeta.stringify()+shape);
     }
 public:
     Zeta currentZeta;
