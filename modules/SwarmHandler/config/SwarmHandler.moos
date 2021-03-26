@@ -8,5 +8,6 @@ ProcessConfig = SwarmHandler
    xIncrement = 0.001
    yIncrement = 0.0
    rotIncrement = 0.0
+   moveFormation = true
 }
 

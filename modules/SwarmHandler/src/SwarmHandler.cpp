@@ -139,7 +139,7 @@ AppCastingMOOSApp::Iterate();
             inRun = true;
             m_first_time = MOOSTime();
         }
-        if(currentShape == "LINE" && MOOSTime()-m_first_time > m_move_delay){
+        if(m_move_formation && MOOSTime()-m_first_time > m_move_delay){
             incrementLineZeta();
         }
     }
@@ -183,7 +183,8 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    m_move_delay = QString::fromStdString(value).toDouble();
    handled = true;
  }
- else if(param == "bar") {
+ else if(param == "moveformation") {
+   m_move_formation = (toupper(value)=="TRUE");
    handled = true;
  }
 

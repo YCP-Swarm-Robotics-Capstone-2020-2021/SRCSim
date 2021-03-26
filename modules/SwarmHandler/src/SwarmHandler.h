@@ -71,6 +71,7 @@ public:
     bool inRun = false;
     double m_first_time = 0.0;
     double m_move_delay = 0.0;
+    bool m_move_formation = false;
 signals:
 
 public slots:
