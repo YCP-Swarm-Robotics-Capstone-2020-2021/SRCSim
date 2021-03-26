@@ -59,6 +59,8 @@ private: // Configuration variables
     double currentFrequency;
     EnumDefs defs;
     MotorController motorcontroller;
+    EnumDefs::VehicleStates state;
+
 
 signals:
     void workFinished();

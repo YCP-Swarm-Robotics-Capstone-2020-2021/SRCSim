@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+
 Motor::Motor(QObject *parent) : QObject(parent)
 {
         readGPIO = 0;
@@ -54,6 +55,7 @@ void Motor::updateCmdSpeed(double speed)
         double range = abs(cwhigh-cwlow);
         double ratio = range *(cmdRPM/maxRPM);
         cmdPulseWidth = cwlow+ratio;
+
     } else { //stationary
         double range = abs(dbhigh-dblow);
         cmdPulseWidth = dblow+range/2.0;
@@ -95,4 +97,5 @@ void Motor::publishCMDPulseWidth()
 void Motor::readPulseWidth(int gpio, int level, uint32_t tick)
 {
   cout<<gpio<<" "<<level<<" "<<tick<<endl;
+
 }

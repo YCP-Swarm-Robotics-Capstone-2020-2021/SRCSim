@@ -64,11 +64,21 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     double curv = 0;
     MOOSValFromString(speed,msg.GetString(),"Speed");
     MOOSValFromString(curv,msg.GetString(),"Curv");
-    motorcontroller.onSpeedCurvOverride(speed, curv);
+    if(state == EnumDefs::VehicleStates::TELEOP){
+        motorcontroller.onSpeedCurvOverride(speed, curv);
+    }
   }
   else if(key == "OVERRIDE_ON"){
     bool on = (msg.GetAsString()=="true");
     motorcontroller.setOverride(on);
+  }
+  else if(key == "Current_State"){
+      if(!msg.IsString()){
+         return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+      }
+      int x;
+      MOOSValFromString(x , msg.GetString(), "State");
+      state = EnumDefs::VehicleStates(x);
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -329,6 +339,7 @@ void GPIOController::registerVariables()
     Register("Speed_Curv");
     Register("OVERRIDE_ON");
     Register("Speed_Curv_Override");
+    Register("Current_State");
 }
 
 
