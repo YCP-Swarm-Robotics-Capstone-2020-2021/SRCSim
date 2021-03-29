@@ -66,6 +66,7 @@ done
 
 cd ../build
 cp start_src_software.sh ./$dst_dir/usr/bin/
+cp stop_src_software.sh ./$dst_dir/usr/bin/
 cp src.service ./$dst_dir/etc/systemd/system/
 cp postinst ./$dst_dir/DEBIAN
 dpkg-deb --build $dst_dir
