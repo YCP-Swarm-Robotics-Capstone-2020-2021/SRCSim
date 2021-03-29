@@ -30,7 +30,8 @@ void MotorController::start()
     for(auto list : motorMap){
         for(auto motor : list){
             motor->notifyCurrentSpeedTimer.start(notifyCurrentSpeedInterval*MS_TO_S);
-	    motor->startUp();
+	          motor->startUp();
+
         }
     }
 }

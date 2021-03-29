@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+
 Motor::Motor(QObject *parent) : QObject(parent)
 {
         readGPIO = 0;
@@ -54,6 +55,7 @@ void Motor::updateCmdSpeed(double speed)
         double range = abs(cwhigh-cwlow);
         double ratio = range *(cmdRPM/maxRPM);
         cmdPulseWidth = cwlow+ratio;
+
     } else { //stationary
         double range = abs(dbhigh-dblow);
         cmdPulseWidth = dblow+range/2.0;
@@ -88,11 +90,11 @@ void Motor::startUp()
 void Motor::publishCMDPulseWidth()
 {
     //TODO: Do work to publish PWM signal here
-  cout<<"We are attempting to control the motor: "<<id<<". Frequency is: "<<cmdPulseWidth<<". CMDSpeed: "<<cmdSpeed<<". cmdRPM: "<<cmdRPM<<endl;
   set_PWM_dutycycle(pigpio_daemon, writeGPIO, cmdPulseWidth );
 }
 
 void Motor::readPulseWidth(int gpio, int level, uint32_t tick)
 {
   cout<<gpio<<" "<<level<<" "<<tick<<endl;
+
 }

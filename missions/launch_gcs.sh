@@ -92,6 +92,7 @@ cat > plug_GCSpShare.moos <<EOF
 ProcessConfig = pShare
 {
      Input = route=\$(GCSIP):\$(GCSPORT)
+
 EOF
 VIP="192.168.1."
 VIPEND=110
