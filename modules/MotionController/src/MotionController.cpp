@@ -145,13 +145,15 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::SWARMRUN:{
-            robotMover();
-            swarmRun();
             if(dodge_state_fwd){
                 dodgeStateFWD();
             }
             if(object){
                 dodge();
+            }
+            else{
+                robotMover();
+                swarmRun();
             }
             break;
         }
