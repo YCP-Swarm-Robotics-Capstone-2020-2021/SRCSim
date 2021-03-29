@@ -12,6 +12,10 @@
 class EnumDefs : public QObject{
 public:
 
+    enum ConnectionState{
+        CONNECTED,
+        DISCONNECTED
+    };
     enum StatusState{
         NORMAL,
         CAUTION,

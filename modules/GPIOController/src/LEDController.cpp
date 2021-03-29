@@ -44,3 +44,75 @@ void LEDController::start()
         set_mode(pigpio_daemon, led.pin, PI_OUTPUT);
     }
 }
+
+void LEDController::updateLEDStatus(EnumDefs::VehicleStates state)
+{
+    if(debug){
+        for(auto led : led_list.values()){
+            led.status = BLINKING;
+        }
+    }
+    switch(state){
+        case EnumDefs::STANDBY:
+            led_list[2].status=OFF;
+            led_list[3].status=OFF;
+            led_list[4].status=OFF;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::TELEOP:
+            led_list[2].status=OFF;
+            led_list[3].status=OFF;
+            led_list[4].status=ON;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::ALLSTOP:
+            led_list[2].status=OFF;
+            led_list[3].status=OFF;
+            led_list[4].status=OFF;
+            led_list[0].status=ON;
+            break;
+        case EnumDefs::DEMOMODE:
+            led_list[2].status=OFF;
+            led_list[3].status=ON;
+            led_list[4].status=OFF;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::DODGE:
+            led_list[2].status=ON;
+            led_list[3].status=OFF;
+            led_list[4].status=OFF;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::BOUNDARY:
+            led_list[2].status=OFF;
+            led_list[3].status=ON;
+            led_list[4].status=ON;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::SWARMINIT:
+            led_list[2].status=ON;
+            led_list[3].status=OFF;
+            led_list[4].status=ON;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::SWARMSTANDBY:
+            led_list[2].status=ON;
+            led_list[3].status=ON;
+            led_list[4].status=OFF;
+            led_list[0].status=OFF;
+            break;
+        case EnumDefs::SWARMRUN:
+            led_list[2].status=ON;
+            led_list[3].status=ON;
+            led_list[4].status=ON;
+            led_list[0].status=OFF;
+            break;
+        default:
+            led_list[2].status=OFF;
+            led_list[3].status=OFF;
+            led_list[4].status=OFF;
+            led_list[0].status=OFF;
+            break;
+    }
+
+}

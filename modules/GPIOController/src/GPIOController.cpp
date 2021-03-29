@@ -309,6 +309,11 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    motorcontroller.maxSpeed = max_speed;
    handled = true;
  }
+ else if(param == "debug") {
+   bool debug = (toupper(value)=="TRUE");
+   ledcontoller.debug = debug;
+   handled = true;
+ }
 
  if(!handled)
    reportUnhandledConfigWarning(orig);

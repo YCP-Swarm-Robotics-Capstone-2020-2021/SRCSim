@@ -30,5 +30,6 @@ ProcessConfig = GPIOController
    LED = id:2, PIN:22
    LED = id:3, PIN:23
    LED = id:4, PIN:24
+   DEBUG=TRUE
 }
 

@@ -36,12 +36,14 @@ public:
 
     QMap<int, LED> led_list;
 
+    bool debug = false;
 public slots:
     void setLEDs();
     void start();
 private:
     QTimer set_timer;
     int pigpio_daemon;
+
 };
 
 #endif // LEDCONTROLLER_H
