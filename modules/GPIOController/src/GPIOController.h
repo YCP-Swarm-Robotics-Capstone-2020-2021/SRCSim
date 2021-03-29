@@ -60,6 +60,7 @@ private: // Configuration variables
     EnumDefs defs;
     MotorController motorcontroller;
     LEDController ledcontoller;
+    EnumDefs::VehicleStates state;
 
 signals:
     void workFinished();
