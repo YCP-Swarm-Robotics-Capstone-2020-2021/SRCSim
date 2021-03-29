@@ -20,7 +20,7 @@
 #include <QTimer>
 #include <VehicleStateDefines.h>
 #include "MotorController.h"
-
+#include "LEDController.h"
 
 class GPIOController : public QObject, public AppCastingMOOSApp
 {
@@ -59,6 +59,7 @@ private: // Configuration variables
     double currentFrequency;
     EnumDefs defs;
     MotorController motorcontroller;
+    LEDController ledcontoller;
 
 signals:
     void workFinished();

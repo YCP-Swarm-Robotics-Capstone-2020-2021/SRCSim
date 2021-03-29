@@ -32,12 +32,14 @@ INCLUDEPATH += \
  ../MotionController/src/
 
 SOURCES += src/main.cpp \
+ src/LEDController.cpp \
  src/Motor.cpp \
  src/MotorController.cpp \
  src/GPIOController.cpp \
  src/GPIOController_Info.cpp
 
 HEADERS += \
+ src/LEDController.h \
  src/Motor.h \
  src/MotorController.h \
  src/GPIOController.h \

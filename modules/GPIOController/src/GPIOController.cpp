@@ -97,6 +97,7 @@ AppCastingMOOSApp::Iterate();
 //AppCastingMOOSApp::PostReport();
 if(!onStartupComplete){
     motorcontroller.start();
+    ledcontoller.start();
     onStartupComplete = true;
 }
 return(true);
@@ -277,6 +278,28 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      motorcontroller.motorMap.insert(SIDE(side), temp3);
      handled = true;
  }
+ else if (param == "led"){
+     QList<QString> temp = QString::fromStdString(value).split(',');
+     int id = -1;
+     int pin = -1;
+     for(QString value : temp){
+         QList<QString> temp2 = value.split(':');
+         if(toupper(temp2[0].toStdString()) == "ID"){
+            id = temp2[1].toInt();
+         }
+         else if (toupper(temp2[0].toStdString()) == "PIN"){
+            pin = temp2[1].toInt();
+         }
+     }
+     if(pin < 0 || id < 0){
+         return -1;
+     }
+     LED led;
+     led.id = id;
+     led.pin = pin;
+     ledcontoller.led_list.insert(id, led);
+     handled = true;
+ }
  else if (param == "currentspeednotifyrates"){
      motorcontroller.notifyCurrentSpeedInterval = QString::fromStdString(value).toDouble();
      handled = true;
@@ -315,6 +338,11 @@ for(auto list : motorcontroller.motorMap){
             <<"\tReadGPIO:"<<element->readGPIO<<"\n"
             <<"\tWriteGPIO:"<<element->writeGPIO<<"\n"<<endl;
     }
+}
+for(auto led : ledcontoller.led_list.values()){
+    cout<<"\n\tPin: "<<led.pin<<"\n"
+        <<"\tID: " <<led.id <<"\n"
+        <<"\tStatus:"<<led.status<<"\n";
 }
 registerVariables();
 return(true);

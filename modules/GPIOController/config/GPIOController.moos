@@ -24,6 +24,11 @@ ProcessConfig = GPIOController
    motor = id:3, CTRLGPIO:19, READGPIO:6, SIDE:R, REVERSED:true
    motor = id:4, CTRLGPIO:18, READGPIO:8, SIDE:R, REVERSED:true
 
-
+//LED Config Block
+   LED = id:0, PIN:20
+   LED = id:1, PIN:21
+   LED = id:2, PIN:22
+   LED = id:3, PIN:23
+   LED = id:4, PIN:24
 }
 
