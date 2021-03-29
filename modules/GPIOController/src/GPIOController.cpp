@@ -80,6 +80,11 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(x , msg.GetString(), "State");
       state = EnumDefs::VehicleStates(x);
   }
+  else if(key == "CONNECTION_STATUS"){
+      int x;
+      MOOSValFromString(x, msg.GetString(), "Status");
+      connectionStatus = EnumDefs::ConnectionState(x);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -110,6 +115,7 @@ if(!onStartupComplete){
     ledcontoller.start();
     onStartupComplete = true;
 }
+ledcontoller.updateLEDStatus(state, connectionStatus);
 return(true);
 }
 

@@ -45,7 +45,7 @@ void LEDController::start()
     }
 }
 
-void LEDController::updateLEDStatus(EnumDefs::VehicleStates state)
+void LEDController::updateLEDStatus(EnumDefs::VehicleStates state, EnumDefs::ConnectionState connectionState)
 {
     if(debug){
         for(auto led : led_list.values()){
@@ -114,12 +114,7 @@ void LEDController::updateLEDStatus(EnumDefs::VehicleStates state)
             led_list[0].status=OFF;
             break;
     }
-
-}
-
-void LEDController::updateConnectionLEDStatus(EnumDefs::ConnectionState state)
-{
-    switch(state){
+    switch(connectionState){
         case EnumDefs::CONNECTED:
             led_list[1].status = ON;
             break;

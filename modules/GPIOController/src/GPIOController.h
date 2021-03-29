@@ -61,7 +61,7 @@ private: // Configuration variables
     MotorController motorcontroller;
     LEDController ledcontoller;
     EnumDefs::VehicleStates state;
-
+    EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
 signals:
     void workFinished();
 
