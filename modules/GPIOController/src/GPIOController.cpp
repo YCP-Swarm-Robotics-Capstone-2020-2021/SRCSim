@@ -362,6 +362,7 @@ void GPIOController::registerVariables()
     Register("Speed_Curv");
     Register("OVERRIDE_ON");
     Register("Speed_Curv_Override");
+    Register("CONNECTION_STATUS");
 }
 
 

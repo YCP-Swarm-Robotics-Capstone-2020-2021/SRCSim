@@ -116,3 +116,18 @@ void LEDController::updateLEDStatus(EnumDefs::VehicleStates state)
     }
 
 }
+
+void LEDController::updateConnectionLEDStatus(EnumDefs::ConnectionState state)
+{
+    switch(state){
+        case EnumDefs::CONNECTED:
+            led_list[1].status = ON;
+            break;
+        case EnumDefs::DISCONNECTED:
+            led_list[1].status = BLINKING;
+            break;
+        default:
+            led_list[1].status = BLINKING;
+            break;
+    }
+}

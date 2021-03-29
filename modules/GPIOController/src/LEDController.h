@@ -33,7 +33,7 @@ public:
     ~LEDController();
 
     void updateLEDStatus(EnumDefs::VehicleStates state);
-
+    void updateConnectionLEDStatus(EnumDefs::ConnectionState state);
     QMap<int, LED> led_list;
 
     bool debug = false;
