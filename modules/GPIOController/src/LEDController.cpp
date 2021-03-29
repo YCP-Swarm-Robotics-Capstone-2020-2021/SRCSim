@@ -1,5 +1,5 @@
 #include "LEDController.h"
-
+#include <iostream>
 LEDController::LEDController()
 {
     connect(&set_timer, &QTimer::timeout, this, &LEDController::setLEDs);
@@ -39,7 +39,7 @@ void LEDController::start()
 {
     int ret = pigpio_start(NULL, NULL);
     if(ret < 0){
-        cout<<"ERROR: COULD NOT CONNECT TO PIGPIOD DAEMON"<<endl;
+      std::cout<<"ERROR: COULD NOT CONNECT TO PIGPIOD DAEMON"<<std::endl;
         return;
     }
     pigpio_daemon = ret;
