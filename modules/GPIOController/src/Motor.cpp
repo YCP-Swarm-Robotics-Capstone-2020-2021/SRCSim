@@ -74,17 +74,18 @@ double Motor::rpm_to_fps(double rpm)
     return angular_velocity*wheelrad;
 }
 
-void Motor::startUp()
+bool Motor::startUp()
 {
     //DO WORK TO SETUP GPIOs and CALLBACK HERE
     int ret = pigpio_start(NULL, NULL);
-    if(ret < 0){return;}
+    if(ret < 0){return false;}
     pigpio_daemon = ret;
     set_mode(pigpio_daemon, readGPIO, PI_INPUT);
     set_mode(pigpio_daemon, writeGPIO, PI_OUTPUT);
     set_PWM_range(pigpio_daemon, writeGPIO, PWM_WRITE_RANGE);
     set_PWM_frequency(pigpio_daemon, writeGPIO, 50);
     cmdMotorTimer.start(motor_control_period);
+    return true;
 }
 
 void Motor::publishCMDPulseWidth()

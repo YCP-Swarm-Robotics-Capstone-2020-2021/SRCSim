@@ -111,11 +111,20 @@ AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
 if(!onStartupComplete){
-    motorcontroller.start();
-    ledcontoller.start();
-    onStartupComplete = true;
+    if(!m_motorStartupComplete){
+        cout<<"Trying to connect motors."<<endl;
+        m_motorStartupComplete = motorcontroller.start();
+    }
+    if(!m_ledStartupComplete){
+        cout<<"Trying to connect LEDs"<<endl;
+        m_ledStartupComplete = ledcontoller.start();
+    }
+    onStartupComplete = m_motorStartupComplete && m_ledStartupComplete;
 }
-ledcontoller.updateLEDStatus(state, connectionStatus);
+if(m_ledStartupComplete){
+    cout<<"Commanding LEDs"<<endl;
+    ledcontoller.updateLEDStatus(state, connectionStatus);
+}
 return(true);
 }
 

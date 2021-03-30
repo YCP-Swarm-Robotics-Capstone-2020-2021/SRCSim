@@ -71,6 +71,8 @@ public slots:
 
   private:
     bool onStartupComplete = false;
+    bool m_motorStartupComplete = false;
+    bool m_ledStartupComplete = false;
 };
 
 #endif 

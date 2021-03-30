@@ -31,21 +31,23 @@ void LEDController::setLEDs()
                 break;
         }
         gpio_write(pigpio_daemon, pin, level);
+        iter++;
     }
 }
 
 
-void LEDController::start()
+bool LEDController::start()
 {
     int ret = pigpio_start(NULL, NULL);
     if(ret < 0){
       std::cout<<"ERROR: COULD NOT CONNECT TO PIGPIOD DAEMON"<<std::endl;
-        return;
+        return false;
     }
     pigpio_daemon = ret;
     for(LED led : led_list.values()){
         set_mode(pigpio_daemon, led.pin, PI_OUTPUT);
     }
+    return true;
 }
 
 void LEDController::updateLEDStatus(EnumDefs::VehicleStates state, EnumDefs::ConnectionState connectionState)

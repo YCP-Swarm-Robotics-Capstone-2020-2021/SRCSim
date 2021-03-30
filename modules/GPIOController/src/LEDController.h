@@ -38,7 +38,7 @@ public:
     bool debug = false;
 public slots:
     void setLEDs();
-    void start();
+    bool start();
 private:
     QTimer set_timer;
     int pigpio_daemon;
