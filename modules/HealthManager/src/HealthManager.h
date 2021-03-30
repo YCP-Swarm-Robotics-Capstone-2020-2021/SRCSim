@@ -17,9 +17,10 @@
 #include <ivp/ACTable.h>
 #include <QString>
 #include <QThread>
+#include <QTimer>
 #include <VehicleStateDefines.h>
 
-
+static const int DISCONNECT_TIME = 5000;
 
 class HealthManager : public QObject, public AppCastingMOOSApp
 {
@@ -66,11 +67,15 @@ public:
     std::string m_versionNum = "";
     std::string m_commitMessage = "";
     bool m_versionRecv = false;
+
+    QTimer disconnectTimer;
 signals:
    void workFinished();
 
 public slots:
     void run();
+    void handleDisconnect();
+    EnumDefs::ConnectionState connectState = EnumDefs::ConnectionState::DISCONNECTED;
 };
 
 #endif 
