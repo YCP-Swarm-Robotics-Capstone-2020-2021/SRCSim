@@ -69,13 +69,14 @@ public:
     bool m_versionRecv = false;
 
     QTimer disconnectTimer;
+    EnumDefs::ConnectionState connectState = EnumDefs::ConnectionState::DISCONNECTED;
+
 signals:
    void workFinished();
 
 public slots:
     void run();
     void handleDisconnect();
-    EnumDefs::ConnectionState connectState = EnumDefs::ConnectionState::DISCONNECTED;
 };
 
 #endif 
