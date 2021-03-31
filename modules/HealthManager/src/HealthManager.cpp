@@ -84,7 +84,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   {
       m_versionRecv = true;
   }
-  else if(key == "PING")
+  else if(key == "GCS_CONNECTION")
   {
       disconnectTimer.stop();
       disconnectTimer.start();
@@ -185,7 +185,7 @@ AppCastingMOOSApp::RegisterVariables();
   Register("BLACK_LINE_DETECTED");
   Register("VERSION_ACK");
   Register("Current_State");
-  Register("PING");
+  Register("GCS_CONNECTION");
 }
 
 

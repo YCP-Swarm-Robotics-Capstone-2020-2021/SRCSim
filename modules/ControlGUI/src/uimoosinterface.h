@@ -16,7 +16,7 @@ static const int BOUNDARY_SIZE_UPDATE_INTERVAL = 1;
 static const std::string SPEED_CMD = "Speed_Curv";
 static const std::string RUN_STARTED = "RUN_STARTED";
 static const std::string RUN_ENDED = "RUN_ENDED";
-static const std::string PING="PING";
+static const std::string PING="GCS_CONNECTION";
 static const int pingTimerSetting = 3;
 
 class UIMoosInterface : public QObject, public AppCastingMOOSApp
