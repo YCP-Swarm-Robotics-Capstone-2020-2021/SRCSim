@@ -84,7 +84,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   {
       m_versionRecv = true;
   }
-  else if(key == "GCS_CONNECTION")
+  else if(key == "BOUNDARY_SIZE")
   {
       disconnectTimer.stop();
       disconnectTimer.start();
@@ -185,7 +185,7 @@ AppCastingMOOSApp::RegisterVariables();
   Register("BLACK_LINE_DETECTED");
   Register("VERSION_ACK");
   Register("Current_State");
-  Register("GCS_CONNECTION");
+  Register("BOUNDARY_SIZE");
 }
 
 
