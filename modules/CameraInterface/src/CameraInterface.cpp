@@ -343,9 +343,12 @@ void CameraInterface::processData(QString data)
     for(QJsonValue dolphin : robots_array){
         QString id = dolphin.toObject().value("id").toString();
         double ort = dolphin.toObject().value("ort").toDouble();
+	if(ort < 0.0){
+	  ort+=360;
+	}
         QJsonArray pos = dolphin.toObject().value("pos").toArray();
-        double x = pos[0].toDouble();
-        double y = pos[1].toDouble();
+        double x = pos[0].toDouble()/12.0;
+        double y = pos[1].toDouble()/12.0;
         int num_dolphin = QString(id.at(7)).toInt();
         id = "Dolphin"+QString::number(num_dolphin);
         std::cout<<"ID: "<<id.toStdString()<<". Ort: "<<ort<<". X,Y="<<x<<","<<y<<std::endl;
