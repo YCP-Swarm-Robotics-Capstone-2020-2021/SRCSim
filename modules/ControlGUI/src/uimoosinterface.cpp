@@ -6,6 +6,7 @@ UIMoosInterface::UIMoosInterface(std::string sName, std::string sMissionFile)
 {
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
+    connect(&pingTimer, &QTimer::timeout, this, &UIMoosInterface::send_ping);
 }
 
 UIMoosInterface::~UIMoosInterface()
@@ -163,8 +164,8 @@ bool UIMoosInterface::OnStartUp()
        reportUnhandledConfigWarning(orig);
 
     }
-cout << "started maybe "<< endl;
     registerVariables();
+    pingTimer.start(m_timeout/double(pingTimerSetting));
     return(true);
 }
 
@@ -457,4 +458,7 @@ void UIMoosInterface::checkActive()
     }
 }
 
-
+void UIMoosInterface::send_ping()
+{
+    Notify(PING, "true");
+}

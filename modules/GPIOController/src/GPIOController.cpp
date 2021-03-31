@@ -64,11 +64,26 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
     double curv = 0;
     MOOSValFromString(speed,msg.GetString(),"Speed");
     MOOSValFromString(curv,msg.GetString(),"Curv");
-    motorcontroller.onSpeedCurvOverride(speed, curv);
+    if(state == EnumDefs::VehicleStates::TELEOP){
+        motorcontroller.onSpeedCurvOverride(speed, curv);
+    }
   }
   else if(key == "OVERRIDE_ON"){
     bool on = (msg.GetAsString()=="true");
     motorcontroller.setOverride(on);
+  }
+  else if(key == "Current_State"){
+      if(!msg.IsString()){
+         return MOOSFail("MotionController::handleCurrentState - You did not input a string you ninny");
+      }
+      int x;
+      MOOSValFromString(x , msg.GetString(), "State");
+      state = EnumDefs::VehicleStates(x);
+  }
+  else if(key == "CONNECTION_STATUS"){
+      int x;
+      MOOSValFromString(x, msg.GetString(), "Status");
+      connectionStatus = EnumDefs::ConnectionState(x);
   }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -96,8 +111,19 @@ AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
 if(!onStartupComplete){
-    motorcontroller.start();
-    onStartupComplete = true;
+    if(!m_motorStartupComplete){
+        cout<<"Trying to connect motors."<<endl;
+        m_motorStartupComplete = motorcontroller.start();
+    }
+    if(!m_ledStartupComplete){
+        cout<<"Trying to connect LEDs"<<endl;
+        m_ledStartupComplete = ledcontoller.start();
+    }
+    onStartupComplete = m_motorStartupComplete && m_ledStartupComplete;
+}
+if(m_ledStartupComplete){
+    cout<<"Commanding LEDs"<<endl;
+    ledcontoller.updateLEDStatus(state, connectionStatus);
 }
 return(true);
 }
@@ -277,6 +303,28 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      motorcontroller.motorMap.insert(SIDE(side), temp3);
      handled = true;
  }
+ else if (param == "led"){
+     QList<QString> temp = QString::fromStdString(value).split(',');
+     int id = -1;
+     int pin = -1;
+     for(QString value : temp){
+         QList<QString> temp2 = value.split(':');
+         if(toupper(temp2[0].toStdString()) == "ID"){
+            id = temp2[1].toInt();
+         }
+         else if (toupper(temp2[0].toStdString()) == "PIN"){
+            pin = temp2[1].toInt();
+         }
+     }
+     if(pin < 0 || id < 0){
+         return -1;
+     }
+     LED led;
+     led.id = id;
+     led.pin = pin;
+     ledcontoller.led_list.insert(id, led);
+     handled = true;
+ }
  else if (param == "currentspeednotifyrates"){
      motorcontroller.notifyCurrentSpeedInterval = QString::fromStdString(value).toDouble();
      handled = true;
@@ -284,6 +332,11 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  else if(param == "maxspeed") {
    double max_speed = QString::fromStdString(value).toDouble();
    motorcontroller.maxSpeed = max_speed;
+   handled = true;
+ }
+ else if(param == "debug") {
+   bool debug = (toupper(value)=="TRUE");
+   ledcontoller.debug = debug;
    handled = true;
  }
 
@@ -316,6 +369,11 @@ for(auto list : motorcontroller.motorMap){
             <<"\tWriteGPIO:"<<element->writeGPIO<<"\n"<<endl;
     }
 }
+for(auto led : ledcontoller.led_list.values()){
+    cout<<"\n\tPin: "<<led.pin<<"\n"
+        <<"\tID: " <<led.id <<"\n"
+        <<"\tStatus:"<<led.status<<"\n";
+}
 registerVariables();
 return(true);
 }
@@ -329,6 +387,8 @@ void GPIOController::registerVariables()
     Register("Speed_Curv");
     Register("OVERRIDE_ON");
     Register("Speed_Curv_Override");
+    Register("CONNECTION_STATUS");
+    Register("Current_State");
 }
 
 

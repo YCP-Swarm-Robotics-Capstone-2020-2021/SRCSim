@@ -20,7 +20,7 @@
 #include <QTimer>
 #include <VehicleStateDefines.h>
 #include "MotorController.h"
-
+#include "LEDController.h"
 
 class GPIOController : public QObject, public AppCastingMOOSApp
 {
@@ -59,7 +59,9 @@ private: // Configuration variables
     double currentFrequency;
     EnumDefs defs;
     MotorController motorcontroller;
-
+    LEDController ledcontoller;
+    EnumDefs::VehicleStates state;
+    EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
 signals:
     void workFinished();
 
@@ -69,6 +71,8 @@ public slots:
 
   private:
     bool onStartupComplete = false;
+    bool m_motorStartupComplete = false;
+    bool m_ledStartupComplete = false;
 };
 
 #endif 

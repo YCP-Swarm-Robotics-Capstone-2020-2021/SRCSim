@@ -32,16 +32,26 @@ INCLUDEPATH += \
  ../MotionController/src/
 
 SOURCES += src/main.cpp \
+ src/LEDController.cpp \
+ src/LIRontroller.cpp \
  src/Motor.cpp \
  src/MotorController.cpp \
  src/GPIOController.cpp \
- src/GPIOController_Info.cpp
+ src/GPIOController_Info.cpp \
+ src/VL53L1X_api.c \
+ src/vl53l1_platform.c
 
 HEADERS += \
+ src/LEDController.h \
+ src/LIRontroller.h \
  src/Motor.h \
  src/MotorController.h \
  src/GPIOController.h \
- src/GPIOController_Info.h
+ src/GPIOController_Info.h \
+ src/VL53L1X_api.h \
+ src/vl53l1_platform.h \
+ src/vl53l1_types.h
+
 
 OTHER_FILES += \
  *.sh \

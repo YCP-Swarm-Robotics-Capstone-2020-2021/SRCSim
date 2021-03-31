@@ -52,7 +52,7 @@ public slots:
     void updateCmdSpeed(double speed);
     double fps_to_rpm(double fps);
     double rpm_to_fps(double rpm);
-    void startUp();
+    bool startUp();
     void publishCMDPulseWidth();
     void readPulseWidth(int gpio, int level, uint32_t tick);
 signals:

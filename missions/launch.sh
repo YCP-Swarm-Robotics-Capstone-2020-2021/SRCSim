@@ -178,6 +178,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=localhost:$PORT
      Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=localhost:$PORT
      Output=src_name=Dolphin${i}_OBJECT_DETECTED,dest_name=OBJECT_DETECTED,route=localhost:$PORT
+     Output=src_name=PING, route=localhost:$PORT
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF

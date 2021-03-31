@@ -92,6 +92,7 @@ cat > plug_GCSpShare.moos <<EOF
 ProcessConfig = pShare
 {
      Input = route=\$(GCSIP):\$(GCSPORT)
+
 EOF
 VIP="192.168.1."
 VIPEND=110
@@ -111,6 +112,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output=src_name=Dolphin${i}_Speed_Curv,dest_name=Speed_Curv_Override,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_BLACK_LINE_DETECTED,dest_name=BLACK_LINE_DETECTED,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_VERSION_ACK,dest_name=VERSION_ACK,route=${VIP}${VIPEND}:9000
+     Output=src_name=PING,route=${VIP}${VIPEND}:9000
 EOF
 done
 cat >> plug_GCSpShare.moos <<EOF

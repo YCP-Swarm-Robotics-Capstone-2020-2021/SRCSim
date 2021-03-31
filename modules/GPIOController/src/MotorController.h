@@ -18,7 +18,7 @@ public:
     void onSpeedCurv(double speed, double curv, bool fromOverride = false);
     void onSpeedCurvOverride(double speed, double curv);
     void setupDeadbandRange(int h, int l);
-    void start();
+    bool start();
 
     double notifyCurrentSpeedInterval = 1.0;
     double maxSpeed = 1.5;

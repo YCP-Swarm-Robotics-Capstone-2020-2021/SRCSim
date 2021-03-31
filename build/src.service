@@ -5,6 +5,6 @@ Description=This is the SRC Software Service
 Type=simple
 User=ubuntu
 ExecStart=/usr/bin/start_src_software.sh
-
+ExecStop=/usr/bin/stop_src_software.sh
 [Install]
 WantedBy=multi-user.target
