@@ -104,6 +104,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output = src_name=BOUNDARY_SIZE, route=${VIP}${VIPEND}:9000
      Output = src_name=RUN_ENDED, route=${VIP}${VIPEND}:9000
      Output = src_name=RUN_STARTED, route=${VIP}${VIPEND}:9000
+     Output = src_name=MAX_SPEED, route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=${VIP}${VIPEND}:9000

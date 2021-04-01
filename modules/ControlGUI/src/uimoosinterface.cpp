@@ -372,6 +372,7 @@ void UIMoosInterface::receiveStateCMD(EnumDefs::VehicleStates state, QString id,
         Notify(id.toStdString()+"_Change_State", "State="+QString::number(int(state)).toStdString()+", id="+id.toStdString());
     else
         Notify("Change_State", "State="+QString::number(int(state)).toStdString());
+    Notify("MAX_SPEED", "Speed="+QString::number(maxSpeed).toStdString());
 }
 
 void UIMoosInterface::receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed)

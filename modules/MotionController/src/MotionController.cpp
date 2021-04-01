@@ -68,6 +68,10 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
+  else if(key == "MAX_SPEED"){
+      MOOSValFromString(max_speed, msg.GetString(), "Speed");
+      std::cout<<"Max speed is " << max_speed << std::endl;
+  }
   else if(key == "OBJECT_DETECTED"){
      if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE){
          dodge_state_fwd = true;
@@ -223,6 +227,7 @@ Register("Zeta_Init");
 Register("Neighbor_Zeta");
 Register("Speed_Curv_Override");
 Register("OBJECT_DETECTED");
+Register("MAX_SPEED");
 }
 
 
