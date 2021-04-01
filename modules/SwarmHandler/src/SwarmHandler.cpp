@@ -88,6 +88,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setWholeTheta(thetalist);
       zetaControl->setAttitude(att*PI/180.0);
       zetaControl->setWholeLambda(lambdalist);
+      initializeSwarm();
   }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);

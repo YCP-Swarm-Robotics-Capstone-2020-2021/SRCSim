@@ -63,6 +63,7 @@ public:
     Zeta *zetaControl;
     bool SwarmInitialized = false;
     QList<QString> m_neighbors;
+
 signals:
 
 public slots:
