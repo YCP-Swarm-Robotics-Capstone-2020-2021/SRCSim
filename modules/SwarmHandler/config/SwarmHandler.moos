@@ -5,9 +5,9 @@ ProcessConfig = SwarmHandler
 {
    AppTick   = 4
    CommsTick = 4
-   xIncrement = 0.001
+   xIncrement = 0.01
    yIncrement = 0.0
    rotIncrement = 0.0
-   moveFormation = true
+   moveFormation = false
 }
 

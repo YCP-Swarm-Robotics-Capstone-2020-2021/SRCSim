@@ -232,7 +232,7 @@ bool VehicleStateMachine::onChangeState(CMOOSMsg &Msg)
         if (state == EnumDefs::ALLSTOP){
             updateState = EnumDefs::ALLSTOP;
         }
-        else if(state == EnumDefs::SWARMMODE && currentState == EnumDefs::STANDBY){
+        else if((state == EnumDefs::SWARMMODE && currentState == EnumDefs::STANDBY) || (state == EnumDefs::SWARMINIT && currentState == EnumDefs::SWARMRUN)){
             updateState = EnumDefs::SWARMINIT;
         }
         else if(state == EnumDefs::SWARMRUN && currentState == EnumDefs::SWARMSTANDBY){

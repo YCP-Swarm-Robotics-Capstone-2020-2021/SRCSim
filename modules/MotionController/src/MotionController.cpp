@@ -69,7 +69,7 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
   else if(key == "OBJECT_DETECTED"){
-     if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE){
+     if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE && driving){
          dodge_state_fwd = true;
      }
      dodgeState = (EnumDefs::SensorState)msg.GetDouble();

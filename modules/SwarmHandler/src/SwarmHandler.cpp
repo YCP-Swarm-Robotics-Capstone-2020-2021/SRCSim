@@ -90,8 +90,12 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setWholeTheta(thetalist);
       zetaControl->setAttitude(att*PI/180.0);
       zetaControl->setWholeLambda(lambdalist);
-      initializeSwarm();
-      currentShape = QString::fromStdString(shape);
+      QString newShape = QString::fromStdString(shape);
+      if(currentShape != newShape and checkState(EnumDefs::SWARMRUN)){
+          Notify("Change_State","State="+QString::number(EnumDefs::VehicleStates::SWARMINIT).toStdString(),MOOSTime());
+          SwarmInitialized = false;
+      }
+      currentShape = newShape;
   }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
@@ -286,8 +290,9 @@ bool SwarmHandler::onChangeState(CMOOSMsg &msg)
         return MOOSFail("SwarmHandler: Unable to get id out of Current_State message.");
     }
     state = EnumDefs::VehicleStates(intState);
-    if(state == EnumDefs::VehicleStates::SWARMMODE){
-
+    if(state != EnumDefs::VehicleStates::SWARMMODE || state != EnumDefs::SWARMINIT){
+        SwarmInitialized = false;
+        currentShape = "none";
     }
     return true;
 
