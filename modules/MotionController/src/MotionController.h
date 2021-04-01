@@ -94,7 +94,7 @@ public:
    QPointF goalpoint;
    double goalx, goaly;
    double goalangle;
-   double posTolerance = 0.2;
+   double posTolerance = 0.1;
    EnumDefs::SensorState dodgeState = EnumDefs::NONE;
    bool object = false;
    bool dodge_state_fwd = false;

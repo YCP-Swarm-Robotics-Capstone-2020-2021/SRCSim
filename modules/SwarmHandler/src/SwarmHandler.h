@@ -53,6 +53,7 @@ public:
    bool checkState(EnumDefs::VehicleStates state);
    QList<double> toDoubleList(QList<QString> input);
    void initializeSwarm();
+   void incrementLineZeta();
 
  protected:
    void registerVariables();
@@ -63,7 +64,14 @@ public:
     Zeta *zetaControl;
     bool SwarmInitialized = false;
     QList<QString> m_neighbors;
-
+    QString currentShape = "none";
+    double xIncrement = 0.0;
+    double yIncrement = 0.0;
+    double rotationIncrement = 0.0;
+    bool inRun = false;
+    double m_first_time = 0.0;
+    double m_move_delay = 0.0;
+    bool m_move_formation = false;
 signals:
 
 public slots:
