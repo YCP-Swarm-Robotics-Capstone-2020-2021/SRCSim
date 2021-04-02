@@ -3,7 +3,7 @@
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
 TIME_WARP=1
-NUM_BOTS=2
+NUM_BOTS=5
 BUILD_MODE=0
 KAPPA=1
 DT=1
@@ -139,6 +139,10 @@ qmake
 make
 cd ..
 cd SwarmHandler
+qmake
+make
+cd ..
+cd CameraInterface
 qmake
 make
 cd ../../missions
