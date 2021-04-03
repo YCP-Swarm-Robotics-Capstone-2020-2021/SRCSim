@@ -78,6 +78,7 @@ public:
    double attitude = 0;
    double max_speed = 100.0;
    double turn_speed = 15.0;
+   double angle_tolerance = 10.0;
    EnumDefs::VehicleStates state = EnumDefs::STANDBY;
    QLabel *entryZone;
    QString id = "";

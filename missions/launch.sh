@@ -169,6 +169,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output = src_name=BOUNDARY_SIZE, route=localhost:$PORT
      Output = src_name=RUN_ENDED, route=localhost:$PORT
      Output = src_name=RUN_STARTED, route=localhost:$PORT
+     Output = src_name=MAX_SPEED, route=localhost:$PORT
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=localhost:$PORT
      Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=localhost:$PORT

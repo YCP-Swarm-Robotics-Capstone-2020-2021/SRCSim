@@ -70,6 +70,13 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   }
   else if(key == "MAX_SPEED"){
       MOOSValFromString(max_speed, msg.GetString(), "Speed");
+      MOOSValFromString(angle_tolerance, msg.GetString(), "AngleTolerance");
+      MOOSValFromString(posTolerance, msg.GetString(), "PoseTolerance");
+      MOOSValFromString(turn_speed, msg.GetString(), "TurnSpeed");
+      cout<<" MaxSpeed: "<<max_speed
+          <<" MaxTurnSpeed: "<<turn_speed
+          <<" AngleTolerance: "<<angle_tolerance
+          <<" PoseTolerance: "<<posTolerance<<endl;
       std::cout<<"Max speed is " << max_speed << std::endl;
   }
   else if(key == "OBJECT_DETECTED"){
@@ -491,7 +498,7 @@ void MotionController::robotMover(){
         //2: Tranform by adding 180 - A to everything
         //3: Take difference between a' and theta'
         //4: Compare. if a' - theta' > 0, turn Right. Else, turn left
-        if(!(attitude > goalangle-10 && attitude < goalangle+10)){ //turn
+        if(!(attitude > goalangle-angle_tolerance && attitude < goalangle+angle_tolerance)){ //turn
                 int a_prime, theta_prime;
                 a_prime = 180;
                 theta_prime = (int(goalangle + (a_prime - attitude)))%360;
@@ -511,8 +518,7 @@ void MotionController::robotMover(){
         }
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
-
+        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime());
 }
 
 void MotionController::boundaryRecovery(){

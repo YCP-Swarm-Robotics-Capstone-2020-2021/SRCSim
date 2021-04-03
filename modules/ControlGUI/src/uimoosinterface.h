@@ -42,7 +42,7 @@ protected: // Standard AppCastingMOOSApp function to overload
 public slots:
     void run();
     void receiveZeta(QString);
-    void receiveStateCMD(EnumDefs::VehicleStates, QString, int);
+    void receiveStateCMD(EnumDefs::VehicleStates, QString, int, int, double, int);
     void receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void sendLogBookmark();
     void updateBoundarySize(int width, int height);
