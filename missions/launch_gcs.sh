@@ -96,7 +96,7 @@ ProcessConfig = pShare
 EOF
 VIP="192.168.1."
 VIPEND=110
-for ((i = 0 ; i < 2 ; i++)); do
+for ((i = 0 ; i < $NUM_BOTS ; i++)); do
 VIPEND=$(($VIPEND+5))
 cat >> plug_GCSpShare.moos <<EOF
      Output = src_name=Change_State, route=${VIP}${VIPEND}:9000

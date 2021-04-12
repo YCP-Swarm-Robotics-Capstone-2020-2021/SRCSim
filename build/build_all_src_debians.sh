@@ -22,3 +22,5 @@ if [[ "$1" == '--' ]]; then shift; fi
 for ((i=0 ; i < 5; i++)); do
     /bin/bash build_src_debian.sh -d $i
 done
+
+mv dolphin*.deb ./debians
