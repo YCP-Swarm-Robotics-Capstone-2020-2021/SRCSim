@@ -57,7 +57,7 @@ void LEDController::updateLEDStatus(EnumDefs::VehicleStates state, EnumDefs::Con
                 led_list[3].status=BLINKING;
                 led_list[4].status=BLINKING;
                 led_list[0].status=BLINKING;
-                led_list[5].status=BLINKING;
+                led_list[1].status=BLINKING;
     }
     else{
         switch(state){
