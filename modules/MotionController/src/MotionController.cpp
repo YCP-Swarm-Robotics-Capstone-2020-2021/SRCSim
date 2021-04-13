@@ -499,11 +499,18 @@ void MotionController::robotMover(){
         //3: Take difference between a' and theta'
         //4: Compare. if a' - theta' > 0, turn Right. Else, turn left
         if(!(attitude > goalangle-angle_tolerance && attitude < goalangle+angle_tolerance)){ //turn
-                int a_prime, theta_prime;
+	  /*int a_prime, theta_prime;
                 a_prime = 180;
                 theta_prime = (int(goalangle + (a_prime - attitude)))%360;
                 roboCurv = (a_prime - theta_prime > 0) ? -90.0 : 90.0;
-                roboSpeed = turn_speed;
+                roboSpeed = turn_speed;*/
+	  int h_prime = (int(attitude)+180)%360;
+	  if(h_prime > attitude){
+	    roboCurv = (goalangle > attitude and goalangle < h_prime) ? -90.0 : 90.0;
+	  } else {
+   	    roboCurv = (goalangle > h_prime and goalangle < attitude) ? 90.0 : -90.0;
+	  }
+	  roboSpeed = turn_speed;
         }
         else{
             if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){

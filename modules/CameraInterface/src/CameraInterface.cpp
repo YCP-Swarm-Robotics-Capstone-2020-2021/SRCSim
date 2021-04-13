@@ -343,6 +343,10 @@ void CameraInterface::processData(QString data)
     for(QJsonValue dolphin : robots_array){
         QString id = dolphin.toObject().value("id").toString();
         double ort = dolphin.toObject().value("ort").toDouble();
+	ort += 90;
+	if(ort < -180){
+	  ort+=360;
+	}
 	if(ort < 0.0){
 	  ort+=360;
 	}
