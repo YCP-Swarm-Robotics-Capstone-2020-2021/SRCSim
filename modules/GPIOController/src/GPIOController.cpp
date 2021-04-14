@@ -119,10 +119,13 @@ if(!onStartupComplete){
         cout<<"Trying to connect LEDs"<<endl;
         m_ledStartupComplete = ledcontoller.start();
     }
-    onStartupComplete = m_motorStartupComplete && m_ledStartupComplete;
+    if(!m_lirStartupComplete){
+        cout<<"Trying to connect LIRSeonsors"<<endl;
+        m_lirStartupComplete = lircontoller.start();
+    }
+    onStartupComplete = m_motorStartupComplete && m_ledStartupComplete && m_lirStartupComplete;
 }
 if(m_ledStartupComplete){
-    cout<<"Commanding LEDs"<<endl;
     ledcontoller.updateLEDStatus(state, connectionStatus);
 }
 return(true);
@@ -339,6 +342,49 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    ledcontoller.debug = debug;
    handled = true;
  }
+ else if(param == "lirsensor"){
+     QList<QString> temp = QString::fromStdString(value).split(',');
+     QString id = "";
+     int pin = -1;
+     double freq = -1;
+     double distance = -1;
+     LIRSensor sensor;
+     for(QString value : temp){
+         QList<QString> temp2 = value.split(':');
+         if(toupper(temp2[0].toStdString()) == "ID"){
+            id = temp2[1];
+            if(toupper(id.toStdString()) == "LEFT"){
+                sensor.side = LEFT;
+            }else {
+                sensor.side = RIGHT;
+            }
+         }
+         else if (toupper(temp2[0].toStdString()) == "INTGPIO"){
+            pin = temp2[1].toInt();
+            sensor.intGpio = pin;
+         }
+         else if (toupper(temp2[0].toStdString()) == "FREQ"){
+            freq = temp2[1].toDouble();
+            sensor.frequency = freq;
+         }
+         else if (toupper(temp2[0].toStdString()) == "DIST"){
+            distance = temp2[1].toDouble();
+            sensor.distance = distance;
+         }
+         else if(toupper(temp2[0].toStdString()) == "BUS"){
+             sensor.bus = temp2[1].toInt();
+         }
+     }
+     if(pin < 0 || id < 0){
+         return -1;
+     }
+     lircontoller.sensor_list[sensor.side] = sensor;
+     handled = true;
+ }
+ else if(param == "lirsensoraddress"){
+    QString addr = QString::fromStdString(value);
+    lircontoller.address = addr.toUInt(NULL, 16);
+ }
 
  if(!handled)
    reportUnhandledConfigWarning(orig);
@@ -373,6 +419,15 @@ for(auto led : ledcontoller.led_list.values()){
     cout<<"\n\tPin: "<<led.pin<<"\n"
         <<"\tID: " <<led.id <<"\n"
         <<"\tStatus:"<<led.status<<"\n";
+}
+
+for(auto IR : lircontoller.sensor_list.values()){
+    cout<<"\n\tSide: "<<((IR.side) ? "RIGHT" : "LEFT")<<"\n"
+        <<"\tPin: "<<IR.intGpio<<"\n"
+        <<"\tDistance "<<IR.distance<<"\n"
+        <<"\tAddress "<<lircontoller.address<<"\n"
+        <<"\tBus "<<IR.bus<<"\n"
+        <<"\tFrequency "<<IR.frequency<<"\n"<<endl;
 }
 registerVariables();
 return(true);

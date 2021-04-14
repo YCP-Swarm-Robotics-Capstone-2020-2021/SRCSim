@@ -19,6 +19,11 @@ typedef struct {
 
 typedef VL53L1_Dev_t *VL53L1_DEV;
 
+/** @brief Init_Pigpiod() definition. \n
+ * This must be used to set the id of the pigpio daemon
+ */
+void Init_Pigpiod(int daemon_id, int leftBus, int rightBus, int devAddr);
+
 /** @brief VL53L1_WriteMulti() definition.\n
  * To be implemented by the developer
  */
