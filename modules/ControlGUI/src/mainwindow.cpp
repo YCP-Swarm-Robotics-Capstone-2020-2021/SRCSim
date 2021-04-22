@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     myPainter = new SwarmFormationPainter(this);
-    QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     policy.setHeightForWidth(true);
     myPainter->setSizePolicy(policy);
     ui->glLayout->addWidget(myPainter);
@@ -40,6 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(myPainter, &SwarmFormationPainter::emitZeta, this, &MainWindow::zetaSent);
     connect(ui->LOG_BOOKMARK_BUTTON, SIGNAL(pressed()), this, SIGNAL(logBookmarkReq()));
     connect(ui->runPushButton, SIGNAL(pressed()), this, SLOT(onRunPressed()));
+    connect(ui->XOffsetBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setXOffset(int)));
+    connect(ui->YOffsetBox, SIGNAL(valueChanged(int)), myPainter, SLOT(setYOffset(int)));
+    connect(ui->ZetaSelectBox, SIGNAL(currentTextChanged(QString)), this, SLOT(onZetaSelectBoxChanged(QString)));
+    connect(ui->Zeta2Checkbox, SIGNAL(stateChanged(int)), this , SLOT(onZetaCheckBoxSelected(int)));
+
 
     connect(&forwardTimer, &QTimer::timeout, this, &MainWindow::onForwardButtonReleased);
     connect(&rightTimer, &QTimer::timeout, this, &MainWindow::onRightButtonReleased);
@@ -52,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setBotList({});
     setupStateSelection();
     setupShapeList();
+    setupZetaList();
     if(!m_runIDFile->exists()){
         system(QString::fromStdString("touch "+path.toStdString()).toLocal8Bit().data());
     }
@@ -81,6 +87,34 @@ MainWindow::~MainWindow()
     if(m_runIDFile != nullptr)
         delete m_runIDFile;
     delete ui;
+}
+
+void MainWindow::onZetaSelectBoxChanged(QString s){
+    myPainter->setZetaOption(s);
+    int Zetaoption =  s.right(1).toInt();
+    ui->XOffsetBox->setValue(myPainter->currentZeta[Zetaoption].xoffset*12.0);
+    ui->YOffsetBox->setValue(myPainter->currentZeta[Zetaoption].yoffset*12.0);
+    ui->widthBox->setValue(myPainter->currentZeta[Zetaoption].width);
+    ui->lengthBox->setValue(myPainter->currentZeta[Zetaoption].length);
+    ui->rotationBox->setValue(myPainter->currentZeta[Zetaoption].rotation);
+    ui->shapeSelection->setCurrentIndex(myPainter->currentZeta[Zetaoption].shape);
+}
+
+void MainWindow::setupZetaList(){
+    ui->ZetaSelectBox->insertItem(0, "Zeta 0");
+    ui->ZetaSelectBox->insertItem(1, "Zeta 1");
+    myPainter->initZeta(2);
+}
+
+void MainWindow::onZetaCheckBoxSelected(int i)
+{
+    if( i == 0){
+        ui->ZetaSelectBox->setCurrentIndex(0);
+        ui->ZetaSelectBox->setEnabled(false);
+    }
+    else{
+        ui->ZetaSelectBox->setEnabled(true);
+    }
 }
 
 void MainWindow::setBotList(QList<QString> list)
@@ -197,7 +231,7 @@ void MainWindow::onForwardButtonPressed()
     forwardTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     forward = true;
     if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
-        myPainter->submitZetaPressed(0, -ui->speedSelection->value()/1000.0);
+        //myPainter->submitZetaPressed(0, -ui->speedSelection->value()/1000.0);
     } else
         emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
@@ -212,7 +246,7 @@ void MainWindow::onLeftButtonPressed()
     leftTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     left = true;
     if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
-        myPainter->submitZetaPressed(ui->speedSelection->value()/1000.0);
+        //myPainter->submitZetaPressed(ui->speedSelection->value()/1000.0);
     } else
         emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
@@ -228,7 +262,7 @@ void MainWindow::onRightButtonPressed()
     rightTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     right = true;
     if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
-        myPainter->submitZetaPressed(-ui->speedSelection->value()/1000.0);
+        //myPainter->submitZetaPressed(-ui->speedSelection->value()/1000.0);
     } else
         emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
@@ -243,7 +277,7 @@ void MainWindow::onBackwardButtonPressed()
     backTimer.start(BUTTON_PRESS_INTERVAL); //BUTTON_PRESS_INTERVAL ms
     reverse = true;
     if(m_currentBotID == "All" && m_currentState == EnumDefs::SWARMMODE){
-        myPainter->submitZetaPressed(0, ui->speedSelection->value()/1000.0);
+        //myPainter->submitZetaPressed(0, ui->speedSelection->value()/1000.0);
     } else
         emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
@@ -490,9 +524,9 @@ void MainWindow::onPreveiwPressed()
 void MainWindow::setupShapeList()
 {
     ui->shapeSelection->clear();
-    for(int i = 0; i<SwarmFormationPainter::Shape::SHAPEENUMEND; i++)
+    for(int i = 0; i<Shape::SHAPEENUMEND; i++)
     {
-        ui->shapeSelection->addItem(myPainter->getShapeSring(SwarmFormationPainter::Shape(i)));
+        ui->shapeSelection->addItem(myPainter->getShapeSring(Shape(i)));
     }
 }
 

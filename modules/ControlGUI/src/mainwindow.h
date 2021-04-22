@@ -119,6 +119,7 @@ public slots:
     void setBotList(QList<QString> list);
     void setupStateSelection();
     void setupShapeList();
+    void setupZetaList();
 
     void sendUpdateBoundarySizeSignal();
 
@@ -147,6 +148,8 @@ public slots:
     void onReverseButtonReleased();
     void onLeftButtonReleased();
     void onRightButtonReleased();
+    void onZetaCheckBoxSelected(int);
+    void onZetaSelectBoxChanged(QString);
 
 
     void onSpeedUpButtonPressed();

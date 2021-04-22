@@ -140,7 +140,7 @@ AppCastingMOOSApp::Iterate();
             m_first_time = MOOSTime();
         }
         if(m_move_formation && MOOSTime()-m_first_time > m_move_delay){
-            incrementLineZeta();
+            incrementFormationZeta();
         }
     }
 return(true);
@@ -393,7 +393,7 @@ QList<double> SwarmHandler::toDoubleList(QList<QString> input){
     return toReturn;
 }
 
-void SwarmHandler::incrementLineZeta()
+void SwarmHandler::incrementFormationZeta()
 {
     zetaControl->setxPos(zetaControl->getxPos()+xIncrement);
     zetaControl->setyPos(zetaControl->getyPos()+yIncrement);

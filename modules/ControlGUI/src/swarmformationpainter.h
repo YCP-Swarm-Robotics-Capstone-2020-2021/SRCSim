@@ -7,6 +7,27 @@
 #include <QDebug>
 #include "zeta.h"
 #include "styles.h"
+enum Shape {
+    SQUARE = 0,
+    TRIANGLE,
+    LINE,
+    PENTAGON,
+    PARALLELOGRAM,
+    SHAPEENUMEND
+};
+class ZetaState{
+public:
+    Zeta zeta;
+    Shape shape = SQUARE;
+    int width = 1;
+    int length = 1;
+    double xoffset = 0;
+    double yoffset = 0;
+    int rotation = 0;
+
+
+};
+
 
 class SwarmFormationPainter : public QWidget
 {
@@ -15,16 +36,7 @@ public:
     explicit SwarmFormationPainter(QWidget *parent = nullptr);
     ~SwarmFormationPainter();
 
-    enum Shape {
-        SQUARE = 0,
-        TRIANGLE,
-        LINE,
-        PENTAGON,
-        PARALLELOGRAM,
-        SHAPEENUMEND
-    };
-
-    const QString getShapeSring(SwarmFormationPainter::Shape shape){
+    const QString getShapeSring(Shape shape){
         if(shape < SHAPEENUMEND){
             return QString::fromStdString(shapeArray[shape]);
         } else {
@@ -43,25 +55,28 @@ public slots:
         qDebug()<<" done painting";
     }
 
-    void setCurrentShape(int i){currentShape = Shape(i); update();}
-    void setCurrentWidth(int i){currentWidth = i; update();}
-    void setCurrentLength(int i){currentLength = i; update();}
-    void setCurrentRotation(int i){currentRotation = i; update();}
+    void initZeta(int i);
+    void setCurrentShape(int i){currentZeta[Zetaoption].shape = Shape(i); update();}
+    void setCurrentWidth(int i){currentZeta[Zetaoption].width = i; update();}
+    void setCurrentLength(int i){currentZeta[Zetaoption].length = i; update();}
+    void setCurrentRotation(int i){currentZeta[Zetaoption].rotation = i; update();}
     void setFeetArenaView(int i){numFeetInArenaView = i; update();}
+    void setXOffset(int i){currentZeta[Zetaoption].xoffset = i/12.0; update();}
+    void setYOffset(int i){currentZeta[Zetaoption].yoffset = i/12.0; update();}
+    void setZetaOption(QString s){Zetaoption =  s.right(1).toInt(); update();}
     void submitZetaPressed(double x=0, double y=0){
-        xOffset += x;
-        yOffset += y;
         setupZeta();
-        currentZeta.setxPos(currentZeta.getxPos()+x);
-        currentZeta.setyPos(currentZeta.getyPos()+y);
-        currentZeta.setxPos((currentZeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
-        currentZeta.setyPos((currentZeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
-        currentZeta.setAttitude(-currentRotation);
-        QString shape = ",shape="+QString::fromStdString(shapeArray[currentShape]);
-        emit emitZeta(currentZeta.stringify()+shape);
+        currentZeta[Zetaoption].zeta.setxPos(currentZeta[Zetaoption].zeta.getxPos()+x);
+        currentZeta[Zetaoption].zeta.setyPos(currentZeta[Zetaoption].zeta.getyPos()+y);
+        currentZeta[Zetaoption].zeta.setxPos((currentZeta[Zetaoption].zeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
+        currentZeta[Zetaoption].zeta.setyPos((currentZeta[Zetaoption].zeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
+        currentZeta[Zetaoption].zeta.setAttitude(-currentZeta[Zetaoption].rotation);
+        QString shape = ",shape="+QString::fromStdString(shapeArray[currentZeta[Zetaoption].shape]);
+        emit emitZeta(currentZeta[Zetaoption].zeta.stringify()+shape);
     }
 public:
-    Zeta currentZeta;
+    QMap<int, ZetaState> currentZeta;
+
 protected:
     virtual void paintEvent(QPaintEvent *event);
     void drawGrid();
@@ -74,13 +89,8 @@ private:
     const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "LINE", "PENTAGON", "PARALLELOGRAM"};
     QList<QString> m_dolphinList;
     QMap<QString, QPair<QPair<double, double>,int>> setupMap;
-    Shape currentShape = Shape::SQUARE;
-    int currentWidth = 1;
-    int currentLength = 1;
-    int currentRotation = 0;
+    int Zetaoption = 0;
     int numFeetInArenaView = ARENA_WIDTH_HEIGHT_IN_FEET;
-    double xOffset = 0.0;
-    double yOffset = 0.0;
 };
 
 #endif // SWARMFORMATIONPAINTER_H

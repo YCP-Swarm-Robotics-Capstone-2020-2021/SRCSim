@@ -53,7 +53,7 @@ public:
    bool checkState(EnumDefs::VehicleStates state);
    QList<double> toDoubleList(QList<QString> input);
    void initializeSwarm();
-   void incrementLineZeta();
+   void incrementFormationZeta();
 
  protected:
    void registerVariables();
