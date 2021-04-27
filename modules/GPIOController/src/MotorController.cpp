@@ -25,15 +25,18 @@ void MotorController::setupDeadbandRange(int h, int l)
     }
 }
 
-void MotorController::start()
+bool MotorController::start()
 {
+    bool complete = true;
     for(auto list : motorMap){
         for(auto motor : list){
             motor->notifyCurrentSpeedTimer.start(notifyCurrentSpeedInterval*MS_TO_S);
-	          motor->startUp();
-
+              if(!motor->startUp()){
+                  complete = false;
+              }
         }
     }
+    return complete;
 }
 
 void MotorController::onSpeedCurv(double speed, double curv, bool fromOverride)

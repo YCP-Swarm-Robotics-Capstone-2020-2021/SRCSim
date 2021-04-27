@@ -16,6 +16,7 @@
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCommandLinkButton>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -97,14 +98,19 @@ public:
     QSpacerItem *horizontalSpacer_14;
     QLabel *label_7;
     QVBoxLayout *verticalLayout_2;
-    QHBoxLayout *horizontalLayout_3;
+    QGridLayout *gridLayout_10;
+    QLabel *maxSpeedPercentage;
     QLabel *label_3;
-    QSpacerItem *horizontalSpacer_5;
-    QLabel *batteryPercentage;
-    QHBoxLayout *maxSpeedSlider_2;
     QLabel *label_4;
     QSlider *maxSpeedSlider;
-    QLabel *maxSpeedPercentage;
+    QSlider *turnSpeedSlider;
+    QLabel *label_29;
+    QLabel *label_30;
+    QLabel *label_34;
+    QLabel *label_35;
+    QDoubleSpinBox *posToleranceSpinner;
+    QSpinBox *angleToleranceSpinner;
+    QLabel *label_28;
     QSpacerItem *horizontalSpacer_2;
     QTabWidget *motorTabWidget;
     QWidget *motor1tab;
@@ -506,50 +512,83 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        gridLayout_10 = new QGridLayout();
+        gridLayout_10->setSpacing(6);
+        gridLayout_10->setObjectName(QStringLiteral("gridLayout_10"));
+        maxSpeedPercentage = new QLabel(controlTab);
+        maxSpeedPercentage->setObjectName(QStringLiteral("maxSpeedPercentage"));
+
+        gridLayout_10->addWidget(maxSpeedPercentage, 2, 3, 1, 1);
+
         label_3 = new QLabel(controlTab);
         label_3->setObjectName(QStringLiteral("label_3"));
 
-        horizontalLayout_3->addWidget(label_3);
+        gridLayout_10->addWidget(label_3, 0, 0, 1, 1);
 
-        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_3->addItem(horizontalSpacer_5);
-
-        batteryPercentage = new QLabel(controlTab);
-        batteryPercentage->setObjectName(QStringLiteral("batteryPercentage"));
-
-        horizontalLayout_3->addWidget(batteryPercentage);
-
-
-        verticalLayout_2->addLayout(horizontalLayout_3);
-
-        maxSpeedSlider_2 = new QHBoxLayout();
-        maxSpeedSlider_2->setSpacing(6);
-        maxSpeedSlider_2->setObjectName(QStringLiteral("maxSpeedSlider_2"));
         label_4 = new QLabel(controlTab);
         label_4->setObjectName(QStringLiteral("label_4"));
 
-        maxSpeedSlider_2->addWidget(label_4);
+        gridLayout_10->addWidget(label_4, 2, 0, 1, 1);
 
         maxSpeedSlider = new QSlider(controlTab);
         maxSpeedSlider->setObjectName(QStringLiteral("maxSpeedSlider"));
         maxSpeedSlider->setMinimumSize(QSize(100, 0));
         maxSpeedSlider->setMaximum(100);
-        maxSpeedSlider->setValue(100);
+        maxSpeedSlider->setValue(50);
         maxSpeedSlider->setOrientation(Qt::Horizontal);
 
-        maxSpeedSlider_2->addWidget(maxSpeedSlider);
+        gridLayout_10->addWidget(maxSpeedSlider, 2, 1, 1, 1);
 
-        maxSpeedPercentage = new QLabel(controlTab);
-        maxSpeedPercentage->setObjectName(QStringLiteral("maxSpeedPercentage"));
+        turnSpeedSlider = new QSlider(controlTab);
+        turnSpeedSlider->setObjectName(QStringLiteral("turnSpeedSlider"));
+        turnSpeedSlider->setMaximum(100);
+        turnSpeedSlider->setValue(15);
+        turnSpeedSlider->setOrientation(Qt::Horizontal);
 
-        maxSpeedSlider_2->addWidget(maxSpeedPercentage);
+        gridLayout_10->addWidget(turnSpeedSlider, 3, 1, 1, 1);
+
+        label_29 = new QLabel(controlTab);
+        label_29->setObjectName(QStringLiteral("label_29"));
+
+        gridLayout_10->addWidget(label_29, 3, 0, 1, 1);
+
+        label_30 = new QLabel(controlTab);
+        label_30->setObjectName(QStringLiteral("label_30"));
+
+        gridLayout_10->addWidget(label_30, 1, 0, 1, 1);
+
+        label_34 = new QLabel(controlTab);
+        label_34->setObjectName(QStringLiteral("label_34"));
+
+        gridLayout_10->addWidget(label_34, 0, 3, 1, 1);
+
+        label_35 = new QLabel(controlTab);
+        label_35->setObjectName(QStringLiteral("label_35"));
+
+        gridLayout_10->addWidget(label_35, 1, 3, 1, 1);
+
+        posToleranceSpinner = new QDoubleSpinBox(controlTab);
+        posToleranceSpinner->setObjectName(QStringLiteral("posToleranceSpinner"));
+        posToleranceSpinner->setDecimals(1);
+        posToleranceSpinner->setSingleStep(0.1);
+        posToleranceSpinner->setValue(0.2);
+
+        gridLayout_10->addWidget(posToleranceSpinner, 0, 1, 1, 1);
+
+        angleToleranceSpinner = new QSpinBox(controlTab);
+        angleToleranceSpinner->setObjectName(QStringLiteral("angleToleranceSpinner"));
+        angleToleranceSpinner->setMaximum(180);
+        angleToleranceSpinner->setValue(10);
+
+        gridLayout_10->addWidget(angleToleranceSpinner, 1, 1, 1, 1);
+
+        label_28 = new QLabel(controlTab);
+        label_28->setObjectName(QStringLiteral("label_28"));
+
+        gridLayout_10->addWidget(label_28, 3, 3, 1, 1);
 
 
-        verticalLayout_2->addLayout(maxSpeedSlider_2);
+        verticalLayout_2->addLayout(gridLayout_10);
 
 
         horizontalLayout_5->addLayout(verticalLayout_2);
@@ -1097,6 +1136,7 @@ public:
         QObject::connect(rotationBox, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
+        QObject::connect(turnSpeedSlider, SIGNAL(valueChanged(int)), label_28, SLOT(setNum(int)));
         QObject::connect(horizontalSlider_4, SIGNAL(valueChanged(int)), XOffsetBox, SLOT(setValue(int)));
         QObject::connect(XOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_4, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_5, SIGNAL(valueChanged(int)), YOffsetBox, SLOT(setValue(int)));
@@ -1168,10 +1208,14 @@ public:
         slowerButton->setShortcut(QApplication::translate("MainWindow", "E", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
         label_7->setText(QApplication::translate("MainWindow", "Speed", Q_NULLPTR));
-        label_3->setText(QApplication::translate("MainWindow", "Battery:", Q_NULLPTR));
-        batteryPercentage->setText(QApplication::translate("MainWindow", "100%", Q_NULLPTR));
+        maxSpeedPercentage->setText(QApplication::translate("MainWindow", "50", Q_NULLPTR));
+        label_3->setText(QApplication::translate("MainWindow", "Pos Tolerance", Q_NULLPTR));
         label_4->setText(QApplication::translate("MainWindow", "Max Speed:", Q_NULLPTR));
-        maxSpeedPercentage->setText(QApplication::translate("MainWindow", "100", Q_NULLPTR));
+        label_29->setText(QApplication::translate("MainWindow", "Turn Speed:", Q_NULLPTR));
+        label_30->setText(QApplication::translate("MainWindow", "Angle Tolerance", Q_NULLPTR));
+        label_34->setText(QApplication::translate("MainWindow", "Ft", Q_NULLPTR));
+        label_35->setText(QApplication::translate("MainWindow", "Degrees", Q_NULLPTR));
+        label_28->setText(QApplication::translate("MainWindow", "15", Q_NULLPTR));
         label_32->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
         m1Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
         label_33->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
