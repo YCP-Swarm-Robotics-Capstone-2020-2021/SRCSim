@@ -122,6 +122,7 @@ public slots:
     void setBotList(QList<QString> list);
     void setupStateSelection();
     void setupShapeList();
+    void setupZetaList();
 
     void sendUpdateBoundarySizeSignal();
 
@@ -149,6 +150,8 @@ public slots:
     void onReverseButtonReleased();
     void onLeftButtonReleased();
     void onRightButtonReleased();
+    void onZetaCheckBoxSelected(int);
+    void onZetaSelectBoxChanged(QString);
 
 
     void onSpeedUpButtonPressed();
@@ -167,6 +170,7 @@ public slots:
 
     void onRunPressed();
     void onRunTimeout();
+    void secondZetaCheck();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int, int, double, int);
     void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);

@@ -64,6 +64,7 @@ int main(int argc, char *argv[])
     a.connect(&w, &MainWindow::logBookmarkReq, &mapp, &UIMoosInterface::sendLogBookmark);
     a.connect(&w, &MainWindow::updateBoundarySize, &mapp, &UIMoosInterface::updateBoundarySize);
     a.connect(&mapp, &UIMoosInterface::updateDolphinVersion, &w, &MainWindow::updateDolphinVersion);
+    a.connect(&mapp, &UIMoosInterface::inputSecondZeta, &w, &MainWindow::secondZetaCheck);
 
     mapp.run();
     QPixmap img("../../Images/SRCImg.jpg");

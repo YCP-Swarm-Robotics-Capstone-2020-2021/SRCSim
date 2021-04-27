@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QCommandLinkButton>
 #include <QtWidgets/QDoubleSpinBox>
@@ -148,34 +149,40 @@ public:
     QLabel *label_5;
     QTextBrowser *textBrowser;
     QWidget *swarmTab;
+    QHBoxLayout *horizontalLayout_15;
     QVBoxLayout *verticalLayout_8;
-    QHBoxLayout *horizontalLayout_11;
-    QHBoxLayout *horizontalLayout_10;
+    QLabel *label_18;
+    QGridLayout *glLayout;
+    QVBoxLayout *verticalLayout_4;
+    QVBoxLayout *verticalLayout_6;
+    QHBoxLayout *horizontalLayout_12;
     QLabel *label_13;
     QComboBox *shapeSelection;
+    QCheckBox *Zeta2Checkbox;
+    QHBoxLayout *horizontalLayout_11;
+    QLabel *label_29;
+    QComboBox *ZetaSelectBox;
     QGridLayout *gridLayout_7;
     QLabel *label_14;
     QSlider *horizontalSlider_3;
     QSpinBox *widthBox;
-    QSpinBox *lengthBox;
     QLabel *label_15;
     QSlider *horizontalSlider_2;
+    QSpinBox *lengthBox;
     QLabel *label_16;
     QSlider *horizontalSlider;
     QSpinBox *rotationBox;
-    QVBoxLayout *verticalLayout_6;
-    QSpacerItem *verticalSpacer_3;
-    QCommandLinkButton *submitZeta;
-    QSpacerItem *verticalSpacer_4;
-    QGridLayout *gridLayout_8;
-    QLabel *label_18;
-    QLabel *label_19;
     QLabel *label_17;
-    QVBoxLayout *verticalLayout_7;
-    QGridLayout *glLayout;
-    QHBoxLayout *horizontalLayout_12;
+    QSlider *horizontalSlider_4;
+    QSpinBox *XOffsetBox;
+    QLabel *label_28;
+    QSlider *horizontalSlider_5;
+    QSpinBox *YOffsetBox;
+    QHBoxLayout *horizontalLayout_10;
+    QLabel *label_19;
     QSlider *zoomSlider;
-    QTextBrowser *textBrowser_2;
+    QCommandLinkButton *submitZeta;
+    QSpacerItem *verticalSpacer_3;
     QWidget *mapTab;
     QWidget *interfaceTab;
     QVBoxLayout *verticalLayout_5;
@@ -766,41 +773,114 @@ public:
         uProcessWatchLabel->addTab(controlTab, QString());
         swarmTab = new QWidget();
         swarmTab->setObjectName(QStringLiteral("swarmTab"));
-        verticalLayout_8 = new QVBoxLayout(swarmTab);
+        horizontalLayout_15 = new QHBoxLayout(swarmTab);
+        horizontalLayout_15->setSpacing(6);
+        horizontalLayout_15->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
+        verticalLayout_8 = new QVBoxLayout();
         verticalLayout_8->setSpacing(6);
-        verticalLayout_8->setContentsMargins(11, 11, 11, 11);
         verticalLayout_8->setObjectName(QStringLiteral("verticalLayout_8"));
-        horizontalLayout_11 = new QHBoxLayout();
-        horizontalLayout_11->setSpacing(6);
-        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
-        horizontalLayout_10 = new QHBoxLayout();
-        horizontalLayout_10->setSpacing(6);
-        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        label_18 = new QLabel(swarmTab);
+        label_18->setObjectName(QStringLiteral("label_18"));
+        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_18->sizePolicy().hasHeightForWidth());
+        label_18->setSizePolicy(sizePolicy1);
+        label_18->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_8->addWidget(label_18);
+
+        glLayout = new QGridLayout();
+        glLayout->setSpacing(6);
+        glLayout->setObjectName(QStringLiteral("glLayout"));
+        glLayout->setSizeConstraint(QLayout::SetMaximumSize);
+
+        verticalLayout_8->addLayout(glLayout);
+
+
+        horizontalLayout_15->addLayout(verticalLayout_8);
+
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        horizontalLayout_12 = new QHBoxLayout();
+        horizontalLayout_12->setSpacing(6);
+        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
         label_13 = new QLabel(swarmTab);
         label_13->setObjectName(QStringLiteral("label_13"));
+        QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(label_13->sizePolicy().hasHeightForWidth());
+        label_13->setSizePolicy(sizePolicy2);
 
-        horizontalLayout_10->addWidget(label_13);
+        horizontalLayout_12->addWidget(label_13);
 
         shapeSelection = new QComboBox(swarmTab);
         shapeSelection->setObjectName(QStringLiteral("shapeSelection"));
+        QSizePolicy sizePolicy3(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(shapeSelection->sizePolicy().hasHeightForWidth());
+        shapeSelection->setSizePolicy(sizePolicy3);
 
-        horizontalLayout_10->addWidget(shapeSelection);
+        horizontalLayout_12->addWidget(shapeSelection);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_12);
+
+        Zeta2Checkbox = new QCheckBox(swarmTab);
+        Zeta2Checkbox->setObjectName(QStringLiteral("Zeta2Checkbox"));
+
+        verticalLayout_6->addWidget(Zeta2Checkbox);
+
+        horizontalLayout_11 = new QHBoxLayout();
+        horizontalLayout_11->setSpacing(6);
+        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
+        label_29 = new QLabel(swarmTab);
+        label_29->setObjectName(QStringLiteral("label_29"));
+        sizePolicy2.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
+        label_29->setSizePolicy(sizePolicy2);
+
+        horizontalLayout_11->addWidget(label_29);
+
+        ZetaSelectBox = new QComboBox(swarmTab);
+        ZetaSelectBox->setObjectName(QStringLiteral("ZetaSelectBox"));
+        ZetaSelectBox->setEnabled(false);
+        sizePolicy3.setHeightForWidth(ZetaSelectBox->sizePolicy().hasHeightForWidth());
+        ZetaSelectBox->setSizePolicy(sizePolicy3);
+
+        horizontalLayout_11->addWidget(ZetaSelectBox);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_11);
+
+
+        verticalLayout_4->addLayout(verticalLayout_6);
 
         gridLayout_7 = new QGridLayout();
         gridLayout_7->setSpacing(6);
         gridLayout_7->setObjectName(QStringLiteral("gridLayout_7"));
         label_14 = new QLabel(swarmTab);
         label_14->setObjectName(QStringLiteral("label_14"));
+        sizePolicy2.setHeightForWidth(label_14->sizePolicy().hasHeightForWidth());
+        label_14->setSizePolicy(sizePolicy2);
 
-        gridLayout_7->addWidget(label_14, 0, 0, 2, 1);
+        gridLayout_7->addWidget(label_14, 0, 0, 1, 1);
 
         horizontalSlider_3 = new QSlider(swarmTab);
         horizontalSlider_3->setObjectName(QStringLiteral("horizontalSlider_3"));
+        sizePolicy3.setHeightForWidth(horizontalSlider_3->sizePolicy().hasHeightForWidth());
+        horizontalSlider_3->setSizePolicy(sizePolicy3);
         horizontalSlider_3->setMinimum(1);
         horizontalSlider_3->setMaximum(6);
         horizontalSlider_3->setOrientation(Qt::Horizontal);
 
-        gridLayout_7->addWidget(horizontalSlider_3, 0, 1, 2, 1);
+        gridLayout_7->addWidget(horizontalSlider_3, 0, 1, 1, 1);
 
         widthBox = new QSpinBox(swarmTab);
         widthBox->setObjectName(QStringLiteral("widthBox"));
@@ -809,193 +889,143 @@ public:
 
         gridLayout_7->addWidget(widthBox, 0, 2, 1, 1);
 
+        label_15 = new QLabel(swarmTab);
+        label_15->setObjectName(QStringLiteral("label_15"));
+        sizePolicy2.setHeightForWidth(label_15->sizePolicy().hasHeightForWidth());
+        label_15->setSizePolicy(sizePolicy2);
+
+        gridLayout_7->addWidget(label_15, 1, 0, 1, 1);
+
+        horizontalSlider_2 = new QSlider(swarmTab);
+        horizontalSlider_2->setObjectName(QStringLiteral("horizontalSlider_2"));
+        sizePolicy3.setHeightForWidth(horizontalSlider_2->sizePolicy().hasHeightForWidth());
+        horizontalSlider_2->setSizePolicy(sizePolicy3);
+        horizontalSlider_2->setMinimum(1);
+        horizontalSlider_2->setMaximum(6);
+        horizontalSlider_2->setOrientation(Qt::Horizontal);
+
+        gridLayout_7->addWidget(horizontalSlider_2, 1, 1, 1, 1);
+
         lengthBox = new QSpinBox(swarmTab);
         lengthBox->setObjectName(QStringLiteral("lengthBox"));
         lengthBox->setMinimum(1);
         lengthBox->setMaximum(6);
 
-        gridLayout_7->addWidget(lengthBox, 1, 2, 2, 1);
-
-        label_15 = new QLabel(swarmTab);
-        label_15->setObjectName(QStringLiteral("label_15"));
-
-        gridLayout_7->addWidget(label_15, 2, 0, 1, 1);
-
-        horizontalSlider_2 = new QSlider(swarmTab);
-        horizontalSlider_2->setObjectName(QStringLiteral("horizontalSlider_2"));
-        horizontalSlider_2->setMinimum(1);
-        horizontalSlider_2->setMaximum(6);
-        horizontalSlider_2->setOrientation(Qt::Horizontal);
-
-        gridLayout_7->addWidget(horizontalSlider_2, 2, 1, 1, 1);
+        gridLayout_7->addWidget(lengthBox, 1, 2, 1, 1);
 
         label_16 = new QLabel(swarmTab);
         label_16->setObjectName(QStringLiteral("label_16"));
+        sizePolicy2.setHeightForWidth(label_16->sizePolicy().hasHeightForWidth());
+        label_16->setSizePolicy(sizePolicy2);
 
-        gridLayout_7->addWidget(label_16, 3, 0, 1, 1);
+        gridLayout_7->addWidget(label_16, 2, 0, 1, 1);
 
         horizontalSlider = new QSlider(swarmTab);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        sizePolicy3.setHeightForWidth(horizontalSlider->sizePolicy().hasHeightForWidth());
+        horizontalSlider->setSizePolicy(sizePolicy3);
         horizontalSlider->setMinimum(-180);
         horizontalSlider->setMaximum(180);
         horizontalSlider->setOrientation(Qt::Horizontal);
 
-        gridLayout_7->addWidget(horizontalSlider, 3, 1, 1, 1);
+        gridLayout_7->addWidget(horizontalSlider, 2, 1, 1, 1);
 
         rotationBox = new QSpinBox(swarmTab);
         rotationBox->setObjectName(QStringLiteral("rotationBox"));
         rotationBox->setMinimum(-180);
         rotationBox->setMaximum(180);
 
-        gridLayout_7->addWidget(rotationBox, 3, 2, 1, 1);
-
-
-        horizontalLayout_10->addLayout(gridLayout_7);
-
-
-        horizontalLayout_11->addLayout(horizontalLayout_10);
-
-        verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setSpacing(6);
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        verticalLayout_6->addItem(verticalSpacer_3);
-
-        submitZeta = new QCommandLinkButton(swarmTab);
-        submitZeta->setObjectName(QStringLiteral("submitZeta"));
-
-        verticalLayout_6->addWidget(submitZeta);
-
-        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        verticalLayout_6->addItem(verticalSpacer_4);
-
-
-        horizontalLayout_11->addLayout(verticalLayout_6);
-
-
-        verticalLayout_8->addLayout(horizontalLayout_11);
-
-        gridLayout_8 = new QGridLayout();
-        gridLayout_8->setSpacing(6);
-        gridLayout_8->setObjectName(QStringLiteral("gridLayout_8"));
-        label_18 = new QLabel(swarmTab);
-        label_18->setObjectName(QStringLiteral("label_18"));
-        label_18->setAlignment(Qt::AlignCenter);
-
-        gridLayout_8->addWidget(label_18, 0, 0, 1, 1);
-
-        label_19 = new QLabel(swarmTab);
-        label_19->setObjectName(QStringLiteral("label_19"));
-        label_19->setAlignment(Qt::AlignCenter);
-
-        gridLayout_8->addWidget(label_19, 0, 1, 1, 1);
+        gridLayout_7->addWidget(rotationBox, 2, 2, 1, 1);
 
         label_17 = new QLabel(swarmTab);
         label_17->setObjectName(QStringLiteral("label_17"));
-        label_17->setAlignment(Qt::AlignCenter);
+        sizePolicy2.setHeightForWidth(label_17->sizePolicy().hasHeightForWidth());
+        label_17->setSizePolicy(sizePolicy2);
 
-        gridLayout_8->addWidget(label_17, 0, 2, 1, 1);
+        gridLayout_7->addWidget(label_17, 3, 0, 1, 1);
 
-        verticalLayout_7 = new QVBoxLayout();
-        verticalLayout_7->setSpacing(6);
-        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
-        glLayout = new QGridLayout();
-        glLayout->setSpacing(6);
-        glLayout->setObjectName(QStringLiteral("glLayout"));
+        horizontalSlider_4 = new QSlider(swarmTab);
+        horizontalSlider_4->setObjectName(QStringLiteral("horizontalSlider_4"));
+        sizePolicy3.setHeightForWidth(horizontalSlider_4->sizePolicy().hasHeightForWidth());
+        horizontalSlider_4->setSizePolicy(sizePolicy3);
+        horizontalSlider_4->setMinimum(-100);
+        horizontalSlider_4->setMaximum(100);
+        horizontalSlider_4->setOrientation(Qt::Horizontal);
 
-        verticalLayout_7->addLayout(glLayout);
+        gridLayout_7->addWidget(horizontalSlider_4, 3, 1, 1, 1);
+
+        XOffsetBox = new QSpinBox(swarmTab);
+        XOffsetBox->setObjectName(QStringLiteral("XOffsetBox"));
+        XOffsetBox->setMinimum(-100);
+        XOffsetBox->setMaximum(100);
+        XOffsetBox->setSingleStep(1);
+
+        gridLayout_7->addWidget(XOffsetBox, 3, 2, 1, 1);
+
+        label_28 = new QLabel(swarmTab);
+        label_28->setObjectName(QStringLiteral("label_28"));
+        sizePolicy2.setHeightForWidth(label_28->sizePolicy().hasHeightForWidth());
+        label_28->setSizePolicy(sizePolicy2);
+
+        gridLayout_7->addWidget(label_28, 4, 0, 1, 1);
+
+        horizontalSlider_5 = new QSlider(swarmTab);
+        horizontalSlider_5->setObjectName(QStringLiteral("horizontalSlider_5"));
+        sizePolicy3.setHeightForWidth(horizontalSlider_5->sizePolicy().hasHeightForWidth());
+        horizontalSlider_5->setSizePolicy(sizePolicy3);
+        horizontalSlider_5->setMinimum(-100);
+        horizontalSlider_5->setMaximum(100);
+        horizontalSlider_5->setOrientation(Qt::Horizontal);
+
+        gridLayout_7->addWidget(horizontalSlider_5, 4, 1, 1, 1);
+
+        YOffsetBox = new QSpinBox(swarmTab);
+        YOffsetBox->setObjectName(QStringLiteral("YOffsetBox"));
+        YOffsetBox->setMinimum(-100);
+        YOffsetBox->setMaximum(100);
+
+        gridLayout_7->addWidget(YOffsetBox, 4, 2, 1, 1);
 
 
-        gridLayout_8->addLayout(verticalLayout_7, 1, 0, 1, 1);
+        verticalLayout_4->addLayout(gridLayout_7);
 
-        horizontalLayout_12 = new QHBoxLayout();
-        horizontalLayout_12->setSpacing(6);
-        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
+        horizontalLayout_10 = new QHBoxLayout();
+        horizontalLayout_10->setSpacing(6);
+        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        label_19 = new QLabel(swarmTab);
+        label_19->setObjectName(QStringLiteral("label_19"));
+        sizePolicy2.setHeightForWidth(label_19->sizePolicy().hasHeightForWidth());
+        label_19->setSizePolicy(sizePolicy2);
+        label_19->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_10->addWidget(label_19);
+
         zoomSlider = new QSlider(swarmTab);
         zoomSlider->setObjectName(QStringLiteral("zoomSlider"));
-        zoomSlider->setStyleSheet(QLatin1String("QSlider::groove:horizontal {\n"
-"border: 1px solid #bbb;\n"
-"background: white;\n"
-"height: 10px;\n"
-"border-radius: 4px;\n"
-"}\n"
-"\n"
-"QSlider::sub-page:horizontal {\n"
-"background: qlineargradient(x1: 0, y1: 0,    x2: 0, y2: 1,\n"
-"    stop: 0 #66e, stop: 1 #bbf);\n"
-"background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,\n"
-"    stop: 0 #bbf, stop: 1 #55f);\n"
-"border: 1px solid #777;\n"
-"height: 10px;\n"
-"border-radius: 4px;\n"
-"}\n"
-"\n"
-"QSlider::add-page:horizontal {\n"
-"background: #fff;\n"
-"border: 1px solid #777;\n"
-"height: 10px;\n"
-"border-radius: 4px;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-"    stop:0 #eee, stop:1 #ccc);\n"
-"border: 1px solid #777;\n"
-"width: 13px;\n"
-"margin-top: -2px;\n"
-"margin-bottom: -2px;\n"
-"border-radius: 4px;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:hover {\n"
-"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-"    stop:0 #fff, stop:1 #ddd);\n"
-"border: 1px solid #444;\n"
-"border-radius: 4px;\n"
-"}\n"
-""
-                        "\n"
-"QSlider::sub-page:horizontal:disabled {\n"
-"background: #bbb;\n"
-"border-color: #999;\n"
-"}\n"
-"\n"
-"QSlider::add-page:horizontal:disabled {\n"
-"background: #eee;\n"
-"border-color: #999;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:disabled {\n"
-"background: #eee;\n"
-"border: 1px solid #aaa;\n"
-"border-radius: 4px;\n"
-"}"));
+        sizePolicy3.setHeightForWidth(zoomSlider->sizePolicy().hasHeightForWidth());
+        zoomSlider->setSizePolicy(sizePolicy3);
         zoomSlider->setMinimum(1);
         zoomSlider->setMaximum(30);
-        zoomSlider->setSingleStep(2);
-        zoomSlider->setValue(6);
-        zoomSlider->setOrientation(Qt::Vertical);
+        zoomSlider->setOrientation(Qt::Horizontal);
 
-        horizontalLayout_12->addWidget(zoomSlider);
+        horizontalLayout_10->addWidget(zoomSlider);
 
 
-        gridLayout_8->addLayout(horizontalLayout_12, 1, 1, 1, 1);
+        verticalLayout_4->addLayout(horizontalLayout_10);
 
-        textBrowser_2 = new QTextBrowser(swarmTab);
-        textBrowser_2->setObjectName(QStringLiteral("textBrowser_2"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(textBrowser_2->sizePolicy().hasHeightForWidth());
-        textBrowser_2->setSizePolicy(sizePolicy1);
-        textBrowser_2->setStyleSheet(QStringLiteral("background-color:rgb(102, 102, 102)"));
+        submitZeta = new QCommandLinkButton(swarmTab);
+        submitZeta->setObjectName(QStringLiteral("submitZeta"));
+        sizePolicy1.setHeightForWidth(submitZeta->sizePolicy().hasHeightForWidth());
+        submitZeta->setSizePolicy(sizePolicy1);
 
-        gridLayout_8->addWidget(textBrowser_2, 1, 2, 1, 1);
+        verticalLayout_4->addWidget(submitZeta);
+
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_4->addItem(verticalSpacer_3);
 
 
-        verticalLayout_8->addLayout(gridLayout_8);
+        horizontalLayout_15->addLayout(verticalLayout_4);
 
         uProcessWatchLabel->addTab(swarmTab, QString());
         mapTab = new QWidget();
@@ -1012,22 +1042,22 @@ public:
         verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
         label_6 = new QLabel(centralWidget);
         label_6->setObjectName(QStringLiteral("label_6"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(1);
-        sizePolicy2.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(1);
+        sizePolicy4.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy4);
         label_6->setAlignment(Qt::AlignCenter);
 
         verticalLayout_5->addWidget(label_6);
 
         warningBrowser = new QTextBrowser(centralWidget);
         warningBrowser->setObjectName(QStringLiteral("warningBrowser"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(40);
-        sizePolicy3.setHeightForWidth(warningBrowser->sizePolicy().hasHeightForWidth());
-        warningBrowser->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy5(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(40);
+        sizePolicy5.setHeightForWidth(warningBrowser->sizePolicy().hasHeightForWidth());
+        warningBrowser->setSizePolicy(sizePolicy5);
         warningBrowser->setMinimumSize(QSize(400, 0));
         warningBrowser->setStyleSheet(QStringLiteral("background-color:black"));
 
@@ -1107,8 +1137,12 @@ public:
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
         QObject::connect(turnSpeedSlider, SIGNAL(valueChanged(int)), label_28, SLOT(setNum(int)));
+        QObject::connect(horizontalSlider_4, SIGNAL(valueChanged(int)), XOffsetBox, SLOT(setValue(int)));
+        QObject::connect(XOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_4, SLOT(setValue(int)));
+        QObject::connect(horizontalSlider_5, SIGNAL(valueChanged(int)), YOffsetBox, SLOT(setValue(int)));
+        QObject::connect(YOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_5, SLOT(setValue(int)));
 
-        uProcessWatchLabel->setCurrentIndex(1);
+        uProcessWatchLabel->setCurrentIndex(2);
         motorTabWidget->setCurrentIndex(1);
 
 
@@ -1212,14 +1246,17 @@ public:
         motorTabWidget->setTabText(motorTabWidget->indexOf(motor4tab), QApplication::translate("MainWindow", "Motor 4", Q_NULLPTR));
         label_5->setText(QApplication::translate("MainWindow", "Debug Console", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(controlTab), QApplication::translate("MainWindow", "Control", Q_NULLPTR));
+        label_18->setText(QApplication::translate("MainWindow", "Formation Preview", Q_NULLPTR));
         label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", Q_NULLPTR));
+        Zeta2Checkbox->setText(QApplication::translate("MainWindow", "Enabled Zeta 2", Q_NULLPTR));
+        label_29->setText(QApplication::translate("MainWindow", "Zeta  Select:", Q_NULLPTR));
         label_14->setText(QApplication::translate("MainWindow", "Width:", Q_NULLPTR));
         label_15->setText(QApplication::translate("MainWindow", "Length:", Q_NULLPTR));
         label_16->setText(QApplication::translate("MainWindow", "Rotation:", Q_NULLPTR));
+        label_17->setText(QApplication::translate("MainWindow", "X Offset: ", Q_NULLPTR));
+        label_28->setText(QApplication::translate("MainWindow", "Y Offset:", Q_NULLPTR));
+        label_19->setText(QApplication::translate("MainWindow", "Zoom View:", Q_NULLPTR));
         submitZeta->setText(QApplication::translate("MainWindow", "Submit", Q_NULLPTR));
-        label_18->setText(QApplication::translate("MainWindow", "Formation Preveiw", Q_NULLPTR));
-        label_19->setText(QApplication::translate("MainWindow", "Zoom View", Q_NULLPTR));
-        label_17->setText(QApplication::translate("MainWindow", "Debug Output", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(mapTab), QApplication::translate("MainWindow", "Map", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(interfaceTab), QApplication::translate("MainWindow", "Interface", Q_NULLPTR));

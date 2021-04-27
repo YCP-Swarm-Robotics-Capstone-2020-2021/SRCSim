@@ -95,11 +95,12 @@ public:
    QPointF goalpoint;
    double goalx, goaly;
    double goalangle;
-   double posTolerance = 0.2;
+   double posTolerance = 0.1;
    EnumDefs::SensorState dodgeState = EnumDefs::NONE;
    bool object = false;
    bool dodge_state_fwd = false;
    bool driving = false;
+   bool done = false;
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
    void setCurv(double curv){roboCurv = curv;}

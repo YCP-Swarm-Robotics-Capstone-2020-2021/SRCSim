@@ -58,6 +58,7 @@ signals:
     void updateProcessWatch(QString id, QString msg);
     void updateWarning(QString id, QString msg, int);
     void updateDolphinVersion(QString id, QString version, QString msg);
+    void inputSecondZeta();
 
 private: // Configuration variables
     bool RunInQtEventLoop(const std::string & sName, const std::string & sMissionFile);
