@@ -68,6 +68,17 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
+  else if(key == "MAX_SPEED"){
+      MOOSValFromString(max_speed, msg.GetString(), "Speed");
+      MOOSValFromString(angle_tolerance, msg.GetString(), "AngleTolerance");
+      MOOSValFromString(posTolerance, msg.GetString(), "PoseTolerance");
+      MOOSValFromString(turn_speed, msg.GetString(), "TurnSpeed");
+      cout<<" MaxSpeed: "<<max_speed
+          <<" MaxTurnSpeed: "<<turn_speed
+          <<" AngleTolerance: "<<angle_tolerance
+          <<" PoseTolerance: "<<posTolerance<<endl;
+      std::cout<<"Max speed is " << max_speed << std::endl;
+  }
   else if(key == "OBJECT_DETECTED"){
      if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE && driving){
          dodge_state_fwd = true;
@@ -225,6 +236,7 @@ Register("Zeta_Init");
 Register("Neighbor_Zeta");
 Register("Speed_Curv_Override");
 Register("OBJECT_DETECTED");
+Register("MAX_SPEED");
 }
 
 
@@ -488,12 +500,19 @@ void MotionController::robotMover(){
         //2: Tranform by adding 180 - A to everything
         //3: Take difference between a' and theta'
         //4: Compare. if a' - theta' > 0, turn Right. Else, turn left
-        if(!(attitude > goalangle-10 && attitude < goalangle+10)){ //turn
-                int a_prime, theta_prime;
+        if(!(attitude > goalangle-angle_tolerance && attitude < goalangle+angle_tolerance)){ //turn
+	  /*int a_prime, theta_prime;
                 a_prime = 180;
                 theta_prime = (int(goalangle + (a_prime - attitude)))%360;
                 roboCurv = (a_prime - theta_prime > 0) ? -90.0 : 90.0;
-                roboSpeed = turn_speed;
+                roboSpeed = turn_speed;*/
+	  int h_prime = (int(attitude)+180)%360;
+	  if(h_prime > attitude){
+	    roboCurv = (goalangle > attitude and goalangle < h_prime) ? -90.0 : 90.0;
+	  } else {
+   	    roboCurv = (goalangle > h_prime and goalangle < attitude) ? 90.0 : -90.0;
+	  }
+	  roboSpeed = turn_speed;
         }
         else{
             if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
@@ -508,8 +527,7 @@ void MotionController::robotMover(){
         }
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
-        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
-
+        Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime());
 }
 
 void MotionController::boundaryRecovery(){

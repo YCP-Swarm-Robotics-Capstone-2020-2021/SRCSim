@@ -3,7 +3,7 @@
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
 TIME_WARP=1
-NUM_BOTS=2
+NUM_BOTS=5
 BUILD_MODE=0
 KAPPA=1
 DT=1
@@ -96,7 +96,7 @@ ProcessConfig = pShare
 EOF
 VIP="192.168.1."
 VIPEND=110
-for ((i = 0 ; i < 2 ; i++)); do
+for ((i = 0 ; i < $NUM_BOTS ; i++)); do
 VIPEND=$(($VIPEND+5))
 cat >> plug_GCSpShare.moos <<EOF
      Output = src_name=Change_State, route=${VIP}${VIPEND}:9000
@@ -104,6 +104,7 @@ cat >> plug_GCSpShare.moos <<EOF
      Output = src_name=BOUNDARY_SIZE, route=${VIP}${VIPEND}:9000
      Output = src_name=RUN_ENDED, route=${VIP}${VIPEND}:9000
      Output = src_name=RUN_STARTED, route=${VIP}${VIPEND}:9000
+     Output = src_name=MAX_SPEED, route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Update_Pos,dest_name=Update_Pos,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Change_State,dest_name=Change_State,route=${VIP}${VIPEND}:9000
      Output=src_name=Dolphin${i}_Reg_Ack,dest_name=Reg_Ack,route=${VIP}${VIPEND}:9000
@@ -138,6 +139,10 @@ qmake
 make
 cd ..
 cd SwarmHandler
+qmake
+make
+cd ..
+cd CameraInterface
 qmake
 make
 cd ../../missions

@@ -328,8 +328,8 @@ void SwarmHandler::initializeSwarm()
 
     //Setup topology of the formation
     if(!SwarmInitialized){
-        iter.value()->podMates->append("Narwhal");
-        m_neighbors.append(iter.key());
+      /*iter.value()->podMates->append("Narwhal");
+	  m_neighbors.append(iter.key());
         if(numRobotsInSwarm != 1){
             iter++;
             QString next = iter.key();
@@ -350,9 +350,15 @@ void SwarmHandler::initializeSwarm()
             }
             iter--;
             iter.value()->podMates->append("Narwhal");
-        }
-        iter.value()->podMates->append("Narwhal");
-        m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
+	    }
+	 iter.value()->podMates->append("Narwhal");
+       */
+      while(iter != registration->end()){
+	 m_neighbors.append(iter.key());
+	iter.value()->podMates->append("Narwhal");
+	iter++;
+      }
+      m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
         //Setup Linkage assignments.
         iter = registration->begin();
         for(int i = 0; i<numRobotsInSwarm; i++, iter++){

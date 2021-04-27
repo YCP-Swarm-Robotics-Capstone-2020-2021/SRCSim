@@ -21,6 +21,7 @@
 #include <VehicleStateDefines.h>
 #include "MotorController.h"
 #include "LEDController.h"
+#include "LIRController.h"
 
 class GPIOController : public QObject, public AppCastingMOOSApp
 {
@@ -60,6 +61,7 @@ private: // Configuration variables
     EnumDefs defs;
     MotorController motorcontroller;
     LEDController ledcontoller;
+    LIRController lircontoller;
     EnumDefs::VehicleStates state;
     EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
 signals:
@@ -73,6 +75,7 @@ public slots:
     bool onStartupComplete = false;
     bool m_motorStartupComplete = false;
     bool m_ledStartupComplete = false;
+    bool m_lirStartupComplete = false;
 };
 
 #endif 

@@ -111,6 +111,10 @@ void MainWindow::setBotList(QList<QString> list)
 
 void MainWindow::onSubmitStateButtonClicked()
 {
+    m_maxTurnSpeed = ui->turnSpeedSlider->value();
+    m_poseTolerance = ui->posToleranceSpinner->value();
+    m_maxSpeed = ui->maxSpeedSlider->value();
+    m_angleTolerance = ui->angleToleranceSpinner->value();
     m_robotStateMap[m_currentBotID].maxSpeed = m_maxSpeed;
     bool differentVersions = false;
     QString version;
@@ -141,7 +145,7 @@ void MainWindow::onSubmitStateButtonClicked()
                                                QMessageBox::Yes|QMessageBox::No);
             switch(user_return){
                 case QMessageBox::Yes:
-                    emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+                    emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed, m_maxTurnSpeed, m_poseTolerance, m_angleTolerance);
                     break;
                 case QMessageBox::No:
                     break;
@@ -150,11 +154,11 @@ void MainWindow::onSubmitStateButtonClicked()
             }
         }
         else {
-            emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+            emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed, m_maxTurnSpeed, m_poseTolerance, m_angleTolerance);
         }
     }
     else {
-        emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed);
+        emit sendStateCMD(m_currentState, m_currentBotID, m_maxSpeed,m_maxTurnSpeed, m_poseTolerance, m_angleTolerance);
     }
 
 }
@@ -335,13 +339,6 @@ void MainWindow::updateDolphinMsg(QString id, QString msg, int lvl){
             printText(id+": "+msg, id);
             break;
     }
-}
-
-void MainWindow::updateBatteryPerc(double perc, QString dolphin)
-{
-    m_robotStateMap[dolphin].batteryCharge = perc;
-    if(dolphin == m_currentBotID)
-        ui->batteryPercentage->setText(QString::number(perc)+"%");
 }
 
 void MainWindow::updateMotorSpeed(double speed, int motor, QString dolphin)

@@ -18,6 +18,7 @@
 #include <QTimer>
 #include <QString>
 #include <QThread>
+#include <QtNetwork/QUdpSocket>
 #include <QUdpSocket>
 #include <QJsonObject>
 #define debug 0

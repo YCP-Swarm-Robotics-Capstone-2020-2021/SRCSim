@@ -576,46 +576,29 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="2" column="3">
+               <widget class="QLabel" name="maxSpeedPercentage">
+                <property name="text">
+                 <string>50</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
                <widget class="QLabel" name="label_3">
                 <property name="text">
-                 <string>Battery:</string>
+                 <string>Pos Tolerance</string>
                 </property>
                </widget>
               </item>
-              <item>
-               <spacer name="horizontalSpacer_5">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="batteryPercentage">
-                <property name="text">
-                 <string>100%</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="maxSpeedSlider_2">
-              <item>
+              <item row="2" column="0">
                <widget class="QLabel" name="label_4">
                 <property name="text">
                  <string>Max Speed:</string>
                 </property>
                </widget>
               </item>
-              <item>
+              <item row="2" column="1">
                <widget class="QSlider" name="maxSpeedSlider">
                 <property name="minimumSize">
                  <size>
@@ -627,17 +610,81 @@
                  <number>100</number>
                 </property>
                 <property name="value">
-                 <number>100</number>
+                 <number>50</number>
                 </property>
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QLabel" name="maxSpeedPercentage">
+              <item row="3" column="1">
+               <widget class="QSlider" name="turnSpeedSlider">
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>15</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_29">
                 <property name="text">
-                 <string>100</string>
+                 <string>Turn Speed:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_30">
+                <property name="text">
+                 <string>Angle Tolerance</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLabel" name="label_34">
+                <property name="text">
+                 <string>Ft</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLabel" name="label_35">
+                <property name="text">
+                 <string>Degrees</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="posToleranceSpinner">
+                <property name="decimals">
+                 <number>1</number>
+                </property>
+                <property name="singleStep">
+                 <double>0.100000000000000</double>
+                </property>
+                <property name="value">
+                 <double>0.200000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="angleToleranceSpinner">
+                <property name="maximum">
+                 <number>180</number>
+                </property>
+                <property name="value">
+                 <number>10</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QLabel" name="label_28">
+                <property name="text">
+                 <string>15</string>
                 </property>
                </widget>
               </item>
@@ -1352,12 +1399,12 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>424</x>
-     <y>229</y>
+     <x>374</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>404</x>
-     <y>266</y>
+     <x>359</x>
+     <y>397</y>
     </hint>
    </hints>
   </connection>
@@ -1368,12 +1415,12 @@ border-radius: 4px;
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>616</x>
-     <y>350</y>
+     <x>571</x>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
-     <x>648</x>
-     <y>328</y>
+     <x>644</x>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -1384,12 +1431,12 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>404</x>
-     <y>266</y>
+     <x>359</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
-     <x>424</x>
-     <y>229</y>
+     <x>374</x>
+     <y>333</y>
     </hint>
    </hints>
   </connection>
@@ -1400,12 +1447,12 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>347</x>
-     <y>115</y>
+     <x>643</x>
+     <y>131</y>
     </hint>
     <hint type="destinationlabel">
-     <x>689</x>
-     <y>115</y>
+     <x>704</x>
+     <y>114</y>
     </hint>
    </hints>
   </connection>
@@ -1420,8 +1467,8 @@ border-radius: 4px;
      <y>150</y>
     </hint>
     <hint type="destinationlabel">
-     <x>474</x>
-     <y>143</y>
+     <x>643</x>
+     <y>181</y>
     </hint>
    </hints>
   </connection>
@@ -1432,12 +1479,12 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>671</x>
-     <y>184</y>
+     <x>704</x>
+     <y>214</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>175</y>
+     <x>643</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -1448,8 +1495,8 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>591</x>
-     <y>145</y>
+     <x>643</x>
+     <y>181</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>
@@ -1464,12 +1511,28 @@ border-radius: 4px;
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>487</x>
-     <y>181</y>
+     <x>643</x>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
-     <x>675</x>
-     <y>186</y>
+     <x>704</x>
+     <y>214</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>turnSpeedSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_28</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>544</x>
+     <y>410</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>644</x>
+     <y>412</y>
     </hint>
    </hints>
   </connection>

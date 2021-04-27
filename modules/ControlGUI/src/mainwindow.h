@@ -89,7 +89,10 @@ private:
     EnumDefs::VehicleStates m_currentState;
     QString m_currentBotID;
     int m_numBots;
-    int m_maxSpeed;
+    int m_maxSpeed = 50;
+    int m_maxTurnSpeed = 15;
+    int m_angleTolerance = 10;
+    double m_poseTolerance = 0.2;
 
     QMap<QString, RobotState> m_robotStateMap;
     QMap<QString, QString> m_robotProcessMap;
@@ -131,7 +134,6 @@ public slots:
     void updateWarningText(QString);
     void updateMotorSpeed(double speed, int motor, QString dolphin);
     void updateMotorCurrent(double current, int motor, QString dolphin);
-    void updateBatteryPerc(double, QString);
     void updateDolphinStatus(EnumDefs::StatusState, QString);
     void updateDolphinState(QString, int);
     void updateDolphinWatch(QString, QString);
@@ -166,7 +168,7 @@ public slots:
     void onRunPressed();
     void onRunTimeout();
 signals:
-    void sendStateCMD(EnumDefs::VehicleStates, QString, int);
+    void sendStateCMD(EnumDefs::VehicleStates, QString, int, int, double, int);
     void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);
     void updatePaintList(QList<QString> list);
     void zoomValue(int);
@@ -175,6 +177,7 @@ signals:
     void updateBoundarySize(int width, int height);
     void runStarted(std::string msg);
     void runEnded(std::string msg);
+private slots:
 };
 
 #endif // MAINWINDOW_H
