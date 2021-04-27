@@ -64,15 +64,13 @@ public slots:
     void setXOffset(int i){currentZeta[Zetaoption].xoffset = i/12.0; update();}
     void setYOffset(int i){currentZeta[Zetaoption].yoffset = i/12.0; update();}
     void setZetaOption(QString s){Zetaoption =  s.right(1).toInt(); update();}
-    void submitZetaPressed(double x=0, double y=0){
+    void submitZetaPressed( int index=0){
         setupZeta();
-        currentZeta[Zetaoption].zeta.setxPos(currentZeta[Zetaoption].zeta.getxPos()+x);
-        currentZeta[Zetaoption].zeta.setyPos(currentZeta[Zetaoption].zeta.getyPos()+y);
-        currentZeta[Zetaoption].zeta.setxPos((currentZeta[Zetaoption].zeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
-        currentZeta[Zetaoption].zeta.setyPos((currentZeta[Zetaoption].zeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
-        currentZeta[Zetaoption].zeta.setAttitude(-currentZeta[Zetaoption].rotation);
-        QString shape = ",shape="+QString::fromStdString(shapeArray[currentZeta[Zetaoption].shape]);
-        emit emitZeta(currentZeta[Zetaoption].zeta.stringify()+shape);
+        currentZeta[index].zeta.setxPos((currentZeta[index].zeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
+        currentZeta[index].zeta.setyPos((currentZeta[index].zeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
+        currentZeta[index].zeta.setAttitude(-currentZeta[index].rotation);
+        QString shape = ",shape="+QString::fromStdString(shapeArray[currentZeta[index].shape]);
+        emit emitZeta(currentZeta[index].zeta.stringify()+shape);
     }
 public:
     QMap<int, ZetaState> currentZeta;

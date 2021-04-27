@@ -101,10 +101,19 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
 
             Notify(id.toStdString()+"_VERSION_ACK", "TRUE");
         }
+        else if(key == "All_Done"){
+            std::string done;
+            MOOSValFromString(done, msg.GetString(), "State");
+            if(done == "true"){
+                emit inputSecondZeta();
+            }
+
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
         }
+
 
     }
     cout << "What the hell is he doing "<< endl;
@@ -178,6 +187,7 @@ void UIMoosInterface::registerVariables()
     Register("PROC_WATCH_SUMMARY");
     Register("WCA_MESSAGE");
     Register("VERSION_NUMBER");
+    Register("All_Done");
 }
 
 bool UIMoosInterface::buildReport()

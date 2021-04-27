@@ -92,10 +92,26 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setWholeLambda(lambdalist);
       currentShape = QString::fromStdString(shape);
   }
+  else if(key == "Dolphin_Done"){
+      std::string id;
+      std::string done;
+      bool bdone = false;
+      MOOSValFromString(id , msg.GetString(), "Id");
+      MOOSValFromString(done , msg.GetString(), "State");
+      if(done == "true"){
+          bdone = true;
+      }
+      registration->value(QString::fromStdString(id))->done = bdone;
+      done = checkDone() ? "true" : "false";
+          Notify("All_Done", "State=" + done);
+
+
+  }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
     std::cout << "Bad message: "<<key<<std::endl;
   }
+
 }
 
 return(true);
@@ -209,6 +225,7 @@ Register("Current_State", 0);
 Register("Reg_In", 0);
 Register("Zeta_Cmd", 0);
 Register("DOLPHIN_DISCONNECTED", 0);
+Register("Dolphin_Done");
 }
 
 
@@ -300,6 +317,21 @@ bool SwarmHandler::checkState(EnumDefs::VehicleStates state)
     QMap<QString, Robot*>::iterator iter = registration->begin();
     while(iter != registration->end()){
         if(iter.value()->state != state){
+            return false;
+        }
+        iter++;
+    }
+    return true;
+}
+
+bool SwarmHandler::checkDone()
+{
+    if(registration->count()<1){
+        return false;
+    }
+    QMap<QString, Robot*>::iterator iter = registration->begin();
+    while(iter != registration->end()){
+        if(! iter.value()->done){
             return false;
         }
         iter++;

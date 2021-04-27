@@ -194,6 +194,7 @@ ProcessConfig = pShare
      Output=src_name=Speed_Curv,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=WCA_MESSAGE,route=\$(GCSIP):\$(GCSPORT)
      Output=src_name=VERSION_NUMBER,route=\$(GCSIP):\$(GCSPORT)
+     Output=src_name=Dolphin_Done,route=\$(GCSIP):\$(GCSPORT)
 EOF
 PORT=8300
 for ((i=0 ; i < $NUM_BOTS ; i++)); do

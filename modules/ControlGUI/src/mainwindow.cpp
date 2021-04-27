@@ -256,6 +256,12 @@ void MainWindow::onLeftButtonReleased()
     left = false;
     emit sendSpeed(m_currentBotID, forward, reverse, left, right, ui->speedSelection->value());
 }
+void MainWindow::secondZetaCheck(){
+    if(ui->ZetaSelectBox->isEnabled()){
+        myPainter->submitZetaPressed(1);
+    }
+
+}
 
 void MainWindow::onRightButtonPressed()
 {

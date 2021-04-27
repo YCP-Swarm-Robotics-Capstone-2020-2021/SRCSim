@@ -29,6 +29,7 @@ public:
     double yOffset;
     int linkageAssignment;
     QList<QString> *podMates;
+    bool done = false;
 };
 
 class SwarmHandler : public QObject, public AppCastingMOOSApp
@@ -51,6 +52,7 @@ public:
    void onRegistration(CMOOSMsg & msg);
    bool onCurrentState(CMOOSMsg & msg);
    bool checkState(EnumDefs::VehicleStates state);
+   bool checkDone();
    QList<double> toDoubleList(QList<QString> input);
    void initializeSwarm();
    void incrementFormationZeta();

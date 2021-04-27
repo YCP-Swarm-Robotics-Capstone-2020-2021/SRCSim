@@ -168,6 +168,7 @@ public slots:
 
     void onRunPressed();
     void onRunTimeout();
+    void secondZetaCheck();
 signals:
     void sendStateCMD(EnumDefs::VehicleStates, QString, int);
     void sendSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed);

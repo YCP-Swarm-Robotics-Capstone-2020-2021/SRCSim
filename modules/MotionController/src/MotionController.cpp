@@ -484,6 +484,7 @@ EnumDefs::VehicleStates MotionController::swarmInit(){
 }
 void MotionController::robotMover(){
         driving = false;
+        done = false;
         //1: Difference between 180 and A
         //2: Tranform by adding 180 - A to everything
         //3: Take difference between a' and theta'
@@ -499,6 +500,9 @@ void MotionController::robotMover(){
             if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
                 roboSpeed = 0;
                 roboCurv = 0;
+                if(state == EnumDefs::SWARMRUN){
+                    done = true;
+                }
             } //We did it!!
             else{
                 driving = true;
@@ -509,6 +513,8 @@ void MotionController::robotMover(){
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
+        QString input = (done ? "true" : "false");
+        Notify("Dolphin_Done", "State=" + input.toStdString()+",Id=" + id.toStdString());
 
 }
 
