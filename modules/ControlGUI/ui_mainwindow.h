@@ -110,7 +110,7 @@ public:
     QLabel *label_35;
     QDoubleSpinBox *posToleranceSpinner;
     QSpinBox *angleToleranceSpinner;
-    QLabel *label_28;
+    QLabel *TurnLabel;
     QSpacerItem *horizontalSpacer_2;
     QTabWidget *motorTabWidget;
     QWidget *motor1tab;
@@ -160,7 +160,7 @@ public:
     QComboBox *shapeSelection;
     QCheckBox *Zeta2Checkbox;
     QHBoxLayout *horizontalLayout_11;
-    QLabel *label_29;
+    QLabel *ZetaLabel;
     QComboBox *ZetaSelectBox;
     QGridLayout *gridLayout_7;
     QLabel *label_14;
@@ -175,7 +175,7 @@ public:
     QLabel *label_17;
     QSlider *horizontalSlider_4;
     QSpinBox *XOffsetBox;
-    QLabel *label_28;
+    QLabel *label_36;
     QSlider *horizontalSlider_5;
     QSpinBox *YOffsetBox;
     QHBoxLayout *horizontalLayout_10;
@@ -205,7 +205,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1312, 708);
+        MainWindow->resize(1368, 708);
         actionKill_All = new QAction(MainWindow);
         actionKill_All->setObjectName(QStringLiteral("actionKill_All"));
         centralWidget = new QWidget(MainWindow);
@@ -582,10 +582,10 @@ public:
 
         gridLayout_10->addWidget(angleToleranceSpinner, 1, 1, 1, 1);
 
-        label_28 = new QLabel(controlTab);
-        label_28->setObjectName(QStringLiteral("label_28"));
+        TurnLabel = new QLabel(controlTab);
+        TurnLabel->setObjectName(QStringLiteral("TurnLabel"));
 
-        gridLayout_10->addWidget(label_28, 3, 3, 1, 1);
+        gridLayout_10->addWidget(TurnLabel, 3, 3, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout_10);
@@ -841,12 +841,12 @@ public:
         horizontalLayout_11 = new QHBoxLayout();
         horizontalLayout_11->setSpacing(6);
         horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
-        label_29 = new QLabel(swarmTab);
-        label_29->setObjectName(QStringLiteral("label_29"));
-        sizePolicy2.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
-        label_29->setSizePolicy(sizePolicy2);
+        ZetaLabel = new QLabel(swarmTab);
+        ZetaLabel->setObjectName(QStringLiteral("ZetaLabel"));
+        sizePolicy2.setHeightForWidth(ZetaLabel->sizePolicy().hasHeightForWidth());
+        ZetaLabel->setSizePolicy(sizePolicy2);
 
-        horizontalLayout_11->addWidget(label_29);
+        horizontalLayout_11->addWidget(ZetaLabel);
 
         ZetaSelectBox = new QComboBox(swarmTab);
         ZetaSelectBox->setObjectName(QStringLiteral("ZetaSelectBox"));
@@ -962,12 +962,12 @@ public:
 
         gridLayout_7->addWidget(XOffsetBox, 3, 2, 1, 1);
 
-        label_28 = new QLabel(swarmTab);
-        label_28->setObjectName(QStringLiteral("label_28"));
-        sizePolicy2.setHeightForWidth(label_28->sizePolicy().hasHeightForWidth());
-        label_28->setSizePolicy(sizePolicy2);
+        label_36 = new QLabel(swarmTab);
+        label_36->setObjectName(QStringLiteral("label_36"));
+        sizePolicy2.setHeightForWidth(label_36->sizePolicy().hasHeightForWidth());
+        label_36->setSizePolicy(sizePolicy2);
 
-        gridLayout_7->addWidget(label_28, 4, 0, 1, 1);
+        gridLayout_7->addWidget(label_36, 4, 0, 1, 1);
 
         horizontalSlider_5 = new QSlider(swarmTab);
         horizontalSlider_5->setObjectName(QStringLiteral("horizontalSlider_5"));
@@ -1113,7 +1113,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1312, 22));
+        menuBar->setGeometry(QRect(0, 0, 1368, 22));
         menuCommands = new QMenu(menuBar);
         menuCommands->setObjectName(QStringLiteral("menuCommands"));
         MainWindow->setMenuBar(menuBar);
@@ -1136,13 +1136,12 @@ public:
         QObject::connect(rotationBox, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
-        QObject::connect(turnSpeedSlider, SIGNAL(valueChanged(int)), label_28, SLOT(setNum(int)));
         QObject::connect(horizontalSlider_4, SIGNAL(valueChanged(int)), XOffsetBox, SLOT(setValue(int)));
         QObject::connect(XOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_4, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_5, SIGNAL(valueChanged(int)), YOffsetBox, SLOT(setValue(int)));
         QObject::connect(YOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_5, SLOT(setValue(int)));
 
-        uProcessWatchLabel->setCurrentIndex(2);
+        uProcessWatchLabel->setCurrentIndex(1);
         motorTabWidget->setCurrentIndex(1);
 
 
@@ -1215,7 +1214,7 @@ public:
         label_30->setText(QApplication::translate("MainWindow", "Angle Tolerance", Q_NULLPTR));
         label_34->setText(QApplication::translate("MainWindow", "Ft", Q_NULLPTR));
         label_35->setText(QApplication::translate("MainWindow", "Degrees", Q_NULLPTR));
-        label_28->setText(QApplication::translate("MainWindow", "15", Q_NULLPTR));
+        TurnLabel->setText(QApplication::translate("MainWindow", "15", Q_NULLPTR));
         label_32->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
         m1Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
         label_33->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));
@@ -1249,12 +1248,12 @@ public:
         label_18->setText(QApplication::translate("MainWindow", "Formation Preview", Q_NULLPTR));
         label_13->setText(QApplication::translate("MainWindow", "Formation Shape:", Q_NULLPTR));
         Zeta2Checkbox->setText(QApplication::translate("MainWindow", "Enabled Zeta 2", Q_NULLPTR));
-        label_29->setText(QApplication::translate("MainWindow", "Zeta  Select:", Q_NULLPTR));
+        ZetaLabel->setText(QApplication::translate("MainWindow", "Zeta  Select:", Q_NULLPTR));
         label_14->setText(QApplication::translate("MainWindow", "Width:", Q_NULLPTR));
         label_15->setText(QApplication::translate("MainWindow", "Length:", Q_NULLPTR));
         label_16->setText(QApplication::translate("MainWindow", "Rotation:", Q_NULLPTR));
         label_17->setText(QApplication::translate("MainWindow", "X Offset: ", Q_NULLPTR));
-        label_28->setText(QApplication::translate("MainWindow", "Y Offset:", Q_NULLPTR));
+        label_36->setText(QApplication::translate("MainWindow", "Y Offset:", Q_NULLPTR));
         label_19->setText(QApplication::translate("MainWindow", "Zoom View:", Q_NULLPTR));
         submitZeta->setText(QApplication::translate("MainWindow", "Submit", Q_NULLPTR));
         uProcessWatchLabel->setTabText(uProcessWatchLabel->indexOf(swarmTab), QApplication::translate("MainWindow", "Swarm", Q_NULLPTR));

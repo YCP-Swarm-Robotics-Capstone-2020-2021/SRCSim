@@ -64,7 +64,6 @@ private: // Configuration variables
     LIRController lircontoller;
     EnumDefs::VehicleStates state;
     EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
-    EnumDefs::VehicleStates state;
 
 
 signals:
