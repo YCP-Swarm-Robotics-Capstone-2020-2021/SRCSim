@@ -90,6 +90,11 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setWholeTheta(thetalist);
       zetaControl->setAttitude(att*PI/180.0);
       zetaControl->setWholeLambda(lambdalist);
+      if(inRun and QString::fromStdString(shape) != currentShape){
+          Notify("Change_State", "State="+QString::number(EnumDefs::SWARMINIT).toStdString());
+          state = EnumDefs::SWARMMODE;
+          SwarmInitialized = false;
+      }
       currentShape = QString::fromStdString(shape);
   }
   else if(key == "Dolphin_Done"){

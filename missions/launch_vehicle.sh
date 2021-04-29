@@ -136,7 +136,7 @@ if [[ deployment -eq 1 ]]; then
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
         KAPPA=$KAPPA                                 DT=$DT  \
 	LOG_DIR=$mission_dir                         VERSION=$version_number \
-	MESSAGE=$commit_message
+	MESSAGE=$commit_message                      SIM="false"
 else
     nsplug meta_vehicle.moos targ_$VNAME.moos -f WARP=$TIME_WARP \
         VNAME=$VNAME                                 VPORT=$PORT \
@@ -144,7 +144,7 @@ else
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
         KAPPA=$KAPPA                                 DT=$DT  \
 	LOG_DIR=$mission_dir                         VERSION=$version_number \
-	MESSAGE=$commit_message
+	MESSAGE=$commit_message                      SIM="false"
 fi
 #-------------------------------------------------------
 #  Part 3: Build the modules

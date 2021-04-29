@@ -152,42 +152,45 @@ void SwarmFormationPainter::drawBots()
 
 }
 
-void SwarmFormationPainter::setupZeta()
+void SwarmFormationPainter::setupZeta(int index)
 {
+    if(index < 0){
+        index = Zetaoption;
+    }
     QPair<double, double> formationXY = {this->width()/2, this->height()/2};
-    double length = sqrt(currentZeta[Zetaoption].width*currentZeta[Zetaoption].width+currentZeta[Zetaoption].length*currentZeta[Zetaoption].length);
+    double length = sqrt(currentZeta[index].width*currentZeta[index].width+currentZeta[index].length*currentZeta[index].length);
     Zeta newShape;
-    switch(currentZeta[Zetaoption].shape){
+    switch(currentZeta[index].shape){
         case Shape::SQUARE:
-            newShape.setxPos(formationXY.first-((currentZeta[Zetaoption].xoffset+(double(currentZeta[Zetaoption].width)/2.0))*this->width()/numFeetInArenaView));
-            newShape.setyPos(formationXY.second+((currentZeta[Zetaoption].yoffset+(double(currentZeta[Zetaoption].length)/2.0))*this->height()/numFeetInArenaView));
-            newShape.setAttitude(double(currentZeta[Zetaoption].rotation)*PI/180);
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].width)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(currentZeta[index].length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
             newShape.setWholeTheta({-90, -90, -90, -90});
-            newShape.setWholeLambda(QList<double>{double(currentZeta[Zetaoption].width),
-                                                     double(currentZeta[Zetaoption].length),
-                                                     double(currentZeta[Zetaoption].width),
-                                                     double(currentZeta[Zetaoption].length)});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].width),
+                                                     double(currentZeta[index].length),
+                                                     double(currentZeta[index].width),
+                                                     double(currentZeta[index].length)});
             break;
         case Shape::TRIANGLE:
-            newShape.setxPos(formationXY.first-((currentZeta[Zetaoption].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
-            newShape.setyPos(formationXY.second+(currentZeta[Zetaoption].yoffset+((double(length)/2.0))*this->height()/numFeetInArenaView));
-            newShape.setAttitude(double(currentZeta[Zetaoption].rotation)*PI/180);
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+(currentZeta[index].yoffset+((double(length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
             newShape.setWholeTheta({-120, -120, -120});
             newShape.setWholeLambda(QList<double>{double(length),
                                                      double(length),
                                                      double(length)});
             break;
         case Shape::LINE:
-            newShape.setxPos(formationXY.first-((currentZeta[Zetaoption].xoffset+(double(currentZeta[Zetaoption].length)/2.0))*this->width()/numFeetInArenaView));
-            newShape.setyPos(formationXY.second+((currentZeta[Zetaoption].yoffset))*this->height()/numFeetInArenaView);
-            newShape.setAttitude(double(currentZeta[Zetaoption].rotation)*PI/180);
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset))*this->height()/numFeetInArenaView);
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
             newShape.setWholeTheta({-90});
-            newShape.setWholeLambda(QList<double>{double(currentZeta[Zetaoption].length)});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].length)});
                 break;
         case Shape::PENTAGON:
-            newShape.setxPos(formationXY.first-((currentZeta[Zetaoption].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
-            newShape.setyPos(formationXY.second+((currentZeta[Zetaoption].yoffset+(double(length)/2.0))*this->height()/numFeetInArenaView));
-            newShape.setAttitude(double(currentZeta[Zetaoption].rotation)*PI/180);
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
             newShape.setWholeTheta({-72, -72, -72, -72, -72});
             newShape.setWholeLambda(QList<double>{double(length),
                                                      double(length),
@@ -196,19 +199,19 @@ void SwarmFormationPainter::setupZeta()
                                                      double(length)});
             break;
         case Shape::PARALLELOGRAM:
-            newShape.setxPos(formationXY.first-((currentZeta[Zetaoption].xoffset+(double(currentZeta[Zetaoption].width)/2.0))*this->width()/numFeetInArenaView));
-            newShape.setyPos(formationXY.second+((currentZeta[Zetaoption].yoffset+(double(currentZeta[Zetaoption].length)/2.0))*this->height()/numFeetInArenaView));
-            newShape.setAttitude(double(currentZeta[Zetaoption].rotation)*PI/180);
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].width)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(currentZeta[index].length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
             newShape.setWholeTheta({-60, -120, -60, -120});
-            newShape.setWholeLambda(QList<double>{double(currentZeta[Zetaoption].width),
-                                                     double(currentZeta[Zetaoption].length),
-                                                     double(currentZeta[Zetaoption].width),
-                                                     double(currentZeta[Zetaoption].length)});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].width),
+                                                     double(currentZeta[index].length),
+                                                     double(currentZeta[index].width),
+                                                     double(currentZeta[index].length)});
             break;
         default:
             break;
     }
-    currentZeta[Zetaoption].zeta = newShape;
+    currentZeta[index].zeta = newShape;
 
 }
 void SwarmFormationPainter::initZeta(int i)

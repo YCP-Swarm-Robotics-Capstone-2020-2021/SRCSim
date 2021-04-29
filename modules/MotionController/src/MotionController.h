@@ -101,6 +101,8 @@ public:
    bool dodge_state_fwd = false;
    bool driving = false;
    bool done = false;
+   bool simulation = false;
+   bool doneTurning = false;
 public slots:
    void setSpeed(double speed){roboSpeed = speed;}
    void setCurv(double curv){roboCurv = curv;}

@@ -61,11 +61,11 @@ public slots:
     void setCurrentLength(int i){currentZeta[Zetaoption].length = i; update();}
     void setCurrentRotation(int i){currentZeta[Zetaoption].rotation = i; update();}
     void setFeetArenaView(int i){numFeetInArenaView = i; update();}
-    void setXOffset(int i){currentZeta[Zetaoption].xoffset = i/12.0; update();}
-    void setYOffset(int i){currentZeta[Zetaoption].yoffset = i/12.0; update();}
+    void setXOffset(int i){currentZeta[Zetaoption].xoffset = double(i)/12.0; update();}
+    void setYOffset(int i){currentZeta[Zetaoption].yoffset = double(i)/12.0; update();}
     void setZetaOption(QString s){Zetaoption =  s.right(1).toInt(); update();}
     void submitZetaPressed( int index=0){
-        setupZeta();
+        setupZeta(index);
         currentZeta[index].zeta.setxPos((currentZeta[index].zeta.getxPos()-this->width()/2.0)*(double(numFeetInArenaView)/double(this->width())));
         currentZeta[index].zeta.setyPos((currentZeta[index].zeta.getyPos()-this->width()/2.0)*-(double(numFeetInArenaView)/double(this->height())));
         currentZeta[index].zeta.setAttitude(-currentZeta[index].rotation);
@@ -82,7 +82,7 @@ protected:
     void initializeGL();
 
 private:
-    void setupZeta();
+    void setupZeta(int index = -1);
 
     const QList<std::string> shapeArray = {"SQUARE", "TRIANGLE", "LINE", "PENTAGON", "PARALLELOGRAM"};
     QList<QString> m_dolphinList;

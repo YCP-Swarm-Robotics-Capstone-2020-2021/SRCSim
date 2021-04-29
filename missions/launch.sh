@@ -224,7 +224,7 @@ for ((i = 0 ; i < $NUM_BOTS ; i++)); do
         BROADCASTNUM=$BROADCASTNUM                   VIP=$VIP \
         KAPPA=$KAPPA                                 DT=$DT  \
 	LOG_DIR=$mission_dir                         VERSION=$version_number \
-	MESSAGE="$commit_message"
+	MESSAGE="$commit_message"                    SIM="true"
 done
 nsplug meta_GroundControlStation.moos targ_$GCSNAME.moos -f WARP=$TIME_WARP \
     $GCSARGS

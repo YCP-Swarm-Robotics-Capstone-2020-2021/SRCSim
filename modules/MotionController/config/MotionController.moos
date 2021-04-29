@@ -6,7 +6,8 @@ ProcessConfig = MotionController
    AppTick   = 30
    CommsTick = 20
    id = Dolphin1
-   kappa = 1.0;
-   dt = 1.0;
+   kappa = 1.0
+   dt = 1.0
+   Simulation = true
 }
 

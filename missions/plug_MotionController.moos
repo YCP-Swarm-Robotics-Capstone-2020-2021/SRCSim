@@ -5,4 +5,5 @@ ProcessConfig = MotionController
    id = $(VNAME)
    kappa = $(KAPPA)
    dt = $(DT)
+   Simulation = $(SIM)
 }
