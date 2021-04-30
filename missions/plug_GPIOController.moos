@@ -1,0 +1,42 @@
+//------------------------------------------------
+// GPIOController config block
+
+ProcessConfig = GPIOController
+{
+   AppTick   = 4
+   CommsTick = 4
+   //Arguably the most important line in the config files
+   MaxSpeed = 1.5 //Feet/second
+   WheelRadius = 1
+   p =1
+   i =1
+   d =1
+   CurrentSpeedNotifyRateS=2
+   CWBANDL = 1480
+   CWBANDH = 1280
+   CCWBANDL = 1520
+   CCWBANDH = 1720
+   READBANDL = 2.7
+   READBANDH = 97.1
+   MAXRPM = 140
+   motor = id:1, CTRLGPIO:12, READGPIO:2, SIDE:L, REVERSED:false
+   motor = id:2, CTRLGPIO:13, READGPIO:4, SIDE:L, REVERSED:false
+   motor = id:3, CTRLGPIO:19, READGPIO:6, SIDE:R, REVERSED:true
+   motor = id:4, CTRLGPIO:18, READGPIO:8, SIDE:R, REVERSED:true
+
+//LED Config Block
+   LED = id:0, PIN:20
+   LED = id:1, PIN:21
+   LED = id:2, PIN:22
+   LED = id:3, PIN:23
+   LED = id:4, PIN:24
+   DEBUG=TRUE
+
+//LongRangeIRSensor Block
+//    Frequency = 10 Hz
+    //Distance = 100 mm = 4 inches roughly
+    LIRSensor = ID:Left, IntGPIO:5, FREQ:5, Dist:100, BUS:0
+    LIRSensor = ID:Right, IntGPIO:6, FREQ:5, Dist:100, BUS:3
+    lirSensorAddress = 29 //Hex
+}
+
