@@ -20,7 +20,8 @@
 #include <QTimer>
 #include <VehicleStateDefines.h>
 #include "MotorController.h"
-
+#include "LEDController.h"
+#include "LIRController.h"
 
 class GPIOController : public QObject, public AppCastingMOOSApp
 {
@@ -56,12 +57,16 @@ private: // Configuration variables
     std::string m_moosAppName,m_moosMissionFile;
 
     QTimer iterateTimer;
+    QTimer distanceRangeTimer;
     double currentFrequency;
     EnumDefs defs;
     MotorController motorcontroller;
+    LEDController ledcontoller;
+    LIRController lircontoller;
     EnumDefs::VehicleStates state;
+    EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
 
-
+    double rangingTimerPeriod;
 signals:
     void workFinished();
 
@@ -71,6 +76,9 @@ public slots:
 
   private:
     bool onStartupComplete = false;
+    bool m_motorStartupComplete = false;
+    bool m_ledStartupComplete = false;
+    bool m_lirStartupComplete = false;
 };
 
 #endif 

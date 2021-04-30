@@ -19,6 +19,8 @@ GPIOController::GPIOController(std::string sName, std::string sMissionFile)
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
     connect(&motorcontroller, &MotorController::notifyMOOSMsg, this, &GPIOController::notifyMOOSMsg);
+    connect(&lircontoller, &LIRController::notifyMOOSMsg, this, &GPIOController::notifyMOOSMsg);
+    connect(&distanceRangeTimer, &QTimer::timeout, &lircontoller, &LIRController::getRanges);
 }
 
 //---------------------------------------------------------
@@ -80,6 +82,11 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(x , msg.GetString(), "State");
       state = EnumDefs::VehicleStates(x);
   }
+  else if(key == "CONNECTION_STATUS"){
+      int x;
+      MOOSValFromString(x, msg.GetString(), "Status");
+      connectionStatus = EnumDefs::ConnectionState(x);
+  }
   else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
 }
@@ -106,8 +113,25 @@ AppCastingMOOSApp::Iterate();
 // Do your thing here!
 //AppCastingMOOSApp::PostReport();
 if(!onStartupComplete){
-    motorcontroller.start();
-    onStartupComplete = true;
+    if(!m_motorStartupComplete){
+        cout<<"Trying to connect motors."<<endl;
+        m_motorStartupComplete = motorcontroller.start();
+    }
+    if(!m_ledStartupComplete){
+        cout<<"Trying to connect LEDs"<<endl;
+        m_ledStartupComplete = ledcontoller.start();
+    }
+    if(!m_lirStartupComplete){
+        cout<<"Trying to connect LIRSeonsors"<<endl;
+        m_lirStartupComplete = lircontoller.start();
+	if(m_lirStartupComplete){
+	  distanceRangeTimer.start(rangingTimerPeriod);
+	}
+    }
+    onStartupComplete = m_motorStartupComplete && m_ledStartupComplete && m_lirStartupComplete;
+}
+if(m_ledStartupComplete){
+    ledcontoller.updateLEDStatus(state, connectionStatus);
 }
 return(true);
 }
@@ -287,6 +311,28 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      motorcontroller.motorMap.insert(SIDE(side), temp3);
      handled = true;
  }
+ else if (param == "led"){
+     QList<QString> temp = QString::fromStdString(value).split(',');
+     int id = -1;
+     int pin = -1;
+     for(QString value : temp){
+         QList<QString> temp2 = value.split(':');
+         if(toupper(temp2[0].toStdString()) == "ID"){
+            id = temp2[1].toInt();
+         }
+         else if (toupper(temp2[0].toStdString()) == "PIN"){
+            pin = temp2[1].toInt();
+         }
+     }
+     if(pin < 0 || id < 0){
+         return -1;
+     }
+     LED led;
+     led.id = id;
+     led.pin = pin;
+     ledcontoller.led_list.insert(id, led);
+     handled = true;
+ }
  else if (param == "currentspeednotifyrates"){
      motorcontroller.notifyCurrentSpeedInterval = QString::fromStdString(value).toDouble();
      handled = true;
@@ -295,6 +341,56 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
    double max_speed = QString::fromStdString(value).toDouble();
    motorcontroller.maxSpeed = max_speed;
    handled = true;
+ }
+ else if(param == "debug") {
+   bool debug = (toupper(value)=="TRUE");
+   ledcontoller.debug = debug;
+   handled = true;
+ }
+ else if(param == "lirsensor"){
+     QList<QString> temp = QString::fromStdString(value).split(',');
+     QString id = "";
+     int pin = -1;
+     double freq = -1;
+     double distance = -1;
+     LIRSensor sensor;
+     for(QString value : temp){
+         QList<QString> temp2 = value.split(':');
+         if(toupper(temp2[0].toStdString()) == "ID"){
+            id = temp2[1];
+            if(toupper(id.toStdString()) == "LEFT"){
+                sensor.side = LEFT;
+            }else {
+                sensor.side = RIGHT;
+            }
+         }
+         else if (toupper(temp2[0].toStdString()) == "INTGPIO"){
+            pin = temp2[1].toInt();
+            sensor.intGpio = pin;
+         }
+         else if (toupper(temp2[0].toStdString()) == "FREQ"){
+            freq = temp2[1].toDouble();
+            sensor.frequency = freq;
+	    rangingTimerPeriod = 1000.0/freq;
+         }
+         else if (toupper(temp2[0].toStdString()) == "DIST"){
+            distance = temp2[1].toDouble();
+            sensor.distance = distance;
+	    lircontoller.minRangeMM = distance;	    
+         }
+         else if(toupper(temp2[0].toStdString()) == "BUS"){
+             sensor.bus = temp2[1].toInt();
+         }
+     }
+     if(pin < 0 || id < 0){
+         return -1;
+     }
+     lircontoller.sensor_list[sensor.side] = sensor;
+     handled = true;
+ }
+ else if(param == "lirsensoraddress"){
+    QString addr = QString::fromStdString(value);
+    lircontoller.address = addr.toUInt(NULL, 16);
  }
 
  if(!handled)
@@ -326,6 +422,20 @@ for(auto list : motorcontroller.motorMap){
             <<"\tWriteGPIO:"<<element->writeGPIO<<"\n"<<endl;
     }
 }
+for(auto led : ledcontoller.led_list.values()){
+    cout<<"\n\tPin: "<<led.pin<<"\n"
+        <<"\tID: " <<led.id <<"\n"
+        <<"\tStatus:"<<led.status<<"\n";
+}
+
+for(auto IR : lircontoller.sensor_list.values()){
+    cout<<"\n\tSide: "<<((IR.side) ? "RIGHT" : "LEFT")<<"\n"
+        <<"\tPin: "<<IR.intGpio<<"\n"
+        <<"\tDistance "<<IR.distance<<"\n"
+        <<"\tAddress "<<lircontoller.address<<"\n"
+        <<"\tBus "<<IR.bus<<"\n"
+        <<"\tFrequency "<<IR.frequency<<"\n"<<endl;
+}
 registerVariables();
 return(true);
 }
@@ -339,6 +449,7 @@ void GPIOController::registerVariables()
     Register("Speed_Curv");
     Register("OVERRIDE_ON");
     Register("Speed_Curv_Override");
+    Register("CONNECTION_STATUS");
     Register("Current_State");
 }
 

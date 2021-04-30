@@ -5,7 +5,7 @@
 
 #include <QObject>
 #include <QTimer>
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 
 const static uint PWM_WRITE_RANGE = 20000;
 const static int motor_control_period = 40;
@@ -52,7 +52,7 @@ public slots:
     void updateCmdSpeed(double speed);
     double fps_to_rpm(double fps);
     double rpm_to_fps(double rpm);
-    void startUp();
+    bool startUp();
     void publishCMDPulseWidth();
     void readPulseWidth(int gpio, int level, uint32_t tick);
 signals:
