@@ -1,6 +1,7 @@
 #include <QStyleOption>
 #include "swarmformationpainter.h"
 #include <math.h>
+#include <iostream>
 
 
 SwarmFormationPainter::SwarmFormationPainter(QWidget *parent) : QWidget (parent)
@@ -85,7 +86,8 @@ void SwarmFormationPainter::drawBots()
     painter.setPen(textPen);
     QFontMetrics fm(painter.font());
 
-    int numLinkagesInFormation = currentZeta.getWholeTheta().size();
+    int numLinkagesInFormation = currentZeta[Zetaoption].zeta.getWholeTheta().size();
+    std::cout<<"Zetaoption is "<< Zetaoption<<std::endl;
     int linkageBotCounts[numLinkagesInFormation];
     int linkageOffsetCounts[numLinkagesInFormation];
     for(int i = 0; i<numLinkagesInFormation; i++){
@@ -112,31 +114,31 @@ void SwarmFormationPainter::drawBots()
 
     iter = m_dolphinList.begin();
     while(iter != m_dolphinList.end()){
-        QPointF point = QPointF((setupMap[*iter].first.first*currentZeta.getLambda(setupMap[*iter].second)), (setupMap[*iter].first.second*currentZeta.getLambda(setupMap[*iter].second)));
+        QPointF point = QPointF((setupMap[*iter].first.first*currentZeta[Zetaoption].zeta.getLambda(setupMap[*iter].second)), (setupMap[*iter].first.second*currentZeta[Zetaoption].zeta.getLambda(setupMap[*iter].second)));
         for(int i = setupMap[*iter].second-1; i>=0; i--){
             double x = point.x();
             double y = point.y();
-            point.setX((x*cos(currentZeta.getTheta(i)*PI/180.0) - y*sin(currentZeta.getTheta(i)*PI/180.0)));
-            point.setY((x*sin(currentZeta.getTheta(i)*PI/180.0) + y*cos(currentZeta.getTheta(i)*PI/180.0)));
-            point.setX(point.x() + currentZeta.getLambda(i));
+            point.setX((x*cos(currentZeta[Zetaoption].zeta.getTheta(i)*PI/180.0) - y*sin(currentZeta[Zetaoption].zeta.getTheta(i)*PI/180.0)));
+            point.setY((x*sin(currentZeta[Zetaoption].zeta.getTheta(i)*PI/180.0) + y*cos(currentZeta[Zetaoption].zeta.getTheta(i)*PI/180.0)));
+            point.setX(point.x() + currentZeta[Zetaoption].zeta.getLambda(i));
         }
-        setupMap[*iter].first.first = ((point.x()*(this->width()/numFeetInArenaView)*cos(currentZeta.getAttitude())-point.y()*(this->width()/numFeetInArenaView)*sin(currentZeta.getAttitude()))+currentZeta.getxPos());
-        setupMap[*iter].first.second = ((point.x()*(this->height()/numFeetInArenaView)*sin(currentZeta.getAttitude())+point.y()*(this->height()/numFeetInArenaView)*cos(currentZeta.getAttitude()))+currentZeta.getyPos());
+        setupMap[*iter].first.first = ((point.x()*(this->width()/numFeetInArenaView)*cos(currentZeta[Zetaoption].zeta.getAttitude())-point.y()*(this->width()/numFeetInArenaView)*sin(currentZeta[Zetaoption].zeta.getAttitude()))+currentZeta[Zetaoption].zeta.getxPos());
+        setupMap[*iter].first.second = ((point.x()*(this->height()/numFeetInArenaView)*sin(currentZeta[Zetaoption].zeta.getAttitude())+point.y()*(this->height()/numFeetInArenaView)*cos(currentZeta[Zetaoption].zeta.getAttitude()))+currentZeta[Zetaoption].zeta.getyPos());
         iter++;
     }
 
     painter.setPen(linePen);
-    QPoint linePoint(currentZeta.getxPos(), currentZeta.getyPos());
-    QPoint nextPoint(linePoint.x()+(currentZeta.getLambda(0)*(this->width()/numFeetInArenaView)*cos(currentZeta.getAttitude())),
-                     linePoint.y()+(currentZeta.getLambda(0)*(this->height()/numFeetInArenaView)*sin(currentZeta.getAttitude())));
-    int angle = currentZeta.getAttitude()*180.0/PI;
+    QPoint linePoint(currentZeta[Zetaoption].zeta.getxPos(), currentZeta[Zetaoption].zeta.getyPos());
+    QPoint nextPoint(linePoint.x()+(currentZeta[Zetaoption].zeta.getLambda(0)*(this->width()/numFeetInArenaView)*cos(currentZeta[Zetaoption].zeta.getAttitude())),
+                     linePoint.y()+(currentZeta[Zetaoption].zeta.getLambda(0)*(this->height()/numFeetInArenaView)*sin(currentZeta[Zetaoption].zeta.getAttitude())));
+    int angle = currentZeta[Zetaoption].zeta.getAttitude()*180.0/PI;
     for(int i = 1; i<=numLinkagesInFormation; i++){
         painter.drawLine(linePoint.x(), linePoint.y(), nextPoint.x(), nextPoint.y());
         linePoint.setX(nextPoint.x());
         linePoint.setY(nextPoint.y());
-        angle += (currentZeta.getTheta(i-1));
-        nextPoint.setX(linePoint.x()+(currentZeta.getLambda(i)*(this->width()/numFeetInArenaView)*cos(angle*PI/180.0)));
-        nextPoint.setY(linePoint.y()+(currentZeta.getLambda(i)*(this->height()/numFeetInArenaView)*sin(angle*PI/180.0)));
+        angle += (currentZeta[Zetaoption].zeta.getTheta(i-1));
+        nextPoint.setX(linePoint.x()+(currentZeta[Zetaoption].zeta.getLambda(i)*(this->width()/numFeetInArenaView)*cos(angle*PI/180.0)));
+        nextPoint.setY(linePoint.y()+(currentZeta[Zetaoption].zeta.getLambda(i)*(this->height()/numFeetInArenaView)*sin(angle*PI/180.0)));
     }
 
     iter = m_dolphinList.begin();
@@ -147,62 +149,76 @@ void SwarmFormationPainter::drawBots()
         painter.drawText(int(setupMap[*iter].first.first-(fm.width(*iter))/2), int(setupMap[*iter].first.second-roboHeight/2-fm.height()/2), *iter);
         iter++;
     }
+
 }
 
-void SwarmFormationPainter::setupZeta()
+void SwarmFormationPainter::setupZeta(int index)
 {
+    if(index < 0){
+        index = Zetaoption;
+    }
     QPair<double, double> formationXY = {this->width()/2, this->height()/2};
-    double length = sqrt(currentWidth*currentWidth+currentLength*currentLength);
-    switch(currentShape){
+    double length = sqrt(currentZeta[index].width*currentZeta[index].width+currentZeta[index].length*currentZeta[index].length);
+    Zeta newShape;
+    switch(currentZeta[index].shape){
         case Shape::SQUARE:
-            currentZeta.setxPos(formationXY.first-((xOffset+(double(currentWidth)/2.0))*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((yOffset+(double(currentLength)/2.0))*this->height()/numFeetInArenaView));
-            currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({-90, -90, -90, -90});
-            currentZeta.setWholeLambda(QList<double>{double(currentWidth),
-                                                     double(currentLength),
-                                                     double(currentWidth),
-                                                     double(currentLength)});
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].width)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(currentZeta[index].length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
+            newShape.setWholeTheta({-90, -90, -90, -90});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].width),
+                                                     double(currentZeta[index].length),
+                                                     double(currentZeta[index].width),
+                                                     double(currentZeta[index].length)});
             break;
         case Shape::TRIANGLE:
-            currentZeta.setxPos(formationXY.first-((xOffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+(yOffset+((double(length)/2.0))*this->height()/numFeetInArenaView));
-            currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({-120, -120, -120});
-            currentZeta.setWholeLambda(QList<double>{double(length),
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+(currentZeta[index].yoffset+((double(length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
+            newShape.setWholeTheta({-120, -120, -120});
+            newShape.setWholeLambda(QList<double>{double(length),
                                                      double(length),
                                                      double(length)});
             break;
         case Shape::LINE:
-            currentZeta.setxPos(formationXY.first-((xOffset+(double(currentLength)/2.0))*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((yOffset))*this->height()/numFeetInArenaView);
-            currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({-90});
-            currentZeta.setWholeLambda(QList<double>{double(currentLength)});
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset))*this->height()/numFeetInArenaView);
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
+            newShape.setWholeTheta({-90});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].length)});
                 break;
         case Shape::PENTAGON:
-            currentZeta.setxPos(formationXY.first-((xOffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((yOffset+(double(length)/2.0))*this->height()/numFeetInArenaView));
-            currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({-72, -72, -72, -72, -72});
-            currentZeta.setWholeLambda(QList<double>{double(length),
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(length)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
+            newShape.setWholeTheta({-72, -72, -72, -72, -72});
+            newShape.setWholeLambda(QList<double>{double(length),
                                                      double(length),
                                                      double(length),
                                                      double(length),
                                                      double(length)});
             break;
         case Shape::PARALLELOGRAM:
-            currentZeta.setxPos(formationXY.first-((xOffset+(double(currentWidth)/2.0))*this->width()/numFeetInArenaView));
-            currentZeta.setyPos(formationXY.second+((yOffset+(double(currentLength)/2.0))*this->height()/numFeetInArenaView));
-            currentZeta.setAttitude(double(currentRotation)*PI/180);
-            currentZeta.setWholeTheta({-60, -120, -60, -120});
-            currentZeta.setWholeLambda(QList<double>{double(currentWidth),
-                                                     double(currentLength),
-                                                     double(currentWidth),
-                                                     double(currentLength)});
+            newShape.setxPos(formationXY.first-((currentZeta[index].xoffset+(double(currentZeta[index].width)/2.0))*this->width()/numFeetInArenaView));
+            newShape.setyPos(formationXY.second+((currentZeta[index].yoffset+(double(currentZeta[index].length)/2.0))*this->height()/numFeetInArenaView));
+            newShape.setAttitude(double(currentZeta[index].rotation)*PI/180);
+            newShape.setWholeTheta({-60, -120, -60, -120});
+            newShape.setWholeLambda(QList<double>{double(currentZeta[index].width),
+                                                     double(currentZeta[index].length),
+                                                     double(currentZeta[index].width),
+                                                     double(currentZeta[index].length)});
             break;
         default:
             break;
+    }
+    currentZeta[index].zeta = newShape;
+
+}
+void SwarmFormationPainter::initZeta(int i)
+{
+    ZetaState toadd;
+    for(int j =0; j<i; j++){
+        currentZeta.insert(j, toadd);
     }
 
 }

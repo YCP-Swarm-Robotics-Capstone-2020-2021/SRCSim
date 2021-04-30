@@ -76,11 +76,13 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       double xPos,yPos, att;
       string theta, lambda;
       QList<double> thetalist, lambdalist;
+      std::string shape;
       MOOSValFromString(xPos , msg.GetString(), "xPos");
       MOOSValFromString(yPos , msg.GetString(), "yPos");
       MOOSValFromString(att , msg.GetString(), "Attitude");
       MOOSValFromString(theta , msg.GetString(), "Theta");
       MOOSValFromString(lambda , msg.GetString(), "Lambda");
+      MOOSValFromString(shape , msg.GetString(), "shape");
       thetalist = toDoubleList(QString::fromStdString(theta).split("|"));
       lambdalist = toDoubleList(QString::fromStdString(lambda).split("|"));
       zetaControl->setxPos(xPos);
@@ -88,11 +90,33 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       zetaControl->setWholeTheta(thetalist);
       zetaControl->setAttitude(att*PI/180.0);
       zetaControl->setWholeLambda(lambdalist);
+      if(inRun and QString::fromStdString(shape) != currentShape){
+          Notify("Change_State", "State="+QString::number(EnumDefs::SWARMINIT).toStdString());
+          state = EnumDefs::SWARMMODE;
+          SwarmInitialized = false;
+      }
+      currentShape = QString::fromStdString(shape);
+  }
+  else if(key == "Dolphin_Done"){
+      std::string id;
+      std::string done;
+      bool bdone = false;
+      MOOSValFromString(id , msg.GetString(), "Id");
+      MOOSValFromString(done , msg.GetString(), "State");
+      if(done == "true"){
+          bdone = true;
+      }
+      registration->value(QString::fromStdString(id))->done = bdone;
+      done = checkDone() ? "true" : "false";
+          Notify("All_Done", "State=" + done);
+
+
   }
   else if(key != "APPCAST_REQ") {// handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
     std::cout << "Bad message: "<<key<<std::endl;
   }
+
 }
 
 return(true);
@@ -132,6 +156,13 @@ AppCastingMOOSApp::Iterate();
         for(QString it : m_neighbors){
             Notify(it.toStdString()+"_Neighbor_Zeta", "id= Narwhal, " +zetaControl->stringify().toStdString(),MOOSTime());
         }
+        if(!inRun){
+            inRun = true;
+            m_first_time = MOOSTime();
+        }
+        if(m_move_formation && MOOSTime()-m_first_time > m_move_delay){
+            incrementFormationZeta();
+        }
     }
 return(true);
 }
@@ -157,10 +188,24 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
  string value = line;
 
  bool handled = false;
- if(param == "foo") {
+ if(param == "xincrement") {
+   xIncrement = QString::fromStdString(value).toDouble();
    handled = true;
  }
- else if(param == "bar") {
+ else if(param == "yincrement") {
+   yIncrement = QString::fromStdString(value).toDouble();
+   handled = true;
+ }
+ else if(param == "rotincrement") {
+   rotationIncrement = QString::fromStdString(value).toDouble();
+   handled = true;
+ }
+ else if(param == "movedelay") {
+   m_move_delay = QString::fromStdString(value).toDouble();
+   handled = true;
+ }
+ else if(param == "moveformation") {
+   m_move_formation = (toupper(value)=="TRUE");
    handled = true;
  }
 
@@ -185,6 +230,7 @@ Register("Current_State", 0);
 Register("Reg_In", 0);
 Register("Zeta_Cmd", 0);
 Register("DOLPHIN_DISCONNECTED", 0);
+Register("Dolphin_Done");
 }
 
 
@@ -283,8 +329,24 @@ bool SwarmHandler::checkState(EnumDefs::VehicleStates state)
     return true;
 }
 
+bool SwarmHandler::checkDone()
+{
+    if(registration->count()<1){
+        return false;
+    }
+    QMap<QString, Robot*>::iterator iter = registration->begin();
+    while(iter != registration->end()){
+        if(! iter.value()->done){
+            return false;
+        }
+        iter++;
+    }
+    return true;
+}
+
 void SwarmHandler::initializeSwarm()
 {
+    inRun = false;
     int numRobotsInSwarm = registration->count();
     int numLinkagesInFormation = zetaControl->getWholeLambda().count();
     int linkageBotCounts[numLinkagesInFormation];
@@ -297,8 +359,8 @@ void SwarmHandler::initializeSwarm()
 
     //Setup topology of the formation
     if(!SwarmInitialized){
-        iter.value()->podMates->append("Narwhal");
-        m_neighbors.append(iter.key());
+      /*iter.value()->podMates->append("Narwhal");
+	  m_neighbors.append(iter.key());
         if(numRobotsInSwarm != 1){
             iter++;
             QString next = iter.key();
@@ -319,9 +381,15 @@ void SwarmHandler::initializeSwarm()
             }
             iter--;
             iter.value()->podMates->append("Narwhal");
-        }
-        iter.value()->podMates->append("Narwhal");
-        m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
+	    }
+	 iter.value()->podMates->append("Narwhal");
+       */
+      while(iter != registration->end()){
+	 m_neighbors.append(iter.key());
+	iter.value()->podMates->append("Narwhal");
+	iter++;
+      }
+      m_neighbors.append("Dolphin"+QString::number(numRobotsInSwarm-1));
         //Setup Linkage assignments.
         iter = registration->begin();
         for(int i = 0; i<numRobotsInSwarm; i++, iter++){
@@ -366,4 +434,11 @@ QList<double> SwarmHandler::toDoubleList(QList<QString> input){
      toReturn.append(input[i].toDouble());
     }
     return toReturn;
+}
+
+void SwarmHandler::incrementFormationZeta()
+{
+    zetaControl->setxPos(zetaControl->getxPos()+xIncrement);
+    zetaControl->setyPos(zetaControl->getyPos()+yIncrement);
+    zetaControl->setAttitude(zetaControl->getAttitude()+rotationIncrement);
 }

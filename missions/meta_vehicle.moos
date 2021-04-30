@@ -10,12 +10,13 @@ ProcessConfig = ANTLER
     Run = ../modules/VehicleStateMachine/bin/VehicleStateMachine 	@ NewConsole = false ~ VehicleStateMachine
     Run = ../modules/MotionController/bin/MotionController 		@ NewConsole = false ~ MotionController
     Run = ../modules/HealthManager/bin/HealthManager 			@ NewConsole = false ~ HealthManager
-    Run = uProcessWatch 						@ NewConsole = false  ~ uProcessWatch
+    Run = ../modules/GPIOController/bin/GPIOController 			@ NewConsole = false ~ GPIOController
+    Run = uProcessWatch 						@ NewConsole = false ~ uProcessWatch
     Run = pLogger							@ NewConsole = false ~ pLogger
     Run = pShare							@ NewConsole = false ~ pShare
 }
 
-#include plug_VehiclepShare.moos
+
 #include plug_pLogger.moos
 #include plug_Pos_module.moos
 #include plug_VehiclepShare.moos
@@ -23,3 +24,4 @@ ProcessConfig = ANTLER
 #include plug_VehicleStateMachine.moos
 #include plug_uProcessWatch.moos
 #include plug_HealthManager.moos
+#include plug_GPIOController.moos

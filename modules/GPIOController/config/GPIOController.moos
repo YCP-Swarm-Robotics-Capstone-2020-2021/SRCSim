@@ -19,11 +19,24 @@ ProcessConfig = GPIOController
    READBANDL = 2.7
    READBANDH = 97.1
    MAXRPM = 140
-   motor = id:1, CTRLGPIO:45, READGPIO:2, SIDE:L, REVERSED:false
+   motor = id:1, CTRLGPIO:12, READGPIO:2, SIDE:L, REVERSED:false
    motor = id:2, CTRLGPIO:13, READGPIO:4, SIDE:L, REVERSED:false
-   motor = id:3, CTRLGPIO:40, READGPIO:6, SIDE:R, REVERSED:true
+   motor = id:3, CTRLGPIO:19, READGPIO:6, SIDE:R, REVERSED:true
    motor = id:4, CTRLGPIO:18, READGPIO:8, SIDE:R, REVERSED:true
 
+//LED Config Block
+   LED = id:0, PIN:20
+   LED = id:1, PIN:21
+   LED = id:2, PIN:22
+   LED = id:3, PIN:23
+   LED = id:4, PIN:24
+   DEBUG=TRUE
 
+//LongRangeIRSensor Block
+    //Frequency = 10 Hz
+    //Distance = 50 mm = 2 inches roughly
+    LIRSensor = ID:Left, IntGPIO:5, Freq: 10, Dist:50, BUS:0
+    LIRSensor = ID:Right, IntGPIO:6, Freq: 10, Dist:50, BUS:1
+    lirSensorAddress = 52 //Hex
 }
 

@@ -25,12 +25,6 @@ ProcessConfig = StageInterface
    NumBots      = $(NUMBOTS)
 }
 
-ProcessConfig = SwarmHandler
-{
-   AppTick      = 4
-   CommsTick    = 4
-}
-
 ProcessConfig = ControlGUI
 {
    AppTick	= 4
@@ -80,3 +74,4 @@ WildCardOmitPattern = *PLOGGER*
 }
 #include plug_UserInterface.moos
 #include plug_GCSpShare.moos
+#include plug_SwarmHandler.moos

@@ -68,6 +68,17 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
       MOOSValFromString(roboSpeed, msg.GetString(), "Speed");
       MOOSValFromString(roboCurv, msg.GetString(), "Curv");
   }
+  else if(key == "MAX_SPEED"){
+      MOOSValFromString(max_speed, msg.GetString(), "Speed");
+      MOOSValFromString(angle_tolerance, msg.GetString(), "AngleTolerance");
+      MOOSValFromString(posTolerance, msg.GetString(), "PoseTolerance");
+      MOOSValFromString(turn_speed, msg.GetString(), "TurnSpeed");
+      cout<<" MaxSpeed: "<<max_speed
+          <<" MaxTurnSpeed: "<<turn_speed
+          <<" AngleTolerance: "<<angle_tolerance
+          <<" PoseTolerance: "<<posTolerance<<endl;
+      std::cout<<"Max speed is " << max_speed << std::endl;
+  }
   else if(key == "OBJECT_DETECTED"){
      if(dodgeState != EnumDefs::NONE && (EnumDefs::SensorState)msg.GetDouble() == EnumDefs::NONE){
          dodge_state_fwd = true;
@@ -145,13 +156,15 @@ AppCastingMOOSApp::Iterate();
             break;
         }
         case EnumDefs::VehicleStates::SWARMRUN:{
-            robotMover();
-            swarmRun();
             if(dodge_state_fwd){
                 dodgeStateFWD();
             }
             if(object){
                 dodge();
+            }
+            else{
+                robotMover();
+                swarmRun();
             }
             break;
         }
@@ -198,6 +211,10 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
      Notify("Boundary", boundary, MOOSTime());
      handled = true;
  }
+ else if(param == "simulation"){
+     simulation = (toupper(value)=="TRUE");
+     handled = true;
+ }
  else if(param == "bar") {
    handled = true;
  }
@@ -223,6 +240,7 @@ Register("Zeta_Init");
 Register("Neighbor_Zeta");
 Register("Speed_Curv_Override");
 Register("OBJECT_DETECTED");
+Register("MAX_SPEED");
 }
 
 
@@ -418,6 +436,7 @@ double MotionController::pointtoTraj(QPointF point){
     }*/
    if(abs(ydiff) < posTolerance && abs(xdiff) < posTolerance){
         phi = 180.0;
+        doneTurning = true;
         return phi;
    }
    else if(ydiff >= 0 && xdiff >= 0){ //Quadrant 1
@@ -436,6 +455,7 @@ double MotionController::pointtoTraj(QPointF point){
    else if(phi < 0){
        phi += 360.0;
    }
+   doneTurning = false;
    return phi;
 
 }
@@ -482,32 +502,63 @@ EnumDefs::VehicleStates MotionController::swarmInit(){
 }
 void MotionController::robotMover(){
         driving = false;
+        done = false;
         //1: Difference between 180 and A
         //2: Tranform by adding 180 - A to everything
         //3: Take difference between a' and theta'
         //4: Compare. if a' - theta' > 0, turn Right. Else, turn left
-        if(!(attitude > goalangle-10 && attitude < goalangle+10)){ //turn
-                int a_prime, theta_prime;
-                a_prime = 180;
-                theta_prime = (int(goalangle + (a_prime - attitude)))%360;
-                roboCurv = (a_prime - theta_prime > 0) ? -90.0 : 90.0;
+       if(simulation){
+           if(!(attitude > goalangle-angle_tolerance && attitude < goalangle+angle_tolerance)){ //turn
+                    int a_prime, theta_prime;
+                    a_prime = 180;
+                    theta_prime = (int(goalangle + (a_prime - attitude)))%360;
+                    roboCurv = (a_prime - theta_prime > 0) ? -90.0 : 90.0;
+                    roboSpeed = turn_speed;
+          } else {
+               if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
+                   roboSpeed = 0;
+                   roboCurv = 0;
+                   if(doneTurning and state == EnumDefs::SWARMRUN){
+                       done = true;
+                   }
+               } //We did it!!
+               else{
+                   driving = true;
+                   roboSpeed = max_speed;
+                   roboCurv = 0;
+               } //Drive forward
+           }
+       }
+       else {
+            if(!(attitude > goalangle-angle_tolerance && attitude < goalangle+angle_tolerance)){ //turn
+                int h_prime = (int(attitude)+180)%360;
+                if(h_prime > attitude){
+                   roboCurv = (goalangle > attitude and goalangle < h_prime) ? -90.0 : 90.0;
+                } else {
+                   roboCurv = (goalangle > h_prime and goalangle < attitude) ? 90.0 : -90.0;
+                }
                 roboSpeed = turn_speed;
-        }
-        else{
-            if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
-                roboSpeed = 0;
-                roboCurv = 0;
-            } //We did it!!
+            }
             else{
-                driving = true;
-                roboSpeed = max_speed;
-                roboCurv = 0;
-            } //Drive forward
+               if((x > goalpoint.x()-posTolerance && x <goalpoint.x()+posTolerance)&& (y > goalpoint.y()-posTolerance && y <goalpoint.y()+posTolerance)){
+                   roboSpeed = 0;
+                   roboCurv = 0;
+                   if(doneTurning and state == EnumDefs::SWARMRUN){
+                       done = true;
+                   }
+               } //We did it!!
+               else{
+                   driving = true;
+                   roboSpeed = max_speed;
+                   roboCurv = 0;
+               } //Drive forward
+            }
         }
         QString moveData = "id="+ id +",Speed="+ QString::number(roboSpeed) + ",Curv=" + QString::number(roboCurv);
         Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
         Notify("Goals", "Angle= " + QString::number(goalangle).toStdString()+ "X= "+ QString::number(goalpoint.x()).toStdString()+ "Y="+ QString::number(goalpoint.y()).toStdString(), MOOSTime()  );
-
+        QString input = (done ? "true" : "false");
+        Notify("Dolphin_Done", "State=" + input.toStdString()+",Id=" + id.toStdString());
 }
 
 void MotionController::boundaryRecovery(){
@@ -550,6 +601,9 @@ void MotionController::dodge(){
 
 void MotionController::dodgeStateFWD()
 {
+    if(!driving){
+        return;
+    }
     QString moveData = "id="+ id +",Speed="+ QString::number(max_speed) + ",Curv=" + QString::number(0);
     Notify("Speed_Curv", moveData.toStdString(), MOOSTime());
     dodge_state_fwd = false;

@@ -6,6 +6,7 @@ UIMoosInterface::UIMoosInterface(std::string sName, std::string sMissionFile)
 {
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
+    connect(&pingTimer, &QTimer::timeout, this, &UIMoosInterface::send_ping);
 }
 
 UIMoosInterface::~UIMoosInterface()
@@ -101,10 +102,19 @@ bool UIMoosInterface::OnNewMail(MOOSMSG_LIST &NewMail)
 
             Notify(id.toStdString()+"_VERSION_ACK", "TRUE");
         }
+        else if(key == "All_Done"){
+            std::string done;
+            MOOSValFromString(done, msg.GetString(), "State");
+            if(done == "true"){
+                emit inputSecondZeta();
+            }
+
+        }
         else if(key != "APPCAST_REQ") // handled by AppCastingMOOSApp
         {
             reportRunWarning("Unhandled Mail: " + key);
         }
+
 
     }
     cout << "What the hell is he doing "<< endl;
@@ -163,8 +173,8 @@ bool UIMoosInterface::OnStartUp()
        reportUnhandledConfigWarning(orig);
 
     }
-cout << "started maybe "<< endl;
     registerVariables();
+    pingTimer.start(m_timeout/double(pingTimerSetting));
     return(true);
 }
 
@@ -178,6 +188,7 @@ void UIMoosInterface::registerVariables()
     Register("PROC_WATCH_SUMMARY");
     Register("WCA_MESSAGE");
     Register("VERSION_NUMBER");
+    Register("All_Done");
 }
 
 bool UIMoosInterface::buildReport()
@@ -365,12 +376,13 @@ void UIMoosInterface::receiveZeta(QString zeta)
     Notify("Zeta_Cmd", zeta.toStdString());
 }
 
-void UIMoosInterface::receiveStateCMD(EnumDefs::VehicleStates state, QString id, int maxSpeed)
+void UIMoosInterface::receiveStateCMD(EnumDefs::VehicleStates state, QString id, int maxSpeed, int maxTurnSpeed, double poseTolerance, int angleTolerance)
 {
     if(state != EnumDefs::VehicleStates::SWARMMODE && id != QString("All"))
         Notify(id.toStdString()+"_Change_State", "State="+QString::number(int(state)).toStdString()+", id="+id.toStdString());
     else
         Notify("Change_State", "State="+QString::number(int(state)).toStdString());
+    Notify("MAX_SPEED", "Speed="+QString::number(maxSpeed).toStdString()+",TurnSpeed="+QString::number(maxTurnSpeed).toStdString()+",PoseTolerance="+QString::number(poseTolerance).toStdString()+", AngleTolerance="+QString::number(angleTolerance).toStdString());
 }
 
 void UIMoosInterface::receiveSpeed(QString id, bool forward, bool reverse, bool left, bool right, int speed)
@@ -457,4 +469,7 @@ void UIMoosInterface::checkActive()
     }
 }
 
-
+void UIMoosInterface::send_ping()
+{
+    Notify(PING, "true");
+}
