@@ -57,6 +57,7 @@ private: // Configuration variables
     std::string m_moosAppName,m_moosMissionFile;
 
     QTimer iterateTimer;
+    QTimer distanceRangeTimer;
     double currentFrequency;
     EnumDefs defs;
     MotorController motorcontroller;
@@ -64,9 +65,8 @@ private: // Configuration variables
     LIRController lircontoller;
     EnumDefs::VehicleStates state;
     EnumDefs::ConnectionState connectionStatus = EnumDefs::DISCONNECTED;
-    EnumDefs::VehicleStates state;
 
-
+    double rangingTimerPeriod;
 signals:
     void workFinished();
 

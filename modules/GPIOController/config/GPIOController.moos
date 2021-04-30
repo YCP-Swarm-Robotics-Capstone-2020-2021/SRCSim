@@ -33,10 +33,11 @@ ProcessConfig = GPIOController
    DEBUG=TRUE
 
 //LongRangeIRSensor Block
-    //Frequency = 10 Hz
-    //Distance = 50 mm = 2 inches roughly
-    LIRSensor = ID:Left, IntGPIO:5, Freq: 10, Dist:50, BUS:0
-    LIRSensor = ID:Right, IntGPIO:6, Freq: 10, Dist:50, BUS:1
-    lirSensorAddress = 52 //Hex
+//    Frequency = 10 Hz
+    //Distance = 100 mm = 4 inches roughly
+    LIRSensor = ID:Left, IntGPIO:5, FREQ:5, Dist:100, BUS:0
+    LIRSensor = ID:Right, IntGPIO:6, FREQ:5, Dist:100, BUS:3
+    lirSensorAddress = 29 //Hex
+
 }
 
