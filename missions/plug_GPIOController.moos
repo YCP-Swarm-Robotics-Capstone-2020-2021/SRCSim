@@ -24,6 +24,7 @@ ProcessConfig = GPIOController
    motor = id:3, CTRLGPIO:19, READGPIO:6, SIDE:R, REVERSED:true
    motor = id:4, CTRLGPIO:18, READGPIO:8, SIDE:R, REVERSED:true
 
+
 //LED Config Block
    LED = id:0, PIN:20
    LED = id:1, PIN:21
@@ -38,5 +39,6 @@ ProcessConfig = GPIOController
     LIRSensor = ID:Left, IntGPIO:5, FREQ:5, Dist:100, BUS:0
     LIRSensor = ID:Right, IntGPIO:6, FREQ:5, Dist:100, BUS:3
     lirSensorAddress = 29 //Hex
+
 }
 

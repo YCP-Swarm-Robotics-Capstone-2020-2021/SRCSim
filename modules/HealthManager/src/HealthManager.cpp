@@ -18,6 +18,7 @@ HealthManager::HealthManager(std::string sName, std::string sMissionFile)
     m_moosAppName = sName;
     m_moosMissionFile = sMissionFile;
     qDebug()<<system("touch ~/Documents/duh.txt");
+    connect(&disconnectTimer, &QTimer::timeout, this, &HealthManager::handleDisconnect);
 }
 
 //---------------------------------------------------------
@@ -83,6 +84,12 @@ for(p=NewMail.begin(); p!=NewMail.end(); p++) {
   {
       m_versionRecv = true;
   }
+  else if(key == "BOUNDARY_SIZE")
+  {
+      disconnectTimer.stop();
+      disconnectTimer.start();
+      connectState = EnumDefs::CONNECTED;
+  }
   else if(key != "APPCAST_REQ"){ // handled by AppCastingMOOSApp
     reportRunWarning("Unhandled Mail: " + key);
   }
@@ -113,6 +120,8 @@ if(m_launchmode){
 if(!m_versionRecv){
     Notify("VERSION_NUMBER", "version="+m_versionNum+",message="+m_commitMessage);
 }
+QString msg = "Status="+QString::number(int(connectState));
+Notify("CONNECTION_STATUS", msg.toStdString());
 AppCastingMOOSApp::PostReport();
 return(true);
 }
@@ -161,6 +170,7 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
 
 }
 m_launchtime = MOOSTime();
+disconnectTimer.start(DISCONNECT_TIME);
 registerVariables();
 return(true);
 }
@@ -175,6 +185,7 @@ AppCastingMOOSApp::RegisterVariables();
   Register("BLACK_LINE_DETECTED");
   Register("VERSION_ACK");
   Register("Current_State");
+  Register("BOUNDARY_SIZE");
 }
 
 
@@ -349,7 +360,7 @@ bool HealthManager::doMOOSWork()
 }
 
 void HealthManager::restartProcess(QList<QString> appName){
-    int error;
+    int error=0;
     for(QString str : appName){
             QString command;
             QString pathStr;
@@ -371,5 +382,10 @@ void HealthManager::restartProcess(QList<QString> appName){
             }
         }
         qDebug()<<error;
+}
 
+void HealthManager::handleDisconnect()
+{
+    connectState = EnumDefs::DISCONNECTED;
+    disconnectTimer.start(DISCONNECT_TIME);
 }
