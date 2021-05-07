@@ -124,11 +124,9 @@ if(!onStartupComplete){
     if(!m_lirStartupComplete){
         cout<<"Trying to connect LIRSeonsors"<<endl;
         m_lirStartupComplete = lircontoller.start();
-
 	if(m_lirStartupComplete){
 	  distanceRangeTimer.start(rangingTimerPeriod);
 	}
-
     }
     onStartupComplete = m_motorStartupComplete && m_ledStartupComplete && m_lirStartupComplete;
 }
@@ -373,15 +371,12 @@ for(p=sParams.begin(); p!=sParams.end(); p++) {
          else if (toupper(temp2[0].toStdString()) == "FREQ"){
             freq = temp2[1].toDouble();
             sensor.frequency = freq;
-
 	    rangingTimerPeriod = 1000.0/freq;
          }
          else if (toupper(temp2[0].toStdString()) == "DIST"){
             distance = temp2[1].toDouble();
             sensor.distance = distance;
-
 	    lircontoller.minRangeMM = distance;	    
-
          }
          else if(toupper(temp2[0].toStdString()) == "BUS"){
              sensor.bus = temp2[1].toInt();

@@ -38,6 +38,5 @@ ProcessConfig = GPIOController
     LIRSensor = ID:Left, IntGPIO:5, FREQ:5, Dist:100, BUS:0
     LIRSensor = ID:Right, IntGPIO:6, FREQ:5, Dist:100, BUS:3
     lirSensorAddress = 29 //Hex
-
 }
 

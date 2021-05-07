@@ -24,6 +24,11 @@ typedef VL53L1_Dev_t *VL53L1_DEV;
  */
 void Init_Pigpiod(int daemon_id, int leftBus, int rightBus, int devAddr);
 
+/** @brief Init_Pigpiod() definition. \n
+ * This must be used to close the i2c connections of the pigpio daemon
+ */
+void Close_Pigpiod();
+
 /** @brief VL53L1_WriteMulti() definition.\n
  * To be implemented by the developer
  */

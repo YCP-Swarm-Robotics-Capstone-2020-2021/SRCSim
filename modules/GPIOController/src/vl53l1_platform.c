@@ -39,7 +39,7 @@
 #include <time.h>
 #include <math.h>
 #include <pigpiod_if2.h>
-
+#include <stdio.h>
 #define I2C_TIME_OUT_BASE   10
 #define I2C_TIME_OUT_BYTE   1
 
@@ -71,14 +71,29 @@ void Init_Pigpiod(int daemon_id, int leftBus, int rightBus, int devAddr){
     address = devAddr;
 }
 
+void Close_Pigpiod(){
+    i2c_close(pigpiodaemonid, leftDeviceHandle);
+    i2c_close(pigpiodaemonid, rightDeviceHandle);
+}
+
 int _I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count) {
+  //  printf("\ti2c_write_device beginning: \n");
+  //  fflush(stdout);
     if(pigpiodaemonid < 0){
+        printf("\tpigpiod daemon is less than 0 \n");
+	fflush(stdout);
         return -1;
     }
+    //    printf("\ti2c_write_device beginning 2: \n");
+    //fflush(stdout);
     int deviceId = (Dev == left_bus) ? leftDeviceHandle : rightDeviceHandle;
     int ir_bus_value = (Dev == left_bus) ? left_bus : right_bus;
     if(deviceId < 0){
+        printf("\tattempting to open i2c channel write: \n");
+        printf("\tdaemonID: %i, ir_bus_value: %i, address: %i\n", pigpiodaemonid, ir_bus_value, address);	
         deviceId = i2c_open(pigpiodaemonid, ir_bus_value, address, 0);
+        printf("\tattempting to open i2c channel device in write, id: %i\n", deviceId);
+	fflush(stdout);
         if(deviceId < 0){
             switch(deviceId){
                 case PI_BAD_I2C_BUS:
@@ -92,26 +107,45 @@ int _I2CWrite(uint16_t Dev, uint8_t *pdata, uint32_t count) {
             }
             return VL53L1_ERROR_INVALID_PARAMS;
         }
+	else{
+	  if(Dev == left_bus){
+	        leftDeviceHandle = deviceId;
+	  } else {
+	        rightDeviceHandle = deviceId;
+	  }
+	}
     }
-    int status;
-    for(uint32_t i = 0; i < count; i++){
-        status = i2c_write_byte(pigpiodaemonid, deviceId, pdata[i]);
-        if (status < 0) {
-            status = VL53L1_ERROR_UNDEFINED;
-            return status;
-        }
+    int status = 0;
+    //    for(uint32_t i = 0; i < count; i++){
+    char buffer[count];
+    for(int i = 0; i < count; i++){
+      buffer[i] = pdata[i];
     }
-    return status;
+    status = i2c_write_device(pigpiodaemonid, deviceId, &buffer, count);
+    if (status < 0) {
+        printf("\ti2c_write_device failed status: %i\n", status);
+        fflush(stdout);
+        status = VL53L1_ERROR_UNDEFINED;
+        return status;
+    }
+    return VL53L1_ERROR_NONE;
 }
 
 int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count) {
+  //printf("\ti2c_read_device beginning: \n");
+  //fflush(stdout);
     if(pigpiodaemonid < 0){
         return -1;
     }
+    //printf("\ti2c_read_device beginning 2: \n");
+    //fflush(stdout);
     int deviceId = (Dev == left_bus) ? leftDeviceHandle : rightDeviceHandle;
     int ir_bus_value = (Dev == left_bus) ? left_bus : right_bus;
     if(deviceId < 0){
+        printf("\tattempting to open i2c channel write: \n");
         deviceId = i2c_open(pigpiodaemonid, ir_bus_value, address, 0);
+        printf("\tattempting to open i2c channel device in read, id: %i\n", deviceId);
+	fflush(stdout);
         if(deviceId < 0){
             switch(deviceId){
                 case PI_BAD_I2C_BUS:
@@ -125,19 +159,27 @@ int _I2CRead(uint16_t Dev, uint8_t *pdata, uint32_t count) {
             }
             return VL53L1_ERROR_INVALID_PARAMS;
         }
+	else{
+	    if(Dev == left_bus){
+	        leftDeviceHandle = deviceId;
+	    } else {
+	        rightDeviceHandle = deviceId;
+	    }
+	}
     }
-    int status;
-    for(uint32_t i = 0; i < count; i++){
-        status = i2c_read_byte(pigpiodaemonid, deviceId);
-        if (status < 0) {
-            status = VL53L1_ERROR_UNDEFINED;
-            return status;
-        }
-        else{
-            pdata[i] = status;
-        }
+    char * ptr = pdata;
+    int status = 0;
+    //    for(uint32_t i = 0; i < count; i++){
+    status = i2c_read_device(pigpiodaemonid, deviceId, ptr, count);
+    //printf("\ti2c_read_device status: %i\n", status);
+    //fflush(stdout);
+    if (status < 0) {
+      printf("\ti2c_write_device failed status: %i\n", status);
+      fflush(stdout);
+      status = VL53L1_ERROR_UNDEFINED;
+      return status;
     }
-    return status;
+    return VL53L1_ERROR_NONE;
 }
 
 VL53L1_Error VL53L1_WriteMulti(uint16_t Dev, uint16_t index, uint8_t *pdata, uint32_t count) {
@@ -285,8 +327,8 @@ VL53L1_Error VL53L1_RdDWord(uint16_t Dev, uint16_t index, uint32_t *data) {
     VL53L1_Error Status = VL53L1_ERROR_NONE;
     int32_t status_int;
 
-    _I2CBuffer[0] = index>>8;
-    _I2CBuffer[1] = index&0xFF;
+    _I2CBuffer[1] = index>>8;
+    _I2CBuffer[0] = index&0xFF;
     VL53L1_GetI2cBus();
     status_int = _I2CWrite(Dev, _I2CBuffer, 2);
     if (status_int != 0) {

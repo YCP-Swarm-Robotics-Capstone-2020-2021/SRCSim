@@ -2,7 +2,7 @@
 #define LIRCONTROLLER_H
 
 #include <QObject>
-
+#include <QTimer>
 
 extern "C"{
     #include "VL53L1X_api.h"
@@ -12,9 +12,12 @@ extern "C"{
 }
 #include "VehicleStateDefines.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
+#include "pigpiod_if2.h"
 
-#define LEFT 0
-#define RIGHT 1
+#define LEFTSENSOR 0
+#define RIGHTSENSOR 1
 
 class LIRSensor
 {
@@ -28,12 +31,19 @@ public:
 
     void setup(){
         VL53L1X_ERROR status = VL53L1_ERROR_NONE;
-        uint8_t bootState = 0;
-        status = VL53L1X_BootState(bus, &bootState);
-        if(!bootState){
-            std::cout<<"IR Sensor not yet booted."<<std::endl;
-            return;
-        }
+	uint16_t id;
+	status = VL53L1X_GetSensorId(bus, &id);
+	if(status != VL53L1_ERROR_NONE){
+	  std::cout<<"ERROR in getting ID "<<QString::number(status).toStdString()<<std::endl;
+	  std::cout<<"Error getting IR Sensor ID for bus "<<bus<<std::endl;
+	  return;
+	}
+	if(id == 0xEACC){
+	  std::cout<<"IR Sensor ID is 0xEACC for bus "<<bus<<std::endl;
+	}
+	else {
+	  std::cout<<"IR Sensor ID is "<<QString::number(id).toStdString()<<" for bus "<<bus<<std::endl;
+	}
         status = VL53L1X_SensorInit(bus);
         if(status != VL53L1_ERROR_NONE){
             std::cout<<"Error Initializing Sensor"<<std::endl;
@@ -45,21 +55,63 @@ public:
             return;
         }
         setupComplete = true;
+	/*uint8_t dataReady = 0;
+	while(true){
+	while(dataReady==0){
+	  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	  status = VL53L1X_CheckForDataReady(bus, &dataReady);
+	  if(status != VL53L1_ERROR_NONE){
+            std::cout<<"Error starting the ranging functionality."<<std::endl;
+            return;
+          }
+	}
+
+	dataReady = 0;
+	uint16_t distance;
+        status = VL53L1X_GetDistance(bus, &distance);
+	std::cout<<"Distance = "<<QString::number(distance).toStdString()<<std::endl;
+	}*/
+    }
+
+    double getRangeData()
+    {
+        VL53L1X_ERROR status = VL53L1_ERROR_NONE;
+        uint8_t dataReady = 0;
+	while(dataReady==0){
+	  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	  status = VL53L1X_CheckForDataReady(bus, &dataReady);
+	  if(status != VL53L1_ERROR_NONE){
+            std::cout<<"Error starting the ranging functionality."<<std::endl;
+            return -1;
+          }
+	}
+	uint16_t distance;
+        status = VL53L1X_GetDistance(bus, &distance);
+	return distance;
     }
 };
+
+const static std::string OBJECT_MSG = "OBJECT_DETECTED";
 
 class LIRController : public QObject
 {
     Q_OBJECT
 public:
     explicit LIRController(QObject *parent = nullptr);
+    ~LIRController(){
+      Close_Pigpiod();
+      pigpio_stop(pigpio_daemon);
+      std::cout<<"Disconnecting from daemon."<<std::endl;
+    }
     bool start();
     int pigpio_daemon;
     int address = 0x52;
     QMap<int, LIRSensor> sensor_list;
-
-signals:
-
+    double minRangeMM = 100;
+    public slots:
+      void getRanges();
+ signals:
+    void notifyMOOSMsg(QString key, QString val);
 };
 
 #endif // LIRCONTROLLER_H
