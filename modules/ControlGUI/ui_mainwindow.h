@@ -104,13 +104,13 @@ public:
     QLabel *label_4;
     QSlider *maxSpeedSlider;
     QSlider *turnSpeedSlider;
-    QLabel *label_29;
+    QLabel *TurnLabel;
     QLabel *label_30;
     QLabel *label_34;
     QLabel *label_35;
     QDoubleSpinBox *posToleranceSpinner;
     QSpinBox *angleToleranceSpinner;
-    QLabel *label_28;
+    QLabel *turnUnit;
     QSpacerItem *horizontalSpacer_2;
     QTabWidget *motorTabWidget;
     QWidget *motor1tab;
@@ -205,7 +205,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1312, 708);
+        MainWindow->resize(1374, 708);
         actionKill_All = new QAction(MainWindow);
         actionKill_All->setObjectName(QStringLiteral("actionKill_All"));
         centralWidget = new QWidget(MainWindow);
@@ -547,10 +547,10 @@ public:
 
         gridLayout_10->addWidget(turnSpeedSlider, 3, 1, 1, 1);
 
-        label_29 = new QLabel(controlTab);
-        label_29->setObjectName(QStringLiteral("label_29"));
+        TurnLabel = new QLabel(controlTab);
+        TurnLabel->setObjectName(QStringLiteral("TurnLabel"));
 
-        gridLayout_10->addWidget(label_29, 3, 0, 1, 1);
+        gridLayout_10->addWidget(TurnLabel, 3, 0, 1, 1);
 
         label_30 = new QLabel(controlTab);
         label_30->setObjectName(QStringLiteral("label_30"));
@@ -582,10 +582,10 @@ public:
 
         gridLayout_10->addWidget(angleToleranceSpinner, 1, 1, 1, 1);
 
-        label_28 = new QLabel(controlTab);
-        label_28->setObjectName(QStringLiteral("label_28"));
+        turnUnit = new QLabel(controlTab);
+        turnUnit->setObjectName(QStringLiteral("turnUnit"));
 
-        gridLayout_10->addWidget(label_28, 3, 3, 1, 1);
+        gridLayout_10->addWidget(turnUnit, 3, 3, 1, 1);
 
 
         verticalLayout_2->addLayout(gridLayout_10);
@@ -1113,7 +1113,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1312, 22));
+        menuBar->setGeometry(QRect(0, 0, 1374, 22));
         menuCommands = new QMenu(menuBar);
         menuCommands->setObjectName(QStringLiteral("menuCommands"));
         MainWindow->setMenuBar(menuBar);
@@ -1136,14 +1136,13 @@ public:
         QObject::connect(rotationBox, SIGNAL(valueChanged(int)), horizontalSlider, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_2, SIGNAL(valueChanged(int)), lengthBox, SLOT(setValue(int)));
         QObject::connect(horizontalSlider, SIGNAL(valueChanged(int)), rotationBox, SLOT(setValue(int)));
-        QObject::connect(turnSpeedSlider, SIGNAL(valueChanged(int)), label_28, SLOT(setNum(int)));
         QObject::connect(horizontalSlider_4, SIGNAL(valueChanged(int)), XOffsetBox, SLOT(setValue(int)));
         QObject::connect(XOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_4, SLOT(setValue(int)));
         QObject::connect(horizontalSlider_5, SIGNAL(valueChanged(int)), YOffsetBox, SLOT(setValue(int)));
         QObject::connect(YOffsetBox, SIGNAL(valueChanged(int)), horizontalSlider_5, SLOT(setValue(int)));
 
-        uProcessWatchLabel->setCurrentIndex(2);
-        motorTabWidget->setCurrentIndex(1);
+        uProcessWatchLabel->setCurrentIndex(1);
+        motorTabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1211,11 +1210,11 @@ public:
         maxSpeedPercentage->setText(QApplication::translate("MainWindow", "50", Q_NULLPTR));
         label_3->setText(QApplication::translate("MainWindow", "Pos Tolerance", Q_NULLPTR));
         label_4->setText(QApplication::translate("MainWindow", "Max Speed:", Q_NULLPTR));
-        label_29->setText(QApplication::translate("MainWindow", "Turn Speed:", Q_NULLPTR));
+        TurnLabel->setText(QApplication::translate("MainWindow", "Turn Speed:", Q_NULLPTR));
         label_30->setText(QApplication::translate("MainWindow", "Angle Tolerance", Q_NULLPTR));
         label_34->setText(QApplication::translate("MainWindow", "Ft", Q_NULLPTR));
         label_35->setText(QApplication::translate("MainWindow", "Degrees", Q_NULLPTR));
-        label_28->setText(QApplication::translate("MainWindow", "15", Q_NULLPTR));
+        turnUnit->setText(QApplication::translate("MainWindow", "15", Q_NULLPTR));
         label_32->setText(QApplication::translate("MainWindow", "Motor Temp:", Q_NULLPTR));
         m1Temp->setText(QApplication::translate("MainWindow", "30*", Q_NULLPTR));
         label_33->setText(QApplication::translate("MainWindow", "Motor Current:", Q_NULLPTR));

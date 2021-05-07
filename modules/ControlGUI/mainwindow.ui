@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1312</width>
+    <width>1374</width>
     <height>708</height>
    </rect>
   </property>
@@ -24,7 +24,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="overviewTap">
        <attribute name="title">
@@ -631,7 +631,7 @@
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QLabel" name="label_29">
+               <widget class="QLabel" name="TurnLabel">
                 <property name="text">
                  <string>Turn Speed:</string>
                 </property>
@@ -682,7 +682,7 @@
                </widget>
               </item>
               <item row="3" column="3">
-               <widget class="QLabel" name="label_28">
+               <widget class="QLabel" name="turnUnit">
                 <property name="text">
                  <string>15</string>
                 </property>
@@ -711,7 +711,7 @@
           <item>
            <widget class="QTabWidget" name="motorTabWidget">
             <property name="currentIndex">
-             <number>1</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="motor1tab">
              <attribute name="title">
@@ -1453,7 +1453,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1312</width>
+     <width>1374</width>
      <height>22</height>
     </rect>
    </property>
